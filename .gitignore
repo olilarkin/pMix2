@@ -1,0 +1,4 @@
+/builds/MacOSX/build/*
+/builds/VisualStudio2010/Debug/*
+/builds/VisualStudio2010/Release/*
+/JuceLibraryCode/*

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="RsNvH4" name="pMix" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.OliLarkin.pMix" includeBinaryInAppConfig="1"
+              jucerVersion="3.1.0" companyName="OliLarkin">
+  <MAINGROUP id="FiV8Cl" name="pMix">
+    <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
+      <FILE id="WJawZW" name="iSpace.h" compile="0" resource="0" file="Source/iSpace.h"/>
+      <FILE id="Y9eWD4" name="ParamTreeView.h" compile="0" resource="0" file="Source/ParamTreeView.h"/>
+      <FILE id="sLNbj5" name="FilterGraph.cpp" compile="1" resource="0" file="Source/FilterGraph.cpp"/>
+      <FILE id="LFtNrQ" name="FilterGraph.h" compile="0" resource="0" file="Source/FilterGraph.h"/>
+      <FILE id="ttLwnT" name="GraphEditorPanel.cpp" compile="1" resource="0"
+            file="Source/GraphEditorPanel.cpp"/>
+      <FILE id="RIOJxZ" name="GraphEditorPanel.h" compile="0" resource="0"
+            file="Source/GraphEditorPanel.h"/>
+      <FILE id="NgTWTW" name="HostStartup.cpp" compile="1" resource="0" file="Source/HostStartup.cpp"/>
+      <FILE id="zqfuWQ" name="InternalFilters.cpp" compile="1" resource="0"
+            file="Source/InternalFilters.cpp"/>
+      <FILE id="cQ4d1f" name="InternalFilters.h" compile="0" resource="0"
+            file="Source/InternalFilters.h"/>
+      <FILE id="RdcPAb" name="MainHostWindow.cpp" compile="1" resource="0"
+            file="Source/MainHostWindow.cpp"/>
+      <FILE id="C0NjfE" name="MainHostWindow.h" compile="0" resource="0"
+            file="Source/MainHostWindow.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="/Users/oli/Dev/MyPluginsJUCE/vstsdk2.4"
+               vst3Folder="/Users/oli/Dev/MyPluginsJUCE/VST3 SDK">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="1" optimisation="1" targetName="pMix"/>
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="0" optimisation="2" targetName="pMix"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce/modules"/>
+        <MODULEPATH id="juce_video" path="../../juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../juce/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+    <VS2010 targetFolder="Builds/VisualStudio2010">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="pMix"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="2" targetName="pMix"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="../../juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce/modules"/>
+        <MODULEPATH id="juce_core" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
+      </MODULEPATHS>
+    </VS2010>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_utils" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_video" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_PLUGINHOST_VST="enabled" JUCE_PLUGINHOST_VST3="enabled"
+               JUCE_PLUGINHOST_AU="enabled"/>
+</JUCERPROJECT>
