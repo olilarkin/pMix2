@@ -361,8 +361,8 @@ public:
           }
           else
           {
-            PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal
-                                                  : PluginWindow::Generic;
+            PluginWindow::WindowFormatType type = /*processor->hasEditor() ? PluginWindow::Normal
+                                                  :*/ PluginWindow::Generic;
 
             switch (r)
             {
@@ -402,7 +402,7 @@ public:
     if (e.mouseWasClicked() && e.getNumberOfClicks() == 2)
     {
       if (const AudioProcessorGraph::Node::Ptr f = graph.getNodeForId (filterID))
-        if (PluginWindow* const w = PluginWindow::getWindowFor (f, PluginWindow::Normal))
+        if (PluginWindow* const w = PluginWindow::getWindowFor (f, PluginWindow::Generic/*Normal*/))
           w->toFront (true);
     }
     else if (! e.mouseWasClicked())
