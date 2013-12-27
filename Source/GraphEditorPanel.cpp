@@ -1085,6 +1085,15 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
     AudioDeviceManager* deviceManager_)
   : graph (formatManager), deviceManager (deviceManager_)
 {
+  // set up the layout and resizer bars..
+  verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be
+  // between 20% and 80%, preferably 50%
+  verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
+  verticalLayout.setItemLayout (2, 150, -1.0, -0.65);  // the components on the right must be
+  // at least 150 pixels wide, preferably 50% of the total width
+  verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
+  addAndMakeVisible (verticalDividerBar);  
+  
   addAndMakeVisible (graphPanel = new GraphEditorPanel (graph));
 //  addAndMakeVisible (treeView = new ParamTreeView(graph));
 
@@ -1124,18 +1133,12 @@ GraphDocumentComponent::~GraphDocumentComponent()
 
 void GraphDocumentComponent::resized()
 {
-  const int keysHeight = 60;
-  const int statusHeight = 20;
-  //const int panelHeight = (getHeight() - keysHeight) * 0.5;
-
-  const int treeWidth = 200;
-
-//  treeView->setBounds (getWidth()-treeWidth, 0, treeWidth, getHeight() - keysHeight);
-  //iSpace->setBounds(0, (getHeight() - keysHeight) / 2., getWidth()-treeWidth, (getHeight() - keysHeight) / 2);
-  paramView->setBounds(0, (getHeight() - keysHeight) / 2., getWidth()-treeWidth, (getHeight() - keysHeight) / 2);
-  graphPanel->setBounds (0, 0, getWidth()-treeWidth, (getHeight() - keysHeight) / 2);
-  statusBar->setBounds (0, getHeight() - keysHeight - statusHeight, getWidth(), statusHeight);
-  keyboardComp->setBounds (0, getHeight() - keysHeight, getWidth(), keysHeight);
+  Component* vcomps[] = { graphPanel, verticalDividerBar, paramView };
+  
+  verticalLayout.layOutComponents (vcomps, 3,
+                                   0, 0, getWidth(), getHeight(),
+                                   false,     // lay out side-by-side
+                                   true);     // resize the components' heights as well as widths
 }
 
 void GraphDocumentComponent::createNewPlugin (const PluginDescription* desc, int x, int y)
