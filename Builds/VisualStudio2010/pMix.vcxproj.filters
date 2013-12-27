@@ -1530,6 +1530,9 @@
     <ClInclude Include="..\..\Source\iSpace.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\ParamView.h">
+      <Filter>pMix\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ParamTreeView.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>

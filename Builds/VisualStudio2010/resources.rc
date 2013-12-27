@@ -13,7 +13,7 @@ BEGIN
   BEGIN
     BLOCK "040904E4"
     BEGIN
-      VALUE "CompanyName",  "Oli Larkin\0"
+      VALUE "CompanyName",  "OliLarkin\0"
       VALUE "FileDescription",  "pMix\0"
       VALUE "FileVersion",  "1.0.0\0"
       VALUE "ProductName",  "pMix\0"

@@ -1236,6 +1236,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\iSpace.h"/>
+    <ClInclude Include="..\..\Source\ParamView.h"/>
     <ClInclude Include="..\..\Source\ParamTreeView.h"/>
     <ClInclude Include="..\..\Source\FilterGraph.h"/>
     <ClInclude Include="..\..\Source\GraphEditorPanel.h"/>

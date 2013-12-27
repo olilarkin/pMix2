@@ -27,7 +27,8 @@
 
 #include "FilterGraph.h"
 #include "iSpace.h"
-#include "ParamTreeView.h"
+#include "ParamView.h"
+//#include "ParamTreeView.h"
 
 class FilterComponent;
 class ConnectorComponent;
@@ -108,7 +109,8 @@ private:
   Component* statusBar;
 
   iSpaceComponent* iSpace;
-  ParamTreeView* treeView;
+  ParamView* paramView;
+//  ParamTreeView* treeView;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphDocumentComponent)
 };

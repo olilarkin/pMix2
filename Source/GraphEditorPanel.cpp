@@ -1086,7 +1086,7 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
   : graph (formatManager), deviceManager (deviceManager_)
 {
   addAndMakeVisible (graphPanel = new GraphEditorPanel (graph));
-  addAndMakeVisible (treeView = new ParamTreeView(graph));
+//  addAndMakeVisible (treeView = new ParamTreeView(graph));
 
   deviceManager->addChangeListener (graphPanel);
 
@@ -1097,7 +1097,8 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState,
       MidiKeyboardComponent::horizontalKeyboard));
 
-  addAndMakeVisible (iSpace = new iSpaceComponent());
+  //addAndMakeVisible (iSpace = new iSpaceComponent());
+  addAndMakeVisible (paramView = new ParamView());
 
   addAndMakeVisible (statusBar = new TooltipBar());
 
@@ -1129,9 +1130,9 @@ void GraphDocumentComponent::resized()
 
   const int treeWidth = 200;
 
-  treeView->setBounds (getWidth()-treeWidth, 0, treeWidth, getHeight() - keysHeight);
-  iSpace->setBounds(0, (getHeight() - keysHeight) / 2., getWidth()-treeWidth, (getHeight() - keysHeight) / 2);
-
+//  treeView->setBounds (getWidth()-treeWidth, 0, treeWidth, getHeight() - keysHeight);
+  //iSpace->setBounds(0, (getHeight() - keysHeight) / 2., getWidth()-treeWidth, (getHeight() - keysHeight) / 2);
+  paramView->setBounds(0, (getHeight() - keysHeight) / 2., getWidth()-treeWidth, (getHeight() - keysHeight) / 2);
   graphPanel->setBounds (0, 0, getWidth()-treeWidth, (getHeight() - keysHeight) / 2);
   statusBar->setBounds (0, getHeight() - keysHeight - statusHeight, getWidth(), statusHeight);
   keyboardComp->setBounds (0, getHeight() - keysHeight, getWidth(), keysHeight);
