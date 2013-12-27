@@ -1107,7 +1107,7 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
       MidiKeyboardComponent::horizontalKeyboard));
 
   //addAndMakeVisible (iSpace = new iSpaceComponent());
-  addAndMakeVisible (paramView = new ParamView());
+  addAndMakeVisible (paramView = new ParamView(graph));
 
   addAndMakeVisible (statusBar = new TooltipBar());
 
