@@ -49,7 +49,7 @@ public:
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
   const AudioProcessorGraph::Node::Ptr getNodeForId (const uint32 uid) const noexcept;
 
-  void addFilter (const PluginDescription* desc, double x, double y);
+  uint32 addFilter (const PluginDescription* desc, double x, double y);
 
   void removeFilter (const uint32 filterUID);
   void disconnectFilter (const uint32 filterUID);

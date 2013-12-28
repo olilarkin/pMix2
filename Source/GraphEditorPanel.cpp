@@ -791,8 +791,9 @@ private:
 
 
 //==============================================================================
-GraphEditorPanel::GraphEditorPanel (FilterGraph& graph_)
+GraphEditorPanel::GraphEditorPanel (FilterGraph& graph_, UndoManager& undoManager)
   : graph (graph_)
+  , undoManager (undoManager)
 {
   graph.addChangeListener (this);
   setOpaque (true);
@@ -829,7 +830,8 @@ void GraphEditorPanel::mouseDown (const MouseEvent& e)
 
 void GraphEditorPanel::createNewPlugin (const PluginDescription* desc, int x, int y)
 {
-  graph.addFilter (desc, x / (double) getWidth(), y / (double) getHeight());
+  CreatePluginAction undoAction(graph, desc, x / (double) getWidth(), y / (double) getHeight());
+  undoManager.perform(&undoAction, TRANS("add plug-in"));
 }
 
 FilterComponent* GraphEditorPanel::getComponentForFilter (const uint32 filterID) const
@@ -1095,7 +1097,7 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);  
   
-  addAndMakeVisible (graphPanel = new GraphEditorPanel (graph));
+  addAndMakeVisible (graphPanel = new GraphEditorPanel (graph, undoManager));
 //  addAndMakeVisible (treeView = new ParamTreeView(graph));
 
   deviceManager->addChangeListener (graphPanel);

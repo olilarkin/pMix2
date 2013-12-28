@@ -74,12 +74,12 @@ const AudioProcessorGraph::Node::Ptr FilterGraph::getNodeForId (const uint32 uid
   return graph.getNodeForId (uid);
 }
 
-void FilterGraph::addFilter (const PluginDescription* desc, double x, double y)
+uint32 FilterGraph::addFilter (const PluginDescription* desc, double x, double y)
 {
+  AudioProcessorGraph::Node* node = nullptr;
+
   if (desc != nullptr)
   {
-    AudioProcessorGraph::Node* node = nullptr;
-
     String errorMessage;
 
     if (AudioPluginInstance* instance = formatManager.createPluginInstance (*desc, graph.getSampleRate(), graph.getBlockSize(), errorMessage))
@@ -98,6 +98,8 @@ void FilterGraph::addFilter (const PluginDescription* desc, double x, double y)
                                    errorMessage);
     }
   }
+  
+  return node->nodeId;
 }
 
 void FilterGraph::removeFilter (const uint32 id)

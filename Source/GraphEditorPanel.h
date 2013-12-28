@@ -44,7 +44,7 @@ class GraphEditorPanel   : public Component,
   public ChangeListener
 {
 public:
-  GraphEditorPanel (FilterGraph& graph);
+  GraphEditorPanel (FilterGraph& graph, UndoManager& undoManager);
   ~GraphEditorPanel();
 
   void paint (Graphics& g);
@@ -69,7 +69,48 @@ public:
 
   //==============================================================================
 private:
+  
+  class CreatePluginAction  : public UndoableAction
+  {
+  public:
+    CreatePluginAction (FilterGraph& graph, const PluginDescription* desc, double x, double y) noexcept
+    : graph(graph)
+    , x(x)
+    , y(y)
+    , desc(*desc)
+    {
+    }
+    
+    bool perform()
+    {
+      nodeID = graph.addFilter (&desc, x, y);
+
+      return true;
+    }
+    
+    bool undo()
+    {
+      graph.removeFilter(nodeID);
+      
+      return true;
+    }
+    
+    int getSizeInUnits()
+    {
+      return (int) sizeof (*this); //xxx should be more accurate
+    }
+
+  private:
+    FilterGraph& graph;
+    double x, y;
+    PluginDescription desc;
+    uint32 nodeID;
+    JUCE_DECLARE_NON_COPYABLE (CreatePluginAction)
+  };
+  
   FilterGraph& graph;
+  UndoManager& undoManager;
+
   ScopedPointer<ConnectorComponent> draggingConnector;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphEditorPanel)
@@ -118,6 +159,8 @@ private:
   
 //  ParamTreeView* treeView;
 
+  UndoManager undoManager;
+  
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphDocumentComponent)
 };
 
