@@ -4,7 +4,7 @@ class ProcessorParameterPropertyComp :  public PropertyComponent,
 {
 public:
   ProcessorParameterPropertyComp (const String& name, AudioProcessor& p, const int index_)
-  : PropertyComponent (name),
+  : PropertyComponent (name, 20),
   owner (p),
   index (index_),
   paramHasChanged (false),
@@ -127,10 +127,10 @@ public:
       
       //todo check existing nodes
       
-      if (f->getProcessor()->getName() != "Audio Input"
+      if   (f->getProcessor()->getName() != "Audio Input"
          && f->getProcessor()->getName() != "Audio Output" 
-          && f->getProcessor()->getName() != "Midi Input" 
-          && f->getProcessor()->getName() != "Midi Output") 
+         && f->getProcessor()->getName() != "Midi Input" 
+         && f->getProcessor()->getName() != "Midi Output") 
       {
         if (!sectionNodes.contains(f)) 
         {
