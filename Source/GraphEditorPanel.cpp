@@ -353,27 +353,30 @@ public:
           AudioProcessor* const processor = f->getProcessor();
           jassert (processor != nullptr);
 
-          if (r == 6)
+          if (r > 0) 
           {
-            MemoryBlock state;
-            processor->getStateInformation (state);
-            processor->setStateInformation (state.getData(), (int) state.getSize());
-          }
-          else
-          {
-            PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal
-                                                  : PluginWindow::Generic;
-
-            switch (r)
+            if (r == 6)
             {
-              case 4: type = PluginWindow::Programs; break;
-              case 5: type = PluginWindow::Parameters; break;
-
-              default: break;
-            };
-
-            if (PluginWindow* const w = PluginWindow::getWindowFor (f, type))
-              w->toFront (true);
+              MemoryBlock state;
+              processor->getStateInformation (state);
+              processor->setStateInformation (state.getData(), (int) state.getSize());
+            }
+            else
+            {
+              PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal
+              : PluginWindow::Generic;
+              
+              switch (r)
+              {
+                case 4: type = PluginWindow::Programs; break;
+                case 5: type = PluginWindow::Parameters; break;
+                  
+                default: break;
+              };
+              
+              if (PluginWindow* const w = PluginWindow::getWindowFor (f, type))
+                w->toFront (true);
+            }
           }
         }
       }
@@ -830,7 +833,10 @@ void GraphEditorPanel::mouseDown (const MouseEvent& e)
 
 void GraphEditorPanel::createNewPlugin (const PluginDescription* desc, int x, int y)
 {
-  undoManager.perform(new CreatePluginAction(graph, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add plug-in"));
+  if (desc != nullptr)
+  {
+    undoManager.perform(new CreatePluginAction(graph, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add plug-in"));
+  }
 }
 
 FilterComponent* GraphEditorPanel::getComponentForFilter (const uint32 filterID) const
