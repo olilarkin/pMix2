@@ -32,10 +32,10 @@
 
 
 //==============================================================================
-class PluginHostApp  : public JUCEApplication
+class pMixApp  : public JUCEApplication
 {
 public:
-  PluginHostApp() {}
+  pMixApp() {}
 
   void initialise (const String& commandLine)
   {
@@ -93,10 +93,10 @@ private:
   ScopedPointer<MainHostWindow> mainWindow;
 };
 
-static PluginHostApp& getApp()                      { return *dynamic_cast<PluginHostApp*>(JUCEApplication::getInstance()); }
+static pMixApp& getApp()                      { return *dynamic_cast<pMixApp*>(JUCEApplication::getInstance()); }
 ApplicationCommandManager& getCommandManager()      { return getApp().commandManager; }
 ApplicationProperties& getAppProperties()           { return *getApp().appProperties; }
 
 
 // This kicks the whole thing off..
-START_JUCE_APPLICATION (PluginHostApp)
+START_JUCE_APPLICATION (pMixApp)
