@@ -29,6 +29,7 @@
 #include "iSpace.h"
 #include "ParamView.h"
 //#include "ParamTreeView.h"
+#include "LookAndFeel.h"
 
 class FilterComponent;
 class ConnectorComponent;
@@ -108,6 +109,7 @@ private:
   Component* keyboardComp;
   Component* statusBar;
 
+  LookAndFeelCustom lf;
   iSpaceComponent* iSpace;
   ParamView* paramView;
   

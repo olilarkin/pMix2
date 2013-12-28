@@ -361,8 +361,8 @@ public:
           }
           else
           {
-            PluginWindow::WindowFormatType type = /*processor->hasEditor() ? PluginWindow::Normal
-                                                  :*/ PluginWindow::Generic;
+            PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal
+                                                  : PluginWindow::Generic;
 
             switch (r)
             {
@@ -1085,6 +1085,7 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
     AudioDeviceManager* deviceManager_)
   : graph (formatManager), deviceManager (deviceManager_)
 {
+  
   // set up the layout and resizer bars..
   verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be
   // between 20% and 80%, preferably 50%
@@ -1108,7 +1109,7 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
 
   //addAndMakeVisible (iSpace = new iSpaceComponent());
   addAndMakeVisible (paramView = new ParamView(graph));
-
+  paramView->setLookAndFeel(&lf);
   addAndMakeVisible (statusBar = new TooltipBar());
 
   deviceManager->addAudioCallback (&graphPlayer);
