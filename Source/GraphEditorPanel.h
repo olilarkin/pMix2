@@ -77,13 +77,13 @@ private:
     : graph(graph)
     , x(x)
     , y(y)
-    , desc(*desc)
+    , desc(desc)
     {
     }
     
     bool perform()
     {
-      nodeID = graph.addFilter (&desc, x, y);
+      nodeID = graph.addFilter (desc, x, y);
 
       return true;
     }
@@ -103,7 +103,7 @@ private:
   private:
     FilterGraph& graph;
     double x, y;
-    PluginDescription desc;
+    const PluginDescription* desc;
     uint32 nodeID;
     JUCE_DECLARE_NON_COPYABLE (CreatePluginAction)
   };
@@ -140,6 +140,8 @@ public:
   //==============================================================================
   void resized();
 
+  UndoManager undoManager;
+
 private:
   //==============================================================================
   AudioDeviceManager* deviceManager;
@@ -159,7 +161,6 @@ private:
   
 //  ParamTreeView* treeView;
 
-  UndoManager undoManager;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphDocumentComponent)
 };

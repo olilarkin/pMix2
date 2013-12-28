@@ -59,11 +59,10 @@ public:
 
     mainWindow->menuItemsChanged();
 
-    if (commandLine.isNotEmpty()
-        && ! commandLine.trimStart().startsWith ("-")
-        && mainWindow->getGraphEditor() != nullptr)
-      mainWindow->getGraphEditor()->graph.loadFrom (File::getCurrentWorkingDirectory()
-          .getChildFile (commandLine), true);
+    if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getGraphEditor() != nullptr)
+    {
+      mainWindow->getGraphEditor()->graph.loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
+    }
   }
 
   void shutdown()

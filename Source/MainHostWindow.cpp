@@ -171,7 +171,7 @@ void MainHostWindow::changeListenerCallback (ChangeBroadcaster*)
 
 StringArray MainHostWindow::getMenuBarNames()
 {
-  const char* const names[] = { "File", "Plugins", "Options", nullptr };
+  const char* const names[] = { "File", "Edit", "Plugins", "Options", nullptr };
 
   return StringArray (names);
 }
@@ -200,6 +200,14 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
   }
   else if (topLevelMenuIndex == 1)
   {
+    menu.addCommandItem (&getCommandManager(), CommandIDs::copy);
+    menu.addCommandItem (&getCommandManager(), CommandIDs::paste);
+    menu.addSeparator();
+    menu.addCommandItem (&getCommandManager(), CommandIDs::undo);
+    menu.addCommandItem (&getCommandManager(), CommandIDs::redo);
+  }
+  else if (topLevelMenuIndex == 2)
+  {
     // "Plugins" menu
     PopupMenu pluginsMenu;
     addPluginsToMenu (pluginsMenu);
@@ -207,7 +215,7 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
     menu.addSeparator();
     menu.addItem (250, "Delete all plugins");
   }
-  else if (topLevelMenuIndex == 2)
+  else if (topLevelMenuIndex == 3)
   {
     // "Options" menu
 
@@ -261,12 +269,12 @@ void MainHostWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/
 
     menuItemsChanged();
   }
-  else
-  {
-    createPlugin (getChosenType (menuItemID),
-                  proportionOfWidth  (0.3f + Random::getSystemRandom().nextFloat() * 0.6f),
-                  proportionOfHeight (0.3f + Random::getSystemRandom().nextFloat() * 0.6f));
-  }
+//  else
+//  {
+//    createPlugin (getChosenType (menuItemID),
+//                  proportionOfWidth  (0.3f + Random::getSystemRandom().nextFloat() * 0.6f),
+//                  proportionOfHeight (0.3f + Random::getSystemRandom().nextFloat() * 0.6f));
+//  }
 }
 
 void MainHostWindow::createPlugin (const PluginDescription* desc, int x, int y)
@@ -309,7 +317,11 @@ void MainHostWindow::getAllCommands (Array <CommandID>& commands)
                             CommandIDs::saveAs,
                             CommandIDs::showPluginListEditor,
                             CommandIDs::showAudioSettings,
-                            CommandIDs::aboutBox
+                            CommandIDs::aboutBox,
+                            CommandIDs::copy,
+                            CommandIDs::paste,
+                            CommandIDs::undo,
+                            CommandIDs::redo
                           };
 
   commands.addArray (ids, numElementsInArray (ids));
@@ -355,7 +367,35 @@ void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationComma
     case CommandIDs::aboutBox:
       result.setInfo ("About...", String::empty, category, 0);
       break;
-
+      
+    case CommandIDs::copy:
+      result.setInfo ("Copy",
+                      "Copies the currently selected filter to the clipboard",
+                      category, 0);
+      result.defaultKeypresses.add (KeyPress ('c', ModifierKeys::commandModifier, 0));
+      
+      break;
+    case CommandIDs::paste:
+      result.setInfo ("Paste",
+                      "Pastes from the clipboard",
+                      category, 0);
+      result.defaultKeypresses.add (KeyPress ('p', ModifierKeys::commandModifier, 0));
+      
+      break;
+    case CommandIDs::undo:
+      result.setInfo ("Undo",
+                      "Undo the last action",
+                      category, 0);
+      result.defaultKeypresses.add (KeyPress ('z', ModifierKeys::commandModifier, 0));
+      
+      break;
+    case CommandIDs::redo:
+      result.setInfo ("Redo",
+                      "Redo the last action",
+                      category, 0);
+      result.defaultKeypresses.add (KeyPress ('b', ModifierKeys::commandModifier, 0));
+      break;
+      
     default:
       break;
   }
@@ -397,7 +437,25 @@ bool MainHostWindow::perform (const InvocationInfo& info)
     case CommandIDs::aboutBox:
       // TODO
       break;
+      
+    case CommandIDs::copy:
+      // TODO
+      break;
 
+    case CommandIDs::paste:
+      // TODO
+      break;
+      
+    case CommandIDs::undo:
+      // TODO
+      graphEditor->undoManager.undo();
+      break;
+      
+    case CommandIDs::redo:
+      // TODO
+      graphEditor->undoManager.redo();
+      break;
+      
     default:
       return false;
   }

@@ -830,8 +830,7 @@ void GraphEditorPanel::mouseDown (const MouseEvent& e)
 
 void GraphEditorPanel::createNewPlugin (const PluginDescription* desc, int x, int y)
 {
-  CreatePluginAction undoAction(graph, desc, x / (double) getWidth(), y / (double) getHeight());
-  undoManager.perform(&undoAction, TRANS("add plug-in"));
+  undoManager.perform(new CreatePluginAction(graph, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add plug-in"));
 }
 
 FilterComponent* GraphEditorPanel::getComponentForFilter (const uint32 filterID) const
