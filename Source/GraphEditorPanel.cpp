@@ -296,8 +296,50 @@ private:
 class FilterComponent    : public Component
 {
 public:
+  
+  class MovePluginAction  : public UndoableAction
+  {
+  public:
+    MovePluginAction (FilterGraph& graph, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
+    : graph(graph)
+    , filterComponent(filterComponent)
+    , nodeID(nodeID)
+    , startPos(startPos)
+    , endPos(endPos)
+    {
+    }
+    
+    bool perform()
+    {      
+      graph.setNodePosition (nodeID, endPos.x, endPos.y);
+      filterComponent->getGraphPanel()->updateComponents();
+      return true;
+    }
+    
+    bool undo()
+    {      
+      graph.setNodePosition (nodeID, startPos.x, startPos.y);
+      filterComponent->getGraphPanel()->updateComponents();
+      return true;
+    }
+    
+    int getSizeInUnits()
+    {
+      return (int) sizeof (*this); //xxx should be more accurate
+    }
+    
+  private:
+    FilterGraph& graph;
+    FilterComponent* filterComponent;
+    uint32 nodeID;
+    Point<double> startPos;
+    Point<double> endPos;
+    JUCE_DECLARE_NON_COPYABLE (MovePluginAction)
+  };
+  
   FilterComponent (FilterGraph& graph_,
-                   const uint32 filterID_)
+                   const uint32 filterID_,
+                   UndoManager& undoManager)
     : graph (graph_),
       filterID (filterID_),
       numInputs (0),
@@ -305,7 +347,9 @@ public:
       pinSize (16),
       font (13.0f, Font::bold),
       numIns (0),
-      numOuts (0)
+      numOuts (0),
+      undoManager (undoManager),
+      moving(false)
   {
     shadow.setShadowProperties (DropShadow (Colours::black.withAlpha (0.5f), 3, Point<int> (0, 1)));
     setComponentEffect (&shadow);
@@ -381,6 +425,10 @@ public:
         }
       }
     }
+    else {
+      moving = true;
+      graph.getNodePosition(filterID, startPos.x, startPos.y);
+    }
   }
 
   void mouseDrag (const MouseEvent& e)
@@ -392,9 +440,10 @@ public:
       if (getParentComponent() != nullptr)
         pos = getParentComponent()->getLocalPoint (nullptr, pos);
 
-      graph.setNodePosition (filterID,
-                             (pos.getX() + getWidth() / 2) / (double) getParentWidth(),
-                             (pos.getY() + getHeight() / 2) / (double) getParentHeight());
+      endPos.x = (pos.getX() + getWidth() / 2) / (double) getParentWidth();
+      endPos.y = (pos.getY() + getHeight() / 2) / (double) getParentHeight();
+      
+      graph.setNodePosition (filterID, endPos.x, endPos.y);
 
       getGraphPanel()->updateComponents();
     }
@@ -411,7 +460,14 @@ public:
     else if (! e.mouseWasClicked())
     {
       graph.setChangedFlag (true);
-    }
+      
+      if (moving) 
+      {
+        moving = false;
+        undoManager.beginNewTransaction();
+        undoManager.perform(new MovePluginAction(graph, this, filterID, startPos, endPos), "move plug-in");
+      }
+    }    
   }
 
   bool hitTest (int x, int y)
@@ -543,8 +599,12 @@ public:
 private:
   int pinSize;
   Point<int> originalPos;
+  Point<double> endPos;
+  Point<double> startPos;
   Font font;
   int numIns, numOuts;
+  UndoManager& undoManager;
+  bool moving;
   DropShadowEffect shadow;
 
   GraphEditorPanel* getGraphPanel() const noexcept
@@ -835,6 +895,7 @@ void GraphEditorPanel::createNewPlugin (const PluginDescription* desc, int x, in
 {
   if (desc != nullptr)
   {
+    undoManager.beginNewTransaction();
     undoManager.perform(new CreatePluginAction(graph, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add plug-in"));
   }
 }
@@ -923,7 +984,7 @@ void GraphEditorPanel::updateComponents()
 
     if (getComponentForFilter (f->nodeId) == 0)
     {
-      FilterComponent* const comp = new FilterComponent (graph, f->nodeId);
+      FilterComponent* const comp = new FilterComponent (graph, f->nodeId, undoManager);
       addAndMakeVisible (comp);
       comp->update();
     }

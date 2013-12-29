@@ -41,7 +41,7 @@ class PinComponent;
     A panel that displays and edits a FilterGraph.
 */
 class GraphEditorPanel   : public Component,
-  public ChangeListener
+                           public ChangeListener
 {
 public:
   GraphEditorPanel (FilterGraph& graph, UndoManager& undoManager);
