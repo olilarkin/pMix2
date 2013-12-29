@@ -1153,6 +1153,7 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
     AudioDeviceManager* deviceManager_)
   : graph (formatManager), deviceManager (deviceManager_)
 {
+  LookAndFeel::setDefaultLookAndFeel(&lf);
   
   // set up the layout and resizer bars..
   verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be
@@ -1177,7 +1178,6 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
 
   //addAndMakeVisible (iSpace = new iSpaceComponent());
   addAndMakeVisible (paramView = new ParamView(graph));
-  paramView->setLookAndFeel(&lf);
   addAndMakeVisible (statusBar = new TooltipBar());
 
   deviceManager->addAudioCallback (&graphPlayer);

@@ -9,8 +9,7 @@ public:
   LookAndFeelCustom() {};
   ~LookAndFeelCustom() {};
 
-  void drawPropertyComponentLabel (Graphics& g, int, int height,
-                                           PropertyComponent& component)
+  void drawPropertyComponentLabel (Graphics& g, int, int height, PropertyComponent& component)
   {
     g.setColour (Colours::black);
     
@@ -24,6 +23,11 @@ public:
     g.drawFittedText (component.getName(),
                       3, r.getY(), r.getX() - 5, r.getHeight(),
                       Justification::centredLeft, 2);
+  }
+  
+  Font getPopupMenuFont()
+  {
+    return Font (12.0f);
   }
   
 private:
