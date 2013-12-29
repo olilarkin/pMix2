@@ -48,7 +48,6 @@ public:
   }
   
 private:
-  //==============================================================================
   class ParamSlider  : public Slider
   {
   public:
@@ -76,7 +75,6 @@ private:
     }
     
   private:
-    //==============================================================================
     AudioProcessor& owner;
     const int index;
     

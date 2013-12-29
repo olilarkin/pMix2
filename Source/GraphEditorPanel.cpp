@@ -1,34 +1,8 @@
-/*
-  ==============================================================================
-
-   This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
-
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
-
-   Details of these licenses can be found at: www.gnu.org/licenses
-
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-   ------------------------------------------------------------------------------
-
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
-
-  ==============================================================================
-*/
-
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "GraphEditorPanel.h"
 #include "InternalFilters.h"
 #include "MainHostWindow.h"
 
-
-//==============================================================================
 class PluginWindow;
 static Array <PluginWindow*> activePluginWindows;
 
@@ -71,7 +45,6 @@ void PluginWindow::closeAllCurrentlyOpenWindows()
   }
 }
 
-//==============================================================================
 class ProcessorProgramPropertyComp : public PropertyComponent,
   private AudioProcessorListener
 {
@@ -149,7 +122,6 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProgramAudioProcessorEditor)
 };
 
-//==============================================================================
 PluginWindow* PluginWindow::getWindowFor (AudioProcessorGraph::Node* const node,
     WindowFormatType type)
 {
@@ -207,7 +179,6 @@ void PluginWindow::closeButtonPressed()
   delete this;
 }
 
-//==============================================================================
 class PinComponent   : public Component,
   public SettableTooltipClient
 {
@@ -292,7 +263,6 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PinComponent)
 };
 
-//==============================================================================
 class FilterComponent    : public Component
 {
 public:
@@ -616,7 +586,6 @@ private:
   FilterComponent& operator= (const FilterComponent&);
 };
 
-//==============================================================================
 class ConnectorComponent   : public Component,
   public SettableTooltipClient
 {
@@ -852,8 +821,6 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConnectorComponent)
 };
 
-
-//==============================================================================
 GraphEditorPanel::GraphEditorPanel (FilterGraph& graph_, UndoManager& undoManager)
   : graph (graph_)
   , undoManager (undoManager)
@@ -1107,8 +1074,6 @@ void GraphEditorPanel::endDraggingConnector (const MouseEvent& e)
   }
 }
 
-
-//==============================================================================
 class TooltipBar   : public Component,
   private Timer
 {
@@ -1148,7 +1113,6 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TooltipBar)
 };
 
-//==============================================================================
 GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& formatManager,
     AudioDeviceManager* deviceManager_)
   : graph (formatManager), deviceManager (deviceManager_)

@@ -1,7 +1,6 @@
 #ifndef __JUCE_LookAndFeelCustom_JUCEHEADER__
 #define __JUCE_LookAndFeelCustom_JUCEHEADER__
 
-//==============================================================================
 class LookAndFeelCustom : public LookAndFeel_V3
 {
 public:

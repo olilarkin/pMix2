@@ -1,27 +1,3 @@
-/*
-  ==============================================================================
-
-   This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
-
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
-
-   Details of these licenses can be found at: www.gnu.org/licenses
-
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-   ------------------------------------------------------------------------------
-
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
-
-  ==============================================================================
-*/
-
 #ifndef __FILTERGRAPH_JUCEHEADER__
 #define __FILTERGRAPH_JUCEHEADER__
 
@@ -31,18 +7,14 @@ class FilterGraph;
 const char* const filenameSuffix = ".filtergraph";
 const char* const filenameWildcard = "*.filtergraph";
 
-//==============================================================================
-/**
-    A collection of filters and some connections between them.
-*/
 class FilterGraph   : public FileBasedDocument
 {
 public:
-  //==============================================================================
+  
   FilterGraph (AudioPluginFormatManager& formatManager);
   ~FilterGraph();
 
-  //==============================================================================
+  
   AudioProcessorGraph& getGraph() noexcept         { return graph; }
 
   int getNumFilters() const noexcept;
@@ -59,7 +31,7 @@ public:
   void setNodePosition (const int nodeId, double x, double y);
   void getNodePosition (const int nodeId, double& x, double& y) const;
 
-  //==============================================================================
+  
   int getNumConnections() const noexcept;
   const AudioProcessorGraph::Connection* getConnection (const int index) const noexcept;
 
@@ -80,24 +52,23 @@ public:
   void clear();
 
 
-  //==============================================================================
+  
 
   XmlElement* createXml() const;
   void restoreFromXml (const XmlElement& xml);
 
-  //==============================================================================
+  
   String getDocumentTitle();
   Result loadDocument (const File& file);
   Result saveDocument (const File& file);
   File getLastDocumentOpened();
   void setLastDocumentOpened (const File& file);
 
-  /** The special channel index used to refer to a filter's midi channel.
-  */
+  // The special channel index used to refer to a filter's midi channel
   static const int midiChannelNumber;
 
 private:
-  //==============================================================================
+  
   AudioPluginFormatManager& formatManager;
   AudioProcessorGraph graph;
 

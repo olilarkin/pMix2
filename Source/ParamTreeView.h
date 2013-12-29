@@ -117,8 +117,6 @@ private:
   String mName;
 };
 
-
-//==============================================================================
 class  ParamTreeViewPluginItem  : public TreeViewItem
 {
 public:

@@ -27,19 +27,12 @@
 
 #include "FilterGraph.h"
 
-
-//==============================================================================
-/**
-    Manages the internal plugin types.
-*/
 class InternalPluginFormat   : public AudioPluginFormat
 {
 public:
-  //==============================================================================
   InternalPluginFormat();
   ~InternalPluginFormat() {}
 
-  //==============================================================================
   enum InternalFilterType
   {
     audioInputFilter = 0,
@@ -53,7 +46,6 @@ public:
 
   void getAllTypes (OwnedArray <PluginDescription>& results);
 
-  //==============================================================================
   String getName() const override                                      { return "Internal"; }
   bool fileMightContainThisPluginType (const String&) override         { return false; }
   FileSearchPath getDefaultLocationsToSearch() override                { return FileSearchPath(); }
@@ -66,7 +58,6 @@ public:
   AudioPluginInstance* createInstanceFromDescription (const PluginDescription&, double, int) override;
 
 private:
-  //==============================================================================
   PluginDescription audioInDesc;
   PluginDescription audioOutDesc;
   PluginDescription midiInDesc;

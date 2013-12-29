@@ -1,35 +1,9 @@
-/*
-  ==============================================================================
-
-   This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
-
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
-
-   Details of these licenses can be found at: www.gnu.org/licenses
-
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-   ------------------------------------------------------------------------------
-
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
-
-  ==============================================================================
-*/
-
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MainHostWindow.h"
 #include "FilterGraph.h"
 #include "InternalFilters.h"
 #include "GraphEditorPanel.h"
 
-
-//==============================================================================
 const int FilterGraph::midiChannelNumber = 0x1000;
 
 FilterGraph::FilterGraph (AudioPluginFormatManager& formatManager_)
@@ -58,7 +32,6 @@ uint32 FilterGraph::getNextUID() noexcept
   return ++lastUID;
 }
 
-//==============================================================================
 int FilterGraph::getNumFilters() const noexcept
 {
   return graph.getNumNodes();
@@ -146,7 +119,7 @@ void FilterGraph::getNodePosition (const int nodeId, double& x, double& y) const
   }
 }
 
-//==============================================================================
+
 int FilterGraph::getNumConnections() const noexcept
 {
   return graph.getNumConnections();
@@ -205,7 +178,6 @@ void FilterGraph::clear()
   changed();
 }
 
-//==============================================================================
 String FilterGraph::getDocumentTitle()
 {
   if (! getFile().exists())
@@ -257,7 +229,6 @@ void FilterGraph::setLastDocumentOpened (const File& file)
   ->setValue ("recentFilterGraphFiles", recentFiles.toString());
 }
 
-//==============================================================================
 static XmlElement* createNodeXml (AudioProcessorGraph::Node* const node) noexcept
 {
   AudioPluginInstance* plugin = dynamic_cast <AudioPluginInstance*> (node->getProcessor());

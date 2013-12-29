@@ -1,27 +1,3 @@
-/*
-  ==============================================================================
-
-   This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
-
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
-
-   Details of these licenses can be found at: www.gnu.org/licenses
-
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-   ------------------------------------------------------------------------------
-
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
-
-  ==============================================================================
-*/
-
 #ifndef __GRAPHEDITORPANEL_JUCEHEADER__
 #define __GRAPHEDITORPANEL_JUCEHEADER__
 
@@ -35,11 +11,6 @@ class FilterComponent;
 class ConnectorComponent;
 class PinComponent;
 
-
-//==============================================================================
-/**
-    A panel that displays and edits a FilterGraph.
-*/
 class GraphEditorPanel   : public Component,
                            public ChangeListener
 {
@@ -60,14 +31,14 @@ public:
   void changeListenerCallback (ChangeBroadcaster*);
   void updateComponents();
 
-  //==============================================================================
+  
   void beginConnectorDrag (uint32 sourceFilterID, int sourceFilterChannel,
                            uint32 destFilterID, int destFilterChannel,
                            const MouseEvent& e);
   void dragConnector (const MouseEvent& e);
   void endDraggingConnector (const MouseEvent& e);
 
-  //==============================================================================
+  
 private:
   
   class CreatePluginAction  : public UndoableAction
@@ -116,34 +87,27 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphEditorPanel)
 };
 
-
-//==============================================================================
-/**
-    A panel that embeds a GraphEditorPanel with a midi keyboard at the bottom.
-
-    It also manages the graph itself, and plays it.
-*/
 class GraphDocumentComponent  : public Component
 {
 public:
-  //==============================================================================
+  
   GraphDocumentComponent (AudioPluginFormatManager& formatManager,
                           AudioDeviceManager* deviceManager);
   ~GraphDocumentComponent();
 
-  //==============================================================================
+  
   void createNewPlugin (const PluginDescription* desc, int x, int y);
 
-  //==============================================================================
+  
   FilterGraph graph;
 
-  //==============================================================================
+  
   void resized();
 
   UndoManager undoManager;
 
 private:
-  //==============================================================================
+  
   AudioDeviceManager* deviceManager;
   AudioProcessorPlayer graphPlayer;
   MidiKeyboardState keyState;
@@ -165,8 +129,6 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphDocumentComponent)
 };
 
-//==============================================================================
-/** A desktop window containing a plugin's UI. */
 class PluginWindow  : public DocumentWindow
 {
 public:
