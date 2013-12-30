@@ -82,13 +82,21 @@ MainHostWindow::MainHostWindow()
   addKeyListener (getCommandManager().getKeyMappings());
 
   Process::setPriority (Process::HighPriority);
+  
+  getCommandManager().registerAllCommandsForTarget (this);
 
+  PopupMenu pop;
+  pop.addCommandItem (&getCommandManager(), CommandIDs::aboutBox);
+  pop.addSeparator();
+  pop.addCommandItem (&getCommandManager(), CommandIDs::showAudioSettings);
+  pop.addSeparator();
+  
 #if JUCE_MAC
-  setMacMainMenu (this);
+  setMacMainMenu (this, &pop);
 #else
   setMenuBar (this);
 #endif
-
+  
   getCommandManager().setFirstCommandTarget (this);
 }
 
@@ -168,8 +176,8 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
 
     menu.addCommandItem (&getCommandManager(), CommandIDs::save);
     menu.addCommandItem (&getCommandManager(), CommandIDs::saveAs);
-    menu.addSeparator();
-    menu.addCommandItem (&getCommandManager(), StandardApplicationCommandIDs::quit);
+    //menu.addSeparator();
+    //menu.addCommandItem (&getCommandManager(), StandardApplicationCommandIDs::quit);
   }
   else if (topLevelMenuIndex == 1)
   {
@@ -201,12 +209,6 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
     sortTypeMenu.addItem (203, "List plugins by manufacturer",       true, pluginSortMethod == KnownPluginList::sortByManufacturer);
     sortTypeMenu.addItem (204, "List plugins based on the directory structure", true, pluginSortMethod == KnownPluginList::sortByFileSystemLocation);
     menu.addSubMenu ("Plugin menu type", sortTypeMenu);
-
-    menu.addSeparator();
-    menu.addCommandItem (&getCommandManager(), CommandIDs::showAudioSettings);
-
-    menu.addSeparator();
-    menu.addCommandItem (&getCommandManager(), CommandIDs::aboutBox);
   }
 
   return menu;
@@ -284,12 +286,13 @@ ApplicationCommandTarget* MainHostWindow::getNextCommandTarget()
 void MainHostWindow::getAllCommands (Array <CommandID>& commands)
 {
   // this returns the set of all commands that this target can perform..
-  const CommandID ids[] = { CommandIDs::open,
+  const CommandID ids[] = { 
+                            CommandIDs::aboutBox,
+                            CommandIDs::open,
                             CommandIDs::save,
                             CommandIDs::saveAs,
                             CommandIDs::showPluginListEditor,
                             CommandIDs::showAudioSettings,
-                            CommandIDs::aboutBox,
                             CommandIDs::copy,
                             CommandIDs::paste,
                             CommandIDs::undo,
@@ -332,12 +335,12 @@ void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationComma
       break;
 
     case CommandIDs::showAudioSettings:
-      result.setInfo ("Change the audio device settings", String::empty, category, 0);
-      result.addDefaultKeypress ('a', ModifierKeys::commandModifier);
+      result.setInfo ("Preferences...", String::empty, category, 0);
+      result.addDefaultKeypress (',', ModifierKeys::commandModifier);
       break;
 
     case CommandIDs::aboutBox:
-      result.setInfo ("About...", String::empty, category, 0);
+      result.setInfo ("About pMix", String::empty, category, 0);
       break;
       
     case CommandIDs::copy:
@@ -448,9 +451,9 @@ void MainHostWindow::showAudioSettings()
   o.content.setNonOwned (&audioSettingsComp);
   o.dialogTitle                   = "Audio Settings";
   o.componentToCentreAround       = this;
-  o.dialogBackgroundColour        = Colours::azure;
+  o.dialogBackgroundColour        = Colours::grey;
   o.escapeKeyTriggersCloseButton  = true;
-  o.useNativeTitleBar             = false;
+  o.useNativeTitleBar             = true;
   o.resizable                     = false;
 
   o.runModal();

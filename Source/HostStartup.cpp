@@ -29,7 +29,7 @@ public:
     mainWindow->setUsingNativeTitleBar (true);
 
     commandManager.registerAllCommandsForTarget (this);
-    commandManager.registerAllCommandsForTarget (mainWindow);
+    //commandManager.registerAllCommandsForTarget (mainWindow);
 
     mainWindow->menuItemsChanged();
 
