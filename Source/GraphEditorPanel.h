@@ -12,7 +12,8 @@ class ConnectorComponent;
 class PinComponent;
 
 class GraphEditorPanel   : public Component,
-                           public ChangeListener
+                           public ChangeListener,
+                           public LassoSource<Component*>
 {
 public:
   GraphEditorPanel (FilterGraph& graph, UndoManager& undoManager);
@@ -20,7 +21,9 @@ public:
 
   void paint (Graphics& g);
   void mouseDown (const MouseEvent& e);
-
+  void mouseDrag (const MouseEvent& e);
+  void mouseUp (const MouseEvent& e);
+  
   void createNewPlugin (const PluginDescription* desc, int x, int y);
 
   FilterComponent* getComponentForFilter (uint32 filterID) const;
@@ -37,7 +40,11 @@ public:
                            const MouseEvent& e);
   void dragConnector (const MouseEvent& e);
   void endDraggingConnector (const MouseEvent& e);
-
+  
+  //LassoSource
+  void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
+  
+  SelectedItemSet<Component*>& getLassoSelection();
   
 private:
   
@@ -81,7 +88,8 @@ private:
   
   FilterGraph& graph;
   UndoManager& undoManager;
-
+  LassoComponent<Component*> lassoComp;
+  SelectedItemSet<Component*> selectedItems;
   ScopedPointer<ConnectorComponent> draggingConnector;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphEditorPanel)

@@ -833,6 +833,7 @@ GraphEditorPanel::~GraphEditorPanel()
 {
   graph.removeChangeListener (this);
   draggingConnector = nullptr;
+  removeChildComponent (&lassoComp);
   deleteAllChildren();
 }
 
@@ -856,6 +857,23 @@ void GraphEditorPanel::mouseDown (const MouseEvent& e)
       createNewPlugin (mainWindow->getChosenType (r), e.x, e.y);
     }
   }
+  else
+  {
+    addChildComponent (lassoComp);
+    lassoComp.beginLasso (e, this);
+  }
+}
+
+void GraphEditorPanel::mouseDrag (const MouseEvent& e)
+{
+  lassoComp.toFront (false);
+  lassoComp.dragLasso (e);
+}
+
+void GraphEditorPanel::mouseUp (const MouseEvent& e)
+{
+  lassoComp.endLasso();
+  removeChildComponent (&lassoComp);
 }
 
 void GraphEditorPanel::createNewPlugin (const PluginDescription* desc, int x, int y)
@@ -1072,6 +1090,24 @@ void GraphEditorPanel::endDraggingConnector (const MouseEvent& e)
 
     graph.addConnection (srcFilter, srcChannel, dstFilter, dstChannel);
   }
+}
+
+void GraphEditorPanel::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
+{
+//  const Rectangle<int> lasso (area - subCompHolder->getPosition());
+//  
+//  for (int i = 0; i < subCompHolder->getNumChildComponents(); ++i)
+//  {
+//    Component* c = subCompHolder->getChildComponent (i);
+//    
+//    if (c->getBounds().intersects (lasso))
+//      results.add (c);
+//  }
+}
+
+SelectedItemSet <Component*>& GraphEditorPanel::getLassoSelection()
+{
+  return selectedItems;
 }
 
 class TooltipBar   : public Component,
