@@ -24,6 +24,15 @@ public:
                       Justification::centredLeft, 2);
   }
   
+  void drawLasso (Graphics& g, Component& lassoComp)
+  {
+    const int outlineThickness = 2;
+    
+    //g.fillAll (lassoComp.findColour (0x1000440 /*lassoFillColourId*/));
+    g.setColour (lassoComp.findColour (0x1000441 /*lassoOutlineColourId*/));
+    g.drawRect (lassoComp.getLocalBounds(), outlineThickness);
+  }
+  
   Font getPopupMenuFont()
   {
     return Font (12.0f);
