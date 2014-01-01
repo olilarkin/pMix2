@@ -64,14 +64,50 @@ private:
   {
   private:
     ComponentDragger myDragger;
+    ComponentBoundsConstrainer boundsConstrainer;
+    UndoManager& undoManager;
+    Rectangle<int> startBounds;
+    Rectangle<int> endBounds;
     
-    iSpaceComponent* getiSpace() const throw()
+    class MovePresetAction  : public UndoableAction
     {
-      return findParentComponentOfClass<iSpaceComponent>();
-    }
-
+    public:
+      MovePresetAction (Component* iSpace, int index, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept
+      : iSpace(iSpace)
+      , index(index)
+      , startBounds(startBounds)
+      , endBounds(endBounds)
+      {
+      }
+      
+      bool perform()
+      {
+        iSpace->getChildComponent(index)->setBounds(endBounds);
+        return true;
+      }
+      
+      bool undo()
+      {      
+        iSpace->getChildComponent(index)->setBounds(startBounds);
+        return true;
+      }
+      
+      int getSizeInUnits()
+      {
+        return (int) sizeof (*this); //xxx should be more accurate
+      }
+      
+    private:
+      Component* iSpace;
+      int index;
+      Rectangle<int> startBounds;
+      Rectangle<int> endBounds;
+      JUCE_DECLARE_NON_COPYABLE (MovePresetAction)
+    };
+    
   public:
-    iSpacePreset ()
+    iSpacePreset(UndoManager& undoManager)
+    : undoManager (undoManager)
     {
     }
 
@@ -81,21 +117,28 @@ private:
 
     void resized ()
     {
+      int radius = getWidth()/2;
+      boundsConstrainer.setMinimumOnscreenAmounts(radius,radius,radius,radius);
     }
 
     void mouseDown (const MouseEvent& e)
     {
       myDragger.startDraggingComponent (this, e);
-//      toFront (true);
+      toFront (true);
+      startBounds = getBounds();
     }
 
     void mouseDrag (const MouseEvent& e)
     {
-      myDragger.dragComponent (this, e, nullptr);
+      myDragger.dragComponent (this, e, &boundsConstrainer);
     }
 
     void mouseUp (const MouseEvent& e)
     {
+      endBounds = getBounds();
+      
+      undoManager.beginNewTransaction();
+      undoManager.perform(new MovePresetAction(getParentComponent(), getParentComponent()->getIndexOfChildComponent(this), startBounds, endBounds), "change preset bounds");
     }
 
     void paint (Graphics& g)
@@ -106,25 +149,25 @@ private:
   };
   
   //TooltipWindow tooltipWindow;
-  Random* mRand;
+  UndoManager& undoManager;
+  Random mRand;
   SelectedItemSet<Component*> selectedItems;
   LassoComponent<Component*> lassoComp;
   
 public:
-  iSpaceComponent ()
+  iSpaceComponent (UndoManager& undoManager)
+  : undoManager (undoManager)
+  , mRand(Time::currentTimeMillis())
   {
-    mRand = new Random (Time::currentTimeMillis());
-
     for(int i = 0; i<10; i++)
     {
-      iSpacePreset* const comp = new iSpacePreset();
+      iSpacePreset* const comp = new iSpacePreset(undoManager);
       addAndMakeVisible (comp);
     }
   }
 
   ~iSpaceComponent ()
   {
-    delete mRand;
     deleteAllChildren();
   }
 
@@ -134,9 +177,9 @@ public:
     {
       iSpacePreset* const comp = dynamic_cast <iSpacePreset*> (getChildComponent(i));
 
-      float r = 50 * mRand->nextFloat();
-      float x = getWidth() * mRand->nextFloat();
-      float y = getHeight() * mRand->nextFloat();
+      float r = 50. + (50. * mRand.nextFloat());
+      float x = getWidth() * mRand.nextFloat();
+      float y = getHeight() * mRand.nextFloat();
       comp->setBounds(x, y, r, r);
     }
   }

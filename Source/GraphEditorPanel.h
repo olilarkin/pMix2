@@ -11,6 +11,9 @@ class FilterComponent;
 class ConnectorComponent;
 class PinComponent;
 
+#pragma mark -
+#pragma mark GraphEditorPanel
+
 class GraphEditorPanel   : public Component,
                            public ChangeListener,
                            public LassoSource<Component*>

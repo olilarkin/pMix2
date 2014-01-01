@@ -270,6 +270,8 @@ class FilterComponent    : public Component
 {
 public:
   
+#pragma mark MovePluginAction
+  
   class MovePluginAction  : public UndoableAction
   {
   public:
@@ -1189,7 +1191,7 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
 
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
 
-  addAndMakeVisible (iSpace = new iSpaceComponent());
+  addAndMakeVisible (iSpace = new iSpaceComponent(undoManager));
   addAndMakeVisible (paramView = new ParamView(graph));
   addAndMakeVisible (statusBar = new TooltipBar());
 
