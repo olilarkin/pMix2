@@ -43,7 +43,6 @@ public:
   
   //LassoSource
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
-  
   SelectedItemSet<Component*>& getLassoSelection();
   
 private:
@@ -99,19 +98,13 @@ class GraphDocumentComponent  : public Component
 {
 public:
   
-  GraphDocumentComponent (AudioPluginFormatManager& formatManager,
-                          AudioDeviceManager* deviceManager);
+  GraphDocumentComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager);
   ~GraphDocumentComponent();
-
   
-  void createNewPlugin (const PluginDescription* desc, int x, int y);
-
-  
-  FilterGraph graph;
-
-  
+  void createNewPlugin (const PluginDescription* desc, int x, int y);  
   void resized();
 
+  FilterGraph graph;
   UndoManager undoManager;
 
 private:
@@ -132,7 +125,6 @@ private:
   StretchableLayoutResizerBar* verticalDividerBar;
   
 //  ParamTreeView* treeView;
-
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphDocumentComponent)
 };

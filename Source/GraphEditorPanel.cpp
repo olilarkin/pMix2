@@ -324,8 +324,8 @@ public:
       undoManager (undoManager),
       moving(false)
   {
-    shadow.setShadowProperties (DropShadow (Colours::black.withAlpha (0.5f), 3, Point<int> (0, 1)));
-    setComponentEffect (&shadow);
+    //shadow.setShadowProperties (DropShadow (Colours::black.withAlpha (0.5f), 3, Point<int> (0, 1)));
+    //setComponentEffect (&shadow);
 
     setSize (150, 60);
   }
@@ -578,7 +578,7 @@ private:
   int numIns, numOuts;
   UndoManager& undoManager;
   bool moving;
-  DropShadowEffect shadow;
+  //DropShadowEffect shadow;
 
   GraphEditorPanel* getGraphPanel() const noexcept
   {
@@ -780,9 +780,11 @@ public:
 
     PathStrokeType wideStroke (8.0f);
     wideStroke.createStrokedPath (hitPath, linePath);
-
+    
     PathStrokeType stroke (2.5f);
-    stroke.createStrokedPath (linePath, linePath);
+    //stroke.createStrokedPath (linePath, linePath);
+    float dashes[2] = { 4, 4 };
+    stroke.createDashedStroke(linePath, linePath, dashes, 2);
 
     const float arrowW = 5.0f;
     const float arrowL = 4.0f;
@@ -1170,12 +1172,9 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
 {
   LookAndFeel::setDefaultLookAndFeel(&lf);
   
-  // set up the layout and resizer bars..
-  verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be
-  // between 20% and 80%, preferably 50%
+  verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be between 20% and 80%, preferably 50%
   verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
-  verticalLayout.setItemLayout (2, 150, -1.0, -0.65);  // the components on the right must be
-  // at least 150 pixels wide, preferably 50% of the total width
+  verticalLayout.setItemLayout (2, 150, -1.0, -0.65);  // the components on the right must be at least 150 pixels wide, preferably 50% of the total width
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);  
   
@@ -1188,10 +1187,9 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
 
   keyState.addListener (&graphPlayer.getMidiMessageCollector());
 
-  addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState,
-      MidiKeyboardComponent::horizontalKeyboard));
+  addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
 
-  //addAndMakeVisible (iSpace = new iSpaceComponent());
+  addAndMakeVisible (iSpace = new iSpaceComponent());
   addAndMakeVisible (paramView = new ParamView(graph));
   addAndMakeVisible (statusBar = new TooltipBar());
 
@@ -1217,7 +1215,7 @@ GraphDocumentComponent::~GraphDocumentComponent()
 
 void GraphDocumentComponent::resized()
 {
-  Component* vcomps[] = { graphPanel, verticalDividerBar, paramView };
+  Component* vcomps[] = { graphPanel, verticalDividerBar, iSpace };
   
   verticalLayout.layOutComponents (vcomps, 3,
                                    0, 0, getWidth(), getHeight(),
