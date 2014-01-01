@@ -56,6 +56,7 @@
 //};
 
 class iSpaceComponent  : public Component
+                       , public LassoSource<Component*>  
 {
 private:
   
@@ -106,6 +107,9 @@ private:
   
   //TooltipWindow tooltipWindow;
   Random* mRand;
+  SelectedItemSet<Component*> selectedItems;
+  LassoComponent<Component*> lassoComp;
+  
 public:
   iSpaceComponent ()
   {
@@ -140,7 +144,44 @@ public:
   void paint (Graphics& g)
   {
     g.fillAll (Colours::white);
-  }  
+  }
+  
+  void mouseDown (const MouseEvent& e)
+  {
+    addChildComponent (lassoComp);
+    lassoComp.beginLasso (e, this);
+  }
+  
+  void mouseDrag (const MouseEvent& e)
+  {
+    lassoComp.toFront (false);
+    lassoComp.dragLasso (e);
+  }
+  
+  void mouseUp (const MouseEvent& e)
+  {
+    lassoComp.endLasso();
+    removeChildComponent (&lassoComp);
+  }
+  
+  //LassoSource
+  void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
+  {
+    //  const Rectangle<int> lasso (area - subCompHolder->getPosition());
+    //  
+    //  for (int i = 0; i < subCompHolder->getNumChildComponents(); ++i)
+    //  {
+    //    Component* c = subCompHolder->getChildComponent (i);
+    //    
+    //    if (c->getBounds().intersects (lasso))
+    //      results.add (c);
+    //  }
+  }
+  
+  SelectedItemSet <Component*>& getLassoSelection()
+  {
+    return selectedItems;
+  }
 };
 
 #endif//_ISPACE_H_ 
