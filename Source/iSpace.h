@@ -2,173 +2,145 @@
 #ifndef _ISPACE_H_
 #define _ISPACE_H_
 
-//class iSpaceComponent;
-//
-//class iSpacePreset  : public Component
+//class iSpaceComponent  : public Component
+//                       , private OpenGLRenderer
 //{
-//private:
-//  Point<int> originalPos;
-//
-//  iSpaceComponent* getiSpace() const throw()
-//  {
-//    return findParentComponentOfClass<iSpaceComponent>();
-//  }
-//
-//
 //public:
-//  iSpacePreset ()
+//  iSpaceComponent()
+//  {
+//    openGLContext.setRenderer (this);
+//    openGLContext.attachTo (*this);
+//    openGLContext.setContinuousRepainting (true);
+//  }
+//  
+//  ~iSpaceComponent()
+//  {
+//    openGLContext.detach();
+//  }
+//  
+//  void newOpenGLContextCreated() override
 //  {
 //  }
-//
-//  ~iSpacePreset ()
+//  
+//  void openGLContextClosing() override
 //  {
 //  }
-//
-//  void resized ()
+//  
+//  void renderOpenGL() override
 //  {
-//  }
-//
-//  void mouseDown (const MouseEvent& e)
-//  {
-//    originalPos = localPointToGlobal (Point<int>());
-//
-//    toFront (true);
-//  }
-//
-//  void mouseDrag (const MouseEvent& e)
-//  {
-//    if (! e.mods.isPopupMenu())
+//    jassert (OpenGLHelpers::isContextActive());
+//    const float desktopScale = (float) openGLContext.getRenderingScale();
+//    
+//    OpenGLHelpers::clear (Colours::lightblue);
+//    
+//    // Create an OpenGLGraphicsContext that will draw into this GL window..
+//    ScopedPointer<LowLevelGraphicsContext> glRenderer (createOpenGLGraphicsContext (openGLContext,
+//                                                                                    roundToInt (desktopScale * getWidth()),
+//                                                                                    roundToInt (desktopScale * getHeight())));
+//    
+//    if (glRenderer != nullptr)
 //    {
-//      Point<int> pos (originalPos + Point<int> (e.getDistanceFromDragStartX(), e.getDistanceFromDragStartY()));
-//
-//      if (getParentComponent() != 0)
-//        pos = getParentComponent()->globalPositionToRelative (pos);
-//
-//      setBounds(pos.getX(), pos.getY(), getWidth(), getHeight());
+//      Graphics g (*glRenderer);
+//      g.addTransform (AffineTransform::scale (desktopScale));
+//      g.setColour(Colours::red);
+//      g.fillEllipse (100., 100., 50., 50.);
 //    }
-//  }
-//
-//  void mouseUp (const MouseEvent& e)
-//  {
 //  }
 //
 //  void paint (Graphics& g)
 //  {
-//    g.setColour(Colours::red);
-//
-//    g.fillEllipse (0, 0, getWidth(), getHeight());
 //  }
-//
-//  //bool hitTest(int x, int y)
-//  //{
-//  //
-//  //}
-//
+//  
+//private:
+//  OpenGLContext openGLContext;
 //};
 
 class iSpaceComponent  : public Component
-                       , private OpenGLRenderer
 {
-public:
-  iSpaceComponent()
-  {
-    openGLContext.setRenderer (this);
-    openGLContext.attachTo (*this);
-    openGLContext.setContinuousRepainting (true);
-  }
+private:
   
-  ~iSpaceComponent()
+  class iSpacePreset  : public Component
   {
-    openGLContext.detach();
-  }
-  
-  void newOpenGLContextCreated() override
-  {
-  }
-  
-  void openGLContextClosing() override
-  {
-  }
-  
-  void renderOpenGL() override
-  {
-    jassert (OpenGLHelpers::isContextActive());
-    const float desktopScale = (float) openGLContext.getRenderingScale();
+  private:
+    ComponentDragger myDragger;
     
-    OpenGLHelpers::clear (Colours::lightblue);
-    
-    // Create an OpenGLGraphicsContext that will draw into this GL window..
-    ScopedPointer<LowLevelGraphicsContext> glRenderer (createOpenGLGraphicsContext (openGLContext,
-                                                                                    roundToInt (desktopScale * getWidth()),
-                                                                                    roundToInt (desktopScale * getHeight())));
-    
-    if (glRenderer != nullptr)
+    iSpaceComponent* getiSpace() const throw()
     {
-      Graphics g (*glRenderer);
-      g.addTransform (AffineTransform::scale (desktopScale));
+      return findParentComponentOfClass<iSpaceComponent>();
+    }
+
+  public:
+    iSpacePreset ()
+    {
+    }
+
+    ~iSpacePreset ()
+    {
+    }
+
+    void resized ()
+    {
+    }
+
+    void mouseDown (const MouseEvent& e)
+    {
+      myDragger.startDraggingComponent (this, e);
+//      toFront (true);
+    }
+
+    void mouseDrag (const MouseEvent& e)
+    {
+      myDragger.dragComponent (this, e, nullptr);
+    }
+
+    void mouseUp (const MouseEvent& e)
+    {
+    }
+
+    void paint (Graphics& g)
+    {
       g.setColour(Colours::red);
-      g.fillEllipse (100., 100., 50., 50.);
+      g.fillEllipse (0, 0, getWidth(), getHeight());
+    }
+  };
+  
+  //TooltipWindow tooltipWindow;
+  Random* mRand;
+public:
+  iSpaceComponent ()
+  {
+    mRand = new Random (Time::currentTimeMillis());
+
+    for(int i = 0; i<10; i++)
+    {
+      iSpacePreset* const comp = new iSpacePreset();
+      addAndMakeVisible (comp);
+    }
+  }
+
+  ~iSpaceComponent ()
+  {
+    delete mRand;
+    deleteAllChildren();
+  }
+
+  void resized ()
+  {
+    for (int i = 0; i < getNumChildComponents(); ++i)
+    {
+      iSpacePreset* const comp = dynamic_cast <iSpacePreset*> (getChildComponent(i));
+
+      float r = 50 * mRand->nextFloat();
+      float x = getWidth() * mRand->nextFloat();
+      float y = getHeight() * mRand->nextFloat();
+      comp->setBounds(x, y, r, r);
     }
   }
 
   void paint (Graphics& g)
   {
-  }
-  
-private:
-  OpenGLContext openGLContext;
+    g.fillAll (Colours::white);
+  }  
 };
-
-//class iSpaceComponent  : public Component
-//{
-//private:
-//  //TooltipWindow tooltipWindow;
-//  Random* mRand;
-//public:
-//  iSpaceComponent ()
-//  {
-//    mRand = new Random (Time::currentTimeMillis());
-//
-//    for(int i = 0; i<10; i++)
-//    {
-//      iSpacePreset* const comp = new iSpacePreset();
-//      addAndMakeVisible (comp);
-//      // comp->update();
-//    }
-//  }
-//
-//  ~iSpaceComponent ()
-//  {
-//    delete mRand;
-//    deleteAllChildren();
-//  }
-//
-//  void resized ()
-//  {
-//    for (int i = 0; i < getNumChildComponents(); ++i)
-//    {
-//      iSpacePreset* const comp = dynamic_cast <iSpacePreset*> (getChildComponent(i));
-//
-//      float r = 50 * mRand->nextFloat();
-//      float x = getWidth() * mRand->nextFloat();
-//      float y = getHeight() * mRand->nextFloat();
-//      comp->setBounds(x, y, r, r);
-//    }
-//  }
-//
-//  void paint (Graphics& g)
-//  {
-//    g.fillAll (Colours::grey);
-//    /*
-//    g.setColour(Colours::red);
-//
-//    for(int i = 0; i<100; i++)
-//    {
-//      float r = 50 * mRand->nextFloat();
-//      g.fillEllipse (getWidth() * mRand->nextFloat(), getHeight() * mRand->nextFloat(), r, r);
-//    }
-//    */
-//  }  
-//};
 
 #endif//_ISPACE_H_ 
