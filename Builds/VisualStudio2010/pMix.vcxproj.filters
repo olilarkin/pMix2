@@ -2930,6 +2930,9 @@
     <None Include="..\..\..\..\juce\modules\juce_video\juce_module_info">
       <Filter>Juce Modules\juce_video</Filter>
     </None>
+    <None Include=".\icon.ico">
+      <Filter>Juce Library Code</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc">
