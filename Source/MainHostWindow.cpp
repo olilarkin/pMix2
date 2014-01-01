@@ -370,6 +370,31 @@ void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationComma
                       category, 0);
       result.defaultKeypresses.add (KeyPress ('b', ModifierKeys::commandModifier, 0));
       break;
+
+      //TODO: use these:
+//    case StandardApplicationCommandIDs::undo:
+//      break;
+//      
+//    case StandardApplicationCommandIDs::redo:
+//      break;
+//      
+//    case StandardApplicationCommandIDs::cut:
+//      break;
+//      
+//    case StandardApplicationCommandIDs::copy:
+//      break;
+//      
+//    case StandardApplicationCommandIDs::paste:
+//      break;
+//      
+//    case StandardApplicationCommandIDs::del:
+//      break;
+//      
+//    case StandardApplicationCommandIDs::selectAll:
+//      break;
+//      
+//    case StandardApplicationCommandIDs::deselectAll:
+//      break; 
       
     default:
       break;
