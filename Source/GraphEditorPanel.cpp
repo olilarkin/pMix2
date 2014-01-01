@@ -263,6 +263,9 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PinComponent)
 };
 
+#pragma mark -
+#pragma mark FilterComponent
+
 class FilterComponent    : public Component
 {
 public:
@@ -586,6 +589,9 @@ private:
   FilterComponent& operator= (const FilterComponent&);
 };
 
+#pragma mark -
+#pragma mark ConnectorComponent
+
 class ConnectorComponent   : public Component,
   public SettableTooltipClient
 {
@@ -820,6 +826,9 @@ private:
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConnectorComponent)
 };
+
+#pragma mark -
+#pragma mark GraphEditorPanel
 
 GraphEditorPanel::GraphEditorPanel (FilterGraph& graph_, UndoManager& undoManager)
   : graph (graph_)
@@ -1110,6 +1119,9 @@ SelectedItemSet <Component*>& GraphEditorPanel::getLassoSelection()
   return selectedItems;
 }
 
+#pragma mark -
+#pragma mark TooltipBar
+
 class TooltipBar   : public Component,
   private Timer
 {
@@ -1148,6 +1160,9 @@ private:
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TooltipBar)
 };
+
+#pragma mark -
+#pragma mark GraphDocumentComponent
 
 GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& formatManager,
     AudioDeviceManager* deviceManager_)
