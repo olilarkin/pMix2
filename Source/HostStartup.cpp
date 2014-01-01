@@ -13,6 +13,12 @@ public:
 
   void initialise (const String& commandLine)
   {
+    splash = new SplashScreen ("pMix",
+                               ImageCache::getFromMemory (BinaryData::pMix_about_png, BinaryData::pMix_about_pngSize),
+                               true);
+    
+    splash->deleteAfterDelay (RelativeTime::seconds (4), false);
+    
     // initialise our settings file..
 
     PropertiesFile::Options options;
@@ -64,6 +70,7 @@ public:
 
 private:
   ScopedPointer<MainHostWindow> mainWindow;
+  SplashScreen* splash;
 };
 
 static pMixApp& getApp()                      { return *dynamic_cast<pMixApp*>(JUCEApplication::getInstance()); }
