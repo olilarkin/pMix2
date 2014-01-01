@@ -72,9 +72,9 @@ private:
     class MovePresetAction  : public UndoableAction
     {
     public:
-      MovePresetAction (Component* iSpace, int index, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept
+      MovePresetAction (Component* iSpace, const String& componentID, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept
       : iSpace(iSpace)
-      , index(index)
+      , componentID(componentID)
       , startBounds(startBounds)
       , endBounds(endBounds)
       {
@@ -82,13 +82,13 @@ private:
       
       bool perform()
       {
-        iSpace->getChildComponent(index)->setBounds(endBounds);
+        iSpace->findChildWithID(componentID)->setBounds(endBounds);
         return true;
       }
       
       bool undo()
       {      
-        iSpace->getChildComponent(index)->setBounds(startBounds);
+        iSpace->findChildWithID(componentID)->setBounds(startBounds);
         return true;
       }
       
@@ -99,7 +99,7 @@ private:
       
     private:
       Component* iSpace;
-      int index;
+      String componentID;
       Rectangle<int> startBounds;
       Rectangle<int> endBounds;
       JUCE_DECLARE_NON_COPYABLE (MovePresetAction)
@@ -138,7 +138,7 @@ private:
       endBounds = getBounds();
       
       undoManager.beginNewTransaction();
-      undoManager.perform(new MovePresetAction(getParentComponent(), getParentComponent()->getIndexOfChildComponent(this), startBounds, endBounds), "change preset bounds");
+      undoManager.perform(new MovePresetAction(getParentComponent(), getComponentID(), startBounds, endBounds), "change preset bounds");
     }
 
     void paint (Graphics& g)
@@ -162,6 +162,7 @@ public:
     for(int i = 0; i<10; i++)
     {
       iSpacePreset* const comp = new iSpacePreset(undoManager);
+      comp->setComponentID(String("preset") + String(i));
       addAndMakeVisible (comp);
     }
   }
