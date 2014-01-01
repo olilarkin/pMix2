@@ -25,12 +25,19 @@ public:
   }
   
   void drawLasso (Graphics& g, Component& lassoComp)
-  {
-    const int outlineThickness = 2;
-    
-    //g.fillAll (lassoComp.findColour (0x1000440 /*lassoFillColourId*/));
+  {    
+    g.fillAll (lassoComp.findColour (0x1000440 /*lassoFillColourId*/));
     g.setColour (lassoComp.findColour (0x1000441 /*lassoOutlineColourId*/));
-    g.drawRect (lassoComp.getLocalBounds(), outlineThickness);
+    
+    Rectangle<int> bounds = lassoComp.getLocalBounds();
+    Path linePath;
+    linePath.addRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+    
+    PathStrokeType stroke (2.5f);
+    float dashes[2] = { 4, 4 };
+    stroke.createDashedStroke(linePath, linePath, dashes, 2);
+    
+    g.fillPath (linePath);
   }
   
   Font getPopupMenuFont()
