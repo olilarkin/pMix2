@@ -348,12 +348,23 @@ public:
       PopupMenu m;
       m.addItem (1, "Delete this filter");
       m.addItem (2, "Disconnect all pins");
-      m.addSeparator();
-      m.addItem (3, "Show plugin UI");
-      m.addItem (4, "Show all programs");
-      m.addItem (5, "Show all parameters");
-      m.addItem (6, "Test state save/load");
-
+      
+      if (AudioProcessorGraph::Node::Ptr f = graph.getNodeForId (filterID))
+      {
+        AudioProcessor* const processor = f->getProcessor();
+        jassert (processor != nullptr);
+        
+        String name = processor->getName();
+        if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
+        {
+          m.addSeparator();
+          m.addItem (3, "Show plugin UI");
+          m.addItem (4, "Show all programs");
+          m.addItem (5, "Show all parameters");
+          m.addItem (6, "Test state save/load");
+        }
+      }
+      
       const int r = m.show();
 
       if (r == 1)
@@ -366,12 +377,14 @@ public:
         graph.disconnectFilter (filterID);
       }
       else
-      {
+      {        
         if (AudioProcessorGraph::Node::Ptr f = graph.getNodeForId (filterID))
         {
           AudioProcessor* const processor = f->getProcessor();
           jassert (processor != nullptr);
 
+          String name = processor->getName();
+                    
           if (r > 0) 
           {
             if (r == 6)
@@ -429,8 +442,15 @@ public:
     if (e.mouseWasClicked() && e.getNumberOfClicks() == 2)
     {
       if (const AudioProcessorGraph::Node::Ptr f = graph.getNodeForId (filterID))
-        if (PluginWindow* const w = PluginWindow::getWindowFor (f, PluginWindow::Generic/*Normal*/))
-          w->toFront (true);
+      {
+        AudioProcessor* const processor = f->getProcessor();
+        String name = processor->getName();
+        if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
+        {          
+          if (PluginWindow* const w = PluginWindow::getWindowFor (f, PluginWindow::Generic/*Normal*/))
+            w->toFront (true);
+        }
+      }
     }
     else if (! e.mouseWasClicked())
     {
