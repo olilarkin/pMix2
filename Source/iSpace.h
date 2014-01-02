@@ -68,6 +68,7 @@ private:
     UndoManager& undoManager;
     Rectangle<int> startBounds;
     Rectangle<int> endBounds;
+    Label* label;
     
     class MovePresetAction  : public UndoableAction
     {
@@ -106,19 +107,28 @@ private:
     };
     
   public:
-    iSpacePreset(UndoManager& undoManager)
+    iSpacePreset(UndoManager& undoManager, String& initalLabel)
     : undoManager (undoManager)
     {
+      addAndMakeVisible (label = new Label (String::empty, initalLabel));
+      label->setFont (Font (13.00f));
+      label->setJustificationType (Justification::centred);
+      label->setEditable (false, true, false);
+      label->setColour (Label::textColourId, Colours::white);
+      label->setColour (TextEditor::textColourId, Colours::white);
+      label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
     }
 
     ~iSpacePreset ()
     {
+      deleteAllChildren();
     }
 
     void resized ()
     {
       int radius = getWidth()/2;
       boundsConstrainer.setMinimumOnscreenAmounts(radius,radius,radius,radius);
+      label->centreWithSize(getWidth()-5, 20);
     }
 
     void mouseDown (const MouseEvent& e)
@@ -145,8 +155,8 @@ private:
     {
       g.setColour(Colours::red);
       g.fillEllipse (0, 0, getWidth(), getHeight());
-      g.setColour(Colours::white);
-      g.drawFittedText(getComponentID(), 0, 0, getWidth(), getHeight(), Justification::centred, 1);
+      //g.setColour(Colours::white);
+      //g.drawFittedText(getComponentID(), 0, 0, getWidth(), getHeight(), Justification::centred, 1);
     }
   };
   
@@ -163,8 +173,9 @@ public:
   {
     for(int i = 0; i<10; i++)
     {
-      iSpacePreset* const comp = new iSpacePreset(undoManager);
-      comp->setComponentID(String("preset") + String(i));
+      String lab = String("preset") + String(i);
+      iSpacePreset* const comp = new iSpacePreset(undoManager, lab);
+      comp->setComponentID(lab);
       addAndMakeVisible (comp);
     }
   }
