@@ -2,6 +2,14 @@
 #include "MainHostWindow.h"
 #include "InternalFilters.h"
 
+static double snapToIntegerZoom (double zoom)
+{
+  if (zoom >= 1.0)
+    return (double) (int) (zoom + 0.5);
+  
+  return 1.0 / (int) (1.0 / zoom + 0.5);
+}
+
 class MainHostWindow::PluginListWindow  : public DocumentWindow
 {
 public:
@@ -209,6 +217,11 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
     sortTypeMenu.addItem (203, "List plugins by manufacturer",       true, pluginSortMethod == KnownPluginList::sortByManufacturer);
     sortTypeMenu.addItem (204, "List plugins based on the directory structure", true, pluginSortMethod == KnownPluginList::sortByFileSystemLocation);
     menu.addSubMenu ("Plugin menu type", sortTypeMenu);
+    
+    menu.addSeparator();
+    menu.addCommandItem (&getCommandManager(), CommandIDs::zoomIn);
+    menu.addCommandItem (&getCommandManager(), CommandIDs::zoomOut);
+    menu.addCommandItem (&getCommandManager(), CommandIDs::zoomNormal);
   }
 
   return menu;
@@ -296,7 +309,10 @@ void MainHostWindow::getAllCommands (Array <CommandID>& commands)
                             CommandIDs::copy,
                             CommandIDs::paste,
                             CommandIDs::undo,
-                            CommandIDs::redo
+                            CommandIDs::redo,
+                            CommandIDs::zoomIn,
+                            CommandIDs::zoomOut,
+                            CommandIDs::zoomNormal
                           };
 
   commands.addArray (ids, numElementsInArray (ids));
@@ -370,7 +386,23 @@ void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationComma
                       category, 0);
       result.defaultKeypresses.add (KeyPress ('b', ModifierKeys::commandModifier, 0));
       break;
-
+    case CommandIDs::zoomIn:
+      result.setInfo (TRANS("Zoom in"), TRANS("Zooms in on the current component."), category, 0);
+//      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      result.defaultKeypresses.add (KeyPress (']', ModifierKeys::commandModifier, 0));
+      break;
+      
+    case CommandIDs::zoomOut:
+      result.setInfo (TRANS("Zoom out"), TRANS("Zooms out on the current component."), category, 0);
+//      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      result.defaultKeypresses.add (KeyPress ('[', ModifierKeys::commandModifier, 0));
+      break;
+      
+    case CommandIDs::zoomNormal:
+      result.setInfo (TRANS("Zoom to 100%"), TRANS("Restores the zoom level to normal."), category, 0);
+//      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
       //TODO: use these:
 //    case StandardApplicationCommandIDs::undo:
 //      break;
@@ -455,6 +487,10 @@ bool MainHostWindow::perform (const InvocationInfo& info)
       // TODO
       graphEditor->undoManager.redo();
       break;
+      
+    case CommandIDs::zoomIn:      getGraphEditor()->setZoom (snapToIntegerZoom (getGraphEditor()->getZoom() * 2.0)); break;
+    case CommandIDs::zoomOut:     getGraphEditor()->setZoom (snapToIntegerZoom (getGraphEditor()->getZoom() / 2.0)); break;
+    case CommandIDs::zoomNormal:  getGraphEditor()->setZoom (1.0); break;
       
     default:
       return false;

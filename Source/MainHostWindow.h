@@ -17,6 +17,9 @@ namespace CommandIDs
   static const int paste                  = 0x30020;
   static const int undo                   = 0x30030;
   static const int redo                   = 0x30040;
+  static const int zoomIn                 = 0xf20013;
+  static const int zoomOut                = 0xf20014;
+  static const int zoomNormal             = 0xf20015;
 }
 
 ApplicationCommandManager& getCommandManager();

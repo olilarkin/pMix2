@@ -106,6 +106,8 @@ public:
   
   void createNewPlugin (const PluginDescription* desc, int x, int y);  
   void resized();
+  void setZoom (double scale);
+  double getZoom() const;
 
   FilterGraph graph;
   UndoManager undoManager;

@@ -1229,3 +1229,19 @@ void GraphDocumentComponent::createNewPlugin (const PluginDescription* desc, int
 {
   graphPanel->createNewPlugin (desc, x, y);
 }
+
+void GraphDocumentComponent::setZoom (double scale)
+{
+  scale = jlimit (1.0 / 4.0, 32.0, scale);
+  
+//  if (EditingPanelBase* panel = dynamic_cast <EditingPanelBase*> (tabbedComponent.getCurrentContentComponent()))
+//    panel->setZoom (scale);
+}
+
+double GraphDocumentComponent::getZoom() const
+{
+//  if (EditingPanelBase* panel = dynamic_cast <EditingPanelBase*> (tabbedComponent.getCurrentContentComponent()))
+//    return panel->getZoom();
+  
+  return 1.0;
+}
