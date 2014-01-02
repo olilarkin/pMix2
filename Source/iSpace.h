@@ -145,6 +145,8 @@ private:
     {
       g.setColour(Colours::red);
       g.fillEllipse (0, 0, getWidth(), getHeight());
+      g.setColour(Colours::white);
+      g.drawFittedText(getComponentID(), 0, 0, getWidth(), getHeight(), Justification::centred, 1);
     }
   };
   
