@@ -329,7 +329,7 @@ public:
     //shadow.setShadowProperties (DropShadow (Colours::black.withAlpha (0.5f), 3, Point<int> (0, 1)));
     //setComponentEffect (&shadow);
 
-    setSize (150, 60);
+    setSize (100, 50);
   }
 
   ~FilterComponent()
@@ -463,14 +463,16 @@ public:
     const int w = getWidth() - x * 2;
     const int h = getHeight() - pinSize * 2;
 
-    g.fillRect (x, y, w, h);
+    g.fillRoundedRectangle(x, y, w, h, 3);
+//    g.fillRect (x, y, w, h);
 
     g.setColour (Colours::black);
     g.setFont (font);
     g.drawFittedText (getName(), getLocalBounds().reduced (4, 2), Justification::centred, 2);
 
     g.setColour (Colours::grey);
-    g.drawRect (x, y, w, h);
+    //g.drawRect (x, y, w, h);
+    g.drawRoundedRectangle(x, y, w, h, 3, 2);
   }
 
   void resized()
@@ -523,8 +525,8 @@ public:
     if (f->getProcessor()->producesMidi())
       ++numOuts;
 
-    int w = 100;
-    int h = 60;
+    int w = 80;
+    int h = 50;
 
     w = jmax (w, (jmax (numIns, numOuts) + 1) * 20);
 
