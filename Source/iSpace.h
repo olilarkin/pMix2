@@ -60,6 +60,14 @@ class iSpaceComponent  : public Component
 {
 private:
   
+  class iSpaceLabel : public Label
+  {
+  public:
+    iSpaceLabel(const String& labelText) : Label(String::empty, labelText)
+    {
+    }
+  };
+  
   class iSpacePreset  : public Component
   {
   private:
@@ -68,7 +76,7 @@ private:
     UndoManager& undoManager;
     Rectangle<int> startBounds;
     Rectangle<int> endBounds;
-    Label* label;
+    iSpaceLabel* label;
     
     class MovePresetAction  : public UndoableAction
     {
@@ -110,7 +118,7 @@ private:
     iSpacePreset(UndoManager& undoManager, String& initalLabel)
     : undoManager (undoManager)
     {
-      addAndMakeVisible (label = new Label (String::empty, initalLabel));
+      addAndMakeVisible (label = new iSpaceLabel (initalLabel));
       label->setFont (Font (13.00f));
       label->setJustificationType (Justification::centred);
       label->setEditable (false, true, false);
