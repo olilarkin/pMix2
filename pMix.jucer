@@ -54,8 +54,8 @@
         <MODULEPATH id="juce_audio_utils" path="../../juce/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2010 targetFolder="Builds/VisualStudio2010" vst3Folder="C:\Dev\MyPluginsJUCE\VST3 SDK"
-            vstFolder="C:\Dev\MyPluginsJUCE\vstsdk2.4" bigIcon="OqTrli" smallIcon="OqTrli">
+    <VS2010 targetFolder="Builds/VisualStudio2010" vst3Folder="D:\Dev\MyPluginsJUCE\VST3 SDK"
+            vstFolder="D:\Dev\MyPluginsJUCE\vstsdk2.4" bigIcon="OqTrli" smallIcon="OqTrli">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="pMix"/>

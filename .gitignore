@@ -2,3 +2,5 @@
 /builds/VisualStudio2010/Debug/*
 /builds/VisualStudio2010/Release/*
 /JuceLibraryCode/*
+Builds/*/ipch
+*.sdf
