@@ -23,7 +23,7 @@ public:
   void refresh()
   {
     paramHasChanged = false;
-    slider.setValue (owner.getParameter (index), dontSendNotification);
+    slider.setValueEx (owner.getParameter (index));
   }
   
   void audioProcessorChanged (AudioProcessor*)  {}
@@ -59,6 +59,14 @@ private:
       setSliderStyle (Slider::LinearBar);
       setTextBoxIsEditable (false);
       setScrollWheelEnabled (false);
+    }
+    
+    void setValueEx(float value)
+    {
+      if (getThumbBeingDragged() == -1) 
+      {
+        setValue(value, dontSendNotification);
+      }
     }
     
     void valueChanged()
