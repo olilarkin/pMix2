@@ -19,7 +19,7 @@ public:
     
     const Rectangle<int> r (getPropertyComponentContentPosition (component));
     
-    g.drawFittedText (component.getName(),
+    g.drawText (component.getName(),
                       3, r.getY(), r.getX() - 5, r.getHeight(),
                       Justification::centredLeft, 2);
   }
@@ -46,7 +46,7 @@ public:
   }
   
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LookAndFeelCustom);
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LookAndFeelCustom);
 };
 
 #endif   // __JUCE_LookAndFeelCustom_JUCEHEADER__
