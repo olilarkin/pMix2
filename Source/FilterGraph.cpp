@@ -69,6 +69,8 @@ uint32 FilterGraph::addFilter (const PluginDescription* desc, double x, double y
       AlertWindow::showMessageBox (AlertWindow::WarningIcon,
                                    TRANS("Couldn't create filter"),
                                    errorMessage);
+      
+      return 0xFFFFFFFF;
     }
   }
   

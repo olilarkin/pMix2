@@ -65,7 +65,11 @@ private:
     {
       nodeID = graph.addFilter (desc, x, y);
 
-      return true;
+      if (nodeID < 0xFFFFFFFF)
+        return true;
+      else
+        return false;
+
     }
     
     bool undo()
