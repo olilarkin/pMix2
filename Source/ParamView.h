@@ -55,8 +55,16 @@ private:
     : owner (p),
     index (index_)
     {
-      setRange (0.0, 1.0, 0.0);
-      setSliderStyle (Slider::LinearBar);
+//      int steps = owner.getParameterNumSteps(index);
+      
+      float div = 0.;
+      
+//      if (steps > 0) {
+//        div = 1.f/steps;
+//      }
+
+      setRange (0.0, 1.0, div);
+      setSliderStyle (Slider::LinearHorizontal);
       setTextBoxIsEditable (false);
       setScrollWheelEnabled (false);
     }

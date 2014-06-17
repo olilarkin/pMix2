@@ -1239,7 +1239,7 @@ GraphDocumentComponent::~GraphDocumentComponent()
 
 void GraphDocumentComponent::resized()
 {
-  Component* vcomps[] = { graphPanel, verticalDividerBar, iSpace };
+  Component* vcomps[] = { graphPanel, verticalDividerBar, paramView };
   
   verticalLayout.layOutComponents (vcomps, 3,
                                    0, 0, getWidth(), getHeight(),
