@@ -13,6 +13,7 @@
 		3B3F5B7310D80DB6C0C0815A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4321B6C20F5EB586761E25D4 /* Accelerate.framework */; };
 		44B892B5F1FC0FC2C187B1D3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F89B3F15D5C424986BD320BA /* CoreAudio.framework */; };
 		4AB8E989220619F1C4139E41 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0549C1D7CBAB736FC9004112 /* QuartzCore.framework */; };
+		4F5BE828195069D600A0563A /* ParamView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BE827195069D600A0563A /* ParamView.cpp */; };
 		5B1AC4EF68866E3B9EE1B09B /* MainHostWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16A2F891973B46347BD9DCED /* MainHostWindow.cpp */; };
 		6676E152E82C11804A4621F1 /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476076C6FED38D23F5CDE5D4 /* BinaryData.cpp */; };
 		6D18DD33F7BF2F73D711664A /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5379C8F8C6B1AFBA22EFAA6 /* CoreAudioKit.framework */; };
@@ -290,6 +291,7 @@
 		4D5E2A45A63877F7A181FBDA /* juce_Timer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_Timer.cpp; path = ../../JuceLibraryCode/modules/juce_events/timers/juce_Timer.cpp; sourceTree = SOURCE_ROOT; };
 		4E5F40FB84583FF8F236A96B /* juce_LinkedListPointer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_LinkedListPointer.h; path = ../../JuceLibraryCode/modules/juce_core/containers/juce_LinkedListPointer.h; sourceTree = SOURCE_ROOT; };
 		4F4A554163E4E816D1E2CBA7 /* juce_ImagePreviewComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_ImagePreviewComponent.cpp; path = ../../JuceLibraryCode/modules/juce_gui_basics/filebrowser/juce_ImagePreviewComponent.cpp; sourceTree = SOURCE_ROOT; };
+		4F5BE827195069D600A0563A /* ParamView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParamView.cpp; path = ../../Source/ParamView.cpp; sourceTree = SOURCE_ROOT; };
 		50068C4E167ED75D091DD825 /* juce_MidiBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_MidiBuffer.h; path = ../../JuceLibraryCode/modules/juce_audio_basics/midi/juce_MidiBuffer.h; sourceTree = SOURCE_ROOT; };
 		50545CD264DF493A68F4CD9D /* juce_android_GraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_android_GraphicsContext.cpp; path = ../../JuceLibraryCode/modules/juce_graphics/native/juce_android_GraphicsContext.cpp; sourceTree = SOURCE_ROOT; };
 		5067B99418FEA1C615862716 /* juce_LuaCodeTokeniser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_LuaCodeTokeniser.h; path = ../../JuceLibraryCode/modules/juce_gui_extra/code_editor/juce_LuaCodeTokeniser.h; sourceTree = SOURCE_ROOT; };
@@ -1760,6 +1762,7 @@
 				F3FA132DC3AE706B836CD90F /* LookAndFeel.h */,
 				F1F19F2C66BAC2FFFA0ECD5B /* iSpace.h */,
 				1E44616E61EA1F6FFA65B2EC /* ParamView.h */,
+				4F5BE827195069D600A0563A /* ParamView.cpp */,
 				1D9F770C439C7658CBA8E74B /* ParamTreeView.h */,
 				15C385F5B84429B389BFB10A /* FilterGraph.cpp */,
 				DF987015546811227760834B /* FilterGraph.h */,
@@ -2726,6 +2729,7 @@
 				03DE0B3D39CE6E3051F005FF /* juce_gui_basics.mm in Sources */,
 				B69A87FF90A46D7AEA2A5AC4 /* juce_gui_extra.mm in Sources */,
 				CBA8CC0552D684D06AF054F5 /* juce_opengl.mm in Sources */,
+				4F5BE828195069D600A0563A /* ParamView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
