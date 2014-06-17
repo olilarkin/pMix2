@@ -193,8 +193,6 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes) throw
     return 0;
 }
 
-const int namedResourceListSize = 1;
-
 const char* namedResourceList[] =
 {
     "pMix_about_png"

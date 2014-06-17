@@ -40,12 +40,19 @@ public:
 
     void timerCallback() override
     {
-        const float newLevel = (float) manager.getCurrentInputLevel();
-
-        if (std::abs (level - newLevel) > 0.005f)
+        if (isShowing())
         {
-            level = newLevel;
-            repaint();
+            const float newLevel = (float) manager.getCurrentInputLevel();
+
+            if (std::abs (level - newLevel) > 0.005f)
+            {
+                level = newLevel;
+                repaint();
+            }
+        }
+        else
+        {
+            level = 0;
         }
     }
 
@@ -68,11 +75,10 @@ class AudioDeviceSelectorComponent::MidiInputSelectorComponentListBox  : public 
                                                                          private ListBoxModel
 {
 public:
-    MidiInputSelectorComponentListBox (AudioDeviceManager& dm,
-                                       const String& noItemsMessage_)
+    MidiInputSelectorComponentListBox (AudioDeviceManager& dm, const String& noItems)
         : ListBox (String::empty, nullptr),
           deviceManager (dm),
-          noItemsMessage (noItemsMessage_)
+          noItemsMessage (noItems)
     {
         items = MidiInput::getDevices();
 
@@ -80,15 +86,12 @@ public:
         setOutlineThickness (1);
     }
 
-    int getNumRows()
+    int getNumRows() override
     {
         return items.size();
     }
 
-    void paintListBoxItem (int row,
-                           Graphics& g,
-                           int width, int height,
-                           bool rowIsSelected)
+    void paintListBoxItem (int row, Graphics& g, int width, int height, bool rowIsSelected) override
     {
         if (isPositiveAndBelow (row, items.size()))
         {
@@ -111,7 +114,7 @@ public:
         }
     }
 
-    void listBoxItemClicked (int row, const MouseEvent& e)
+    void listBoxItemClicked (int row, const MouseEvent& e) override
     {
         selectRow (row);
 
@@ -119,12 +122,12 @@ public:
             flipEnablement (row);
     }
 
-    void listBoxItemDoubleClicked (int row, const MouseEvent&)
+    void listBoxItemDoubleClicked (int row, const MouseEvent&) override
     {
         flipEnablement (row);
     }
 
-    void returnKeyPressed (int row)
+    void returnKeyPressed (int row) override
     {
         flipEnablement (row);
     }

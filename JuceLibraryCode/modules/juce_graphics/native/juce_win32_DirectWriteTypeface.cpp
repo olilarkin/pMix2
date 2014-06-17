@@ -107,15 +107,9 @@ public:
         systemFonts = nullptr;
     }
 
-    static const Direct2DFactories& getInstance()
-    {
-        static Direct2DFactories instance;
-        return instance;
-    }
-
-    ComSmartPtr <ID2D1Factory> d2dFactory;
-    ComSmartPtr <IDWriteFactory> directWriteFactory;
-    ComSmartPtr <IDWriteFontCollection> systemFonts;
+    ComSmartPtr<ID2D1Factory> d2dFactory;
+    ComSmartPtr<IDWriteFactory> directWriteFactory;
+    ComSmartPtr<IDWriteFontCollection> systemFonts;
 
 private:
     DynamicLibrary direct2dDll, directWriteDll;
@@ -237,17 +231,6 @@ public:
         }
     }
 
-    EdgeTable* getEdgeTableForGlyph (int glyphNumber, const AffineTransform& transform)
-    {
-        Path path;
-
-        if (getOutlineForGlyph (glyphNumber, path) && ! path.isEmpty())
-            return new EdgeTable (path.getBoundsTransformed (transform).getSmallestIntegerContainer().expanded (1, 0),
-                                  path, transform);
-
-        return nullptr;
-    }
-
     bool getOutlineForGlyph (int glyphNumber, Path& path)
     {
         jassert (path.isEmpty());  // we might need to apply a transform to the path, so this must be empty
@@ -266,6 +249,7 @@ public:
     IDWriteFontFace* getIDWriteFontFace() const noexcept    { return dwFontFace; }
 
 private:
+    SharedResourcePointer<Direct2DFactories> factories;
     ComSmartPtr<IDWriteFontFace> dwFontFace;
     float unitsToHeightScaleFactor, heightToPointsFactor, ascent;
     int designUnitsPerEm;

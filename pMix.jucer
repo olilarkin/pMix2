@@ -30,7 +30,7 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="/Users/oli/Dev/MyPluginsJUCE/vstsdk2.4"
-               vst3Folder="/Users/oli/Dev/MyPluginsJUCE/VST3 SDK" customPList=""
+               vst3Folder="/Users/oli/Dev/MyPluginsJUCE/VST3SDK" customPList=""
                bigIcon="OqTrli" smallIcon="OqTrli">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
@@ -94,6 +94,6 @@
     <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_PLUGINHOST_VST="enabled" JUCE_PLUGINHOST_VST3="enabled"
+  <JUCEOPTIONS JUCE_PLUGINHOST_VST="enabled" JUCE_PLUGINHOST_VST3="disabled"
                JUCE_PLUGINHOST_AU="enabled"/>
 </JUCERPROJECT>
