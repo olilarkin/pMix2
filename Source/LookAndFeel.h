@@ -24,6 +24,46 @@ public:
                       Justification::centredLeft, 2);
   }
   
+  void drawLinearSliderBackground (Graphics& g, int x, int y, int width, int height,
+                              float /*sliderPos*/,
+                              float /*minSliderPos*/,
+                              float /*maxSliderPos*/,
+                              const Slider::SliderStyle /*style*/, Slider& slider)
+  {
+    const float sliderRadius = (float) (getSliderThumbRadius (slider) - 2);
+    
+    const Colour trackColour (slider.findColour (Slider::trackColourId));
+    const Colour gradCol1 (trackColour.overlaidWith (Colour (slider.isEnabled() ? 0x13000000 : 0x09000000)));
+    const Colour gradCol2 (trackColour.overlaidWith (Colour (0x06000000)));
+    Path indent;
+    
+    if (slider.isHorizontal())
+    {
+      const float iy = y + height * 0.5f - sliderRadius * 0.5f;
+      
+      g.setColour (trackColour);
+      //g.setGradientFill (ColourGradient (gradCol1, 0.0f, iy,
+      //                                   gradCol2, 0.0f, iy + sliderRadius, false));
+      
+      indent.addRoundedRectangle (x - sliderRadius * 0.5f, iy, width + sliderRadius, sliderRadius, 5.0f);
+    }
+    else
+    {
+      const float ix = x + width * 0.5f - sliderRadius * 0.5f;
+      
+      
+      //g.setGradientFill (ColourGradient (gradCol1, ix, 0.0f,
+      //                                   gradCol2, ix + sliderRadius, 0.0f, false));
+      
+      indent.addRoundedRectangle (ix, y - sliderRadius * 0.5f, sliderRadius, height + sliderRadius, 5.0f);
+    }
+    
+    g.fillPath (indent);
+    
+    //g.setColour (trackColour.contrasting (0.5f));
+    //g.strokePath (indent, PathStrokeType (0.5f));
+  }
+  
   void drawLasso (Graphics& g, Component& lassoComp)
   {    
     g.fillAll (lassoComp.findColour (0x1000440 /*lassoFillColourId*/));
