@@ -1765,7 +1765,6 @@
 		6F1BE8DFB6E4F44F7689999E /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				5B627E651FA0D0CFE9DA2369 /* ParamTreeView.cpp */,
 				54218A4C8B59AB75B1B835E4 /* LookAndFeel.cpp */,
 				F3FA132DC3AE706B836CD90F /* LookAndFeel.h */,
 				8461FB374828A5A41243A8A0 /* ISpace.cpp */,
@@ -1773,6 +1772,7 @@
 				8C6574F813C7779ED5E115B7 /* ParamView.cpp */,
 				1E44616E61EA1F6FFA65B2EC /* ParamView.h */,
 				1D9F770C439C7658CBA8E74B /* ParamTreeView.h */,
+				5B627E651FA0D0CFE9DA2369 /* ParamTreeView.cpp */,
 				15C385F5B84429B389BFB10A /* FilterGraph.cpp */,
 				DF987015546811227760834B /* FilterGraph.h */,
 				18A1EE44C9C3CC1375B3B025 /* GraphEditorPanel.cpp */,
