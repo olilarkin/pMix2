@@ -125,6 +125,10 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ParamTreeView.cpp"/>
+    <ClCompile Include="..\..\Source\LookAndFeel.cpp"/>
+    <ClCompile Include="..\..\Source\ISpace.cpp"/>
+    <ClCompile Include="..\..\Source\ParamView.cpp"/>
     <ClCompile Include="..\..\Source\FilterGraph.cpp"/>
     <ClCompile Include="..\..\Source\GraphEditorPanel.cpp"/>
     <ClCompile Include="..\..\Source\HostStartup.cpp"/>

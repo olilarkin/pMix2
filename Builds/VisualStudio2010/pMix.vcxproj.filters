@@ -292,6 +292,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ParamTreeView.cpp">
+      <Filter>pMix\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LookAndFeel.cpp">
+      <Filter>pMix\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ISpace.cpp">
+      <Filter>pMix\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ParamView.cpp">
+      <Filter>pMix\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\FilterGraph.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
