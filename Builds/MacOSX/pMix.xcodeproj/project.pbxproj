@@ -292,6 +292,7 @@
 		4E5F40FB84583FF8F236A96B /* juce_LinkedListPointer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_LinkedListPointer.h; path = ../../JuceLibraryCode/modules/juce_core/containers/juce_LinkedListPointer.h; sourceTree = SOURCE_ROOT; };
 		4F4A554163E4E816D1E2CBA7 /* juce_ImagePreviewComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_ImagePreviewComponent.cpp; path = ../../JuceLibraryCode/modules/juce_gui_basics/filebrowser/juce_ImagePreviewComponent.cpp; sourceTree = SOURCE_ROOT; };
 		4F5BE827195069D600A0563A /* ParamView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParamView.cpp; path = ../../Source/ParamView.cpp; sourceTree = SOURCE_ROOT; };
+		4F5BE86719506E6700A0563A /* HostStartup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostStartup.h; path = ../../Source/HostStartup.h; sourceTree = SOURCE_ROOT; };
 		50068C4E167ED75D091DD825 /* juce_MidiBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_MidiBuffer.h; path = ../../JuceLibraryCode/modules/juce_audio_basics/midi/juce_MidiBuffer.h; sourceTree = SOURCE_ROOT; };
 		50545CD264DF493A68F4CD9D /* juce_android_GraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_android_GraphicsContext.cpp; path = ../../JuceLibraryCode/modules/juce_graphics/native/juce_android_GraphicsContext.cpp; sourceTree = SOURCE_ROOT; };
 		5067B99418FEA1C615862716 /* juce_LuaCodeTokeniser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_LuaCodeTokeniser.h; path = ../../JuceLibraryCode/modules/juce_gui_extra/code_editor/juce_LuaCodeTokeniser.h; sourceTree = SOURCE_ROOT; };
@@ -1768,6 +1769,7 @@
 				DF987015546811227760834B /* FilterGraph.h */,
 				18A1EE44C9C3CC1375B3B025 /* GraphEditorPanel.cpp */,
 				5DBF15586B4F94FC33176C20 /* GraphEditorPanel.h */,
+				4F5BE86719506E6700A0563A /* HostStartup.h */,
 				607CE560B023EA5189C5B5B2 /* HostStartup.cpp */,
 				F3826478E1EAEFD391F1702B /* InternalFilters.cpp */,
 				3A4242B7045FD058284DFDA8 /* InternalFilters.h */,
