@@ -55,7 +55,7 @@ public:
   
 private:
   FilterGraph& graph;
-  Array<AudioProcessorGraph::Node::Ptr> sectionNodes;
+  Array<uint32> sectionNodes;
   PropertyPanel panel;
 };
 

@@ -14,8 +14,7 @@ public:
   FilterGraph (AudioPluginFormatManager& formatManager);
   ~FilterGraph();
 
-  
-  AudioProcessorGraph& getGraph() noexcept         { return graph; }
+  AudioProcessorGraph& getGraph() noexcept { return graph; }
 
   int getNumFilters() const noexcept;
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
@@ -50,9 +49,6 @@ public:
                          uint32 destFilterUID, int destFilterChannel);
 
   void clear();
-
-
-  
 
   XmlElement* createXml() const;
   void restoreFromXml (const XmlElement& xml);

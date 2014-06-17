@@ -40,16 +40,16 @@ String ParamSlider::getTextFromValue (double /*value*/)
 }
 
 ProcessorParameterPropertyComp::ProcessorParameterPropertyComp(const String& name, AudioProcessor& p, const int index_)
-  : PropertyComponent (name, 20),
-  owner (p),
-  index (index_),
-  paramHasChanged (false),
-  slider (p, index_)
-  {
-    startTimer (100);
-    addAndMakeVisible (slider);
-    owner.addListener (this);
-  }
+: PropertyComponent (name, 20),
+owner (p),
+index (index_),
+paramHasChanged (false),
+slider (p, index_)
+{
+  startTimer (100);
+  addAndMakeVisible (slider);
+  owner.addListener (this);
+}
   
 ProcessorParameterPropertyComp::~ProcessorParameterPropertyComp()
 {
@@ -109,20 +109,36 @@ void ParamView::resized() override
   
 void ParamView::changeListenerCallback (ChangeBroadcaster* source)
 {
+  bool deletedNodes = false;
+  
+  for (int i = 0; i < sectionNodes.size(); i++) 
+  {
+    const AudioProcessorGraph::Node::Ptr f (graph.getNodeForId(sectionNodes[i]));
+    
+    if (f == nullptr) 
+    {
+      deletedNodes = true;
+    }
+  }
+  
+  if (deletedNodes) 
+  {
+    sectionNodes.clear();
+    panel.clear();
+  }
+  
   for (int i = graph.getNumFilters(); --i >= 0;)
   {
     const AudioProcessorGraph::Node::Ptr f (graph.getNode (i));
-    
-    //todo check existing nodes
     
     if   (f->getProcessor()->getName() != "Audio Input"
           && f->getProcessor()->getName() != "Audio Output" 
           && f->getProcessor()->getName() != "Midi Input" 
           && f->getProcessor()->getName() != "Midi Output") 
     {
-      if (!sectionNodes.contains(f)) 
+      if (!sectionNodes.contains(f->nodeId)) 
       {
-        sectionNodes.add(f);
+        sectionNodes.add(f->nodeId);
         addEditor(f->getProcessor());
       }
     }
