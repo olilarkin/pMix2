@@ -3,6 +3,9 @@
 #include "InternalFilters.h"
 #include "MainHostWindow.h"
 
+#pragma mark -
+#pragma mark CreatePluginAction
+
 CreatePluginAction::CreatePluginAction (FilterGraph& graph, const PluginDescription* desc, double x, double y) noexcept
 : graph(graph)
 , x(x)
@@ -34,6 +37,9 @@ int CreatePluginAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
+#pragma mark -
+#pragma mark ProcessorProgramPropertyComp
+
 ProcessorProgramPropertyComp::ProcessorProgramPropertyComp (const String& name, AudioProcessor& p, int index_)
 : PropertyComponent (name),
 owner (p),
@@ -50,6 +56,9 @@ ProcessorProgramPropertyComp::~ProcessorProgramPropertyComp()
 void ProcessorProgramPropertyComp::refresh() { }
 void ProcessorProgramPropertyComp::audioProcessorChanged (AudioProcessor*) { }
 void ProcessorProgramPropertyComp::audioProcessorParameterChanged (AudioProcessor*, int, float) { }
+
+#pragma mark -
+#pragma mark ProgramAudioProcessorEditor
 
 ProgramAudioProcessorEditor::ProgramAudioProcessorEditor (AudioProcessor* const p)
 : AudioProcessorEditor (p)
@@ -90,6 +99,9 @@ void ProgramAudioProcessorEditor::resized()
 {
   panel.setBounds (getLocalBounds());
 }
+
+#pragma mark -
+#pragma mark PluginWindow
 
 class PluginWindow;
 static Array <PluginWindow*> activePluginWindows;
@@ -482,6 +494,9 @@ SelectedItemSet <Component*>& GraphEditorPanel::getLassoSelection()
   return selectedItems;
 }
 
+#pragma mark -
+#pragma mark PinComponent
+
 PinComponent::PinComponent (FilterGraph& graph_, const uint32 filterID_, const int index_, const bool isInput_)
 : filterID (filterID_),
 index (index_),
@@ -551,6 +566,9 @@ GraphEditorPanel* PinComponent::getGraphPanel() const noexcept
   return findParentComponentOfClass<GraphEditorPanel>();
 }
 
+#pragma mark -
+#pragma mark MovePluginAction
+
 MovePluginAction::MovePluginAction (FilterGraph& graph, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
 : graph(graph)
 , filterComponent(filterComponent)
@@ -578,6 +596,9 @@ int MovePluginAction::getSizeInUnits()
 {
   return (int) sizeof (*this); //xxx should be more accurate
 }
+
+#pragma mark -
+#pragma mark FilterComponent
 
 FilterComponent::FilterComponent (FilterGraph& graph_,
                  const uint32 filterID_,
@@ -861,6 +882,9 @@ GraphEditorPanel* FilterComponent::getGraphPanel() const noexcept
   return findParentComponentOfClass<GraphEditorPanel>();
 }
 
+#pragma mark -
+#pragma mark ConnectorComponent
+
 ConnectorComponent::ConnectorComponent (FilterGraph& graph_)
 : sourceFilterID (0),
 destFilterID (0),
@@ -1086,44 +1110,34 @@ void ConnectorComponent::getDistancesFromEnds (int x, int y, double& distanceFro
 #pragma mark -
 #pragma mark TooltipBar
 
-class TooltipBar   : public Component,
-  private Timer
+TooltipBar::TooltipBar()
 {
-public:
-  TooltipBar()
+  startTimer (100);
+}
+
+void TooltipBar::paint (Graphics& g)
+{
+  g.setFont (Font (getHeight() * 0.7f, Font::bold));
+  g.setColour (Colours::black);
+  g.drawFittedText (tip, 10, 0, getWidth() - 12, getHeight(), Justification::centredLeft, 1);
+}
+
+void TooltipBar::timerCallback()
+{
+  Component* const underMouse = Desktop::getInstance().getMainMouseSource().getComponentUnderMouse();
+  TooltipClient* const ttc = dynamic_cast <TooltipClient*> (underMouse);
+
+  String newTip;
+
+  if (ttc != nullptr && ! (underMouse->isMouseButtonDown() || underMouse->isCurrentlyBlockedByAnotherModalComponent()))
+    newTip = ttc->getTooltip();
+
+  if (newTip != tip)
   {
-    startTimer (100);
+    tip = newTip;
+    repaint();
   }
-
-  void paint (Graphics& g)
-  {
-    g.setFont (Font (getHeight() * 0.7f, Font::bold));
-    g.setColour (Colours::black);
-    g.drawFittedText (tip, 10, 0, getWidth() - 12, getHeight(), Justification::centredLeft, 1);
-  }
-
-  void timerCallback()
-  {
-    Component* const underMouse = Desktop::getInstance().getMainMouseSource().getComponentUnderMouse();
-    TooltipClient* const ttc = dynamic_cast <TooltipClient*> (underMouse);
-
-    String newTip;
-
-    if (ttc != nullptr && ! (underMouse->isMouseButtonDown() || underMouse->isCurrentlyBlockedByAnotherModalComponent()))
-      newTip = ttc->getTooltip();
-
-    if (newTip != tip)
-    {
-      tip = newTip;
-      repaint();
-    }
-  }
-
-private:
-  String tip;
-
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TooltipBar)
-};
+}
 
 #pragma mark -
 #pragma mark GraphDocumentComponent

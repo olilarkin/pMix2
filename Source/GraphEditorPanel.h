@@ -11,6 +11,9 @@ class FilterComponent;
 class ConnectorComponent;
 class PinComponent;
 
+#pragma mark -
+#pragma mark CreatePluginAction
+
 class CreatePluginAction  : public UndoableAction
 {
 public:
@@ -26,6 +29,9 @@ private:
   uint32 nodeID;
   JUCE_DECLARE_NON_COPYABLE (CreatePluginAction)
 };
+
+#pragma mark -
+#pragma mark GraphEditorPanel
 
 class GraphEditorPanel   : public Component,
                            public ChangeListener,
@@ -71,6 +77,9 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphEditorPanel)
 };
 
+#pragma mark -
+#pragma mark PinComponent
+
 class PinComponent : public Component,
                      public SettableTooltipClient
 {
@@ -93,6 +102,9 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PinComponent)
 };
 
+#pragma mark -
+#pragma mark MovePluginAction
+
 class MovePluginAction  : public UndoableAction
 {
 public:
@@ -109,6 +121,9 @@ private:
   Point<double> endPos;
   JUCE_DECLARE_NON_COPYABLE (MovePluginAction)
 };
+
+#pragma mark -
+#pragma mark FilterComponent
 
 class FilterComponent : public Component
 {
@@ -182,6 +197,9 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConnectorComponent)
 };
 
+#pragma mark -
+#pragma mark GraphDocumentComponent
+
 class GraphDocumentComponent  : public Component
 {
 public:
@@ -236,6 +254,26 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProcessorProgramPropertyComp)
 };
 
+#pragma mark -
+#pragma mark TooltipBar
+
+class TooltipBar : public Component
+                 , private Timer
+{
+public:
+  TooltipBar();
+  void paint (Graphics& g);
+  void timerCallback();
+  
+private:
+  String tip;
+  
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TooltipBar)
+};
+
+#pragma mark -
+#pragma mark ProgramAudioProcessorEditor
+
 class ProgramAudioProcessorEditor : public AudioProcessorEditor
 {
 public:
@@ -248,6 +286,9 @@ private:
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProgramAudioProcessorEditor)
 };
+
+#pragma mark -
+#pragma mark PluginWindow
 
 class PluginWindow  : public DocumentWindow
 {
