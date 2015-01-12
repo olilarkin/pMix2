@@ -70,7 +70,7 @@ void ProcessorParameterPropertyComp::audioProcessorParameterChanged (AudioProces
     paramHasChanged = true;
 }
 
-void ProcessorParameterPropertyComp::timerCallback() override
+void ProcessorParameterPropertyComp::timerCallback()
 {
   if (paramHasChanged)
   {
@@ -97,12 +97,12 @@ ParamView::~ParamView()
   graph.removeChangeListener (this);
 }
 
-void ParamView::paint (Graphics& g) override
+void ParamView::paint (Graphics& g)
 {
   g.fillAll (Colour::greyLevel (0.8f));
 }
 
-void ParamView::resized() override
+void ParamView::resized()
 {
   panel.setBounds (getLocalBounds().reduced (4));
 }
