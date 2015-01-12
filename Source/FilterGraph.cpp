@@ -237,7 +237,7 @@ static XmlElement* createNodeXml (AudioProcessorGraph::Node* const node) noexcep
 
   if (plugin == nullptr)
   {
-    jassertfalse
+    jassertfalse;
     return nullptr;
   }
 
