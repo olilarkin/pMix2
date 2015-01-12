@@ -348,6 +348,13 @@ public:
     bool setReadOnly (bool shouldBeReadOnly,
                       bool applyRecursively = false) const;
 
+    /** Changes the execute-permissions of a file.
+
+        @param shouldBeExecutable   whether to add or remove execute-permission
+        @returns    true if it manages to change the file's permissions.
+    */
+    bool setExecutePermission (bool shouldBeExecutable) const;
+
     /** Returns true if this file is a hidden or system file.
         The criteria for deciding whether a file is hidden are platform-dependent.
     */
@@ -844,6 +851,11 @@ public:
         /** In a plugin, this will return the path of the host executable. */
         hostApplicationPath,
 
+       #if JUCE_WINDOWS
+        /** On a Windows machine, returns the location of the Windows/System32 folder. */
+        windowsSystemDirectory,
+       #endif
+
         /** The directory in which applications normally get installed.
             So on windows, this would be something like "c:\program files", on the
             Mac "/Applications", or "/usr" on linux.
@@ -963,6 +975,7 @@ private:
     bool setFileTimesInternal (int64 m, int64 a, int64 c) const;
     void getFileTimesInternal (int64& m, int64& a, int64& c) const;
     bool setFileReadOnlyInternal (bool) const;
+    bool setFileExecutableInternal (bool) const;
 };
 
 #endif   // JUCE_FILE_H_INCLUDED

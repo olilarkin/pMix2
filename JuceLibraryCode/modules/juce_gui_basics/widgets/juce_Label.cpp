@@ -30,6 +30,7 @@ Label::Label (const String& name, const String& labelText)
       justification (Justification::centredLeft),
       border (1, 5, 1, 5),
       minimumHorizontalScale (0.7f),
+      keyboardType (TextEditor::textKeyboard),
       editSingleClick (false),
       editDoubleClick (false),
       lossOfFocusDiscardsChanges (false)
@@ -208,6 +209,7 @@ void Label::showEditor()
     {
         addAndMakeVisible (editor = createEditorComponent());
         editor->setText (getText(), false);
+        editor->setKeyboardType (keyboardType);
         editor->addListener (this);
         editor->grabKeyboardFocus();
 
@@ -289,11 +291,22 @@ bool Label::isBeingEdited() const noexcept
     return editor != nullptr;
 }
 
+static void copyColourIfSpecified (Label& l, TextEditor& ed, int colourID, int targetColourID)
+{
+    if (l.isColourSpecified (colourID) || l.getLookAndFeel().isColourSpecified (colourID))
+        ed.setColour (targetColourID, l.findColour (colourID));
+}
+
 TextEditor* Label::createEditorComponent()
 {
     TextEditor* const ed = new TextEditor (getName());
     ed->applyFontToAllText (getLookAndFeel().getLabelFont (*this));
     copyAllExplicitColoursTo (*ed);
+
+    copyColourIfSpecified (*this, *ed, textWhenEditingColourId, TextEditor::textColourId);
+    copyColourIfSpecified (*this, *ed, backgroundWhenEditingColourId, TextEditor::backgroundColourId);
+    copyColourIfSpecified (*this, *ed, outlineWhenEditingColourId, TextEditor::outlineColourId);
+
     return ed;
 }
 
@@ -449,5 +462,3 @@ void Label::textEditorFocusLost (TextEditor& ed)
 {
     textEditorTextChanged (ed);
 }
-
-void Label::Listener::editorShown (Label*, TextEditor&) {}

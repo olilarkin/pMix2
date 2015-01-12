@@ -163,6 +163,12 @@ bool File::setFileReadOnlyInternal (const bool shouldBeReadOnly) const
             || SetFileAttributes (fullPath.toWideCharPointer(), newAtts) != FALSE;
 }
 
+bool File::setFileExecutableInternal (bool /*shouldBeExecutable*/) const
+{
+    // XXX is this possible?
+    return false;
+}
+
 bool File::isHidden() const
 {
     return (WindowsFileHelpers::getAtts (fullPath) & FILE_ATTRIBUTE_HIDDEN) != 0;
@@ -551,6 +557,14 @@ File JUCE_CALLTYPE File::getSpecialLocation (const SpecialLocationType type)
             WCHAR dest [2048];
             dest[0] = 0;
             GetTempPath ((DWORD) numElementsInArray (dest), dest);
+            return File (String (dest));
+        }
+
+        case windowsSystemDirectory:
+        {
+            WCHAR dest [2048];
+            dest[0] = 0;
+            GetSystemDirectoryW (dest, (UINT) numElementsInArray (dest));
             return File (String (dest));
         }
 

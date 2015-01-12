@@ -26,11 +26,8 @@ class MidiKeyboardUpDownButton  : public Button
 {
 public:
     MidiKeyboardUpDownButton (MidiKeyboardComponent& comp, const int d)
-        : Button (String::empty),
-          owner (comp),
-          delta (d)
+        : Button (String::empty), owner (comp), delta (d)
     {
-        setOpaque (true);
     }
 
     void clicked() override
@@ -60,8 +57,7 @@ private:
 };
 
 //==============================================================================
-MidiKeyboardComponent::MidiKeyboardComponent (MidiKeyboardState& s,
-                                              const Orientation o)
+MidiKeyboardComponent::MidiKeyboardComponent (MidiKeyboardState& s, Orientation o)
     : state (s),
       xOffset (0),
       blackNoteLength (1),
@@ -92,12 +88,12 @@ MidiKeyboardComponent::MidiKeyboardComponent (MidiKeyboardState& s,
     mouseOverNotes.insertMultiple (0, -1, 32);
     mouseDownNotes.insertMultiple (0, -1, 32);
 
-    setOpaque (true);
+    colourChanged();
     setWantsKeyboardFocus (true);
 
     state.addListener (this);
 
-    startTimer (1000 / 20);
+    startTimerHz (20);
 }
 
 MidiKeyboardComponent::~MidiKeyboardComponent()
@@ -169,6 +165,7 @@ void MidiKeyboardComponent::setScrollButtonsVisible (const bool newCanScroll)
 
 void MidiKeyboardComponent::colourChanged()
 {
+    setOpaque (findColour (whiteNoteColourId).isOpaque());
     repaint();
 }
 
@@ -342,7 +339,7 @@ void MidiKeyboardComponent::repaintNote (const int noteNum)
 
 void MidiKeyboardComponent::paint (Graphics& g)
 {
-    g.fillAll (Colours::white.overlaidWith (findColour (whiteNoteColourId)));
+    g.fillAll (findColour (whiteNoteColourId));
 
     const Colour lineColour (findColour (keySeparatorLineColourId));
     const Colour textColour (findColour (textLabelColourId));
@@ -816,7 +813,7 @@ void MidiKeyboardComponent::timerCallback()
         const Array<MouseInputSource>& mouseSources = Desktop::getInstance().getMouseSources();
 
         for (MouseInputSource* mi = mouseSources.begin(), * const e = mouseSources.end(); mi != e; ++mi)
-            updateNoteUnderMouse (getLocalPoint (nullptr, mi->getScreenPosition()), mi->isDragging(), mi->getIndex());
+            updateNoteUnderMouse (getLocalPoint (nullptr, mi->getScreenPosition()).roundToInt(), mi->isDragging(), mi->getIndex());
     }
 }
 
@@ -828,8 +825,7 @@ void MidiKeyboardComponent::clearKeyMappings()
     keyPresses.clear();
 }
 
-void MidiKeyboardComponent::setKeyPressForNote (const KeyPress& key,
-                                                const int midiNoteOffsetFromC)
+void MidiKeyboardComponent::setKeyPressForNote (const KeyPress& key, int midiNoteOffsetFromC)
 {
     removeKeyPressForNote (midiNoteOffsetFromC);
 
@@ -885,6 +881,11 @@ bool MidiKeyboardComponent::keyStateChanged (const bool /*isKeyDown*/)
     }
 
     return keyPressUsed;
+}
+
+bool MidiKeyboardComponent::keyPressed (const KeyPress& key)
+{
+    return keyPresses.contains (key);
 }
 
 void MidiKeyboardComponent::focusLost (FocusChangeType)
