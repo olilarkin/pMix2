@@ -4,3 +4,5 @@
 /JuceLibraryCode/*
 Builds/*/ipch
 *.sdf
+Builds/MacOSX/pMix.xcodeproj/xcuserdata
+Builds/MacOSX/pMix.xcodeproj/project.xcworkspace
