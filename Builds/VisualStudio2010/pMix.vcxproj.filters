@@ -298,7 +298,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\FaustProcessor.cpp">
+    <ClCompile Include="..\..\Source\FaustAudioProcessor.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ParamTreeView.cpp">
@@ -1530,7 +1530,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\FaustProcessor.h">
+    <ClInclude Include="..\..\Source\FaustAudioProcessor.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LookAndFeel.h">

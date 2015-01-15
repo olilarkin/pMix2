@@ -1,7 +1,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "InternalFilters.h"
 #include "FilterGraph.h"
-#include "FaustProcessor.h"
+#include "FaustAudioProcessor.h"
 
 InternalPluginFormat::InternalPluginFormat()
 {

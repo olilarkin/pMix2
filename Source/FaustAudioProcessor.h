@@ -1,15 +1,14 @@
 /*
   ==============================================================================
 
-    FaustProcessor.h
-    Created: 15 Jan 2015 4:32:44pm
+    FaustAudioProcessor.h
     Author:  Oliver Larkin
 
   ==============================================================================
 */
 
-#ifndef FAUSTPROCESSOR_H_INCLUDED
-#define FAUSTPROCESSOR_H_INCLUDED
+#ifndef FAUSTAUDIOPROCESSOR_H_INCLUDED
+#define FAUSTAUDIOPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "faust/llvm-dsp.h"
@@ -66,4 +65,4 @@ private:
 };
 
 
-#endif  // FAUSTPROCESSOR_H_INCLUDED
+#endif  // FAUSTAUDIOPROCESSOR_H_INCLUDED

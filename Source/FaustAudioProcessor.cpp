@@ -1,14 +1,13 @@
 /*
   ==============================================================================
 
-    FaustProcessor.cpp
-    Created: 15 Jan 2015 4:32:44pm
+    FaustAudioProcessor.cpp
     Author:  Oliver Larkin
 
   ==============================================================================
 */
 
-#include "FaustProcessor.h"
+#include "FaustAudioProcessor.h"
 
 FaustAudioProcessor::FaustAudioProcessor()
 : mFactory(nullptr)
