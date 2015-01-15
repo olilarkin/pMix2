@@ -1,6 +1,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "InternalFilters.h"
 #include "FilterGraph.h"
+#include "FaustProcessor.h"
 
 InternalPluginFormat::InternalPluginFormat()
 {
@@ -23,6 +24,12 @@ InternalPluginFormat::InternalPluginFormat()
     AudioProcessorGraph::AudioGraphIOProcessor p (AudioProcessorGraph::AudioGraphIOProcessor::midiOutputNode);
     p.fillInPluginDescription (midiOutDesc);
   }
+  
+  {
+    //TODO:, probably the wrong place for this
+    FaustAudioProcessor p;
+    p.fillInPluginDescription (faustDesc);
+  }
 }
 
 AudioPluginInstance* InternalPluginFormat::createInstanceFromDescription (const PluginDescription& desc,
@@ -40,6 +47,9 @@ AudioPluginInstance* InternalPluginFormat::createInstanceFromDescription (const 
   if (desc.name == midiOutDesc.name)
     return new AudioProcessorGraph::AudioGraphIOProcessor (AudioProcessorGraph::AudioGraphIOProcessor::midiOutputNode);
   
+  if (desc.name == faustDesc.name)
+    return new FaustAudioProcessor();
+
   return 0;
 }
 
@@ -50,7 +60,8 @@ const PluginDescription* InternalPluginFormat::getDescriptionFor (const Internal
     case audioInputFilter:      return &audioInDesc;
     case audioOutputFilter:     return &audioOutDesc;
     case midiInputFilter:       return &midiInDesc;
-    case midiOutputFilter:       return &midiOutDesc;
+    case midiOutputFilter:      return &midiOutDesc;
+    case faustEffect:           return &faustDesc;
     default:                    break;
   }
 
