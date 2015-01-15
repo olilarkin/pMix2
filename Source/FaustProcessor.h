@@ -12,7 +12,7 @@
 #define FAUSTPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "/usr/local/include/faust/llvm-dsp.h"
+#include "faust/llvm-dsp.h"
 
 class FaustAudioProcessor  : public AudioPluginInstance
 {
@@ -27,10 +27,10 @@ public:
   void processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages) override;
   void reset() override;
   
-  bool hasEditor() const override                  { return false; }
+  bool hasEditor() const override;
   AudioProcessorEditor* createEditor() override;
   
-  const String getName() const override            { return "FaustAudioProcessor"; }
+  const String getName() const override;
   
   int getNumParameters() override;
   float getParameter (int index) override;
@@ -50,10 +50,10 @@ public:
   double getTailLengthSeconds() const override;
   
   int getNumPrograms() override;
-  int getCurrentProgram() override                                            { return 0; }
-  void setCurrentProgram (int /*index*/) override                             {}
-  const String getProgramName (int /*index*/) override                        { return "Default"; }
-  void changeProgramName (int /*index*/, const String& /*newName*/) override  {}
+  int getCurrentProgram() override;
+  void setCurrentProgram (int /*index*/) override;
+  const String getProgramName (int /*index*/) override;
+  void changeProgramName (int /*index*/, const String& /*newName*/) override;
   
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;

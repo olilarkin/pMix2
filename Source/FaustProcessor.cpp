@@ -74,9 +74,19 @@ void FaustAudioProcessor::reset()
   
 }
 
+bool FaustAudioProcessor::hasEditor() const
+{
+  return false;
+}
+
 AudioProcessorEditor* FaustAudioProcessor::createEditor()
 {
   return nullptr;
+}
+
+const String FaustAudioProcessor::getName() const
+{
+  return "FaustAudioProcessor";
 }
 
 int FaustAudioProcessor::getNumParameters()
@@ -153,6 +163,24 @@ double FaustAudioProcessor::getTailLengthSeconds() const
 int FaustAudioProcessor::getNumPrograms()
 {
   return 1;
+}
+
+int FaustAudioProcessor::getCurrentProgram()
+{
+  return 0;
+}
+
+void FaustAudioProcessor::setCurrentProgram (int /*index*/)
+{
+}
+
+const String FaustAudioProcessor::getProgramName (int /*index*/)
+{
+  return "Default";
+}
+
+void FaustAudioProcessor::changeProgramName (int /*index*/, const String& /*newName*/)
+{
 }
 
 void FaustAudioProcessor::getStateInformation (MemoryBlock& destData)
