@@ -130,7 +130,7 @@
     <ClCompile Include="..\..\Source\FaustAudioProcessor.cpp"/>
     <ClCompile Include="..\..\Source\ParamTreeView.cpp"/>
     <ClCompile Include="..\..\Source\LookAndFeel.cpp"/>
-    <ClCompile Include="..\..\Source\ISpace.cpp"/>
+    <ClCompile Include="..\..\Source\InterpolationSpace.cpp"/>
     <ClCompile Include="..\..\Source\ParamView.cpp"/>
     <ClCompile Include="..\..\Source\FilterGraph.cpp"/>
     <ClCompile Include="..\..\Source\GraphEditorPanel.cpp"/>
@@ -1246,7 +1246,7 @@
     <ClInclude Include="..\..\Source\CodeEditor.h"/>
     <ClInclude Include="..\..\Source\FaustAudioProcessor.h"/>
     <ClInclude Include="..\..\Source\LookAndFeel.h"/>
-    <ClInclude Include="..\..\Source\iSpace.h"/>
+    <ClInclude Include="..\..\Source\InterpolationSpace.h"/>
     <ClInclude Include="..\..\Source\ParamView.h"/>
     <ClInclude Include="..\..\Source\ParamTreeView.h"/>
     <ClInclude Include="..\..\Source\FilterGraph.h"/>

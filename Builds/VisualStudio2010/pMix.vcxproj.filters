@@ -313,7 +313,7 @@
     <ClCompile Include="..\..\Source\LookAndFeel.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\ISpace.cpp">
+    <ClCompile Include="..\..\Source\InterpolationSpace.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ParamView.cpp">
@@ -1548,7 +1548,7 @@
     <ClInclude Include="..\..\Source\LookAndFeel.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\iSpace.h">
+    <ClInclude Include="..\..\Source\InterpolationSpace.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ParamView.h">

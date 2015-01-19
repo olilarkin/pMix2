@@ -13,7 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "FilterGraph.h"
 #include "LookAndFeel.h"
-#include "iSpace.h"
+#include "InterpolationSpace.h"
 #include "GraphEditorPanel.h"
 
 class MainComponent  : public Component

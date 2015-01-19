@@ -20,8 +20,10 @@
             file="Source/ParamTreeView.cpp"/>
       <FILE id="iyOFme" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
       <FILE id="eFdXp7" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
-      <FILE id="SvrItn" name="ISpace.cpp" compile="1" resource="0" file="Source/ISpace.cpp"/>
-      <FILE id="WJawZW" name="iSpace.h" compile="0" resource="0" file="Source/iSpace.h"/>
+      <FILE id="SvrItn" name="InterpolationSpace.cpp" compile="1" resource="0"
+            file="Source/InterpolationSpace.cpp"/>
+      <FILE id="WJawZW" name="InterpolationSpace.h" compile="0" resource="0"
+            file="Source/InterpolationSpace.h"/>
       <FILE id="qqMSEw" name="ParamView.cpp" compile="1" resource="0" file="Source/ParamView.cpp"/>
       <FILE id="gxpRcI" name="ParamView.h" compile="0" resource="0" file="Source/ParamView.h"/>
       <FILE id="Y9eWD4" name="ParamTreeView.h" compile="0" resource="0" file="Source/ParamTreeView.h"/>
