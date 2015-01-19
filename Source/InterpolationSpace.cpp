@@ -147,14 +147,12 @@ void InterpolationSpaceComponent::mouseUp (const MouseEvent& e)
 
 //LassoSource
 void InterpolationSpaceComponent::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
-{
-  const Rectangle<int> lasso (area - this->getPosition());
-  
+{  
   for (int i = 0; i < this->getNumChildComponents(); ++i)
   {
     Component* c = this->getChildComponent (i);
     
-    if (c->getBounds().intersects (lasso))
+    if (c->getBounds().intersects (area))
       results.add (c);
   }
 }
