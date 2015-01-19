@@ -21,10 +21,10 @@ MainComponent::MainComponent (AudioPluginFormatManager& formatManager,
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);
   
-  addAndMakeVisible (graphPanel = new GraphEditorPanel (graph, undoManager));
+  addAndMakeVisible (graphEditor = new GraphEditor (graph, undoManager));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
   
-  deviceManager->addChangeListener (graphPanel);
+  deviceManager->addChangeListener (graphEditor);
   
   graphPlayer.setProcessor (&graph.getGraph());
   
@@ -40,14 +40,14 @@ MainComponent::MainComponent (AudioPluginFormatManager& formatManager,
   deviceManager->addAudioCallback (&graphPlayer);
   deviceManager->addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
   
-  graphPanel->updateComponents();
+  graphEditor->updateComponents();
 }
 
 MainComponent::~MainComponent()
 {
   deviceManager->removeAudioCallback (&graphPlayer);
   deviceManager->removeMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
-  deviceManager->removeChangeListener (graphPanel);
+  deviceManager->removeChangeListener (graphEditor);
   
   deleteAllChildren();
   
@@ -59,7 +59,7 @@ MainComponent::~MainComponent()
 
 void MainComponent::resized()
 {
-  Component* vcomps[] = { graphPanel, verticalDividerBar, codeEditor };
+  Component* vcomps[] = { graphEditor, verticalDividerBar, codeEditor };
   
   verticalLayout.layOutComponents (vcomps, 3,
                                    0, 0, getWidth(), getHeight(),
@@ -69,7 +69,7 @@ void MainComponent::resized()
 
 void MainComponent::createNewPlugin (const PluginDescription* desc, int x, int y)
 {
-  graphPanel->createNewPlugin (desc, x, y);
+  graphEditor->createNewPlugin (desc, x, y);
 }
 
 void MainComponent::setZoom (double scale)

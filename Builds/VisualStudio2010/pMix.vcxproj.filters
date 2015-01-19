@@ -322,7 +322,7 @@
     <ClCompile Include="..\..\Source\FilterGraph.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GraphEditorPanel.cpp">
+    <ClCompile Include="..\..\Source\GraphEditor.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\HostStartup.cpp">
@@ -1560,7 +1560,7 @@
     <ClInclude Include="..\..\Source\FilterGraph.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GraphEditorPanel.h">
+    <ClInclude Include="..\..\Source\GraphEditor.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\InternalFilters.h">

@@ -1,5 +1,5 @@
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "GraphEditorPanel.h"
+#include "GraphEditor.h"
 #include "InternalFilters.h"
 #include "MainHostWindow.h"
 
@@ -203,9 +203,9 @@ void PluginWindow::closeButtonPressed()
 }
 
 #pragma mark -
-#pragma mark GraphEditorPanel
+#pragma mark GraphEditor
 
-GraphEditorPanel::GraphEditorPanel (FilterGraph& graph_, UndoManager& undoManager)
+GraphEditor::GraphEditor (FilterGraph& graph_, UndoManager& undoManager)
   : graph (graph_)
   , undoManager (undoManager)
 {
@@ -213,7 +213,7 @@ GraphEditorPanel::GraphEditorPanel (FilterGraph& graph_, UndoManager& undoManage
   setOpaque (true);
 }
 
-GraphEditorPanel::~GraphEditorPanel()
+GraphEditor::~GraphEditor()
 {
   graph.removeChangeListener (this);
   draggingConnector = nullptr;
@@ -221,12 +221,12 @@ GraphEditorPanel::~GraphEditorPanel()
   deleteAllChildren();
 }
 
-void GraphEditorPanel::paint (Graphics& g)
+void GraphEditor::paint (Graphics& g)
 {
   g.fillAll (Colours::white);
 }
 
-void GraphEditorPanel::mouseDown (const MouseEvent& e)
+void GraphEditor::mouseDown (const MouseEvent& e)
 {
   if (e.mods.isPopupMenu())
   {
@@ -248,19 +248,19 @@ void GraphEditorPanel::mouseDown (const MouseEvent& e)
   }
 }
 
-void GraphEditorPanel::mouseDrag (const MouseEvent& e)
+void GraphEditor::mouseDrag (const MouseEvent& e)
 {
   lassoComp.toFront (false);
   lassoComp.dragLasso (e);
 }
 
-void GraphEditorPanel::mouseUp (const MouseEvent& e)
+void GraphEditor::mouseUp (const MouseEvent& e)
 {
   lassoComp.endLasso();
   removeChildComponent (&lassoComp);
 }
 
-void GraphEditorPanel::createNewPlugin (const PluginDescription* desc, int x, int y)
+void GraphEditor::createNewPlugin (const PluginDescription* desc, int x, int y)
 {
   if (desc != nullptr)
   {
@@ -269,7 +269,7 @@ void GraphEditorPanel::createNewPlugin (const PluginDescription* desc, int x, in
   }
 }
 
-FilterComponent* GraphEditorPanel::getComponentForFilter (const uint32 filterID) const
+FilterComponent* GraphEditor::getComponentForFilter (const uint32 filterID) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
@@ -281,7 +281,7 @@ FilterComponent* GraphEditorPanel::getComponentForFilter (const uint32 filterID)
   return nullptr;
 }
 
-ConnectorComponent* GraphEditorPanel::getComponentForConnection (const AudioProcessorGraph::Connection& conn) const
+ConnectorComponent* GraphEditor::getComponentForConnection (const AudioProcessorGraph::Connection& conn) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
@@ -296,7 +296,7 @@ ConnectorComponent* GraphEditorPanel::getComponentForConnection (const AudioProc
   return nullptr;
 }
 
-PinComponent* GraphEditorPanel::findPinAt (const int x, const int y) const
+PinComponent* GraphEditor::findPinAt (const int x, const int y) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
@@ -311,17 +311,17 @@ PinComponent* GraphEditorPanel::findPinAt (const int x, const int y) const
   return nullptr;
 }
 
-void GraphEditorPanel::resized()
+void GraphEditor::resized()
 {
   updateComponents();
 }
 
-void GraphEditorPanel::changeListenerCallback (ChangeBroadcaster*)
+void GraphEditor::changeListenerCallback (ChangeBroadcaster*)
 {
   updateComponents();
 }
 
-void GraphEditorPanel::updateComponents()
+void GraphEditor::updateComponents()
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
@@ -374,7 +374,7 @@ void GraphEditorPanel::updateComponents()
   }
 }
 
-void GraphEditorPanel::beginConnectorDrag (const uint32 sourceFilterID, const int sourceFilterChannel,
+void GraphEditor::beginConnectorDrag (const uint32 sourceFilterID, const int sourceFilterChannel,
     const uint32 destFilterID, const int destFilterChannel,
     const MouseEvent& e)
 {
@@ -392,7 +392,7 @@ void GraphEditorPanel::beginConnectorDrag (const uint32 sourceFilterID, const in
   dragConnector (e);
 }
 
-void GraphEditorPanel::dragConnector (const MouseEvent& e)
+void GraphEditor::dragConnector (const MouseEvent& e)
 {
   const MouseEvent e2 (e.getEventRelativeTo (this));
 
@@ -437,7 +437,7 @@ void GraphEditorPanel::dragConnector (const MouseEvent& e)
   }
 }
 
-void GraphEditorPanel::endDraggingConnector (const MouseEvent& e)
+void GraphEditor::endDraggingConnector (const MouseEvent& e)
 {
   if (draggingConnector == nullptr)
     return;
@@ -476,7 +476,7 @@ void GraphEditorPanel::endDraggingConnector (const MouseEvent& e)
   }
 }
 
-void GraphEditorPanel::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
+void GraphEditor::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
 {
 //  const Rectangle<int> lasso (area - subCompHolder->getPosition());
 //  
@@ -489,7 +489,7 @@ void GraphEditorPanel::findLassoItemsInArea (Array <Component*>& results, const 
 //  }
 }
 
-SelectedItemSet <Component*>& GraphEditorPanel::getLassoSelection()
+SelectedItemSet <Component*>& GraphEditor::getLassoSelection()
 {
   return selectedItems;
 }
@@ -561,9 +561,9 @@ void PinComponent::mouseUp (const MouseEvent& e)
   getGraphPanel()->endDraggingConnector (e);
 }
 
-GraphEditorPanel* PinComponent::getGraphPanel() const noexcept
+GraphEditor* PinComponent::getGraphPanel() const noexcept
 {
-  return findParentComponentOfClass<GraphEditorPanel>();
+  return findParentComponentOfClass<GraphEditor>();
 }
 
 #pragma mark -
@@ -877,9 +877,9 @@ void FilterComponent::update()
   }
 }
 
-GraphEditorPanel* FilterComponent::getGraphPanel() const noexcept
+GraphEditor* FilterComponent::getGraphPanel() const noexcept
 {
-  return findParentComponentOfClass<GraphEditorPanel>();
+  return findParentComponentOfClass<GraphEditor>();
 }
 
 #pragma mark -
@@ -972,7 +972,7 @@ void ConnectorComponent::getPoints (float& x1, float& y1, float& x2, float& y2) 
   x2 = lastOutputX;
   y2 = lastOutputY;
   
-  if (GraphEditorPanel* const hostPanel = getGraphPanel())
+  if (GraphEditor* const hostPanel = getGraphPanel())
   {
     if (FilterComponent* srcFilterComp = hostPanel->getComponentForFilter (sourceFilterID))
       srcFilterComp->getPinPos (sourceFilterChannel, false, x1, y1);
@@ -1092,9 +1092,9 @@ void ConnectorComponent::resized()
   linePath.setUsingNonZeroWinding (true);
 }
 
-GraphEditorPanel* ConnectorComponent::getGraphPanel() const noexcept
+GraphEditor* ConnectorComponent::getGraphPanel() const noexcept
 {
-  return findParentComponentOfClass<GraphEditorPanel>();
+  return findParentComponentOfClass<GraphEditor>();
 }
 
 void ConnectorComponent::getDistancesFromEnds (int x, int y, double& distanceFromStart, double& distanceFromEnd) const

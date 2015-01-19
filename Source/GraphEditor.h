@@ -1,5 +1,5 @@
-#ifndef __GRAPHEDITORPANEL_JUCEHEADER__
-#define __GRAPHEDITORPANEL_JUCEHEADER__
+#ifndef __GRAPHEDITOR_JUCEHEADER__
+#define __GRAPHEDITOR_JUCEHEADER__
 
 #include "FilterGraph.h"
 #include "ParamView.h"
@@ -29,15 +29,15 @@ private:
 };
 
 #pragma mark -
-#pragma mark GraphEditorPanel
+#pragma mark GraphEditor
 
-class GraphEditorPanel   : public Component,
-                           public ChangeListener,
-                           public LassoSource<Component*>
+class GraphEditor : public Component,
+                    public ChangeListener,
+                    public LassoSource<Component*>
 {
 public:
-  GraphEditorPanel (FilterGraph& graph, UndoManager& undoManager);
-  ~GraphEditorPanel();
+  GraphEditor (FilterGraph& graph, UndoManager& undoManager);
+  ~GraphEditor();
 
   void paint (Graphics& g);
   void mouseDown (const MouseEvent& e);
@@ -72,7 +72,7 @@ private:
   SelectedItemSet<Component*> selectedItems;
   ScopedPointer<ConnectorComponent> draggingConnector;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphEditorPanel)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphEditor)
 };
 
 #pragma mark -
@@ -95,7 +95,7 @@ public:
 private:
   FilterGraph& graph;
   
-  GraphEditorPanel* getGraphPanel() const noexcept;
+  GraphEditor* getGraphPanel() const noexcept;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PinComponent)
 };
@@ -153,7 +153,7 @@ private:
   //DropShadowEffect shadow;
   friend class MovePluginAction;
   
-  GraphEditorPanel* getGraphPanel() const noexcept;
+  GraphEditor* getGraphPanel() const noexcept;
   
   FilterComponent (const FilterComponent&);
   FilterComponent& operator= (const FilterComponent&);
@@ -190,7 +190,7 @@ private:
   Path linePath, hitPath;
   bool dragging;
   
-  GraphEditorPanel* getGraphPanel() const noexcept;
+  GraphEditor* getGraphPanel() const noexcept;
   void getDistancesFromEnds (int x, int y, double& distanceFromStart, double& distanceFromEnd) const;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConnectorComponent)
 };
@@ -279,4 +279,4 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginWindow)
 };
 
-#endif   // __GRAPHEDITORPANEL_JUCEHEADER__
+#endif   // __GraphEditor_JUCEHEADER__

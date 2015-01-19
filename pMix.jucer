@@ -29,10 +29,8 @@
       <FILE id="Y9eWD4" name="ParamTreeView.h" compile="0" resource="0" file="Source/ParamTreeView.h"/>
       <FILE id="sLNbj5" name="FilterGraph.cpp" compile="1" resource="0" file="Source/FilterGraph.cpp"/>
       <FILE id="LFtNrQ" name="FilterGraph.h" compile="0" resource="0" file="Source/FilterGraph.h"/>
-      <FILE id="ttLwnT" name="GraphEditorPanel.cpp" compile="1" resource="0"
-            file="Source/GraphEditorPanel.cpp"/>
-      <FILE id="RIOJxZ" name="GraphEditorPanel.h" compile="0" resource="0"
-            file="Source/GraphEditorPanel.h"/>
+      <FILE id="ttLwnT" name="GraphEditor.cpp" compile="1" resource="0" file="Source/GraphEditor.cpp"/>
+      <FILE id="RIOJxZ" name="GraphEditor.h" compile="0" resource="0" file="Source/GraphEditor.h"/>
       <FILE id="NgTWTW" name="HostStartup.cpp" compile="1" resource="0" file="Source/HostStartup.cpp"/>
       <FILE id="zqfuWQ" name="InternalFilters.cpp" compile="1" resource="0"
             file="Source/InternalFilters.cpp"/>

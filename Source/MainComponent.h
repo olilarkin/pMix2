@@ -14,7 +14,7 @@
 #include "FilterGraph.h"
 #include "LookAndFeel.h"
 #include "InterpolationSpace.h"
-#include "GraphEditorPanel.h"
+#include "GraphEditor.h"
 #include "CodeEditor.h"
 
 class MainComponent  : public Component
@@ -39,7 +39,7 @@ private:
   MidiKeyboardState keyState;
   
   CodeEditor* codeEditor;
-  GraphEditorPanel* graphPanel;
+  GraphEditor* graphEditor;
   Component* keyboardComp;
   Component* statusBar;
   
