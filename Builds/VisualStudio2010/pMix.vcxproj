@@ -125,7 +125,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\GraphDocumentComponent.cpp"/>
+    <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\CodeEditor.cpp"/>
     <ClCompile Include="..\..\Source\FaustAudioProcessor.cpp"/>
     <ClCompile Include="..\..\Source\ParamTreeView.cpp"/>
@@ -1242,7 +1242,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_opengl\juce_opengl.cpp"/>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\GraphDocumentComponent.h"/>
+    <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\CodeEditor.h"/>
     <ClInclude Include="..\..\Source\FaustAudioProcessor.h"/>
     <ClInclude Include="..\..\Source\LookAndFeel.h"/>

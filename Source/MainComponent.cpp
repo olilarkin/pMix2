@@ -1,15 +1,15 @@
 /*
   ==============================================================================
 
-    GraphDocumentComponent.cpp
+    MainComponent.cpp
     Author:  Oliver Larkin
 
   ==============================================================================
 */
 
-#include "GraphDocumentComponent.h"
+#include "MainComponent.h"
 
-GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& formatManager,
+MainComponent::MainComponent (AudioPluginFormatManager& formatManager,
                                                 AudioDeviceManager* deviceManager_)
 : graph (formatManager), deviceManager (deviceManager_)
 {
@@ -42,7 +42,7 @@ GraphDocumentComponent::GraphDocumentComponent (AudioPluginFormatManager& format
   graphPanel->updateComponents();
 }
 
-GraphDocumentComponent::~GraphDocumentComponent()
+MainComponent::~MainComponent()
 {
   deviceManager->removeAudioCallback (&graphPlayer);
   deviceManager->removeMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
@@ -56,7 +56,7 @@ GraphDocumentComponent::~GraphDocumentComponent()
   graph.clear();
 }
 
-void GraphDocumentComponent::resized()
+void MainComponent::resized()
 {
   Component* vcomps[] = { graphPanel, verticalDividerBar, paramView };
   
@@ -66,12 +66,12 @@ void GraphDocumentComponent::resized()
                                    true);     // resize the components' heights as well as widths
 }
 
-void GraphDocumentComponent::createNewPlugin (const PluginDescription* desc, int x, int y)
+void MainComponent::createNewPlugin (const PluginDescription* desc, int x, int y)
 {
   graphPanel->createNewPlugin (desc, x, y);
 }
 
-void GraphDocumentComponent::setZoom (double scale)
+void MainComponent::setZoom (double scale)
 {
   scale = jlimit (1.0 / 4.0, 32.0, scale);
   
@@ -79,7 +79,7 @@ void GraphDocumentComponent::setZoom (double scale)
   //    panel->setZoom (scale);
 }
 
-double GraphDocumentComponent::getZoom() const
+double MainComponent::getZoom() const
 {
   //  if (EditingPanelBase* panel = dynamic_cast <EditingPanelBase*> (tabbedComponent.getCurrentContentComponent()))
   //    return panel->getZoom();

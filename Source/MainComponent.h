@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    GraphDocumentComponent.h
+    MainComponent.h
     Author:  Oliver Larkin
 
   ==============================================================================
 */
 
-#ifndef GRAPHDOCUMENTCOMPONENT_H_INCLUDED
-#define GRAPHDOCUMENTCOMPONENT_H_INCLUDED
+#ifndef MAINCOMPONENT_H_INCLUDED
+#define MAINCOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "FilterGraph.h"
@@ -16,12 +16,12 @@
 #include "iSpace.h"
 #include "GraphEditorPanel.h"
 
-class GraphDocumentComponent  : public Component
+class MainComponent  : public Component
 {
 public:
   
-  GraphDocumentComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager);
-  ~GraphDocumentComponent();
+  MainComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager);
+  ~MainComponent();
   
   void createNewPlugin (const PluginDescription* desc, int x, int y);
   void resized();
@@ -50,7 +50,7 @@ private:
   
   //  ParamTreeView* treeView;
   
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphDocumentComponent)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
 
 

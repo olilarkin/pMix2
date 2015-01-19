@@ -68,7 +68,7 @@ MainHostWindow::MainHostWindow()
   setResizeLimits (500, 400, 10000, 10000);
   centreWithSize (800, 600);
 
-  setContentOwned (new GraphDocumentComponent (formatManager, &deviceManager), false);
+  setContentOwned (new MainComponent (formatManager, &deviceManager), false);
 
   restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
 
@@ -133,8 +133,8 @@ bool MainHostWindow::tryToQuitApplication()
 {
   PluginWindow::closeAllCurrentlyOpenWindows();
 
-  if (getGraphEditor() == nullptr
-      || getGraphEditor()->graph.saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+  if (getMainComponent() == nullptr
+      || getMainComponent()->graph.saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
   {
     JUCEApplication::quit();
     return true;
@@ -229,7 +229,7 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
 
 void MainHostWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
 {
-  GraphDocumentComponent* const graphEditor = getGraphEditor();
+  MainComponent* const graphEditor = getMainComponent();
 
   if (menuItemID == 250)
   {
@@ -267,7 +267,7 @@ void MainHostWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/
 
 void MainHostWindow::createPlugin (const PluginDescription* desc, int x, int y)
 {
-  GraphDocumentComponent* const graphEditor = getGraphEditor();
+  MainComponent* const graphEditor = getMainComponent();
 
   if (graphEditor != nullptr)
     graphEditor->createNewPlugin (desc, x, y);
@@ -435,7 +435,7 @@ void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationComma
 
 bool MainHostWindow::perform (const InvocationInfo& info)
 {
-  GraphDocumentComponent* const graphEditor = getGraphEditor();
+  MainComponent* const graphEditor = getMainComponent();
 
   switch (info.commandID)
   {
@@ -488,9 +488,9 @@ bool MainHostWindow::perform (const InvocationInfo& info)
       graphEditor->undoManager.redo();
       break;
       
-    case CommandIDs::zoomIn:      getGraphEditor()->setZoom (snapToIntegerZoom (getGraphEditor()->getZoom() * 2.0)); break;
-    case CommandIDs::zoomOut:     getGraphEditor()->setZoom (snapToIntegerZoom (getGraphEditor()->getZoom() / 2.0)); break;
-    case CommandIDs::zoomNormal:  getGraphEditor()->setZoom (1.0); break;
+    case CommandIDs::zoomIn:      getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() * 2.0)); break;
+    case CommandIDs::zoomOut:     getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() / 2.0)); break;
+    case CommandIDs::zoomNormal:  getMainComponent()->setZoom (1.0); break;
       
     default:
       return false;
@@ -524,7 +524,7 @@ void MainHostWindow::showAudioSettings()
   getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
   getAppProperties().getUserSettings()->saveIfNeeded();
 
-  GraphDocumentComponent* const graphEditor = getGraphEditor();
+  MainComponent* const graphEditor = getMainComponent();
 
   if (graphEditor != nullptr)
     graphEditor->graph.removeIllegalConnections();
@@ -549,7 +549,7 @@ void MainHostWindow::fileDragExit (const StringArray&)
 
 void MainHostWindow::filesDropped (const StringArray& files, int x, int y)
 {
-  GraphDocumentComponent* const graphEditor = getGraphEditor();
+  MainComponent* const graphEditor = getMainComponent();
 
   if (graphEditor != nullptr)
   {
@@ -571,7 +571,7 @@ void MainHostWindow::filesDropped (const StringArray& files, int x, int y)
   }
 }
 
-GraphDocumentComponent* MainHostWindow::getGraphEditor() const
+MainComponent* MainHostWindow::getMainComponent() const
 {
-  return dynamic_cast <GraphDocumentComponent*> (getContentComponent());
+  return dynamic_cast <MainComponent*> (getContentComponent());
 }

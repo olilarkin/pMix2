@@ -34,9 +34,9 @@ void pMixApp::initialise (const String& commandLine)
 
   mainWindow->menuItemsChanged();
 
-  if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getGraphEditor() != nullptr)
+  if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getMainComponent() != nullptr)
   {
-    mainWindow->getGraphEditor()->graph.loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
+    mainWindow->getMainComponent()->graph.loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
   }
 }
 

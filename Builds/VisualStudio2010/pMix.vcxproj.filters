@@ -298,7 +298,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\GraphDocumentComponent.cpp">
+    <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\CodeEditor.cpp">
@@ -1536,7 +1536,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\GraphDocumentComponent.h">
+    <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\CodeEditor.h">

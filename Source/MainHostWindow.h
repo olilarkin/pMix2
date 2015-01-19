@@ -2,7 +2,7 @@
 #define __MAINHOSTWINDOW_JUCEHEADER__
 
 #include "FilterGraph.h"
-#include "GraphDocumentComponent.h"
+#include "MainComponent.h"
 
 namespace CommandIDs
 {
@@ -58,7 +58,7 @@ public:
   void addPluginsToMenu (PopupMenu& m) const;
   const PluginDescription* getChosenType (const int menuID) const;
 
-  GraphDocumentComponent* getGraphEditor() const;
+  MainComponent* getMainComponent() const;
 
 private:
   AudioDeviceManager deviceManager;
