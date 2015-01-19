@@ -59,7 +59,7 @@ MainComponent::~MainComponent()
 
 void MainComponent::resized()
 {
-  Component* vcomps[] = { graphEditor, verticalDividerBar, codeEditor };
+  Component* vcomps[] = { graphEditor, verticalDividerBar, interpolationSpace };
   
   verticalLayout.layOutComponents (vcomps, 3,
                                    0, 0, getWidth(), getHeight(),

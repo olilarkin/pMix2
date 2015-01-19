@@ -100,7 +100,8 @@ public:
 };
 
 class InterpolationSpaceComponent  : public Component
-                       , public LassoSource<Component*>  
+                                   , public LassoSource<Component*>
+                                   , public ChangeListener
 {
 private:
   //TooltipWindow tooltipWindow;
@@ -119,6 +120,8 @@ public:
   void mouseUp (const MouseEvent& e);
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
   SelectedItemSet <Component*>& getLassoSelection();
+  
+  void changeListenerCallback (ChangeBroadcaster*);
 };
 
 #endif //_INTERPOLATIONSPACE_H_ 

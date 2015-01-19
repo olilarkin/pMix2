@@ -210,12 +210,15 @@ GraphEditor::GraphEditor (FilterGraph& graph_, UndoManager& undoManager)
   , undoManager (undoManager)
 {
   graph.addChangeListener (this);
+  selectedItems.addChangeListener(this);
+
   setOpaque (true);
 }
 
 GraphEditor::~GraphEditor()
 {
   graph.removeChangeListener (this);
+  selectedItems.removeChangeListener (this);
   draggingConnector = nullptr;
   removeChildComponent (&lassoComp);
   deleteAllChildren();
@@ -228,8 +231,6 @@ void GraphEditor::paint (Graphics& g)
 
 void GraphEditor::mouseDown (const MouseEvent& e)
 {
-  selectedItems.deselectAll();
-
   if (e.mods.isPopupMenu())
   {
     PopupMenu m;
@@ -318,9 +319,14 @@ void GraphEditor::resized()
   updateComponents();
 }
 
-void GraphEditor::changeListenerCallback (ChangeBroadcaster*)
+void GraphEditor::changeListenerCallback (ChangeBroadcaster* source)
 {
-  updateComponents();
+  if (source == &selectedItems)
+  {
+    repaint();
+  }
+  else
+    updateComponents();
 }
 
 void GraphEditor::updateComponents()
@@ -480,15 +486,15 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
 
 void GraphEditor::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
 {
-//  const Rectangle<int> lasso (area - subCompHolder->getPosition());
-//  
-//  for (int i = 0; i < subCompHolder->getNumChildComponents(); ++i)
-//  {
-//    Component* c = subCompHolder->getChildComponent (i);
-//    
-//    if (c->getBounds().intersects (lasso))
-//      results.add (c);
-//  }
+  const Rectangle<int> lasso (area - this->getPosition());
+  
+  for (int i = 0; i < this->getNumChildComponents(); ++i)
+  {
+    Component* c = this->getChildComponent (i);
+    
+    if (c->getBounds().intersects (lasso))
+      results.add (c);
+  }
 }
 
 SelectedItemSet <Component*>& GraphEditor::getLassoSelection()

@@ -59,6 +59,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
   myDragger.startDraggingComponent (this, e);
   toFront (true);
   startBounds = getBounds();
+  dynamic_cast<InterpolationSpaceComponent*>(getParentComponent())->getLassoSelection().selectOnly(this);
 }
 
 void InterpolationSpacePreset::mouseDrag (const MouseEvent& e)
@@ -76,8 +77,12 @@ void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
 
 void InterpolationSpacePreset::paint (Graphics& g)
 {
-  g.setColour(Colours::red);
+  if (dynamic_cast<InterpolationSpaceComponent*>(getParentComponent())->getLassoSelection().isSelected(this))
+    g.setColour(Colours::black);
+  else
+    g.setColour(Colours::red);
   g.fillEllipse (0, 0, getWidth(), getHeight());
+
   //g.setColour(Colours::white);
   //g.drawFittedText(getComponentID(), 0, 0, getWidth(), getHeight(), Justification::centred, 1);
 }
@@ -93,10 +98,13 @@ InterpolationSpaceComponent::InterpolationSpaceComponent (UndoManager& undoManag
     comp->setComponentID(lab);
     addAndMakeVisible (comp);
   }
+  
+  selectedItems.addChangeListener(this);
 }
 
 InterpolationSpaceComponent::~InterpolationSpaceComponent ()
 {
+  selectedItems.removeChangeListener(this);
   deleteAllChildren();
 }
 
@@ -120,6 +128,7 @@ void InterpolationSpaceComponent::paint (Graphics& g)
 
 void InterpolationSpaceComponent::mouseDown (const MouseEvent& e)
 {
+  selectedItems.deselectAll();
   addChildComponent (lassoComp);
   lassoComp.beginLasso (e, this);
 }
@@ -139,18 +148,24 @@ void InterpolationSpaceComponent::mouseUp (const MouseEvent& e)
 //LassoSource
 void InterpolationSpaceComponent::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
 {
-  //  const Rectangle<int> lasso (area - subCompHolder->getPosition());
-  //  
-  //  for (int i = 0; i < subCompHolder->getNumChildComponents(); ++i)
-  //  {
-  //    Component* c = subCompHolder->getChildComponent (i);
-  //    
-  //    if (c->getBounds().intersects (lasso))
-  //      results.add (c);
-  //  }
+  const Rectangle<int> lasso (area - this->getPosition());
+  
+  for (int i = 0; i < this->getNumChildComponents(); ++i)
+  {
+    Component* c = this->getChildComponent (i);
+    
+    if (c->getBounds().intersects (lasso))
+      results.add (c);
+  }
 }
 
 SelectedItemSet <Component*>& InterpolationSpaceComponent::getLassoSelection()
 {
   return selectedItems;
 }
+
+void InterpolationSpaceComponent::changeListenerCallback (ChangeBroadcaster*)
+{
+  repaint();
+}
+

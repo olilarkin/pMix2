@@ -51,7 +51,7 @@ public:
   PinComponent* findPinAt (int x, int y) const;
 
   void resized();
-  void changeListenerCallback (ChangeBroadcaster*);
+  void changeListenerCallback (ChangeBroadcaster* source);
   void updateComponents();
 
   
