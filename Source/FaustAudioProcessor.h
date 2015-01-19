@@ -20,7 +20,7 @@ public:
   ~FaustAudioProcessor();
   
   virtual void fillInPluginDescription (PluginDescription& description) const override;
-  
+
   void prepareToPlay (double sampleRate, int samplesPerBlock) override;
   void releaseResources() override;
   void processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages) override;
@@ -59,6 +59,8 @@ public:
   
 private:
   llvm_dsp_factory* mFactory;
+  dsp* mDSP;
+  
   std::string mError_msg;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioProcessor)

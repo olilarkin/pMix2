@@ -25,8 +25,15 @@ FaustAudioProcessor::FaustAudioProcessor()
   
   if (mFactory != nullptr)
   {
-    printf("success");
+    mDSP = createDSPInstance(mFactory);
+
+    if (mDSP)
+    {
+      printf("success");
+    }
   }
+  
+  updateHostDisplay();
 }
 
 FaustAudioProcessor::~FaustAudioProcessor()
@@ -49,13 +56,14 @@ void FaustAudioProcessor::fillInPluginDescription (PluginDescription& descriptio
   description.lastFileModTime = Time(0);
   description.isInstrument = false;
   description.hasSharedContainer = false;
-  description.numInputChannels = 2;
-  description.numOutputChannels = 2;
+  description.numInputChannels = mDSP->getNumInputs();
+  description.numOutputChannels = mDSP->getNumOutputs();
 }
 
 void FaustAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-  
+  setPlayConfigDetails(mDSP->getNumInputs(),  mDSP->getNumOutputs(), sampleRate, samplesPerBlock);
+  mDSP->init(sampleRate);
 }
 
 void FaustAudioProcessor::releaseResources()
@@ -65,7 +73,6 @@ void FaustAudioProcessor::releaseResources()
 
 void FaustAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-  
 }
 
 void FaustAudioProcessor::reset()
@@ -130,12 +137,12 @@ const String FaustAudioProcessor::getOutputChannelName (int channelIndex) const
 
 bool FaustAudioProcessor::isInputChannelStereoPair (int index) const
 {
-  return true;
+  return false;
 }
 
 bool FaustAudioProcessor::isOutputChannelStereoPair (int index) const
 {
-  return true;
+  return false;
 }
 
 
