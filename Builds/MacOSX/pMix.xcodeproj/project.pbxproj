@@ -2076,7 +2076,7 @@
 					"JUCE_APP_VERSION=1.0.0",
 					"JUCE_APP_VERSION_HEX=0x10000", );
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = ("/Users/oli/Dev/SDKs/Steinberg/vstsdk2.4", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "/usr/local/include", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("\"/Users/oli/Dev/SDKs/Steinberg/VST3 SDK\"", "/Users/oli/Dev/SDKs/Steinberg/vstsdk2.4", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "/usr/local/include", "$(inherited)");
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"/usr/local/lib\"", "\"/opt/local/lib\"", "\"/opt/local/libexec/llvm-3.5/lib\"");
@@ -2102,7 +2102,7 @@
 					"JUCE_APP_VERSION_HEX=0x10000", );
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = ("/Users/oli/Dev/SDKs/Steinberg/vstsdk2.4", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "/usr/local/include", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("\"/Users/oli/Dev/SDKs/Steinberg/VST3 SDK\"", "/Users/oli/Dev/SDKs/Steinberg/vstsdk2.4", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "/usr/local/include", "$(inherited)");
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"/usr/local/lib\"", "\"/opt/local/lib\"", "\"/opt/local/libexec/llvm-3.5/lib\"");
