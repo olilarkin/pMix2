@@ -53,7 +53,7 @@ slider (p, index_)
   
 ProcessorParameterPropertyComp::~ProcessorParameterPropertyComp()
 {
-  owner.removeListener (this);
+//  owner.removeListener (this);
 }
 
 void ProcessorParameterPropertyComp::refresh()

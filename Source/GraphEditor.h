@@ -64,7 +64,7 @@ public:
   //LassoSource
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
   SelectedItemSet<Component*>& getLassoSelection();
-  
+
 private:
   FilterGraph& graph;
   UndoManager& undoManager;

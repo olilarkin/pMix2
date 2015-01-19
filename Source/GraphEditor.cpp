@@ -228,6 +228,8 @@ void GraphEditor::paint (Graphics& g)
 
 void GraphEditor::mouseDown (const MouseEvent& e)
 {
+  selectedItems.deselectAll();
+
   if (e.mods.isPopupMenu())
   {
     PopupMenu m;
@@ -701,8 +703,10 @@ void FilterComponent::mouseDown (const MouseEvent& e)
       }
     }
   }
-  else {
+  else
+  {
     moving = true;
+    getGraphPanel()->getLassoSelection().selectOnly(this);
     graph.getNodePosition(filterID, startPos.x, startPos.y);
   }
 }
@@ -778,7 +782,10 @@ void FilterComponent::paint (Graphics& g)
   g.setFont (font);
   g.drawFittedText (getName(), getLocalBounds().reduced (4, 2), Justification::centred, 2);
   
-  g.setColour (Colours::grey);
+  if (getGraphPanel()->getLassoSelection().isSelected(this))
+    g.setColour (Colours::red);
+  else
+    g.setColour (Colours::grey);
   //g.drawRect (x, y, w, h);
   g.drawRoundedRectangle(x, y, w, h, 3, 2);
 }
