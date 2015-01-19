@@ -298,6 +298,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\GraphDocumentComponent.cpp">
+      <Filter>pMix\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CodeEditor.cpp">
+      <Filter>pMix\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\FaustAudioProcessor.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
@@ -1530,6 +1536,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\GraphDocumentComponent.h">
+      <Filter>pMix\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CodeEditor.h">
+      <Filter>pMix\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\FaustAudioProcessor.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>

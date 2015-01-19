@@ -7,6 +7,12 @@
     <FILE id="BhRF6l" name="pMix_about.png" compile="0" resource="1" file="BinaryData/pMix_about.png"/>
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
     <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
+      <FILE id="atxxnI" name="GraphDocumentComponent.cpp" compile="1" resource="0"
+            file="Source/GraphDocumentComponent.cpp"/>
+      <FILE id="cjM5RC" name="GraphDocumentComponent.h" compile="0" resource="0"
+            file="Source/GraphDocumentComponent.h"/>
+      <FILE id="PSI7MM" name="CodeEditor.cpp" compile="1" resource="0" file="Source/CodeEditor.cpp"/>
+      <FILE id="wnQxO5" name="CodeEditor.h" compile="0" resource="0" file="Source/CodeEditor.h"/>
       <FILE id="DBJuQb" name="FaustAudioProcessor.cpp" compile="1" resource="0"
             file="Source/FaustAudioProcessor.cpp"/>
       <FILE id="Q4Vrll" name="FaustAudioProcessor.h" compile="0" resource="0"

@@ -2,10 +2,8 @@
 #define __GRAPHEDITORPANEL_JUCEHEADER__
 
 #include "FilterGraph.h"
-#include "iSpace.h"
 #include "ParamView.h"
 //#include "ParamTreeView.h"
-#include "LookAndFeel.h"
 
 class FilterComponent;
 class ConnectorComponent;
@@ -195,46 +193,6 @@ private:
   GraphEditorPanel* getGraphPanel() const noexcept;
   void getDistancesFromEnds (int x, int y, double& distanceFromStart, double& distanceFromEnd) const;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConnectorComponent)
-};
-
-#pragma mark -
-#pragma mark GraphDocumentComponent
-
-class GraphDocumentComponent  : public Component
-{
-public:
-  
-  GraphDocumentComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager);
-  ~GraphDocumentComponent();
-  
-  void createNewPlugin (const PluginDescription* desc, int x, int y);  
-  void resized();
-  void setZoom (double scale);
-  double getZoom() const;
-
-  FilterGraph graph;
-  UndoManager undoManager;
-
-private:
-  
-  AudioDeviceManager* deviceManager;
-  AudioProcessorPlayer graphPlayer;
-  MidiKeyboardState keyState;
-
-  GraphEditorPanel* graphPanel;
-  Component* keyboardComp;
-  Component* statusBar;
-
-  pMixLookAndFeel lf;
-  iSpaceComponent* iSpace;
-  ParamView* paramView;
-  
-  StretchableLayoutManager verticalLayout;
-  StretchableLayoutResizerBar* verticalDividerBar;
-  
-//  ParamTreeView* treeView;
-  
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphDocumentComponent)
 };
 
 class ProcessorProgramPropertyComp : public PropertyComponent,

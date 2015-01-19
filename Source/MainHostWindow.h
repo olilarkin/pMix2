@@ -2,8 +2,7 @@
 #define __MAINHOSTWINDOW_JUCEHEADER__
 
 #include "FilterGraph.h"
-#include "GraphEditorPanel.h"
-
+#include "GraphDocumentComponent.h"
 
 namespace CommandIDs
 {
@@ -26,10 +25,10 @@ ApplicationCommandManager& getCommandManager();
 ApplicationProperties& getAppProperties();
 
 class MainHostWindow    : public DocumentWindow,
-  public MenuBarModel,
-  public ApplicationCommandTarget,
-  public ChangeListener,
-  public FileDragAndDropTarget
+                          public MenuBarModel,
+                          public ApplicationCommandTarget,
+                          public ChangeListener,
+                          public FileDragAndDropTarget
 {
 public:
   MainHostWindow();
