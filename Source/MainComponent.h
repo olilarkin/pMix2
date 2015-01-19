@@ -42,7 +42,7 @@ private:
   Component* statusBar;
   
   pMixLookAndFeel lf;
-  iSpaceComponent* iSpace;
+  InterpolationSpaceComponent* interpolationSpace;
   ParamView* paramView;
   
   StretchableLayoutManager verticalLayout;

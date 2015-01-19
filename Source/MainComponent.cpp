@@ -32,7 +32,7 @@ MainComponent::MainComponent (AudioPluginFormatManager& formatManager,
   
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
-  addAndMakeVisible (iSpace = new iSpaceComponent(undoManager));
+  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(undoManager));
   addAndMakeVisible (paramView = new ParamView(graph));
   addAndMakeVisible (statusBar = new TooltipBar());
   

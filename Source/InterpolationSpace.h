@@ -4,18 +4,18 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-//class iSpaceComponent  : public Component
+//class InterpolationSpaceComponent  : public Component
 //                       , private OpenGLRenderer
 //{
 //public:
-//  iSpaceComponent()
+//  InterpolationSpaceComponent()
 //  {
 //    openGLContext.setRenderer (this);
 //    openGLContext.attachTo (*this);
 //    openGLContext.setContinuousRepainting (true);
 //  }
 //  
-//  ~iSpaceComponent()
+//  ~InterpolationSpaceComponent()
 //  {
 //    openGLContext.detach();
 //  }
@@ -57,29 +57,29 @@
 //  OpenGLContext openGLContext;
 //};
 
-class iSpaceLabel : public Label
+class InterpolationSpaceLabel : public Label
 {
 public:
-  iSpaceLabel(const String& labelText);
+  InterpolationSpaceLabel(const String& labelText);
 };
 
 class MovePresetAction : public UndoableAction
 {
 public:
-  MovePresetAction (Component* iSpace, const String& componentID, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept;
+  MovePresetAction (Component* interpolationSpace, const String& componentID, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
-  Component* iSpace;
+  Component* interpolationSpace;
   String componentID;
   Rectangle<int> startBounds;
   Rectangle<int> endBounds;
   JUCE_DECLARE_NON_COPYABLE (MovePresetAction)
 };
 
-class iSpacePreset : public Component
+class InterpolationSpacePreset : public Component
 {
 private:
   ComponentDragger myDragger;
@@ -87,11 +87,11 @@ private:
   UndoManager& undoManager;
   Rectangle<int> startBounds;
   Rectangle<int> endBounds;
-  iSpaceLabel* label;
+  InterpolationSpaceLabel* label;
     
 public:
-  iSpacePreset(UndoManager& undoManager, String& initalLabel);
-  ~iSpacePreset ();
+  InterpolationSpacePreset(UndoManager& undoManager, String& initalLabel);
+  ~InterpolationSpacePreset ();
   void resized ();
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
@@ -99,7 +99,7 @@ public:
   void paint (Graphics& g);
 };
 
-class iSpaceComponent  : public Component
+class InterpolationSpaceComponent  : public Component
                        , public LassoSource<Component*>  
 {
 private:
@@ -110,8 +110,8 @@ private:
   LassoComponent<Component*> lassoComp;
   
 public:
-  iSpaceComponent (UndoManager& undoManager);
-  ~iSpaceComponent ();
+  InterpolationSpaceComponent (UndoManager& undoManager);
+  ~InterpolationSpaceComponent ();
   void resized ();
   void paint (Graphics& g);
   void mouseDown (const MouseEvent& e);
