@@ -73,6 +73,7 @@ void FaustAudioProcessor::releaseResources()
 
 void FaustAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
+  mDSP->compute(buffer.getNumSamples(), (FAUSTFLOAT**)buffer.getArrayOfReadPointers(), (FAUSTFLOAT**)buffer.getArrayOfWritePointers());
 }
 
 void FaustAudioProcessor::reset()

@@ -11,6 +11,9 @@
 #define FAUSTAUDIOPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+
+#define FAUSTFLOAT float
+
 #include "faust/llvm-dsp.h"
 
 class FaustAudioProcessor  : public AudioPluginInstance
