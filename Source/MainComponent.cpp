@@ -34,6 +34,7 @@ MainComponent::MainComponent (AudioPluginFormatManager& formatManager,
   
   addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(undoManager));
   addAndMakeVisible (paramView = new ParamView(graph));
+  addAndMakeVisible (codeEditor = new CodeEditor());
   addAndMakeVisible (statusBar = new TooltipBar());
   
   deviceManager->addAudioCallback (&graphPlayer);
@@ -58,7 +59,7 @@ MainComponent::~MainComponent()
 
 void MainComponent::resized()
 {
-  Component* vcomps[] = { graphPanel, verticalDividerBar, paramView };
+  Component* vcomps[] = { graphPanel, verticalDividerBar, codeEditor };
   
   verticalLayout.layOutComponents (vcomps, 3,
                                    0, 0, getWidth(), getHeight(),

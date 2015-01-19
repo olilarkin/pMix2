@@ -15,6 +15,7 @@
 #include "LookAndFeel.h"
 #include "InterpolationSpace.h"
 #include "GraphEditorPanel.h"
+#include "CodeEditor.h"
 
 class MainComponent  : public Component
 {
@@ -37,6 +38,7 @@ private:
   AudioProcessorPlayer graphPlayer;
   MidiKeyboardState keyState;
   
+  CodeEditor* codeEditor;
   GraphEditorPanel* graphPanel;
   Component* keyboardComp;
   Component* statusBar;
