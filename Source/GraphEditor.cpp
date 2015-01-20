@@ -246,6 +246,7 @@ void GraphEditor::mouseDown (const MouseEvent& e)
   }
   else
   {
+    selectedItems.deselectAll();
     addChildComponent (lassoComp);
     lassoComp.beginLasso (e, this);
   }
