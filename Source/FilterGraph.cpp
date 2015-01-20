@@ -2,7 +2,7 @@
 #include "MainHostWindow.h"
 #include "FilterGraph.h"
 #include "InternalFilters.h"
-#include "GraphEditorPanel.h"
+#include "GraphEditor.h"
 
 const int FilterGraph::midiChannelNumber = 0x1000;
 
