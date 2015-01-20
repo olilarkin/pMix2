@@ -199,10 +199,10 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
   {
     // "View" menu
     PopupMenu showMenu;
-    showMenu.addItem (259, "Graph Editor", true, true);
-    showMenu.addItem (260, "Interpolation Space", true, true);
-    showMenu.addItem (261, "Code Editor", true, false);
-    showMenu.addItem (262, "Parameters", true, false);
+    showMenu.addCommandItem (&getCommandManager(), CommandIDs::showGraphEditor);
+    showMenu.addCommandItem (&getCommandManager(), CommandIDs::showISpace);
+    showMenu.addCommandItem (&getCommandManager(), CommandIDs::showCodeEditor);
+    showMenu.addCommandItem (&getCommandManager(), CommandIDs::showParameters);
     menu.addSubMenu("Show", showMenu);
 
     PopupMenu floatMenu;
@@ -329,7 +329,11 @@ void MainHostWindow::getAllCommands (Array <CommandID>& commands)
                             CommandIDs::redo,
                             CommandIDs::zoomIn,
                             CommandIDs::zoomOut,
-                            CommandIDs::zoomNormal
+                            CommandIDs::zoomNormal,
+                            CommandIDs::showGraphEditor,
+                            CommandIDs::showISpace,
+                            CommandIDs::showCodeEditor,
+                            CommandIDs::showParameters
                           };
 
   commands.addArray (ids, numElementsInArray (ids));
@@ -343,21 +347,21 @@ void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationComma
   {
     case CommandIDs::open:
       result.setInfo ("Open...",
-                      "Opens a filter graph file",
+                      "Opens a pMix patch",
                       category, 0);
       result.defaultKeypresses.add (KeyPress ('o', ModifierKeys::commandModifier, 0));
       break;
 
     case CommandIDs::save:
       result.setInfo ("Save",
-                      "Saves the current graph to a file",
+                      "Saves the current patch",
                       category, 0);
       result.defaultKeypresses.add (KeyPress ('s', ModifierKeys::commandModifier, 0));
       break;
 
     case CommandIDs::saveAs:
       result.setInfo ("Save As...",
-                      "Saves a copy of the current graph to a file",
+                      "Saves a copy of the patch",
                       category, 0);
       result.defaultKeypresses.add (KeyPress ('s', ModifierKeys::shiftModifier | ModifierKeys::commandModifier, 0));
       break;
@@ -419,6 +423,27 @@ void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationComma
       result.setInfo (TRANS("Zoom to 100%"), TRANS("Restores the zoom level to normal."), category, 0);
 //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
+      
+    case CommandIDs::showGraphEditor:
+      result.setInfo (TRANS("Graph Editor"), TRANS("Shows the Graph Editor"), category, 0);
+      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::showISpace:
+      result.setInfo (TRANS("Interpolation Space"), TRANS("Shows the Interpolation Space"), category, 0);
+      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::showCodeEditor:
+      result.setInfo (TRANS("Code Editor"), TRANS("Shows the Code Editor"), category, 0);
+      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::showParameters:
+      result.setInfo (TRANS("Parameters"), TRANS("Shows the Parameters"), category, 0);
+      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
       //TODO: use these:
 //    case StandardApplicationCommandIDs::undo:
