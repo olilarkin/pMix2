@@ -22,7 +22,7 @@ public:
   
 private:
   ScopedPointer<MainHostWindow> mainWindow;
-  SplashScreen* splash;
+//  SplashScreen* splash;
 };
 
 #endif //__HOSTSTARTUP_JUCEHEADER__

@@ -35,6 +35,7 @@
       <FILE id="ttLwnT" name="GraphEditor.cpp" compile="1" resource="0" file="Source/GraphEditor.cpp"/>
       <FILE id="RIOJxZ" name="GraphEditor.h" compile="0" resource="0" file="Source/GraphEditor.h"/>
       <FILE id="NgTWTW" name="HostStartup.cpp" compile="1" resource="0" file="Source/HostStartup.cpp"/>
+      <FILE id="QyuONq" name="HostStartup.h" compile="0" resource="0" file="Source/HostStartup.h"/>
       <FILE id="zqfuWQ" name="InternalFilters.cpp" compile="1" resource="0"
             file="Source/InternalFilters.cpp"/>
       <FILE id="cQ4d1f" name="InternalFilters.h" compile="0" resource="0"

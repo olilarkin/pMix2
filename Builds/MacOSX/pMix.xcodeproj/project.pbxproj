@@ -344,6 +344,7 @@
 		5BBB9717ECC1188DAAD2CAF4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_AppleRemote.h"; path = "../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_AppleRemote.h"; sourceTree = "SOURCE_ROOT"; };
 		5BCD547548BB04A2AD55E0C7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_Desktop.h"; path = "../../JuceLibraryCode/modules/juce_gui_basics/components/juce_Desktop.h"; sourceTree = "SOURCE_ROOT"; };
 		5C7053B692508E8B9ABC8B03 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_AudioFormatReader.cpp"; path = "../../JuceLibraryCode/modules/juce_audio_formats/format/juce_AudioFormatReader.cpp"; sourceTree = "SOURCE_ROOT"; };
+		5CBEE801209C6D2D5C0F12C5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HostStartup.h; path = ../../Source/HostStartup.h; sourceTree = "SOURCE_ROOT"; };
 		5D2E69E7DCDBC31792CA534E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ImagePreviewComponent.h"; path = "../../JuceLibraryCode/modules/juce_gui_basics/filebrowser/juce_ImagePreviewComponent.h"; sourceTree = "SOURCE_ROOT"; };
 		5D809F989667398A84FA5CA1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_XmlDocument.cpp"; path = "../../JuceLibraryCode/modules/juce_core/xml/juce_XmlDocument.cpp"; sourceTree = "SOURCE_ROOT"; };
 		5EA4A7D90489771A628362D8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_BufferingAudioFormatReader.h"; path = "../../JuceLibraryCode/modules/juce_audio_formats/format/juce_BufferingAudioFormatReader.h"; sourceTree = "SOURCE_ROOT"; };
@@ -982,6 +983,7 @@
 					3C9CB457C691F63A571AB2EB,
 					1BBD192F23973BA9F377972D,
 					607CE560B023EA5189C5B5B2,
+					5CBEE801209C6D2D5C0F12C5,
 					F3826478E1EAEFD391F1702B,
 					3A4242B7045FD058284DFDA8,
 					16A2F891973B46347BD9DCED,
