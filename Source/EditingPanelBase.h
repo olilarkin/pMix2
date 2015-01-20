@@ -1,52 +1,19 @@
-/*
-  ==============================================================================
+#ifndef EDITINGPANELBASE_H_INCLUDED
+#define EDITINGPANELBASE_H_INCLUDED
 
-   This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
-
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
-
-   Details of these licenses can be found at: www.gnu.org/licenses
-
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-   ------------------------------------------------------------------------------
-
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
-
-  ==============================================================================
-*/
-
-#ifndef __JUCER_EDITINGPANELBASE_JUCEHEADER__
-#define __JUCER_EDITINGPANELBASE_JUCEHEADER__
-
-#include "../jucer_JucerDocument.h"
-#include "jucer_ComponentLayoutEditor.h"
+#include "PMixDocument.h"
+#include "ComponentLayoutEditor.h"
 class LayoutPropsPanel;
 
-
-//==============================================================================
-/**
-    Base class for the layout and graphics panels - this takes care of arranging
-    the properties panel and managing the viewport for the content.
-
-*/
 class EditingPanelBase  : public Component
 {
 public:
-    //==============================================================================
-    EditingPanelBase (JucerDocument& document,
+    EditingPanelBase (PMixDocument& document,
                       Component* propsPanel,
                       Component* editorComp);
 
     ~EditingPanelBase();
 
-    //==============================================================================
     void resized();
     void visibilityChanged();
 
@@ -66,7 +33,7 @@ public:
     class MagnifierComponent;
 
 protected:
-    JucerDocument& document;
+    PMixDocument& document;
     LookAndFeel_V2 lookAndFeel;
 
     Viewport* viewport;
@@ -75,5 +42,4 @@ protected:
     Component* propsPanel;
 };
 
-
-#endif   // __JUCER_EDITINGPANELBASE_JUCEHEADER__
+#endif   // EDITINGPANELBASE_H_INCLUDED

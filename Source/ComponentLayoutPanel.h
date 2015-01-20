@@ -1,40 +1,13 @@
-/*
-  ==============================================================================
+#ifndef COMPONENTLAYOUTPANEL_H_INCLUDED
+#define COMPONENTLAYOUTPANEL_H_INCLUDED
 
-   This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+#include "ComponentLayoutEditor.h"
+#include "EditingPanelBase.h"
 
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
-
-   Details of these licenses can be found at: www.gnu.org/licenses
-
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-   ------------------------------------------------------------------------------
-
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
-
-  ==============================================================================
-*/
-
-#ifndef __JUCER_COMPONENTLAYOUTPANEL_JUCEHEADER__
-#define __JUCER_COMPONENTLAYOUTPANEL_JUCEHEADER__
-
-#include "jucer_ComponentLayoutEditor.h"
-#include "jucer_EditingPanelBase.h"
-
-
-//==============================================================================
 class ComponentLayoutPanel  : public EditingPanelBase
 {
 public:
-    //==============================================================================
-    ComponentLayoutPanel (JucerDocument& doc, ComponentLayout& l)
+        ComponentLayoutPanel (PMixDocument& doc, ComponentLayout& l)
         : EditingPanelBase (doc,
                             new LayoutPropsPanel (doc, l),
                             new ComponentLayoutEditor (doc, l)),
@@ -69,7 +42,7 @@ private:
                               public ChangeListener
     {
     public:
-        LayoutPropsPanel (JucerDocument& doc, ComponentLayout& l)
+        LayoutPropsPanel (PMixDocument& doc, ComponentLayout& l)
             : document (doc), layout (l)
         {
             layout.getSelectedSet().addChangeListener (this);
@@ -110,11 +83,11 @@ private:
         }
 
     private:
-        JucerDocument& document;
+        PMixDocument& document;
         ComponentLayout& layout;
         PropertyPanel propsPanel;
     };
 };
 
 
-#endif   // __JUCER_COMPONENTLAYOUTPANEL_JUCEHEADER__
+#endif   // COMPONENTLAYOUTPANEL_H_INCLUDED

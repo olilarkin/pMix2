@@ -1,39 +1,14 @@
-/*
-  ==============================================================================
-
-   This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
-
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
-
-   Details of these licenses can be found at: www.gnu.org/licenses
-
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-   ------------------------------------------------------------------------------
-
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
-
-  ==============================================================================
-*/
-
-#include "../../jucer_Headers.h"
-#include "../../Application/jucer_Application.h"
-#include "jucer_ComponentLayoutEditor.h"
-#include "../ui/jucer_JucerCommandIDs.h"
-#include "../jucer_ObjectTypes.h"
+//#include "../../jucer_Headers.h"
+//#include "../../Application/jucer_Application.h"
+#include "ComponentLayoutEditor.h"
+//#include "../ui/jucer_JucerCommandIDs.h"
+//#include "../jucer_ObjectTypes.h"
 #include "../components/jucer_JucerComponentHandler.h"
 
-//==============================================================================
-class SubComponentHolderComp    : public Component
+class SubComponentHolderComp : public Component
 {
 public:
-    SubComponentHolderComp (JucerDocument& doc,
+    SubComponentHolderComp (PMixDocument& doc,
                             SnapGridPainter& g)
        : document (doc), grid (g),
          dontFillBackground (false)
@@ -97,13 +72,12 @@ public:
         ((ComponentLayoutEditor*) getParentComponent())->updateOverlayPositions();
     }
 
-    JucerDocument& document;
+    PMixDocument& document;
     SnapGridPainter& grid;
     bool dontFillBackground;
 };
 
-//==============================================================================
-ComponentLayoutEditor::ComponentLayoutEditor (JucerDocument& doc, ComponentLayout& cl)
+ComponentLayoutEditor::ComponentLayoutEditor (PMixDocument& doc, ComponentLayout& cl)
     : document (doc), layout (cl), firstResize (true)
 {
     setWantsKeyboardFocus (true);
@@ -124,7 +98,6 @@ ComponentLayoutEditor::~ComponentLayoutEditor()
     deleteAllChildren();
 }
 
-//==============================================================================
 void ComponentLayoutEditor::visibilityChanged()
 {
     document.beginTransaction();
@@ -352,7 +325,7 @@ void ComponentLayoutEditor::filesDropped (const StringArray& filenames, int x, i
 {
     const File f (filenames [0]);
 
-    if (JucerDocument::isValidJucerCppFile (f))
+    if (PMixDocument::isValidJucerCppFile (f))
     {
         JucerComponentHandler jucerDocHandler;
         layout.getDocument()->beginTransaction();
