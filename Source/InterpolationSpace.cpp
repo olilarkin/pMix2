@@ -3,6 +3,7 @@
 InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText) 
 : Label(String::empty, labelText)
 {
+  setInterceptsMouseClicks(false, false);
 }
 
 MovePresetAction::MovePresetAction (Component* interpolationSpace, const String& componentID, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept
