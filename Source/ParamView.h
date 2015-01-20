@@ -2,7 +2,7 @@
 #define __PARAMVIEW_JUCEHEADER__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "FilterGraph.h"
+#include "PMixDocument.h"
 
 class ParamSlider  : public Slider
 {
@@ -45,7 +45,7 @@ class ParamView : public Component
                 , public ChangeListener
 {
 public:  
-  ParamView(FilterGraph& graph_);
+  ParamView(PMixDocument& graph_);
   
   ~ParamView();
   void paint (Graphics& g) override;
@@ -54,7 +54,7 @@ public:
   void addEditor(AudioProcessor* p);
   
 private:
-  FilterGraph& graph;
+  PMixDocument& graph;
   Array<uint32> sectionNodes;
   PropertyPanel panel;
 };

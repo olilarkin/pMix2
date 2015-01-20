@@ -1,17 +1,17 @@
-#ifndef __FILTERGRAPH_JUCEHEADER__
-#define __FILTERGRAPH_JUCEHEADER__
+#ifndef __PMixDocument_JUCEHEADER__
+#define __PMixDocument_JUCEHEADER__
 
 class FilterInGraph;
-class FilterGraph;
+class PMixDocument;
 
 const char* const filenameSuffix = ".pmix";
 const char* const filenameWildcard = "*.pmix";
 
-class FilterGraph   : public FileBasedDocument
+class PMixDocument   : public FileBasedDocument
 {
 public:
-  FilterGraph (AudioPluginFormatManager& formatManager);
-  ~FilterGraph();
+  PMixDocument (AudioPluginFormatManager& formatManager);
+  ~PMixDocument();
   AudioProcessorGraph& getGraph() noexcept { return graph; }
   int getNumFilters() const noexcept;
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
@@ -51,8 +51,8 @@ private:
   uint32 getNextUID() noexcept;
   void createNodeFromXml (const XmlElement& xml);
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FilterGraph)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixDocument)
 };
 
 
-#endif   // __FILTERGRAPH_JUCEHEADER__
+#endif   // __PMixDocument_JUCEHEADER__

@@ -11,7 +11,7 @@
 #define MAINCOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "FilterGraph.h"
+#include "PMixDocument.h"
 #include "LookAndFeel.h"
 #include "InterpolationSpace.h"
 #include "GraphEditor.h"
@@ -29,7 +29,7 @@ public:
   void setZoom (double scale);
   double getZoom() const;
   
-  FilterGraph graph;
+  PMixDocument graph;
   UndoManager undoManager;
   
 private:

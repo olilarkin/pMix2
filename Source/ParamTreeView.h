@@ -2,7 +2,7 @@
 #define __PTVHEADER__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "FilterGraph.h"
+#include "PMixDocument.h"
 
 class  ParamTreeViewRootItem  : public TreeViewItem
 {
@@ -36,7 +36,7 @@ private:
 class  ParamTreeViewPluginItem  : public TreeViewItem
 {
 public:
-  ParamTreeViewPluginItem (FilterGraph& graph_, const uint32 filterID_);
+  ParamTreeViewPluginItem (PMixDocument& graph_, const uint32 filterID_);
   ~ParamTreeViewPluginItem();
   int getItemWidth() const;
   int getItemHeight() const;
@@ -46,7 +46,7 @@ public:
   void itemOpennessChanged (bool isNowOpen);
 
 private:
-  FilterGraph& graph;
+  PMixDocument& graph;
   const uint32 filterID;
 };
 
@@ -56,7 +56,7 @@ class  ParamTreeView  : public Component,
 /*, public ButtonListener*/
 {
 public:
-  ParamTreeView(FilterGraph& graph_);
+  ParamTreeView(PMixDocument& graph_);
   ~ParamTreeView();
   
   void paint (Graphics& g);
@@ -69,7 +69,7 @@ public:
   juce_UseDebuggingNewOperator
 
 private:
-  FilterGraph& graph;
+  PMixDocument& graph;
   ScopedPointer <TreeViewItem> rootItem;
   ScopedPointer <TreeView> treeView;
 

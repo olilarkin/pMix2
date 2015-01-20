@@ -102,7 +102,7 @@ void ParamTreeViewParamItem::itemOpennessChanged (bool isNowOpen)
 {
 }
   
-ParamTreeViewPluginItem::ParamTreeViewPluginItem (FilterGraph& graph_, const uint32 filterID_)
+ParamTreeViewPluginItem::ParamTreeViewPluginItem (PMixDocument& graph_, const uint32 filterID_)
 : graph (graph_),
 filterID (filterID_)
 {
@@ -174,7 +174,7 @@ void ParamTreeViewPluginItem::itemOpennessChanged (bool isNowOpen)
   }
 }
 
-ParamTreeView::ParamTreeView(FilterGraph& graph_)
+ParamTreeView::ParamTreeView(PMixDocument& graph_)
 : graph (graph_)
 , treeView (0)
 {

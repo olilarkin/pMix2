@@ -1,7 +1,7 @@
 #ifndef __GRAPHEDITOR_JUCEHEADER__
 #define __GRAPHEDITOR_JUCEHEADER__
 
-#include "FilterGraph.h"
+#include "PMixDocument.h"
 #include "ParamView.h"
 //#include "ParamTreeView.h"
 
@@ -15,13 +15,13 @@ class PinComponent;
 class CreatePluginAction  : public UndoableAction
 {
 public:
-  CreatePluginAction (FilterGraph& graph, const PluginDescription* desc, double x, double y) noexcept;
+  CreatePluginAction (PMixDocument& graph, const PluginDescription* desc, double x, double y) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
-  FilterGraph& graph;
+  PMixDocument& graph;
   double x, y;
   const PluginDescription* desc;
   uint32 nodeID;
@@ -36,7 +36,7 @@ class GraphEditor : public Component,
                     public LassoSource<Component*>
 {
 public:
-  GraphEditor (FilterGraph& graph, UndoManager& undoManager);
+  GraphEditor (PMixDocument& graph, UndoManager& undoManager);
   ~GraphEditor();
 
   void paint (Graphics& g);
@@ -66,7 +66,7 @@ public:
   SelectedItemSet<Component*>& getLassoSelection();
 
 private:
-  FilterGraph& graph;
+  PMixDocument& graph;
   UndoManager& undoManager;
   LassoComponent<Component*> lassoComp;
   SelectedItemSet<Component*> selectedItems;
@@ -82,7 +82,7 @@ class PinComponent : public Component,
                      public SettableTooltipClient
 {
 public:
-  PinComponent (FilterGraph& graph_, const uint32 filterID_, const int index_, const bool isInput_);
+  PinComponent (PMixDocument& graph_, const uint32 filterID_, const int index_, const bool isInput_);
   void paint (Graphics& g);
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
@@ -93,7 +93,7 @@ public:
   const bool isInput;
   
 private:
-  FilterGraph& graph;
+  PMixDocument& graph;
   
   GraphEditor* getGraphPanel() const noexcept;
   
@@ -106,13 +106,13 @@ private:
 class MovePluginAction  : public UndoableAction
 {
 public:
-  MovePluginAction (FilterGraph& graph, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
+  MovePluginAction (PMixDocument& graph, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
-  FilterGraph& graph;
+  PMixDocument& graph;
   FilterComponent* filterComponent;
   uint32 nodeID;
   Point<double> startPos;
@@ -126,7 +126,7 @@ private:
 class FilterComponent : public Component
 {
 public:
-  FilterComponent (FilterGraph& graph_, const uint32 filterID_, UndoManager& undoManager);
+  FilterComponent (PMixDocument& graph_, const uint32 filterID_, UndoManager& undoManager);
   ~FilterComponent();
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
@@ -137,7 +137,7 @@ public:
   void getPinPos (const int index, const bool isInput, float& x, float& y);
   void update();
   
-  FilterGraph& graph;
+  PMixDocument& graph;
   const uint32 filterID;
   int numInputs, numOutputs;
   
@@ -166,7 +166,7 @@ class ConnectorComponent   : public Component
                            , public SettableTooltipClient
 {
 public:
-  ConnectorComponent (FilterGraph& graph_);
+  ConnectorComponent (PMixDocument& graph_);
   void setInput (const uint32 sourceFilterID_, const int sourceFilterChannel_);
   void setOutput (const uint32 destFilterID_, const int destFilterChannel_);
   void dragStart (int x, int y);
@@ -185,7 +185,7 @@ public:
   int sourceFilterChannel, destFilterChannel;
   
 private:
-  FilterGraph& graph;
+  PMixDocument& graph;
   float lastInputX, lastInputY, lastOutputX, lastOutputY;
   Path linePath, hitPath;
   bool dragging;

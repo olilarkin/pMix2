@@ -6,7 +6,7 @@
 #pragma mark -
 #pragma mark CreatePluginAction
 
-CreatePluginAction::CreatePluginAction (FilterGraph& graph, const PluginDescription* desc, double x, double y) noexcept
+CreatePluginAction::CreatePluginAction (PMixDocument& graph, const PluginDescription* desc, double x, double y) noexcept
 : graph(graph)
 , x(x)
 , y(y)
@@ -205,7 +205,7 @@ void PluginWindow::closeButtonPressed()
 #pragma mark -
 #pragma mark GraphEditor
 
-GraphEditor::GraphEditor (FilterGraph& graph_, UndoManager& undoManager)
+GraphEditor::GraphEditor (PMixDocument& graph_, UndoManager& undoManager)
   : graph (graph_)
   , undoManager (undoManager)
 {
@@ -505,7 +505,7 @@ SelectedItemSet <Component*>& GraphEditor::getLassoSelection()
 #pragma mark -
 #pragma mark PinComponent
 
-PinComponent::PinComponent (FilterGraph& graph_, const uint32 filterID_, const int index_, const bool isInput_)
+PinComponent::PinComponent (PMixDocument& graph_, const uint32 filterID_, const int index_, const bool isInput_)
 : filterID (filterID_),
 index (index_),
 isInput (isInput_),
@@ -515,7 +515,7 @@ graph (graph_)
   {
     String tip;
     
-    if (index_ == FilterGraph::midiChannelNumber)
+    if (index_ == PMixDocument::midiChannelNumber)
     {
       tip = isInput ? "MIDI Input" : "MIDI Output";
     }
@@ -546,7 +546,7 @@ void PinComponent::paint (Graphics& g)
   
   p.addRectangle (w * 0.4f, isInput ? (0.5f * h) : 0.0f, w * 0.2f, h * 0.5f);
   
-  g.setColour (index == FilterGraph::midiChannelNumber ? Colours::red : Colours::green);
+  g.setColour (index == PMixDocument::midiChannelNumber ? Colours::red : Colours::green);
   g.fillPath (p);
 }
 
@@ -577,7 +577,7 @@ GraphEditor* PinComponent::getGraphPanel() const noexcept
 #pragma mark -
 #pragma mark MovePluginAction
 
-MovePluginAction::MovePluginAction (FilterGraph& graph, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
+MovePluginAction::MovePluginAction (PMixDocument& graph, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
 : graph(graph)
 , filterComponent(filterComponent)
 , nodeID(nodeID)
@@ -608,7 +608,7 @@ int MovePluginAction::getSizeInUnits()
 #pragma mark -
 #pragma mark FilterComponent
 
-FilterComponent::FilterComponent (FilterGraph& graph_,
+FilterComponent::FilterComponent (PMixDocument& graph_,
                  const uint32 filterID_,
                  UndoManager& undoManager)
 : graph (graph_),
@@ -803,7 +803,7 @@ void FilterComponent::resized()
     if (PinComponent* const pc = dynamic_cast <PinComponent*> (getChildComponent(i)))
     {
       const int total = pc->isInput ? numIns : numOuts;
-      const int index = pc->index == FilterGraph::midiChannelNumber ? (total - 1) : pc->index;
+      const int index = pc->index == PMixDocument::midiChannelNumber ? (total - 1) : pc->index;
       
       pc->setBounds (proportionOfWidth ((1 + index) / (total + 1.0f)) - pinSize / 2,
                      pc->isInput ? 0 : (getHeight() - pinSize),
@@ -878,13 +878,13 @@ void FilterComponent::update()
       addAndMakeVisible (new PinComponent (graph, filterID, i, true));
     
     if (f->getProcessor()->acceptsMidi())
-      addAndMakeVisible (new PinComponent (graph, filterID, FilterGraph::midiChannelNumber, true));
+      addAndMakeVisible (new PinComponent (graph, filterID, PMixDocument::midiChannelNumber, true));
     
     for (i = 0; i < f->getProcessor()->getNumOutputChannels(); ++i)
       addAndMakeVisible (new PinComponent (graph, filterID, i, false));
     
     if (f->getProcessor()->producesMidi())
-      addAndMakeVisible (new PinComponent (graph, filterID, FilterGraph::midiChannelNumber, false));
+      addAndMakeVisible (new PinComponent (graph, filterID, PMixDocument::midiChannelNumber, false));
     
     resized();
   }
@@ -898,7 +898,7 @@ GraphEditor* FilterComponent::getGraphPanel() const noexcept
 #pragma mark -
 #pragma mark ConnectorComponent
 
-ConnectorComponent::ConnectorComponent (FilterGraph& graph_)
+ConnectorComponent::ConnectorComponent (PMixDocument& graph_)
 : sourceFilterID (0),
 destFilterID (0),
 sourceFilterChannel (0),
@@ -997,8 +997,8 @@ void ConnectorComponent::getPoints (float& x1, float& y1, float& x2, float& y2) 
 
 void ConnectorComponent::paint (Graphics& g)
 {
-  if (sourceFilterChannel == FilterGraph::midiChannelNumber
-      || destFilterChannel == FilterGraph::midiChannelNumber)
+  if (sourceFilterChannel == PMixDocument::midiChannelNumber
+      || destFilterChannel == PMixDocument::midiChannelNumber)
   {
     g.setColour (Colours::red);
   }

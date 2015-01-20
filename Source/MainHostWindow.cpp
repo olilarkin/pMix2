@@ -176,7 +176,7 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
 
     RecentlyOpenedFilesList recentFiles;
     recentFiles.restoreFromString (getAppProperties().getUserSettings()
-                                   ->getValue ("recentFilterGraphFiles"));
+                                   ->getValue ("recentPMixDocumentFiles"));
 
     PopupMenu recentFilesMenu;
     recentFiles.createPopupMenuItems (recentFilesMenu, 100, true, true);
@@ -240,7 +240,7 @@ void MainHostWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/
   {
     RecentlyOpenedFilesList recentFiles;
     recentFiles.restoreFromString (getAppProperties().getUserSettings()
-                                   ->getValue ("recentFilterGraphFiles"));
+                                   ->getValue ("recentPMixDocumentFiles"));
 
     if (graphEditor != nullptr && graphEditor->graph.saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
       graphEditor->graph.loadFrom (recentFiles.getFile (menuItemID - 100), true);

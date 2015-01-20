@@ -1,7 +1,7 @@
 #ifndef __MAINHOSTWINDOW_JUCEHEADER__
 #define __MAINHOSTWINDOW_JUCEHEADER__
 
-#include "FilterGraph.h"
+#include "PMixDocument.h"
 #include "MainComponent.h"
 
 namespace CommandIDs

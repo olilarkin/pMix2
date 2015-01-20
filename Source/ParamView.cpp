@@ -83,7 +83,7 @@ void ProcessorParameterPropertyComp::timerCallback()
   }
 }
 
-ParamView::ParamView(FilterGraph& graph_)
+ParamView::ParamView(PMixDocument& graph_)
 : graph (graph_)
 {
   graph.addChangeListener (this);

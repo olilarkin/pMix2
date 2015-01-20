@@ -1,12 +1,12 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MainHostWindow.h"
-#include "FilterGraph.h"
+#include "PMixDocument.h"
 #include "InternalFilters.h"
 #include "GraphEditor.h"
 
-const int FilterGraph::midiChannelNumber = 0x1000;
+const int PMixDocument::midiChannelNumber = 0x1000;
 
-FilterGraph::FilterGraph (AudioPluginFormatManager& formatManager_)
+PMixDocument::PMixDocument (AudioPluginFormatManager& formatManager_)
   : FileBasedDocument (filenameSuffix,
                        filenameWildcard,
                        "Load a filter graph",
@@ -22,32 +22,32 @@ FilterGraph::FilterGraph (AudioPluginFormatManager& formatManager_)
   setChangedFlag (false);
 }
 
-FilterGraph::~FilterGraph()
+PMixDocument::~PMixDocument()
 {
   graph.clear();
 }
 
-uint32 FilterGraph::getNextUID() noexcept
+uint32 PMixDocument::getNextUID() noexcept
 {
   return ++lastUID;
 }
 
-int FilterGraph::getNumFilters() const noexcept
+int PMixDocument::getNumFilters() const noexcept
 {
   return graph.getNumNodes();
 }
 
-const AudioProcessorGraph::Node::Ptr FilterGraph::getNode (const int index) const noexcept
+const AudioProcessorGraph::Node::Ptr PMixDocument::getNode (const int index) const noexcept
 {
   return graph.getNode (index);
 }
 
-const AudioProcessorGraph::Node::Ptr FilterGraph::getNodeForId (const uint32 uid) const noexcept
+const AudioProcessorGraph::Node::Ptr PMixDocument::getNodeForId (const uint32 uid) const noexcept
 {
   return graph.getNodeForId (uid);
 }
 
-uint32 FilterGraph::addFilter (const PluginDescription* desc, double x, double y)
+uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double y)
 {
   AudioProcessorGraph::Node* node = nullptr;
 
@@ -77,7 +77,7 @@ uint32 FilterGraph::addFilter (const PluginDescription* desc, double x, double y
   return node->nodeId;
 }
 
-void FilterGraph::removeFilter (const uint32 id)
+void PMixDocument::removeFilter (const uint32 id)
 {
   PluginWindow::closeCurrentlyOpenWindowsFor (id);
 
@@ -85,19 +85,19 @@ void FilterGraph::removeFilter (const uint32 id)
     changed();
 }
 
-void FilterGraph::disconnectFilter (const uint32 id)
+void PMixDocument::disconnectFilter (const uint32 id)
 {
   if (graph.disconnectNode (id))
     changed();
 }
 
-void FilterGraph::removeIllegalConnections()
+void PMixDocument::removeIllegalConnections()
 {
   if (graph.removeIllegalConnections())
     changed();
 }
 
-void FilterGraph::setNodePosition (const int nodeId, double x, double y)
+void PMixDocument::setNodePosition (const int nodeId, double x, double y)
 {
   const AudioProcessorGraph::Node::Ptr n (graph.getNodeForId (nodeId));
 
@@ -108,7 +108,7 @@ void FilterGraph::setNodePosition (const int nodeId, double x, double y)
   }
 }
 
-void FilterGraph::getNodePosition (const int nodeId, double& x, double& y) const
+void PMixDocument::getNodePosition (const int nodeId, double& x, double& y) const
 {
   x = y = 0;
 
@@ -122,31 +122,31 @@ void FilterGraph::getNodePosition (const int nodeId, double& x, double& y) const
 }
 
 
-int FilterGraph::getNumConnections() const noexcept
+int PMixDocument::getNumConnections() const noexcept
 {
   return graph.getNumConnections();
 }
 
-const AudioProcessorGraph::Connection* FilterGraph::getConnection (const int index) const noexcept
+const AudioProcessorGraph::Connection* PMixDocument::getConnection (const int index) const noexcept
 {
   return graph.getConnection (index);
 }
 
-const AudioProcessorGraph::Connection* FilterGraph::getConnectionBetween (uint32 sourceFilterUID, int sourceFilterChannel,
+const AudioProcessorGraph::Connection* PMixDocument::getConnectionBetween (uint32 sourceFilterUID, int sourceFilterChannel,
     uint32 destFilterUID, int destFilterChannel) const noexcept
 {
   return graph.getConnectionBetween (sourceFilterUID, sourceFilterChannel,
                                      destFilterUID, destFilterChannel);
 }
 
-bool FilterGraph::canConnect (uint32 sourceFilterUID, int sourceFilterChannel,
+bool PMixDocument::canConnect (uint32 sourceFilterUID, int sourceFilterChannel,
                               uint32 destFilterUID, int destFilterChannel) const noexcept
 {
   return graph.canConnect (sourceFilterUID, sourceFilterChannel,
                            destFilterUID, destFilterChannel);
 }
 
-bool FilterGraph::addConnection (uint32 sourceFilterUID, int sourceFilterChannel,
+bool PMixDocument::addConnection (uint32 sourceFilterUID, int sourceFilterChannel,
                                  uint32 destFilterUID, int destFilterChannel)
 {
   const bool result = graph.addConnection (sourceFilterUID, sourceFilterChannel,
@@ -158,13 +158,13 @@ bool FilterGraph::addConnection (uint32 sourceFilterUID, int sourceFilterChannel
   return result;
 }
 
-void FilterGraph::removeConnection (const int index)
+void PMixDocument::removeConnection (const int index)
 {
   graph.removeConnection (index);
   changed();
 }
 
-void FilterGraph::removeConnection (uint32 sourceFilterUID, int sourceFilterChannel,
+void PMixDocument::removeConnection (uint32 sourceFilterUID, int sourceFilterChannel,
                                     uint32 destFilterUID, int destFilterChannel)
 {
   if (graph.removeConnection (sourceFilterUID, sourceFilterChannel,
@@ -172,7 +172,7 @@ void FilterGraph::removeConnection (uint32 sourceFilterUID, int sourceFilterChan
     changed();
 }
 
-void FilterGraph::clear()
+void PMixDocument::clear()
 {
   PluginWindow::closeAllCurrentlyOpenWindows();
 
@@ -180,7 +180,7 @@ void FilterGraph::clear()
   changed();
 }
 
-String FilterGraph::getDocumentTitle()
+String PMixDocument::getDocumentTitle()
 {
   if (! getFile().exists())
     return "Unnamed";
@@ -188,19 +188,19 @@ String FilterGraph::getDocumentTitle()
   return getFile().getFileNameWithoutExtension();
 }
 
-Result FilterGraph::loadDocument (const File& file)
+Result PMixDocument::loadDocument (const File& file)
 {
   XmlDocument doc (file);
   ScopedPointer<XmlElement> xml (doc.getDocumentElement());
 
-  if (xml == nullptr || ! xml->hasTagName ("FILTERGRAPH"))
+  if (xml == nullptr || ! xml->hasTagName ("PMixDocument"))
     return Result::fail ("Not a valid filter graph file");
 
   restoreFromXml (*xml);
   return Result::ok();
 }
 
-Result FilterGraph::saveDocument (const File& file)
+Result PMixDocument::saveDocument (const File& file)
 {
   ScopedPointer<XmlElement> xml (createXml());
 
@@ -210,25 +210,25 @@ Result FilterGraph::saveDocument (const File& file)
   return Result::ok();
 }
 
-File FilterGraph::getLastDocumentOpened()
+File PMixDocument::getLastDocumentOpened()
 {
   RecentlyOpenedFilesList recentFiles;
   recentFiles.restoreFromString (getAppProperties().getUserSettings()
-                                 ->getValue ("recentFilterGraphFiles"));
+                                 ->getValue ("recentPMixDocumentFiles"));
 
   return recentFiles.getFile (0);
 }
 
-void FilterGraph::setLastDocumentOpened (const File& file)
+void PMixDocument::setLastDocumentOpened (const File& file)
 {
   RecentlyOpenedFilesList recentFiles;
   recentFiles.restoreFromString (getAppProperties().getUserSettings()
-                                 ->getValue ("recentFilterGraphFiles"));
+                                 ->getValue ("recentPMixDocumentFiles"));
 
   recentFiles.addFile (file);
 
   getAppProperties().getUserSettings()
-  ->setValue ("recentFilterGraphFiles", recentFiles.toString());
+  ->setValue ("recentPMixDocumentFiles", recentFiles.toString());
 }
 
 static XmlElement* createNodeXml (AudioProcessorGraph::Node* const node) noexcept
@@ -263,7 +263,7 @@ static XmlElement* createNodeXml (AudioProcessorGraph::Node* const node) noexcep
   return e;
 }
 
-void FilterGraph::createNodeFromXml (const XmlElement& xml)
+void PMixDocument::createNodeFromXml (const XmlElement& xml)
 {
   PluginDescription pd;
 
@@ -301,9 +301,9 @@ void FilterGraph::createNodeFromXml (const XmlElement& xml)
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
 }
 
-XmlElement* FilterGraph::createXml() const
+XmlElement* PMixDocument::createXml() const
 {
-  XmlElement* xml = new XmlElement ("FILTERGRAPH");
+  XmlElement* xml = new XmlElement ("PMixDocument");
 
   for (int i = 0; i < graph.getNumNodes(); ++i)
     xml->addChildElement (createNodeXml (graph.getNode (i)));
@@ -325,7 +325,7 @@ XmlElement* FilterGraph::createXml() const
   return xml;
 }
 
-void FilterGraph::restoreFromXml (const XmlElement& xml)
+void PMixDocument::restoreFromXml (const XmlElement& xml)
 {
   clear();
 
