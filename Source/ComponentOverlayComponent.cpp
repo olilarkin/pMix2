@@ -1,6 +1,6 @@
 //#include "../../jucer_Headers.h"
 #include "ComponentLayoutEditor.h"
-//#include "../jucer_UtilityFunctions.h"
+#include "Utilities.h"
 
 ComponentOverlayComponent::ComponentOverlayComponent (Component* const target_,
                                                       ComponentLayout& layout_)

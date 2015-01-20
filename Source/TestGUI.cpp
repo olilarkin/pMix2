@@ -73,7 +73,7 @@ void TestGUI::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    hyperlinkButton->setBounds (88, 104, 150, 24);
+    hyperlinkButton->setBounds (360, 192, 216, 48);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -95,11 +95,11 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="TestGUI" componentName=""
                  parentClasses="public Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
+                 snapPixels="24" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ffffffff"/>
   <HYPERLINKBUTTON name="new hyperlink" id="be2bbf8158924658" memberName="hyperlinkButton"
-                   virtualName="" explicitFocusOrder="0" pos="88 104 150 24" tooltip="http://www.juce.com"
+                   virtualName="" explicitFocusOrder="0" pos="360 192 216 48" tooltip="http://www.juce.com"
                    buttonText="new hyperlink" connectedEdges="0" needsCallback="0"
                    radioGroupId="0" url="http://www.juce.com"/>
 </JUCER_COMPONENT>

@@ -3,7 +3,7 @@
 #include "ComponentLayoutEditor.h"
 //#include "../ui/jucer_JucerCommandIDs.h"
 //#include "../jucer_ObjectTypes.h"
-#include "../components/jucer_JucerComponentHandler.h"
+//#include "../components/jucer_JucerComponentHandler.h"
 
 class SubComponentHolderComp : public Component
 {

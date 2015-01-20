@@ -2,6 +2,7 @@
 #define COMPONENTOVERLAY_H_INCLUDED
 
 #include "PMixDocument.h"
+#include "ComponentLayout.h"
 
 class ComponentOverlayComponent  : public Component,
                                    public ComponentListener,

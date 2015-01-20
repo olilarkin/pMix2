@@ -3,7 +3,7 @@
 
 #include "ComponentOverlayComponent.h"
 #include "PMixDocument.h"
-//#include "jucer_SnapGridPainter.h"
+#include "SnapGridPainter.h"
 
 class ComponentLayoutEditor  : public Component,
                                public ChangeListener,

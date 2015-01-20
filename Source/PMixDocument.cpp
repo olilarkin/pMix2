@@ -345,3 +345,41 @@ void PMixDocument::restoreFromXml (const XmlElement& xml)
 
   graph.removeIllegalConnections();
 }
+
+bool PMixDocument::isSnapActive (const bool disableIfCtrlKeyDown) const noexcept
+{
+  return snapActive != (disableIfCtrlKeyDown && ModifierKeys::getCurrentModifiers().isCtrlDown());
+}
+
+int PMixDocument::snapPosition (int pos) const noexcept
+{
+  if (isSnapActive (true))
+  {
+    jassert (snapGridPixels > 0);
+    pos = ((pos + snapGridPixels * 1024 + snapGridPixels / 2) / snapGridPixels - 1024) * snapGridPixels;
+  }
+  
+  return pos;
+}
+
+void PMixDocument::setSnappingGrid (const int numPixels, const bool active, const bool shown)
+{
+  if (numPixels != snapGridPixels
+      || active != snapActive
+      || shown != snapShown)
+  {
+    snapGridPixels = numPixels;
+    snapActive = active;
+    snapShown = shown;
+    changed();
+  }
+}
+
+void PMixDocument::setComponentOverlayOpacity (const float alpha)
+{
+  if (alpha != componentOverlayOpacity)
+  {
+    componentOverlayOpacity = alpha;
+    changed();
+  }
+}

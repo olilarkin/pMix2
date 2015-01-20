@@ -1,6 +1,8 @@
 #ifndef __PMixDocument_JUCEHEADER__
 #define __PMixDocument_JUCEHEADER__
 
+#include "../JuceLibraryCode/JuceHeader.h"
+
 class FilterInGraph;
 class PMixDocument;
 
@@ -43,6 +45,17 @@ public:
   void setLastDocumentOpened (const File& file);
   // The special channel index used to refer to a filter's midi channel
   static const int midiChannelNumber;
+  
+  void setSnappingGrid (const int numPixels, const bool active, const bool shown);
+  
+  int getSnappingGridSize() const noexcept                                { return snapGridPixels; }
+  bool isSnapActive (const bool disableIfCtrlKeyDown) const noexcept;
+  bool isSnapShown() const noexcept                                       { return snapShown; }
+  
+  int snapPosition (int pos) const noexcept;
+  void setComponentOverlayOpacity (const float alpha);
+  float getComponentOverlayOpacity() const noexcept                       { return componentOverlayOpacity; }
+  
 private:
   
   AudioPluginFormatManager& formatManager;
@@ -51,6 +64,10 @@ private:
   uint32 getNextUID() noexcept;
   void createNodeFromXml (const XmlElement& xml);
 
+  int snapGridPixels;
+  bool snapActive, snapShown;
+  float componentOverlayOpacity;
+  
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixDocument)
 };
 
