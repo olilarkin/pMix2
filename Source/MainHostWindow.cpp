@@ -160,7 +160,7 @@ void MainHostWindow::changeListenerCallback (ChangeBroadcaster*)
 
 StringArray MainHostWindow::getMenuBarNames()
 {
-  const char* const names[] = { "File", "Edit", "Plugins", "Options", nullptr };
+  const char* const names[] = { "File", "Edit", "View", "Plugins", "Options", nullptr };
 
   return StringArray (names);
 }
@@ -197,6 +197,28 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
   }
   else if (topLevelMenuIndex == 2)
   {
+    // "View" menu
+    PopupMenu showMenu;
+    showMenu.addItem (259, "Graph Editor", true, true);
+    showMenu.addItem (260, "Interpolation Space", true, true);
+    showMenu.addItem (261, "Code Editor", true, false);
+    showMenu.addItem (262, "Parameters", true, false);
+    menu.addSubMenu("Show", showMenu);
+
+    PopupMenu floatMenu;
+    floatMenu.addItem (263, "Graph Editor", true, true);
+    floatMenu.addItem (264, "Interpolation Space", true, false);
+    floatMenu.addItem (265, "Code Editor", true, false);
+    floatMenu.addItem (266, "Parameters", true, false);
+    menu.addSubMenu("Float", floatMenu);
+    
+    menu.addSeparator();
+    menu.addCommandItem (&getCommandManager(), CommandIDs::zoomIn);
+    menu.addCommandItem (&getCommandManager(), CommandIDs::zoomOut);
+    menu.addCommandItem (&getCommandManager(), CommandIDs::zoomNormal);
+  }
+  else if (topLevelMenuIndex == 3)
+  {
     // "Plugins" menu
     PopupMenu pluginsMenu;
     addPluginsToMenu (pluginsMenu);
@@ -204,7 +226,7 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
     menu.addSeparator();
     menu.addItem (250, "Delete all plugins");
   }
-  else if (topLevelMenuIndex == 3)
+  else if (topLevelMenuIndex == 4)
   {
     // "Options" menu
 
@@ -217,11 +239,6 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
     sortTypeMenu.addItem (203, "List plugins by manufacturer",       true, pluginSortMethod == KnownPluginList::sortByManufacturer);
     sortTypeMenu.addItem (204, "List plugins based on the directory structure", true, pluginSortMethod == KnownPluginList::sortByFileSystemLocation);
     menu.addSubMenu ("Plugin menu type", sortTypeMenu);
-    
-    menu.addSeparator();
-    menu.addCommandItem (&getCommandManager(), CommandIDs::zoomIn);
-    menu.addCommandItem (&getCommandManager(), CommandIDs::zoomOut);
-    menu.addCommandItem (&getCommandManager(), CommandIDs::zoomNormal);
   }
 
   return menu;

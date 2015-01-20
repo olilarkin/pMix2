@@ -9,8 +9,8 @@ const int PMixDocument::midiChannelNumber = 0x1000;
 PMixDocument::PMixDocument (AudioPluginFormatManager& formatManager_)
   : FileBasedDocument (filenameSuffix,
                        filenameWildcard,
-                       "Load a filter graph",
-                       "Save a filter graph"),
+                       "Load a pMix patch",
+                       "Save a pMix patch"),
   formatManager (formatManager_), lastUID (0)
 {
   InternalPluginFormat internalFormat;
@@ -194,7 +194,7 @@ Result PMixDocument::loadDocument (const File& file)
   ScopedPointer<XmlElement> xml (doc.getDocumentElement());
 
   if (xml == nullptr || ! xml->hasTagName ("PMixDocument"))
-    return Result::fail ("Not a valid filter graph file");
+    return Result::fail ("Not a valid pMix file");
 
   restoreFromXml (*xml);
   return Result::ok();
