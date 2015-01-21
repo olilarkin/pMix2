@@ -11,7 +11,12 @@ PMixDocument::PMixDocument (AudioPluginFormatManager& formatManager_)
                        filenameWildcard,
                        "Load a pMix patch",
                        "Save a pMix patch"),
-  formatManager (formatManager_), lastUID (0)
+                       formatManager (formatManager_),
+                       lastUID (0),
+                       snapGridPixels (8),
+                       snapActive (true),
+                       snapShown (true),
+                       componentOverlayOpacity (0.33f)
 {
   InternalPluginFormat internalFormat;
 
@@ -318,9 +323,17 @@ XmlElement* PMixDocument::createXml() const
     e->setAttribute ("srcChannel", fc->sourceChannelIndex);
     e->setAttribute ("dstFilter", (int) fc->destNodeId);
     e->setAttribute ("dstChannel", fc->destChannelIndex);
-
+    
     xml->addChildElement (e);
   }
+  
+  XmlElement* e = new XmlElement ("MISC");
+
+  e->setAttribute ("snapPixels", snapGridPixels);
+  e->setAttribute ("snapActive", snapActive);
+  e->setAttribute ("snapShown", snapShown);
+  e->setAttribute ("overlayOpacity", String (componentOverlayOpacity, 3));
+  xml->addChildElement (e);
 
   return xml;
 }
