@@ -3,59 +3,7 @@
 #define _INTERPOLATIONSPACE_H_
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
-//class InterpolationSpaceComponent  : public Component
-//                       , private OpenGLRenderer
-//{
-//public:
-//  InterpolationSpaceComponent()
-//  {
-//    openGLContext.setRenderer (this);
-//    openGLContext.attachTo (*this);
-//    openGLContext.setContinuousRepainting (true);
-//  }
-//  
-//  ~InterpolationSpaceComponent()
-//  {
-//    openGLContext.detach();
-//  }
-//  
-//  void newOpenGLContextCreated() override
-//  {
-//  }
-//  
-//  void openGLContextClosing() override
-//  {
-//  }
-//  
-//  void renderOpenGL() override
-//  {
-//    jassert (OpenGLHelpers::isContextActive());
-//    const float desktopScale = (float) openGLContext.getRenderingScale();
-//    
-//    OpenGLHelpers::clear (Colours::lightblue);
-//    
-//    // Create an OpenGLGraphicsContext that will draw into this GL window..
-//    ScopedPointer<LowLevelGraphicsContext> glRenderer (createOpenGLGraphicsContext (openGLContext,
-//                                                                                    roundToInt (desktopScale * getWidth()),
-//                                                                                    roundToInt (desktopScale * getHeight())));
-//    
-//    if (glRenderer != nullptr)
-//    {
-//      Graphics g (*glRenderer);
-//      g.addTransform (AffineTransform::scale (desktopScale));
-//      g.setColour(Colours::red);
-//      g.fillEllipse (100., 100., 50., 50.);
-//    }
-//  }
-//
-//  void paint (Graphics& g)
-//  {
-//  }
-//  
-//private:
-//  OpenGLContext openGLContext;
-//};
+#include "PMixDocument.h"
 
 class InterpolationSpaceLabel : public Label
 {
@@ -84,13 +32,13 @@ class InterpolationSpacePreset : public Component
 private:
   ComponentDragger myDragger;
   ComponentBoundsConstrainer boundsConstrainer;
-  UndoManager& undoManager;
+  PMixDocument& doc;
   Rectangle<int> startBounds;
   Rectangle<int> endBounds;
   InterpolationSpaceLabel* label;
     
 public:
-  InterpolationSpacePreset(UndoManager& undoManager, String& initalLabel);
+  InterpolationSpacePreset(PMixDocument& doc, String& initalLabel);
   ~InterpolationSpacePreset ();
   void resized ();
   void mouseDown (const MouseEvent& e);
@@ -105,13 +53,13 @@ class InterpolationSpaceComponent  : public Component
 {
 private:
   //TooltipWindow tooltipWindow;
-  UndoManager& undoManager;
+  PMixDocument& doc;
   Random mRand;
   SelectedItemSet<Component*> selectedItems;
   LassoComponent<Component*> lassoComp;
   
 public:
-  InterpolationSpaceComponent (UndoManager& undoManager);
+  InterpolationSpaceComponent (PMixDocument& doc);
   ~InterpolationSpaceComponent ();
   void resized ();
   void paint (Graphics& g);

@@ -31,8 +31,8 @@ int MovePresetAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-InterpolationSpacePreset::InterpolationSpacePreset(UndoManager& undoManager, String& initalLabel)
-: undoManager (undoManager)
+InterpolationSpacePreset::InterpolationSpacePreset(PMixDocument& doc, String& initalLabel)
+: doc(doc)
 {
   addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));
   label->setFont (Font (13.00f));
@@ -72,8 +72,8 @@ void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
 {
   endBounds = getBounds();
   
-  undoManager.beginNewTransaction();
-  undoManager.perform(new MovePresetAction(getParentComponent(), getComponentID(), startBounds, endBounds), "change preset bounds");
+  doc.beginTransaction();
+  doc.perform(new MovePresetAction(getParentComponent(), getComponentID(), startBounds, endBounds), "change preset bounds");
 }
 
 void InterpolationSpacePreset::paint (Graphics& g)
@@ -88,14 +88,14 @@ void InterpolationSpacePreset::paint (Graphics& g)
   //g.drawFittedText(getComponentID(), 0, 0, getWidth(), getHeight(), Justification::centred, 1);
 }
 
-InterpolationSpaceComponent::InterpolationSpaceComponent (UndoManager& undoManager)
-: undoManager (undoManager)
+InterpolationSpaceComponent::InterpolationSpaceComponent (PMixDocument& doc)
+: doc (doc)
 , mRand(Time::currentTimeMillis())
 {
   for(int i = 0; i<10; i++)
   {
     String lab = String("preset") + String(i);
-    InterpolationSpacePreset* const comp = new InterpolationSpacePreset(undoManager, lab);
+    InterpolationSpacePreset* const comp = new InterpolationSpacePreset(doc, lab);
     comp->setComponentID(lab);
     addAndMakeVisible (comp);
   }

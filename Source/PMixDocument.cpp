@@ -396,3 +396,18 @@ void PMixDocument::setComponentOverlayOpacity (const float alpha)
     changed();
   }
 }
+
+void PMixDocument::beginTransaction()
+{
+  getUndoManager().beginNewTransaction();
+}
+
+void PMixDocument::beginTransaction (const String& name)
+{
+  getUndoManager().beginNewTransaction (name);
+}
+
+bool PMixDocument::perform (UndoableAction* const action, const String& actionName)
+{
+  return undoManager.perform (action, actionName);
+}

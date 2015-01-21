@@ -56,8 +56,15 @@ public:
   void setComponentOverlayOpacity (const float alpha);
   float getComponentOverlayOpacity() const noexcept                       { return componentOverlayOpacity; }
   
+  void beginTransaction();
+  void beginTransaction (const String& name);
+  bool perform (UndoableAction* const action, const String& actionName);
+
+  UndoManager& getUndoManager() noexcept                                  { return undoManager; }
+
 private:
-  
+  UndoManager undoManager;
+
   AudioPluginFormatManager& formatManager;
   AudioProcessorGraph graph;
   uint32 lastUID;

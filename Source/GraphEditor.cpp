@@ -6,8 +6,8 @@
 #pragma mark -
 #pragma mark CreatePluginAction
 
-CreatePluginAction::CreatePluginAction (PMixDocument& graph, const PluginDescription* desc, double x, double y) noexcept
-: graph(graph)
+CreatePluginAction::CreatePluginAction (PMixDocument& doc, const PluginDescription* desc, double x, double y) noexcept
+: doc(doc)
 , x(x)
 , y(y)
 , desc(desc)
@@ -16,7 +16,7 @@ CreatePluginAction::CreatePluginAction (PMixDocument& graph, const PluginDescrip
 
 bool CreatePluginAction::perform()
 {
-  nodeID = graph.addFilter (desc, x, y);
+  nodeID = doc.addFilter (desc, x, y);
   
   if (nodeID < 0xFFFFFFFF)
     return true;
@@ -27,7 +27,7 @@ bool CreatePluginAction::perform()
 
 bool CreatePluginAction::undo()
 {
-  graph.removeFilter(nodeID);
+  doc.removeFilter(nodeID);
   
   return true;
 }
@@ -205,11 +205,10 @@ void PluginWindow::closeButtonPressed()
 #pragma mark -
 #pragma mark GraphEditor
 
-GraphEditor::GraphEditor (PMixDocument& graph_, UndoManager& undoManager)
-  : graph (graph_)
-  , undoManager (undoManager)
+GraphEditor::GraphEditor (PMixDocument& doc)
+  : doc (doc)
 {
-  graph.addChangeListener (this);
+  doc.addChangeListener (this);
   selectedItems.addChangeListener(this);
 
   setOpaque (true);
@@ -217,7 +216,7 @@ GraphEditor::GraphEditor (PMixDocument& graph_, UndoManager& undoManager)
 
 GraphEditor::~GraphEditor()
 {
-  graph.removeChangeListener (this);
+  doc.removeChangeListener (this);
   selectedItems.removeChangeListener (this);
   draggingConnector = nullptr;
   removeChildComponent (&lassoComp);
@@ -268,8 +267,8 @@ void GraphEditor::createNewPlugin (const PluginDescription* desc, int x, int y)
 {
   if (desc != nullptr)
   {
-    undoManager.beginNewTransaction();
-    undoManager.perform(new CreatePluginAction(graph, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add plug-in"));
+    doc.beginTransaction();
+    doc.perform(new CreatePluginAction(doc, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add plug-in"));
   }
 }
 
@@ -344,7 +343,7 @@ void GraphEditor::updateComponents()
 
     if (cc != nullptr && cc != draggingConnector)
     {
-      if (graph.getConnectionBetween (cc->sourceFilterID, cc->sourceFilterChannel,
+      if (doc.getConnectionBetween (cc->sourceFilterID, cc->sourceFilterChannel,
                                       cc->destFilterID, cc->destFilterChannel) == nullptr)
       {
         delete cc;
@@ -356,25 +355,25 @@ void GraphEditor::updateComponents()
     }
   }
 
-  for (int i = graph.getNumFilters(); --i >= 0;)
+  for (int i = doc.getNumFilters(); --i >= 0;)
   {
-    const AudioProcessorGraph::Node::Ptr f (graph.getNode (i));
+    const AudioProcessorGraph::Node::Ptr f (doc.getNode (i));
 
     if (getComponentForFilter (f->nodeId) == 0)
     {
-      FilterComponent* const comp = new FilterComponent (graph, f->nodeId, undoManager);
+      FilterComponent* const comp = new FilterComponent (doc, f->nodeId);
       addAndMakeVisible (comp);
       comp->update();
     }
   }
 
-  for (int i = graph.getNumConnections(); --i >= 0;)
+  for (int i = doc.getNumConnections(); --i >= 0;)
   {
-    const AudioProcessorGraph::Connection* const c = graph.getConnection (i);
+    const AudioProcessorGraph::Connection* const c = doc.getConnection (i);
 
     if (getComponentForConnection (*c) == 0)
     {
-      ConnectorComponent* const comp = new ConnectorComponent (graph);
+      ConnectorComponent* const comp = new ConnectorComponent (doc);
       addAndMakeVisible (comp);
 
       comp->setInput (c->sourceNodeId, c->sourceChannelIndex);
@@ -390,7 +389,7 @@ void GraphEditor::beginConnectorDrag (const uint32 sourceFilterID, const int sou
   draggingConnector = dynamic_cast <ConnectorComponent*> (e.originalComponent);
 
   if (draggingConnector == nullptr)
-    draggingConnector = new ConnectorComponent (graph);
+    draggingConnector = new ConnectorComponent (doc);
 
   draggingConnector->setInput (sourceFilterID, sourceFilterChannel);
   draggingConnector->setOutput (destFilterID, destFilterChannel);
@@ -430,7 +429,7 @@ void GraphEditor::dragConnector (const MouseEvent& e)
         dstChannel = pin->index;
       }
 
-      if (graph.canConnect (srcFilter, srcChannel, dstFilter, dstChannel))
+      if (doc.canConnect (srcFilter, srcChannel, dstFilter, dstChannel))
       {
         x = pin->getParentComponent()->getX() + pin->getX() + pin->getWidth() / 2;
         y = pin->getParentComponent()->getY() + pin->getY() + pin->getHeight() / 2;
@@ -481,7 +480,7 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
       dstChannel = pin->index;
     }
 
-    graph.addConnection (srcFilter, srcChannel, dstFilter, dstChannel);
+    doc.addConnection (srcFilter, srcChannel, dstFilter, dstChannel);
   }
 }
 
@@ -506,13 +505,13 @@ SelectedItemSet <Component*>& GraphEditor::getLassoSelection()
 #pragma mark -
 #pragma mark PinComponent
 
-PinComponent::PinComponent (PMixDocument& graph_, const uint32 filterID_, const int index_, const bool isInput_)
+PinComponent::PinComponent (PMixDocument& doc, const uint32 filterID_, const int index_, const bool isInput_)
 : filterID (filterID_),
 index (index_),
 isInput (isInput_),
-graph (graph_)
+doc (doc)
 {
-  if (const AudioProcessorGraph::Node::Ptr node = graph.getNodeForId (filterID_))
+  if (const AudioProcessorGraph::Node::Ptr node = doc.getNodeForId (filterID_))
   {
     String tip;
     
@@ -578,8 +577,8 @@ GraphEditor* PinComponent::getGraphPanel() const noexcept
 #pragma mark -
 #pragma mark MovePluginAction
 
-MovePluginAction::MovePluginAction (PMixDocument& graph, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
-: graph(graph)
+MovePluginAction::MovePluginAction (PMixDocument& doc, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
+: doc(doc)
 , filterComponent(filterComponent)
 , nodeID(nodeID)
 , startPos(startPos)
@@ -589,14 +588,14 @@ MovePluginAction::MovePluginAction (PMixDocument& graph, FilterComponent* filter
 
 bool MovePluginAction::perform()
 {      
-  graph.setNodePosition (nodeID, endPos.x, endPos.y);
+  doc.setNodePosition (nodeID, endPos.x, endPos.y);
   filterComponent->getGraphPanel()->updateComponents();
   return true;
 }
 
 bool MovePluginAction::undo()
 {      
-  graph.setNodePosition (nodeID, startPos.x, startPos.y);
+  doc.setNodePosition (nodeID, startPos.x, startPos.y);
   filterComponent->getGraphPanel()->updateComponents();
   return true;
 }
@@ -609,10 +608,8 @@ int MovePluginAction::getSizeInUnits()
 #pragma mark -
 #pragma mark FilterComponent
 
-FilterComponent::FilterComponent (PMixDocument& graph_,
-                 const uint32 filterID_,
-                 UndoManager& undoManager)
-: graph (graph_),
+FilterComponent::FilterComponent (PMixDocument& doc, const uint32 filterID_)
+: doc (doc),
 filterID (filterID_),
 numInputs (0),
 numOutputs (0),
@@ -620,7 +617,6 @@ pinSize (16),
 font (13.0f, Font::bold),
 numIns (0),
 numOuts (0),
-undoManager (undoManager),
 moving(false)
 {
   //shadow.setShadowProperties (DropShadow (Colours::black.withAlpha (0.5f), 3, Point<int> (0, 1)));
@@ -646,7 +642,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     m.addItem (1, "Delete this filter");
     m.addItem (2, "Disconnect all pins");
     
-    if (AudioProcessorGraph::Node::Ptr f = graph.getNodeForId (filterID))
+    if (AudioProcessorGraph::Node::Ptr f = doc.getNodeForId (filterID))
     {
       AudioProcessor* const processor = f->getProcessor();
       jassert (processor != nullptr);
@@ -666,16 +662,16 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     
     if (r == 1)
     {
-      graph.removeFilter (filterID);
+      doc.removeFilter (filterID);
       return;
     }
     else if (r == 2)
     {
-      graph.disconnectFilter (filterID);
+      doc.disconnectFilter (filterID);
     }
     else
     {        
-      if (AudioProcessorGraph::Node::Ptr f = graph.getNodeForId (filterID))
+      if (AudioProcessorGraph::Node::Ptr f = doc.getNodeForId (filterID))
       {
         AudioProcessor* const processor = f->getProcessor();
         jassert (processor != nullptr);
@@ -714,7 +710,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
   {
     moving = true;
     getGraphPanel()->getLassoSelection().selectOnly(this);
-    graph.getNodePosition(filterID, startPos.x, startPos.y);
+    doc.getNodePosition(filterID, startPos.x, startPos.y);
   }
 }
 
@@ -730,7 +726,7 @@ void FilterComponent::mouseDrag (const MouseEvent& e)
     endPos.x = (pos.getX() + getWidth() / 2) / (double) getParentWidth();
     endPos.y = (pos.getY() + getHeight() / 2) / (double) getParentHeight();
     
-    graph.setNodePosition (filterID, endPos.x, endPos.y);
+    doc.setNodePosition (filterID, endPos.x, endPos.y);
     
     getGraphPanel()->updateComponents();
   }
@@ -740,7 +736,7 @@ void FilterComponent::mouseUp (const MouseEvent& e)
 {
   if (e.mouseWasClicked() && e.getNumberOfClicks() == 2)
   {
-    if (const AudioProcessorGraph::Node::Ptr f = graph.getNodeForId (filterID))
+    if (const AudioProcessorGraph::Node::Ptr f = doc.getNodeForId (filterID))
     {
       AudioProcessor* const processor = f->getProcessor();
       String name = processor->getName();
@@ -753,13 +749,13 @@ void FilterComponent::mouseUp (const MouseEvent& e)
   }
   else if (! e.mouseWasClicked())
   {
-    graph.setChangedFlag (true);
+    doc.setChangedFlag (true);
     
     if (moving) 
     {
       moving = false;
-      undoManager.beginNewTransaction();
-      undoManager.perform(new MovePluginAction(graph, this, filterID, startPos, endPos), "move plug-in");
+      doc.beginTransaction();
+      doc.perform(new MovePluginAction(doc, this, filterID, startPos, endPos), "move plug-in");
     }
   }    
 }
@@ -831,7 +827,7 @@ void FilterComponent::getPinPos (const int index, const bool isInput, float& x, 
 
 void FilterComponent::update()
 {
-  const AudioProcessorGraph::Node::Ptr f (graph.getNodeForId (filterID));
+  const AudioProcessorGraph::Node::Ptr f (doc.getNodeForId (filterID));
   
   if (f == nullptr)
   {
@@ -863,7 +859,7 @@ void FilterComponent::update()
   
   {
     double x, y;
-    graph.getNodePosition (filterID, x, y);
+    doc.getNodePosition (filterID, x, y);
     setCentreRelative ((float) x, (float) y);
   }
   
@@ -876,16 +872,16 @@ void FilterComponent::update()
     
     int i;
     for (i = 0; i < f->getProcessor()->getNumInputChannels(); ++i)
-      addAndMakeVisible (new PinComponent (graph, filterID, i, true));
+      addAndMakeVisible (new PinComponent (doc, filterID, i, true));
     
     if (f->getProcessor()->acceptsMidi())
-      addAndMakeVisible (new PinComponent (graph, filterID, PMixDocument::midiChannelNumber, true));
+      addAndMakeVisible (new PinComponent (doc, filterID, PMixDocument::midiChannelNumber, true));
     
     for (i = 0; i < f->getProcessor()->getNumOutputChannels(); ++i)
-      addAndMakeVisible (new PinComponent (graph, filterID, i, false));
+      addAndMakeVisible (new PinComponent (doc, filterID, i, false));
     
     if (f->getProcessor()->producesMidi())
-      addAndMakeVisible (new PinComponent (graph, filterID, PMixDocument::midiChannelNumber, false));
+      addAndMakeVisible (new PinComponent (doc, filterID, PMixDocument::midiChannelNumber, false));
     
     resized();
   }
@@ -899,12 +895,12 @@ GraphEditor* FilterComponent::getGraphPanel() const noexcept
 #pragma mark -
 #pragma mark ConnectorComponent
 
-ConnectorComponent::ConnectorComponent (PMixDocument& graph_)
+ConnectorComponent::ConnectorComponent (PMixDocument& doc)
 : sourceFilterID (0),
 destFilterID (0),
 sourceFilterChannel (0),
 destFilterChannel (0),
-graph (graph_),
+doc (doc),
 lastInputX (0),
 lastInputY (0),
 lastOutputX (0),
@@ -1036,7 +1032,7 @@ void ConnectorComponent::mouseDrag (const MouseEvent& e)
   {
     dragging = true;
     
-    graph.removeConnection (sourceFilterID, sourceFilterChannel, destFilterID, destFilterChannel);
+    doc.removeConnection (sourceFilterID, sourceFilterChannel, destFilterID, destFilterChannel);
     
     double distanceFromStart, distanceFromEnd;
     getDistancesFromEnds (e.x, e.y, distanceFromStart, distanceFromEnd);

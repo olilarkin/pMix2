@@ -9,9 +9,9 @@
 
 #include "MainComponent.h"
 
-MainComponent::MainComponent (AudioPluginFormatManager& formatManager,
-                                                AudioDeviceManager* deviceManager_)
-: graph (formatManager), deviceManager (deviceManager_)
+MainComponent::MainComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager_)
+: doc (formatManager)
+, deviceManager (deviceManager_)
 {
   LookAndFeel::setDefaultLookAndFeel(&lf);
   
@@ -21,19 +21,19 @@ MainComponent::MainComponent (AudioPluginFormatManager& formatManager,
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);
   
-  addAndMakeVisible (graphEditor = new GraphEditor (graph, undoManager));
+  addAndMakeVisible (graphEditor = new GraphEditor (doc));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
   
   deviceManager->addChangeListener (graphEditor);
   
-  graphPlayer.setProcessor (&graph.getGraph());
+  graphPlayer.setProcessor (&doc.getGraph());
   
   keyState.addListener (&graphPlayer.getMidiMessageCollector());
   
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
-  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(undoManager));
-  addAndMakeVisible (paramView = new ParamView(graph));
+  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(doc));
+  addAndMakeVisible (paramView = new ParamView(doc));
   addAndMakeVisible (codeEditor = new CodeEditor());
   addAndMakeVisible (statusBar = new TooltipBar());
   
@@ -54,7 +54,7 @@ MainComponent::~MainComponent()
   graphPlayer.setProcessor (nullptr);
   keyState.removeListener (&graphPlayer.getMidiMessageCollector());
   
-  graph.clear();
+  doc.clear();
 }
 
 void MainComponent::resized()

@@ -29,10 +29,8 @@ public:
   void setZoom (double scale);
   double getZoom() const;
   
-  PMixDocument graph;
-  UndoManager undoManager;
-  
 private:
+  PMixDocument doc;
   
   AudioDeviceManager* deviceManager;
   AudioProcessorPlayer graphPlayer;
