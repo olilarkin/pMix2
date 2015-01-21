@@ -36,7 +36,7 @@ void pMixApp::initialise (const String& commandLine)
 
   if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getMainComponent() != nullptr)
   {
-    mainWindow->getMainComponent()->graph.loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
+    mainWindow->getMainComponent()->getDoc().loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
   }
 }
 

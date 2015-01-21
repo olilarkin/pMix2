@@ -134,7 +134,7 @@ bool MainHostWindow::tryToQuitApplication()
   PluginWindow::closeAllCurrentlyOpenWindows();
 
   if (getMainComponent() == nullptr
-      || getMainComponent()->graph.saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+      || getMainComponent()->getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
   {
     JUCEApplication::quit();
     return true;
@@ -246,12 +246,12 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
 
 void MainHostWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
 {
-  MainComponent* const graphEditor = getMainComponent();
+  MainComponent* const mainComponent = getMainComponent();
 
   if (menuItemID == 250)
   {
-    if (graphEditor != nullptr)
-      graphEditor->graph.clear();
+    if (mainComponent != nullptr)
+      mainComponent->getDoc().clear();
   }
   else if (menuItemID >= 100 && menuItemID < 200)
   {
@@ -259,8 +259,8 @@ void MainHostWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/
     recentFiles.restoreFromString (getAppProperties().getUserSettings()
                                    ->getValue ("recentPMixDocumentFiles"));
 
-    if (graphEditor != nullptr && graphEditor->graph.saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
-      graphEditor->graph.loadFrom (recentFiles.getFile (menuItemID - 100), true);
+    if (mainComponent != nullptr && mainComponent->getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+      mainComponent->getDoc().loadFrom (recentFiles.getFile (menuItemID - 100), true);
   }
   else if (menuItemID >= 200 && menuItemID < 210)
   {
@@ -284,10 +284,10 @@ void MainHostWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/
 
 void MainHostWindow::createPlugin (const PluginDescription* desc, int x, int y)
 {
-  MainComponent* const graphEditor = getMainComponent();
+  MainComponent* const mainComponent = getMainComponent();
 
-  if (graphEditor != nullptr)
-    graphEditor->createNewPlugin (desc, x, y);
+  if (mainComponent != nullptr)
+    mainComponent->createNewPlugin (desc, x, y);
 }
 
 void MainHostWindow::addPluginsToMenu (PopupMenu& m) const
@@ -477,24 +477,24 @@ void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationComma
 
 bool MainHostWindow::perform (const InvocationInfo& info)
 {
-  MainComponent* const graphEditor = getMainComponent();
+  MainComponent* const mainComponent = getMainComponent();
 
   switch (info.commandID)
   {
     case CommandIDs::open:
-      if (graphEditor != nullptr && graphEditor->graph.saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
-        graphEditor->graph.loadFromUserSpecifiedFile (true);
+      if (mainComponent != nullptr && mainComponent->getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+        mainComponent->getDoc().loadFromUserSpecifiedFile (true);
 
       break;
 
     case CommandIDs::save:
-      if (graphEditor != nullptr)
-        graphEditor->graph.save (true, true);
+      if (mainComponent != nullptr)
+        mainComponent->getDoc().save (true, true);
       break;
 
     case CommandIDs::saveAs:
-      if (graphEditor != nullptr)
-        graphEditor->graph.saveAs (File::nonexistent, true, true, true);
+      if (mainComponent != nullptr)
+        mainComponent->getDoc().saveAs (File::nonexistent, true, true, true);
       break;
 
     case CommandIDs::showPluginListEditor:
@@ -522,12 +522,12 @@ bool MainHostWindow::perform (const InvocationInfo& info)
       
     case CommandIDs::undo:
       // TODO
-      graphEditor->undoManager.undo();
+      mainComponent->getDoc().getUndoManager().undo();
       break;
       
     case CommandIDs::redo:
       // TODO
-      graphEditor->undoManager.redo();
+      mainComponent->getDoc().getUndoManager().redo();
       break;
       
     case CommandIDs::zoomIn:      getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() * 2.0)); break;
@@ -566,10 +566,10 @@ void MainHostWindow::showAudioSettings()
   getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
   getAppProperties().getUserSettings()->saveIfNeeded();
 
-  MainComponent* const graphEditor = getMainComponent();
+  MainComponent* const mainComponent = getMainComponent();
 
-  if (graphEditor != nullptr)
-    graphEditor->graph.removeIllegalConnections();
+  if (mainComponent != nullptr)
+    mainComponent->getDoc().removeIllegalConnections();
 }
 
 bool MainHostWindow::isInterestedInFileDrag (const StringArray&)
@@ -591,21 +591,21 @@ void MainHostWindow::fileDragExit (const StringArray&)
 
 void MainHostWindow::filesDropped (const StringArray& files, int x, int y)
 {
-  MainComponent* const graphEditor = getMainComponent();
+  MainComponent* const mainComponent = getMainComponent();
 
-  if (graphEditor != nullptr)
+  if (mainComponent != nullptr)
   {
     if (files.size() == 1 && File (files[0]).hasFileExtension (filenameSuffix))
     {
-      if (graphEditor->graph.saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
-        graphEditor->graph.loadFrom (File (files[0]), true);
+      if (mainComponent->getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+        mainComponent->getDoc().loadFrom (File (files[0]), true);
     }
     else
     {
       OwnedArray <PluginDescription> typesFound;
       knownPluginList.scanAndAddDragAndDroppedFiles (formatManager, files, typesFound);
 
-      Point<int> pos (graphEditor->getLocalPoint (this, Point<int> (x, y)));
+      Point<int> pos (mainComponent->getLocalPoint (this, Point<int> (x, y)));
 
       for (int i = 0; i < jmin (5, typesFound.size()); ++i)
         createPlugin (typesFound.getUnchecked(i), pos.getX(), pos.getY());

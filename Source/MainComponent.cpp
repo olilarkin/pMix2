@@ -74,7 +74,7 @@ void MainComponent::createNewPlugin (const PluginDescription* desc, int x, int y
 
 void MainComponent::setZoom (double scale)
 {
-  scale = jlimit (1.0 / 4.0, 32.0, scale);
+ // scale = jlimit (1.0 / 4.0, 32.0, scale);
   
   //  if (EditingPanelBase* panel = dynamic_cast <EditingPanelBase*> (tabbedComponent.getCurrentContentComponent()))
   //    panel->setZoom (scale);

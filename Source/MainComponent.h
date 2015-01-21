@@ -28,7 +28,7 @@ public:
   void resized();
   void setZoom (double scale);
   double getZoom() const;
-  
+  PMixDocument& getDoc() { return doc; }
 private:
   PMixDocument doc;
   
