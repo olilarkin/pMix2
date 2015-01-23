@@ -12,9 +12,7 @@
 MainComponent::MainComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager_)
 : doc (formatManager)
 , deviceManager (deviceManager_)
-{
-  LookAndFeel::setDefaultLookAndFeel(&lf);
-  
+{  
   verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be between 20% and 80%, preferably 50%
   verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
   verticalLayout.setItemLayout (2, 150, -1.0, -0.65);  // the components on the right must be at least 150 pixels wide, preferably 50% of the total width
@@ -39,6 +37,38 @@ MainComponent::MainComponent (AudioPluginFormatManager& formatManager, AudioDevi
   
   deviceManager->addAudioCallback (&graphPlayer);
   deviceManager->addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
+  
+  graphEditor->updateComponents();
+}
+
+MainComponent::MainComponent (AudioPluginFormatManager& formatManager)
+: doc (formatManager)
+, deviceManager (0)
+{
+  verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be between 20% and 80%, preferably 50%
+  verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
+  verticalLayout.setItemLayout (2, 150, -1.0, -0.65);  // the components on the right must be at least 150 pixels wide, preferably 50% of the total width
+  verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
+  addAndMakeVisible (verticalDividerBar);
+  
+  addAndMakeVisible (graphEditor = new GraphEditor (doc));
+  //  addAndMakeVisible (treeView = new ParamTreeView(graph));
+  
+  //deviceManager->addChangeListener (graphEditor);
+  
+  graphPlayer.setProcessor (&doc.getGraph());
+  
+  keyState.addListener (&graphPlayer.getMidiMessageCollector());
+  
+  addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
+  
+  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(doc));
+  addAndMakeVisible (paramView = new ParamView(doc));
+  addAndMakeVisible (codeEditor = new CodeEditor());
+  addAndMakeVisible (statusBar = new TooltipBar());
+  
+  //deviceManager->addAudioCallback (&graphPlayer);
+  //deviceManager->addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
   
   graphEditor->updateComponents();
 }

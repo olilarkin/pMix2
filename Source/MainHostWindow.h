@@ -15,7 +15,7 @@ class MainHostWindow    : public DocumentWindow,
                           public FileDragAndDropTarget
 {
 public:
-  MainHostWindow();
+  MainHostWindow(AudioDeviceManager* deviceManager);
   ~MainHostWindow();
 
   void closeButtonPressed();
@@ -45,17 +45,14 @@ public:
   MainComponent* getMainComponent() const;
 
 private:
-  AudioDeviceManager deviceManager;
-  AudioPluginFormatManager formatManager;
-
   OwnedArray <PluginDescription> internalTypes;
   KnownPluginList knownPluginList;
   KnownPluginList::SortMethod pluginSortMethod;
+  AudioPluginFormatManager formatManager;
+  AudioDeviceManager* deviceManager;
 
   class PluginListWindow;
   ScopedPointer <PluginListWindow> pluginListWindow;
-
-  void showAudioSettings();
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainHostWindow)
 };

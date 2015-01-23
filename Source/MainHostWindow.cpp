@@ -52,23 +52,18 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginListWindow)
 };
 
-MainHostWindow::MainHostWindow()
-  : DocumentWindow (JUCEApplication::getInstance()->getApplicationName(), Colours::lightgrey,
-                    DocumentWindow::allButtons)
+MainHostWindow::MainHostWindow(AudioDeviceManager* deviceManager)
+  : DocumentWindow (JUCEApplication::getInstance()->getApplicationName(), Colours::lightgrey, DocumentWindow::allButtons)
+  , deviceManager(deviceManager)
 {
   formatManager.addDefaultFormats();
   formatManager.addFormat (new InternalPluginFormat());
-
-  ScopedPointer<XmlElement> savedAudioState (getAppProperties().getUserSettings()
-      ->getXmlValue ("audioDeviceState"));
-
-  deviceManager.initialise (256, 256, savedAudioState, true);
 
   setResizable (true, false);
   setResizeLimits (500, 400, 10000, 10000);
   centreWithSize (800, 600);
 
-  setContentOwned (new MainComponent (formatManager, &deviceManager), false);
+  setContentOwned (new MainComponent (formatManager, deviceManager), false);
 
   restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
 
@@ -505,7 +500,7 @@ bool MainHostWindow::perform (const InvocationInfo& info)
       break;
 
     case CommandIDs::showAudioSettings:
-      showAudioSettings();
+      //showAudioSettings();
       break;
 
     case CommandIDs::aboutBox:
@@ -539,37 +534,6 @@ bool MainHostWindow::perform (const InvocationInfo& info)
   }
 
   return true;
-}
-
-void MainHostWindow::showAudioSettings()
-{
-  AudioDeviceSelectorComponent audioSettingsComp (deviceManager,
-      0, 256,
-      0, 256,
-      true, true, true, false);
-
-  audioSettingsComp.setSize (500, 450);
-
-  DialogWindow::LaunchOptions o;
-  o.content.setNonOwned (&audioSettingsComp);
-  o.dialogTitle                   = "Audio Settings";
-  o.componentToCentreAround       = this;
-  o.dialogBackgroundColour        = Colours::grey;
-  o.escapeKeyTriggersCloseButton  = true;
-  o.useNativeTitleBar             = true;
-  o.resizable                     = false;
-
-  o.runModal();
-
-  ScopedPointer<XmlElement> audioState (deviceManager.createStateXml());
-
-  getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
-  getAppProperties().getUserSettings()->saveIfNeeded();
-
-  MainComponent* const mainComponent = getMainComponent();
-
-  if (mainComponent != nullptr)
-    mainComponent->getDoc().removeIllegalConnections();
 }
 
 bool MainHostWindow::isInterestedInFileDrag (const StringArray&)

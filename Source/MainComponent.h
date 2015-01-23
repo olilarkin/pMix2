@@ -12,7 +12,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PMixDocument.h"
-#include "LookAndFeel.h"
 #include "InterpolationSpace.h"
 #include "GraphEditor.h"
 #include "CodeEditor.h"
@@ -22,6 +21,7 @@ class MainComponent  : public Component
 public:
   
   MainComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager);
+  MainComponent (AudioPluginFormatManager& formatManager);
   ~MainComponent();
   
   void createNewPlugin (const PluginDescription* desc, int x, int y);
@@ -41,7 +41,6 @@ private:
   Component* keyboardComp;
   Component* statusBar;
   
-  pMixLookAndFeel lf;
   InterpolationSpaceComponent* interpolationSpace;
   ParamView* paramView;
   
