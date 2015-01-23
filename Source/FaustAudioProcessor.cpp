@@ -46,8 +46,8 @@ FaustAudioProcessor::~FaustAudioProcessor()
 
 void FaustAudioProcessor::fillInPluginDescription (PluginDescription& description) const
 {
-  description.name = "FaustProc";
-  description.descriptiveName = "Faust Processor";
+  description.name = "Faust Effect";
+  description.descriptiveName = "JIT compiled Faust Effect";
   description.pluginFormatName = "Faust JIT compiled";
   description.category = "na";
   description.manufacturerName = "bleh";

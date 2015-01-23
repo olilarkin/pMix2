@@ -12,12 +12,13 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-
+#include "pMixAppProperties.h"
 
 //==============================================================================
 /**
 */
 class PMixPluginAudioProcessor  : public AudioProcessor
+                                , public pMixAppProperties
 {
 public:
     //==============================================================================

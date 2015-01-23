@@ -7,6 +7,14 @@
     <FILE id="BhRF6l" name="pMix_about.png" compile="0" resource="1" file="BinaryData/pMix_about.png"/>
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
     <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
+      <FILE id="VyEfrv" name="pMixAppProperties.h" compile="0" resource="0"
+            file="Source/pMixAppProperties.h"/>
+      <GROUP id="{BD6E503A-5AF1-EE48-6B73-1E762F377B78}" name="meter">
+        <FILE id="LdrQpu" name="jucetice_MeterComponent.cpp" compile="1" resource="0"
+              file="Source/meter/jucetice_MeterComponent.cpp"/>
+        <FILE id="BpHh03" name="jucetice_MeterComponent.h" compile="0" resource="0"
+              file="Source/meter/jucetice_MeterComponent.h"/>
+      </GROUP>
       <FILE id="zVO2XV" name="CommandIDs.h" compile="0" resource="0" file="Source/CommandIDs.h"/>
       <FILE id="atxxnI" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
@@ -33,8 +41,8 @@
       <FILE id="LFtNrQ" name="PMixDocument.h" compile="0" resource="0" file="Source/PMixDocument.h"/>
       <FILE id="ttLwnT" name="GraphEditor.cpp" compile="1" resource="0" file="Source/GraphEditor.cpp"/>
       <FILE id="RIOJxZ" name="GraphEditor.h" compile="0" resource="0" file="Source/GraphEditor.h"/>
-      <FILE id="NgTWTW" name="HostStartup.cpp" compile="1" resource="0" file="Source/HostStartup.cpp"/>
-      <FILE id="QyuONq" name="HostStartup.h" compile="0" resource="0" file="Source/HostStartup.h"/>
+      <FILE id="NgTWTW" name="pMixApp.cpp" compile="1" resource="0" file="Source/pMixApp.cpp"/>
+      <FILE id="QyuONq" name="pMixApp.h" compile="0" resource="0" file="Source/pMixApp.h"/>
       <FILE id="zqfuWQ" name="InternalFilters.cpp" compile="1" resource="0"
             file="Source/InternalFilters.cpp"/>
       <FILE id="cQ4d1f" name="InternalFilters.h" compile="0" resource="0"

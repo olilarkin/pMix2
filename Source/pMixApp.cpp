@@ -14,15 +14,7 @@ void pMixApp::initialise (const String& commandLine)
 //  
 //  splash->deleteAfterDelay (RelativeTime::seconds (4), false);
   
-  // initialise our settings file..
 
-  PropertiesFile::Options options;
-  options.applicationName     = "pMix";
-  options.filenameSuffix      = "settings";
-  options.osxLibrarySubFolder = "Preferences";
-
-  appProperties = new ApplicationProperties();
-  appProperties->setStorageParameters (options);
 
   LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
 
@@ -47,7 +39,6 @@ void pMixApp::initialise (const String& commandLine)
 void pMixApp::shutdown()
 {
   mainWindow = nullptr;
-  appProperties = nullptr;
   LookAndFeel::setDefaultLookAndFeel (nullptr);
 }
 

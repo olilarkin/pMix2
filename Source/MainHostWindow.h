@@ -50,7 +50,7 @@ private:
   KnownPluginList::SortMethod pluginSortMethod;
   AudioPluginFormatManager formatManager;
   AudioDeviceManager* deviceManager;
-
+  
   class PluginListWindow;
   ScopedPointer <PluginListWindow> pluginListWindow;
 

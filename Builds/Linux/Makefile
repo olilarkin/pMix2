@@ -51,6 +51,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/jucetice_MeterComponent_8e4f0daa.o \
   $(OBJDIR)/MainComponent_a6ffb4a5.o \
   $(OBJDIR)/CodeEditor_53cffe43.o \
   $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
@@ -60,7 +61,7 @@ OBJECTS := \
   $(OBJDIR)/ParamView_17869533.o \
   $(OBJDIR)/PMixDocument_695e1610.o \
   $(OBJDIR)/GraphEditor_2db3113c.o \
-  $(OBJDIR)/HostStartup_5ce96f96.o \
+  $(OBJDIR)/pMixApp_f4968cb6.o \
   $(OBJDIR)/InternalFilters_beb54bdf.o \
   $(OBJDIR)/MainHostWindow_e920295a.o \
   $(OBJDIR)/BinaryData_ce4232d4.o \
@@ -94,6 +95,11 @@ clean:
 strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/jucetice_MeterComponent_8e4f0daa.o: ../../Source/meter/jucetice_MeterComponent.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling jucetice_MeterComponent.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/MainComponent_a6ffb4a5.o: ../../Source/MainComponent.cpp
 	-@mkdir -p $(OBJDIR)
@@ -140,9 +146,9 @@ $(OBJDIR)/GraphEditor_2db3113c.o: ../../Source/GraphEditor.cpp
 	@echo "Compiling GraphEditor.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/HostStartup_5ce96f96.o: ../../Source/HostStartup.cpp
+$(OBJDIR)/pMixApp_f4968cb6.o: ../../Source/pMixApp.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling HostStartup.cpp"
+	@echo "Compiling pMixApp.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/InternalFilters_beb54bdf.o: ../../Source/InternalFilters.cpp

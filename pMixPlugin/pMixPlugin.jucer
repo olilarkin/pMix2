@@ -14,6 +14,12 @@
   <MAINGROUP id="AyXwwn" name="pMixPlugin">
     <GROUP id="{8923BDF0-8D2C-0D4F-E35D-890C89D5DF51}" name="Source">
       <GROUP id="{723E4500-EB17-731D-8B10-B7C846C86094}" name="pMix">
+        <FILE id="YotR7F" name="MainHostWindow.cpp" compile="1" resource="0"
+              file="../Source/MainHostWindow.cpp"/>
+        <FILE id="Ky6VVX" name="MainHostWindow.h" compile="0" resource="0"
+              file="../Source/MainHostWindow.h"/>
+        <FILE id="d3ZEQw" name="pMixAppProperties.h" compile="0" resource="0"
+              file="../Source/pMixAppProperties.h"/>
         <FILE id="ct4JAI" name="CodeEditor.cpp" compile="1" resource="0" file="../Source/CodeEditor.cpp"/>
         <FILE id="IvY4Tk" name="CodeEditor.h" compile="0" resource="0" file="../Source/CodeEditor.h"/>
         <FILE id="y1Lyqe" name="CommandIDs.h" compile="0" resource="0" file="../Source/CommandIDs.h"/>
@@ -82,6 +88,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../../juce/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../../juce/modules"/>
         <MODULEPATH id="juce_audio_plugin_client" path="../../../juce/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../juce/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -91,6 +98,7 @@
     <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_core" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>

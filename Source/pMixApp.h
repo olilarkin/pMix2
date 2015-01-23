@@ -5,8 +5,10 @@
 #include "MainHostWindow.h"
 #include "InternalFilters.h"
 #include "LookAndFeel.h"
+#include "pMixAppProperties.h"
 
 class pMixApp : public JUCEApplication
+              , public pMixAppProperties
 {
 public:
   pMixApp();
@@ -19,7 +21,6 @@ public:
   void showAudioSettings();
 
   ApplicationCommandManager commandManager;
-  ScopedPointer<ApplicationProperties> appProperties;
   pMixLookAndFeel lookAndFeel;
   
 private:
