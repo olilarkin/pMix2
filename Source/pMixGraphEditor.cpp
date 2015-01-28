@@ -1,7 +1,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "GraphEditor.h"
-#include "InternalFilters.h"
-#include "MainAppWindow.h"
+#include "pMixGraphEditor.h"
+#include "pMixInternalFilters.h"
+#include "pMixMainAppWindow.h"
 
 #pragma mark -
 #pragma mark CreatePluginAction

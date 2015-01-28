@@ -1,9 +1,9 @@
 #ifndef __MAINAPPWINDOW_JUCEHEADER__
 #define __MAINAPPWINDOW_JUCEHEADER__
 
-#include "PMixDocument.h"
-#include "MainComponent.h"
-#include "CommandIDs.h"
+#include "pMixDocument.h"
+#include "pMixMainComponent.h"
+#include "pMixCommandIDs.h"
 
 ApplicationCommandManager& getCommandManager();
 ApplicationProperties& getAppProperties();

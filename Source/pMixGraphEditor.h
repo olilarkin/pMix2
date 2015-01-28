@@ -1,9 +1,9 @@
 #ifndef __GRAPHEDITOR_JUCEHEADER__
 #define __GRAPHEDITOR_JUCEHEADER__
 
-#include "PMixDocument.h"
-#include "ParamView.h"
-//#include "ParamTreeView.h"
+#include "pMixDocument.h"
+#include "pMixParamView.h"
+//#include "pMixParamTreeView.h"
 
 class FilterComponent;
 class ConnectorComponent;

@@ -1,8 +1,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainHostWindow.h"
-#include "PMixDocument.h"
-#include "InternalFilters.h"
-#include "GraphEditor.h"
+#include "pMixMainAppWindow.h"
+#include "pMixDocument.h"
+#include "pMixInternalFilters.h"
+#include "pMixGraphEditor.h"
 
 const int PMixDocument::midiChannelNumber = 0x1000;
 

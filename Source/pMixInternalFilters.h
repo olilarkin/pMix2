@@ -1,7 +1,7 @@
 #ifndef __INTERNALFILTERS_JUCEHEADER__
 #define __INTERNALFILTERS_JUCEHEADER__
 
-#include "PMixDocument.h"
+#include "pMixDocument.h"
 
 class InternalPluginFormat   : public AudioPluginFormat
 {

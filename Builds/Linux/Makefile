@@ -52,18 +52,19 @@ endif
 
 OBJECTS := \
   $(OBJDIR)/jucetice_MeterComponent_8e4f0daa.o \
-  $(OBJDIR)/MainComponent_a6ffb4a5.o \
-  $(OBJDIR)/CodeEditor_53cffe43.o \
+  $(OBJDIR)/pMixMainComponent_71d6859.o \
+  $(OBJDIR)/pMixCodeEditor_9c72070f.o \
   $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
-  $(OBJDIR)/ParamTreeView_41221a71.o \
-  $(OBJDIR)/LookAndFeel_40552bdf.o \
-  $(OBJDIR)/InterpolationSpace_e93d7e4b.o \
-  $(OBJDIR)/ParamView_17869533.o \
-  $(OBJDIR)/PMixDocument_695e1610.o \
-  $(OBJDIR)/GraphEditor_2db3113c.o \
+  $(OBJDIR)/pMixParamTreeView_a13fce25.o \
+  $(OBJDIR)/pMixLookAndFeel_bf43c93.o \
+  $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
+  $(OBJDIR)/pMixParamView_95a42e7.o \
+  $(OBJDIR)/pMixDocument_9b99d1f0.o \
+  $(OBJDIR)/pMixGraphEditor_f95221f0.o \
   $(OBJDIR)/pMixApp_f4968cb6.o \
-  $(OBJDIR)/InternalFilters_beb54bdf.o \
-  $(OBJDIR)/MainAppWindow_88ba319.o \
+  $(OBJDIR)/pMixPrefsComponent_29159002.o \
+  $(OBJDIR)/pMixInternalFilters_8e34e293.o \
+  $(OBJDIR)/pMixMainAppWindow_68a956cd.o \
   $(OBJDIR)/BinaryData_ce4232d4.o \
   $(OBJDIR)/juce_audio_basics_2442e4ea.o \
   $(OBJDIR)/juce_audio_devices_a4c8a728.o \
@@ -101,14 +102,14 @@ $(OBJDIR)/jucetice_MeterComponent_8e4f0daa.o: ../../Source/meter/jucetice_MeterC
 	@echo "Compiling jucetice_MeterComponent.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/MainComponent_a6ffb4a5.o: ../../Source/MainComponent.cpp
+$(OBJDIR)/pMixMainComponent_71d6859.o: ../../Source/pMixMainComponent.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling MainComponent.cpp"
+	@echo "Compiling pMixMainComponent.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/CodeEditor_53cffe43.o: ../../Source/CodeEditor.cpp
+$(OBJDIR)/pMixCodeEditor_9c72070f.o: ../../Source/pMixCodeEditor.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling CodeEditor.cpp"
+	@echo "Compiling pMixCodeEditor.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/FaustAudioProcessor_fbc83018.o: ../../Source/FaustAudioProcessor.cpp
@@ -116,34 +117,34 @@ $(OBJDIR)/FaustAudioProcessor_fbc83018.o: ../../Source/FaustAudioProcessor.cpp
 	@echo "Compiling FaustAudioProcessor.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/ParamTreeView_41221a71.o: ../../Source/ParamTreeView.cpp
+$(OBJDIR)/pMixParamTreeView_a13fce25.o: ../../Source/pMixParamTreeView.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling ParamTreeView.cpp"
+	@echo "Compiling pMixParamTreeView.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/LookAndFeel_40552bdf.o: ../../Source/LookAndFeel.cpp
+$(OBJDIR)/pMixLookAndFeel_bf43c93.o: ../../Source/pMixLookAndFeel.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling LookAndFeel.cpp"
+	@echo "Compiling pMixLookAndFeel.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/InterpolationSpace_e93d7e4b.o: ../../Source/InterpolationSpace.cpp
+$(OBJDIR)/pMixInterpolationSpace_b9dffb17.o: ../../Source/pMixInterpolationSpace.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling InterpolationSpace.cpp"
+	@echo "Compiling pMixInterpolationSpace.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/ParamView_17869533.o: ../../Source/ParamView.cpp
+$(OBJDIR)/pMixParamView_95a42e7.o: ../../Source/pMixParamView.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling ParamView.cpp"
+	@echo "Compiling pMixParamView.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/PMixDocument_695e1610.o: ../../Source/PMixDocument.cpp
+$(OBJDIR)/pMixDocument_9b99d1f0.o: ../../Source/pMixDocument.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling PMixDocument.cpp"
+	@echo "Compiling pMixDocument.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/GraphEditor_2db3113c.o: ../../Source/GraphEditor.cpp
+$(OBJDIR)/pMixGraphEditor_f95221f0.o: ../../Source/pMixGraphEditor.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling GraphEditor.cpp"
+	@echo "Compiling pMixGraphEditor.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixApp_f4968cb6.o: ../../Source/pMixApp.cpp
@@ -151,14 +152,19 @@ $(OBJDIR)/pMixApp_f4968cb6.o: ../../Source/pMixApp.cpp
 	@echo "Compiling pMixApp.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/InternalFilters_beb54bdf.o: ../../Source/InternalFilters.cpp
+$(OBJDIR)/pMixPrefsComponent_29159002.o: ../../Source/pMixPrefsComponent.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling InternalFilters.cpp"
+	@echo "Compiling pMixPrefsComponent.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/MainAppWindow_88ba319.o: ../../Source/MainAppWindow.cpp
+$(OBJDIR)/pMixInternalFilters_8e34e293.o: ../../Source/pMixInternalFilters.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling MainAppWindow.cpp"
+	@echo "Compiling pMixInternalFilters.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixMainAppWindow_68a956cd.o: ../../Source/pMixMainAppWindow.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixMainAppWindow.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/BinaryData_ce4232d4.o: ../../JuceLibraryCode/BinaryData.cpp

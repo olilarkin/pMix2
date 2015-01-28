@@ -2,7 +2,7 @@
 #define __PTVHEADER__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "PMixDocument.h"
+#include "pMixDocument.h"
 
 class  ParamTreeViewRootItem  : public TreeViewItem
 {

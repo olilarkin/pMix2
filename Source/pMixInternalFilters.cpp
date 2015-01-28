@@ -1,6 +1,6 @@
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "InternalFilters.h"
-#include "PMixDocument.h"
+#include "pMixInternalFilters.h"
+#include "pMixDocument.h"
 #include "FaustAudioProcessor.h"
 
 InternalPluginFormat::InternalPluginFormat()

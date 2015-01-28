@@ -1,6 +1,6 @@
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainAppWindow.h"
-#include "InternalFilters.h"
+#include "pMixMainAppWindow.h"
+#include "pMixInternalFilters.h"
 
 static double snapToIntegerZoom (double zoom)
 {

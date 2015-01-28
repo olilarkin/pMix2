@@ -1,4 +1,4 @@
-#include "ParamTreeView.h"
+#include "pMixParamTreeView.h"
 
 ParamTreeViewRootItem::ParamTreeViewRootItem ()
 {

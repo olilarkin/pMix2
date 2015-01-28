@@ -3,7 +3,7 @@
 #define _INTERPOLATIONSPACE_H_
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "PMixDocument.h"
+#include "pMixDocument.h"
 
 class InterpolationSpaceLabel : public Label
 {

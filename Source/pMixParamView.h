@@ -2,7 +2,7 @@
 #define __PARAMVIEW_JUCEHEADER__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "PMixDocument.h"
+#include "pMixDocument.h"
 
 class ParamSlider  : public Slider
 {

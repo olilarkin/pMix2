@@ -1,4 +1,4 @@
-#include "InterpolationSpace.h"
+#include "pMixInterpolationSpace.h"
 
 InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText) 
 : Label(String::empty, labelText)

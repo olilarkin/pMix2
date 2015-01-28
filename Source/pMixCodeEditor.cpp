@@ -7,7 +7,7 @@
   ==============================================================================
 */
 
-#include "CodeEditor.h"
+#include "pMixCodeEditor.h"
 
 CodeEditor::CodeEditor()
 {

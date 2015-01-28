@@ -2,9 +2,9 @@
 #define __PMIXAPP_JUCEHEADER__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainAppWindow.h"
-#include "InternalFilters.h"
-#include "LookAndFeel.h"
+#include "pMixMainAppWindow.h"
+#include "pMixInternalFilters.h"
+#include "pMixLookAndFeel.h"
 #include "pMixAppProperties.h"
 #include "pMixCommandManager.h"
 

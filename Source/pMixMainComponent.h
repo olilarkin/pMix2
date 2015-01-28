@@ -11,10 +11,10 @@
 #define MAINCOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "PMixDocument.h"
-#include "InterpolationSpace.h"
-#include "GraphEditor.h"
-#include "CodeEditor.h"
+#include "pMixDocument.h"
+#include "pMixInterpolationSpace.h"
+#include "pMixGraphEditor.h"
+#include "pMixCodeEditor.h"
 
 class MainComponent  : public Component
 {

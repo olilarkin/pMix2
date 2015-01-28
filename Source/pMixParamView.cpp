@@ -1,4 +1,4 @@
-#include "ParamView.h"
+#include "pMixParamView.h"
 
 ParamSlider::ParamSlider (AudioProcessor& p, const int index_)
 : owner (p),

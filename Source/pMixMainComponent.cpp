@@ -7,7 +7,7 @@
   ==============================================================================
 */
 
-#include "MainComponent.h"
+#include "pMixMainComponent.h"
 
 MainComponent::MainComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager_)
 : doc (formatManager)

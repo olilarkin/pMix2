@@ -1,4 +1,4 @@
-#include "LookAndFeel.h"
+#include "pMixLookAndFeel.h"
 
 pMixLookAndFeel::pMixLookAndFeel() {};
 
