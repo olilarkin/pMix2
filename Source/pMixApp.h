@@ -6,9 +6,11 @@
 #include "InternalFilters.h"
 #include "LookAndFeel.h"
 #include "pMixAppProperties.h"
+#include "pMixCommandManager.h"
 
 class pMixApp : public JUCEApplication
               , public pMixAppPropertiesHolder
+              , public pMixCommandManagerHolder
 {
 public:
   pMixApp();
@@ -20,7 +22,6 @@ public:
   bool moreThanOneInstanceAllowed();
   void showAudioSettings();
 
-  ApplicationCommandManager commandManager;
   pMixLookAndFeel lookAndFeel;
   
 private:

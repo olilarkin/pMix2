@@ -20,6 +20,8 @@
               file="../Source/MainHostWindow.h"/>
         <FILE id="d3ZEQw" name="pMixAppProperties.h" compile="0" resource="0"
               file="../Source/pMixAppProperties.h"/>
+        <FILE id="j3bIMS" name="pMixCommandManager.h" compile="0" resource="0"
+              file="../Source/pMixCommandManager.h"/>
         <FILE id="ct4JAI" name="CodeEditor.cpp" compile="1" resource="0" file="../Source/CodeEditor.cpp"/>
         <FILE id="IvY4Tk" name="CodeEditor.h" compile="0" resource="0" file="../Source/CodeEditor.h"/>
         <FILE id="y1Lyqe" name="CommandIDs.h" compile="0" resource="0" file="../Source/CommandIDs.h"/>

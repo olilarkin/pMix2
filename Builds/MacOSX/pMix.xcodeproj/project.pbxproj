@@ -337,6 +337,7 @@
 		59B5D4AD56C029479CE6C5D0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_KeyMappingEditorComponent.cpp"; path = "../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_KeyMappingEditorComponent.cpp"; sourceTree = "SOURCE_ROOT"; };
 		59CEE50895F19F6220E774EE = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_TabbedButtonBar.h"; path = "../../JuceLibraryCode/modules/juce_gui_basics/layout/juce_TabbedButtonBar.h"; sourceTree = "SOURCE_ROOT"; };
 		5A1B2C279C43634844FAE4FE = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_posix_SharedCode.h"; path = "../../JuceLibraryCode/modules/juce_core/native/juce_posix_SharedCode.h"; sourceTree = "SOURCE_ROOT"; };
+		5A8DC055CBEA692CE15528EC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixCommandManager.h; path = ../../Source/pMixCommandManager.h; sourceTree = "SOURCE_ROOT"; };
 		5AA6D3BA692E5CC02086EB40 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_InterprocessConnection.cpp"; path = "../../JuceLibraryCode/modules/juce_events/interprocess/juce_InterprocessConnection.cpp"; sourceTree = "SOURCE_ROOT"; };
 		5B51871D0CCDD989AE6F175D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_SparseSet.h"; path = "../../JuceLibraryCode/modules/juce_core/containers/juce_SparseSet.h"; sourceTree = "SOURCE_ROOT"; };
 		5B627E651FA0D0CFE9DA2369 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParamTreeView.cpp; path = ../../Source/ParamTreeView.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -967,9 +968,10 @@
 					9E7ABCC33735BF655EA1026A,
 					A8FC5F687A091FF16FDD078D, ); name = meter; sourceTree = "<group>"; };
 		6F1BE8DFB6E4F44F7689999E = {isa = PBXGroup; children = (
-					60B6F791932384305EF5771F,
 					994E1A98977A7CA1E4D9B7F4,
 					18088E92E2529273D568AC8D,
+					60B6F791932384305EF5771F,
+					5A8DC055CBEA692CE15528EC,
 					083D802A9297A934EC9C7A7A,
 					D393EA4BEE1FB58E46C6B317,
 					DE6C38D4981F90EA30C0F97A,
