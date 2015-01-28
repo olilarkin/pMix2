@@ -14,10 +14,6 @@
   <MAINGROUP id="AyXwwn" name="pMixPlugin">
     <GROUP id="{8923BDF0-8D2C-0D4F-E35D-890C89D5DF51}" name="Source">
       <GROUP id="{723E4500-EB17-731D-8B10-B7C846C86094}" name="pMix">
-        <FILE id="YotR7F" name="MainHostWindow.cpp" compile="1" resource="0"
-              file="../Source/MainHostWindow.cpp"/>
-        <FILE id="Ky6VVX" name="MainHostWindow.h" compile="0" resource="0"
-              file="../Source/MainHostWindow.h"/>
         <FILE id="d3ZEQw" name="pMixAppProperties.h" compile="0" resource="0"
               file="../Source/pMixAppProperties.h"/>
         <FILE id="j3bIMS" name="pMixCommandManager.h" compile="0" resource="0"
@@ -68,12 +64,12 @@
                extraLinkerFlags="-lLLVMLTO -lLLVMObjCARCOpts -lLLVMLinker -lLLVMipo -lLLVMVectorize -lLLVMBitWriter -lLLVMIRReader -lLLVMAsmParser -lLLVMR600CodeGen -lLLVMR600Desc -lLLVMR600Info -lLLVMR600AsmPrinter -lLLVMSystemZDisassembler -lLLVMSystemZCodeGen -lLLVMSystemZAsmParser -lLLVMSystemZDesc -lLLVMSystemZInfo -lLLVMSystemZAsmPrinter -lLLVMHexagonCodeGen -lLLVMHexagonAsmPrinter -lLLVMHexagonDesc -lLLVMHexagonInfo -lLLVMNVPTXCodeGen -lLLVMNVPTXDesc -lLLVMNVPTXInfo -lLLVMNVPTXAsmPrinter -lLLVMCppBackendCodeGen -lLLVMCppBackendInfo -lLLVMMSP430CodeGen -lLLVMMSP430Desc -lLLVMMSP430Info -lLLVMMSP430AsmPrinter -lLLVMXCoreDisassembler -lLLVMXCoreCodeGen -lLLVMXCoreDesc -lLLVMXCoreInfo -lLLVMXCoreAsmPrinter -lLLVMMipsDisassembler -lLLVMMipsCodeGen -lLLVMMipsAsmParser -lLLVMMipsDesc -lLLVMMipsInfo -lLLVMMipsAsmPrinter -lLLVMAArch64Disassembler -lLLVMAArch64CodeGen -lLLVMAArch64AsmParser -lLLVMAArch64Desc -lLLVMAArch64Info -lLLVMAArch64AsmPrinter -lLLVMAArch64Utils -lLLVMARMDisassembler -lLLVMARMCodeGen -lLLVMARMAsmParser -lLLVMARMDesc -lLLVMARMInfo -lLLVMARMAsmPrinter -lLLVMPowerPCDisassembler -lLLVMPowerPCCodeGen -lLLVMPowerPCAsmParser -lLLVMPowerPCDesc -lLLVMPowerPCInfo -lLLVMPowerPCAsmPrinter -lLLVMSparcDisassembler -lLLVMSparcCodeGen -lLLVMSparcAsmParser -lLLVMSparcDesc -lLLVMSparcInfo -lLLVMSparcAsmPrinter -lLLVMTableGen -lLLVMDebugInfo -lLLVMOption -lLLVMX86Disassembler -lLLVMX86AsmParser -lLLVMX86CodeGen -lLLVMSelectionDAG -lLLVMAsmPrinter -lLLVMX86Desc -lLLVMX86Info -lLLVMX86AsmPrinter -lLLVMX86Utils -lLLVMJIT -lLLVMLineEditor -lLLVMMCAnalysis -lLLVMMCDisassembler -lLLVMInstrumentation -lLLVMInterpreter -lLLVMCodeGen -lLLVMScalarOpts -lLLVMInstCombine -lLLVMTransformUtils -lLLVMipa -lLLVMAnalysis -lLLVMProfileData -lLLVMMCJIT -lLLVMTarget -lLLVMRuntimeDyld -lLLVMObject -lLLVMMCParser -lLLVMBitReader -lLLVMExecutionEngine -lLLVMMC -lLLVMCore -lLLVMSupport"
                externalLibraries="faust&#10;crypto&#10;z&#10;curses">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" osxSDK="10.9 SDK" osxCompatibility="10.7 SDK" osxArchitecture="default"
+        <CONFIGURATION name="Debug" osxSDK="10.9 SDK" osxCompatibility="10.7 SDK" osxArchitecture="64BitUniversal"
                        isDebug="1" optimisation="1" targetName="pMixPlugin" libraryPath="/usr/local/lib&#10;/opt/local/lib&#10;/opt/local/libexec/llvm-3.5/lib"
                        headerPath="/usr/local/include" cppLibType="libc++"/>
         <CONFIGURATION name="Release" osxSDK="10.9 SDK" osxCompatibility="10.7 SDK"
-                       osxArchitecture="default" isDebug="0" optimisation="2" targetName="pMixPlugin"
-                       libraryPath="/usr/local/lib&#10;/opt/local/lib&#10;/opt/local/libexec/llvm-3.5/lib&#10;"
+                       osxArchitecture="64BitUniversal" isDebug="0" optimisation="2"
+                       targetName="pMixPlugin" libraryPath="/usr/local/lib&#10;/opt/local/lib&#10;/opt/local/libexec/llvm-3.5/lib&#10;"
                        cppLibType="libc++" headerPath="/usr/local/include&#10;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

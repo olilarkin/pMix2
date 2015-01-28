@@ -1,5 +1,5 @@
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainHostWindow.h"
+#include "MainAppWindow.h"
 #include "InternalFilters.h"
 
 static double snapToIntegerZoom (double zoom)
@@ -10,10 +10,10 @@ static double snapToIntegerZoom (double zoom)
   return 1.0 / (int) (1.0 / zoom + 0.5);
 }
 
-class MainHostWindow::PluginListWindow  : public DocumentWindow
+class MainAppWindow::PluginListWindow  : public DocumentWindow
 {
 public:
-  PluginListWindow (MainHostWindow& owner_, AudioPluginFormatManager& formatManager)
+  PluginListWindow (MainAppWindow& owner_, AudioPluginFormatManager& formatManager)
     : DocumentWindow ("Available Plugins", Colours::white,
                       DocumentWindow::minimiseButton | DocumentWindow::closeButton),
     owner (owner_)
@@ -47,12 +47,12 @@ public:
   }
 
 private:
-  MainHostWindow& owner;
+  MainAppWindow& owner;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginListWindow)
 };
 
-MainHostWindow::MainHostWindow(AudioDeviceManager* deviceManager)
+MainAppWindow::MainAppWindow(AudioDeviceManager* deviceManager)
   : DocumentWindow (JUCEApplication::getInstance()->getApplicationName(), Colours::lightgrey, DocumentWindow::allButtons)
   , deviceManager(deviceManager)
 {
@@ -103,7 +103,7 @@ MainHostWindow::MainHostWindow(AudioDeviceManager* deviceManager)
   getCommandManager().setFirstCommandTarget (this);
 }
 
-MainHostWindow::~MainHostWindow()
+MainAppWindow::~MainAppWindow()
 {
   pluginListWindow = nullptr;
 
@@ -119,12 +119,12 @@ MainHostWindow::~MainHostWindow()
   clearContentComponent();
 }
 
-void MainHostWindow::closeButtonPressed()
+void MainAppWindow::closeButtonPressed()
 {
   tryToQuitApplication();
 }
 
-bool MainHostWindow::tryToQuitApplication()
+bool MainAppWindow::tryToQuitApplication()
 {
   PluginWindow::closeAllCurrentlyOpenWindows();
 
@@ -138,7 +138,7 @@ bool MainHostWindow::tryToQuitApplication()
   return false;
 }
 
-void MainHostWindow::changeListenerCallback (ChangeBroadcaster*)
+void MainAppWindow::changeListenerCallback (ChangeBroadcaster*)
 {
   menuItemsChanged();
 
@@ -153,14 +153,14 @@ void MainHostWindow::changeListenerCallback (ChangeBroadcaster*)
   }
 }
 
-StringArray MainHostWindow::getMenuBarNames()
+StringArray MainAppWindow::getMenuBarNames()
 {
   const char* const names[] = { "File", "Edit", "View", "Plugins", "Options", nullptr };
 
   return StringArray (names);
 }
 
-PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& /*menuName*/)
+PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /*menuName*/)
 {
   PopupMenu menu;
 
@@ -239,7 +239,7 @@ PopupMenu MainHostWindow::getMenuForIndex (int topLevelMenuIndex, const String& 
   return menu;
 }
 
-void MainHostWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
+void MainAppWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
 {
   MainComponent* const mainComponent = getMainComponent();
 
@@ -277,7 +277,7 @@ void MainHostWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/
 //  }
 }
 
-void MainHostWindow::createPlugin (const PluginDescription* desc, int x, int y)
+void MainAppWindow::createPlugin (const PluginDescription* desc, int x, int y)
 {
   MainComponent* const mainComponent = getMainComponent();
 
@@ -285,7 +285,7 @@ void MainHostWindow::createPlugin (const PluginDescription* desc, int x, int y)
     mainComponent->createNewPlugin (desc, x, y);
 }
 
-void MainHostWindow::addPluginsToMenu (PopupMenu& m) const
+void MainAppWindow::addPluginsToMenu (PopupMenu& m) const
 {
   for (int i = 0; i < internalTypes.size(); ++i)
     m.addItem (i + 1, internalTypes.getUnchecked(i)->name);
@@ -295,7 +295,7 @@ void MainHostWindow::addPluginsToMenu (PopupMenu& m) const
   knownPluginList.addToMenu (m, pluginSortMethod);
 }
 
-const PluginDescription* MainHostWindow::getChosenType (const int menuID) const
+const PluginDescription* MainAppWindow::getChosenType (const int menuID) const
 {
   if (menuID >= 1 && menuID < 1 + internalTypes.size())
     return internalTypes [menuID - 1];
@@ -303,12 +303,12 @@ const PluginDescription* MainHostWindow::getChosenType (const int menuID) const
   return knownPluginList.getType (knownPluginList.getIndexChosenByMenu (menuID));
 }
 
-ApplicationCommandTarget* MainHostWindow::getNextCommandTarget()
+ApplicationCommandTarget* MainAppWindow::getNextCommandTarget()
 {
   return findFirstTargetParentComponent();
 }
 
-void MainHostWindow::getAllCommands (Array <CommandID>& commands)
+void MainAppWindow::getAllCommands (Array <CommandID>& commands)
 {
   // this returns the set of all commands that this target can perform..
   const CommandID ids[] = { 
@@ -334,7 +334,7 @@ void MainHostWindow::getAllCommands (Array <CommandID>& commands)
   commands.addArray (ids, numElementsInArray (ids));
 }
 
-void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationCommandInfo& result)
+void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationCommandInfo& result)
 {
   const String category ("General");
 
@@ -470,7 +470,7 @@ void MainHostWindow::getCommandInfo (const CommandID commandID, ApplicationComma
   }
 }
 
-bool MainHostWindow::perform (const InvocationInfo& info)
+bool MainAppWindow::perform (const InvocationInfo& info)
 {
   MainComponent* const mainComponent = getMainComponent();
 
@@ -536,24 +536,24 @@ bool MainHostWindow::perform (const InvocationInfo& info)
   return true;
 }
 
-bool MainHostWindow::isInterestedInFileDrag (const StringArray&)
+bool MainAppWindow::isInterestedInFileDrag (const StringArray&)
 {
   return true;
 }
 
-void MainHostWindow::fileDragEnter (const StringArray&, int, int)
+void MainAppWindow::fileDragEnter (const StringArray&, int, int)
 {
 }
 
-void MainHostWindow::fileDragMove (const StringArray&, int, int)
+void MainAppWindow::fileDragMove (const StringArray&, int, int)
 {
 }
 
-void MainHostWindow::fileDragExit (const StringArray&)
+void MainAppWindow::fileDragExit (const StringArray&)
 {
 }
 
-void MainHostWindow::filesDropped (const StringArray& files, int x, int y)
+void MainAppWindow::filesDropped (const StringArray& files, int x, int y)
 {
   MainComponent* const mainComponent = getMainComponent();
 
@@ -577,7 +577,7 @@ void MainHostWindow::filesDropped (const StringArray& files, int x, int y)
   }
 }
 
-MainComponent* MainHostWindow::getMainComponent() const
+MainComponent* MainAppWindow::getMainComponent() const
 {
   return dynamic_cast <MainComponent*> (getContentComponent());
 }

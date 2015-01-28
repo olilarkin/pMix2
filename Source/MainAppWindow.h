@@ -1,5 +1,5 @@
-#ifndef __MAINHOSTWINDOW_JUCEHEADER__
-#define __MAINHOSTWINDOW_JUCEHEADER__
+#ifndef __MAINAPPWINDOW_JUCEHEADER__
+#define __MAINAPPWINDOW_JUCEHEADER__
 
 #include "PMixDocument.h"
 #include "MainComponent.h"
@@ -8,15 +8,15 @@
 ApplicationCommandManager& getCommandManager();
 ApplicationProperties& getAppProperties();
 
-class MainHostWindow    : public DocumentWindow,
+class MainAppWindow    : public DocumentWindow,
                           public MenuBarModel,
                           public ApplicationCommandTarget,
                           public ChangeListener,
                           public FileDragAndDropTarget
 {
 public:
-  MainHostWindow(AudioDeviceManager* deviceManager);
-  ~MainHostWindow();
+  MainAppWindow(AudioDeviceManager* deviceManager);
+  ~MainAppWindow();
 
   //DocumentWindow
   void closeButtonPressed();
@@ -59,8 +59,8 @@ private:
   class PluginListWindow;
   ScopedPointer <PluginListWindow> pluginListWindow;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainHostWindow)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainAppWindow)
 };
 
 
-#endif   // __MAINHOSTWINDOW_JUCEHEADER__
+#endif   // __MAINAPPWINDOW_JUCEHEADER__

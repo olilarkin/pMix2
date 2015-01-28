@@ -49,10 +49,9 @@
             file="Source/InternalFilters.cpp"/>
       <FILE id="cQ4d1f" name="InternalFilters.h" compile="0" resource="0"
             file="Source/InternalFilters.h"/>
-      <FILE id="RdcPAb" name="MainHostWindow.cpp" compile="1" resource="0"
-            file="Source/MainHostWindow.cpp"/>
-      <FILE id="C0NjfE" name="MainHostWindow.h" compile="0" resource="0"
-            file="Source/MainHostWindow.h"/>
+      <FILE id="RdcPAb" name="MainAppWindow.cpp" compile="1" resource="0"
+            file="Source/MainAppWindow.cpp"/>
+      <FILE id="C0NjfE" name="MainAppWindow.h" compile="0" resource="0" file="Source/MainAppWindow.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

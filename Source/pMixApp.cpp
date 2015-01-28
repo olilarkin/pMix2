@@ -18,7 +18,7 @@ void pMixApp::initialise (const String& commandLine)
 
   LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
 
-  mainWindow = new MainHostWindow(&deviceManager);
+  mainWindow = new MainAppWindow(&deviceManager);
   mainWindow->setUsingNativeTitleBar (true);
 
   commandManager.registerAllCommandsForTarget (this);

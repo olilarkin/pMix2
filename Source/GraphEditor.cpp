@@ -1,7 +1,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "GraphEditor.h"
 #include "InternalFilters.h"
-#include "MainHostWindow.h"
+#include "MainAppWindow.h"
 
 #pragma mark -
 #pragma mark CreatePluginAction
@@ -234,7 +234,7 @@ void GraphEditor::mouseDown (const MouseEvent& e)
   {
     PopupMenu m;
 
-    if (MainHostWindow* const mainWindow = findParentComponentOfClass<MainHostWindow>())
+    if (MainAppWindow* const mainWindow = findParentComponentOfClass<MainAppWindow>())
     {
       mainWindow->addPluginsToMenu (m);
 

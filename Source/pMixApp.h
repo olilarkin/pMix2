@@ -2,7 +2,7 @@
 #define __PMIXAPP_JUCEHEADER__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MainHostWindow.h"
+#include "MainAppWindow.h"
 #include "InternalFilters.h"
 #include "LookAndFeel.h"
 #include "pMixAppProperties.h"
@@ -25,7 +25,7 @@ public:
   pMixLookAndFeel lookAndFeel;
   
 private:
-  ScopedPointer<MainHostWindow> mainWindow;
+  ScopedPointer<MainAppWindow> mainWindow;
   AudioDeviceManager deviceManager;
 //  SplashScreen* splash;
 };

@@ -63,7 +63,7 @@ OBJECTS := \
   $(OBJDIR)/GraphEditor_2db3113c.o \
   $(OBJDIR)/pMixApp_f4968cb6.o \
   $(OBJDIR)/InternalFilters_beb54bdf.o \
-  $(OBJDIR)/MainHostWindow_e920295a.o \
+  $(OBJDIR)/MainAppWindow_88ba319.o \
   $(OBJDIR)/BinaryData_ce4232d4.o \
   $(OBJDIR)/juce_audio_basics_2442e4ea.o \
   $(OBJDIR)/juce_audio_devices_a4c8a728.o \
@@ -156,9 +156,9 @@ $(OBJDIR)/InternalFilters_beb54bdf.o: ../../Source/InternalFilters.cpp
 	@echo "Compiling InternalFilters.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/MainHostWindow_e920295a.o: ../../Source/MainHostWindow.cpp
+$(OBJDIR)/MainAppWindow_88ba319.o: ../../Source/MainAppWindow.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling MainHostWindow.cpp"
+	@echo "Compiling MainAppWindow.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/BinaryData_ce4232d4.o: ../../JuceLibraryCode/BinaryData.cpp
