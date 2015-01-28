@@ -8,7 +8,7 @@
 #include "pMixAppProperties.h"
 
 class pMixApp : public JUCEApplication
-              , public pMixAppProperties
+              , public pMixAppPropertiesHolder
 {
 public:
   pMixApp();

@@ -12,10 +12,10 @@
 
 //#include "../JuceLibraryCode/JuceHeader.h"
 
-class pMixAppProperties
+class pMixAppPropertiesHolder
 {
 public:
-  pMixAppProperties()
+  pMixAppPropertiesHolder()
   {
     // initialise our settings file..
     
@@ -28,7 +28,7 @@ public:
     appProperties->setStorageParameters (options);
   }
   
-  ~pMixAppProperties()
+  ~pMixAppPropertiesHolder()
   {
     appProperties = nullptr;
   }
