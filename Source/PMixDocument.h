@@ -3,18 +3,17 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class FilterInGraph;
-class PMixDocument;
-
 const char* const filenameSuffix = ".pmix";
 const char* const filenameWildcard = "*.pmix";
+
+class PMixAudio;
 
 class PMixDocument   : public FileBasedDocument
 {
 public:
-  PMixDocument (AudioPluginFormatManager& formatManager);
+  PMixDocument (PMixAudio& audio);
   ~PMixDocument();
-  AudioProcessorGraph& getGraph() noexcept { return graph; }
+  
   int getNumFilters() const noexcept;
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
   const AudioProcessorGraph::Node::Ptr getNodeForId (const uint32 uid) const noexcept;
@@ -66,7 +65,7 @@ private:
   UndoManager undoManager;
 
   AudioPluginFormatManager& formatManager;
-  AudioProcessorGraph graph;
+  AudioProcessorGraph& graph;
   uint32 lastUID;
   uint32 getNextUID() noexcept;
   void createNodeFromXml (const XmlElement& xml);

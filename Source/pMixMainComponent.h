@@ -11,7 +11,7 @@
 #define MAINCOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "pMixDocument.h"
+#include "pMixAudio.h"
 #include "pMixInterpolationSpace.h"
 #include "pMixGraphEditor.h"
 #include "pMixCodeEditor.h"
@@ -19,21 +19,20 @@
 class MainComponent  : public Component
 {
 public:
-  
-  MainComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager);
-  MainComponent (AudioPluginFormatManager& formatManager);
+  MainComponent (PMixAudio& audio, AudioDeviceManager* deviceManager);
+  MainComponent (PMixAudio& audio);
   ~MainComponent();
   
   void createNewPlugin (const PluginDescription* desc, int x, int y);
   void resized();
   void setZoom (double scale);
   double getZoom() const;
-  PMixDocument& getDoc() { return doc; }
+  //PMixDocument& getDoc() { return doc; }
 private:
-  PMixDocument doc;
+  PMixAudio& audio;
   
   AudioDeviceManager* deviceManager;
-  AudioProcessorPlayer graphPlayer;
+//  AudioProcessorPlayer& graphPlayer;
   MidiKeyboardState keyState;
   
   CodeEditor* codeEditor;

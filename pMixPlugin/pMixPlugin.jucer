@@ -14,40 +14,62 @@
   <MAINGROUP id="AyXwwn" name="pMixPlugin">
     <GROUP id="{8923BDF0-8D2C-0D4F-E35D-890C89D5DF51}" name="Source">
       <GROUP id="{723E4500-EB17-731D-8B10-B7C846C86094}" name="pMix">
-        <FILE id="d3ZEQw" name="pMixAppProperties.h" compile="0" resource="0"
-              file="../Source/pMixAppProperties.h"/>
-        <FILE id="j3bIMS" name="pMixCommandManager.h" compile="0" resource="0"
-              file="../Source/pMixCommandManager.h"/>
-        <FILE id="ct4JAI" name="CodeEditor.cpp" compile="1" resource="0" file="../Source/CodeEditor.cpp"/>
-        <FILE id="IvY4Tk" name="CodeEditor.h" compile="0" resource="0" file="../Source/CodeEditor.h"/>
-        <FILE id="y1Lyqe" name="CommandIDs.h" compile="0" resource="0" file="../Source/CommandIDs.h"/>
-        <FILE id="Hsh8kb" name="FaustAudioProcessor.cpp" compile="1" resource="0"
+        <FILE id="kUfRnk" name="FaustAudioProcessor.cpp" compile="1" resource="0"
               file="../Source/FaustAudioProcessor.cpp"/>
-        <FILE id="Cu6483" name="FaustAudioProcessor.h" compile="0" resource="0"
+        <FILE id="FquO7I" name="FaustAudioProcessor.h" compile="0" resource="0"
               file="../Source/FaustAudioProcessor.h"/>
-        <FILE id="sX8eAR" name="GraphEditor.cpp" compile="1" resource="0" file="../Source/GraphEditor.cpp"/>
-        <FILE id="SVuhYW" name="GraphEditor.h" compile="0" resource="0" file="../Source/GraphEditor.h"/>
-        <FILE id="tPcIcd" name="InternalFilters.cpp" compile="1" resource="0"
-              file="../Source/InternalFilters.cpp"/>
-        <FILE id="YabKmM" name="InternalFilters.h" compile="0" resource="0"
-              file="../Source/InternalFilters.h"/>
-        <FILE id="PNeF5q" name="InterpolationSpace.cpp" compile="1" resource="0"
-              file="../Source/InterpolationSpace.cpp"/>
-        <FILE id="C8TbUC" name="InterpolationSpace.h" compile="0" resource="0"
-              file="../Source/InterpolationSpace.h"/>
-        <FILE id="qbOxt8" name="LookAndFeel.cpp" compile="1" resource="0" file="../Source/LookAndFeel.cpp"/>
-        <FILE id="ZfY61j" name="LookAndFeel.h" compile="0" resource="0" file="../Source/LookAndFeel.h"/>
-        <FILE id="SN9OQK" name="MainComponent.cpp" compile="1" resource="0"
-              file="../Source/MainComponent.cpp"/>
-        <FILE id="JlcxMW" name="MainComponent.h" compile="0" resource="0" file="../Source/MainComponent.h"/>
-        <FILE id="dk2UmF" name="ParamTreeView.cpp" compile="1" resource="0"
-              file="../Source/ParamTreeView.cpp"/>
-        <FILE id="JQLUZD" name="ParamTreeView.h" compile="0" resource="0" file="../Source/ParamTreeView.h"/>
-        <FILE id="DtZgup" name="ParamView.cpp" compile="1" resource="0" file="../Source/ParamView.cpp"/>
-        <FILE id="gtQVPM" name="ParamView.h" compile="0" resource="0" file="../Source/ParamView.h"/>
-        <FILE id="Iww2Jv" name="PMixDocument.cpp" compile="1" resource="0"
-              file="../Source/PMixDocument.cpp"/>
-        <FILE id="qbeAHT" name="PMixDocument.h" compile="0" resource="0" file="../Source/PMixDocument.h"/>
+        <FILE id="n3JBj6" name="pMixApp.cpp" compile="1" resource="0" file="../Source/pMixApp.cpp"/>
+        <FILE id="XJZNrW" name="pMixApp.h" compile="0" resource="0" file="../Source/pMixApp.h"/>
+        <FILE id="Ca7LcE" name="pMixAppProperties.h" compile="0" resource="0"
+              file="../Source/pMixAppProperties.h"/>
+        <FILE id="nc3fJ2" name="pMixAudio.cpp" compile="1" resource="0" file="../Source/pMixAudio.cpp"/>
+        <FILE id="IsU1DR" name="pMixAudio.h" compile="0" resource="0" file="../Source/pMixAudio.h"/>
+        <FILE id="rTh7Ts" name="pMixCodeEditor.cpp" compile="1" resource="0"
+              file="../Source/pMixCodeEditor.cpp"/>
+        <FILE id="y3b3r7" name="pMixCodeEditor.h" compile="0" resource="0"
+              file="../Source/pMixCodeEditor.h"/>
+        <FILE id="UGM1Ge" name="pMixCommandIDs.h" compile="0" resource="0"
+              file="../Source/pMixCommandIDs.h"/>
+        <FILE id="KCkriH" name="pMixCommandManager.h" compile="0" resource="0"
+              file="../Source/pMixCommandManager.h"/>
+        <FILE id="gl0oTz" name="pMixDocument.cpp" compile="1" resource="0"
+              file="../Source/pMixDocument.cpp"/>
+        <FILE id="cPShvs" name="pMixDocument.h" compile="0" resource="0" file="../Source/pMixDocument.h"/>
+        <FILE id="MVT1Vg" name="pMixGraphEditor.cpp" compile="1" resource="0"
+              file="../Source/pMixGraphEditor.cpp"/>
+        <FILE id="ZuET4A" name="pMixGraphEditor.h" compile="0" resource="0"
+              file="../Source/pMixGraphEditor.h"/>
+        <FILE id="zl0zzi" name="pMixInternalFilters.cpp" compile="1" resource="0"
+              file="../Source/pMixInternalFilters.cpp"/>
+        <FILE id="neo6Co" name="pMixInternalFilters.h" compile="0" resource="0"
+              file="../Source/pMixInternalFilters.h"/>
+        <FILE id="TEmorc" name="pMixInterpolationSpace.cpp" compile="1" resource="0"
+              file="../Source/pMixInterpolationSpace.cpp"/>
+        <FILE id="njCdOx" name="pMixInterpolationSpace.h" compile="0" resource="0"
+              file="../Source/pMixInterpolationSpace.h"/>
+        <FILE id="CGkl3E" name="pMixLookAndFeel.cpp" compile="1" resource="0"
+              file="../Source/pMixLookAndFeel.cpp"/>
+        <FILE id="YeKmnR" name="pMixLookAndFeel.h" compile="0" resource="0"
+              file="../Source/pMixLookAndFeel.h"/>
+        <FILE id="MyLgR2" name="pMixMainAppWindow.cpp" compile="1" resource="0"
+              file="../Source/pMixMainAppWindow.cpp"/>
+        <FILE id="hJT0Ao" name="pMixMainAppWindow.h" compile="0" resource="0"
+              file="../Source/pMixMainAppWindow.h"/>
+        <FILE id="B9Hn3M" name="pMixMainComponent.cpp" compile="1" resource="0"
+              file="../Source/pMixMainComponent.cpp"/>
+        <FILE id="YQA0Q6" name="pMixMainComponent.h" compile="0" resource="0"
+              file="../Source/pMixMainComponent.h"/>
+        <FILE id="PfWPnc" name="pMixParamTreeView.cpp" compile="1" resource="0"
+              file="../Source/pMixParamTreeView.cpp"/>
+        <FILE id="Jx4boH" name="pMixParamTreeView.h" compile="0" resource="0"
+              file="../Source/pMixParamTreeView.h"/>
+        <FILE id="bemJub" name="pMixParamView.cpp" compile="1" resource="0"
+              file="../Source/pMixParamView.cpp"/>
+        <FILE id="L7Qf43" name="pMixParamView.h" compile="0" resource="0" file="../Source/pMixParamView.h"/>
+        <FILE id="KyPeks" name="pMixPrefsComponent.cpp" compile="1" resource="0"
+              file="../Source/pMixPrefsComponent.cpp"/>
+        <FILE id="VQHPHd" name="pMixPrefsComponent.h" compile="0" resource="0"
+              file="../Source/pMixPrefsComponent.h"/>
       </GROUP>
       <FILE id="TFAQgM" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

@@ -6,17 +6,18 @@
 
 const int PMixDocument::midiChannelNumber = 0x1000;
 
-PMixDocument::PMixDocument (AudioPluginFormatManager& formatManager_)
-  : FileBasedDocument (filenameSuffix,
-                       filenameWildcard,
-                       "Load a pMix patch",
-                       "Save a pMix patch"),
-                       formatManager (formatManager_),
-                       lastUID (0),
-                       snapGridPixels (8),
-                       snapActive (true),
-                       snapShown (true),
-                       componentOverlayOpacity (0.33f)
+PMixDocument::PMixDocument (PMixAudio& audio)
+: FileBasedDocument (filenameSuffix,
+                     filenameWildcard,
+                     "Load a pMix patch",
+                     "Save a pMix patch"),
+                     formatManager (audio.getFormatManager()),
+                     graph(audio.getGraph()),
+                     lastUID (0),
+                     snapGridPixels (8),
+                     snapActive (true),
+                     snapShown (true),
+                     componentOverlayOpacity (0.33f)
 {
   InternalPluginFormat internalFormat;
 

@@ -9,9 +9,9 @@
 
 #include "pMixMainComponent.h"
 
-MainComponent::MainComponent (AudioPluginFormatManager& formatManager, AudioDeviceManager* deviceManager_)
-: doc (formatManager)
-, deviceManager (deviceManager_)
+MainComponent::MainComponent (PMixAudio& audio, AudioDeviceManager* deviceManager)
+: audio(audio)
+, deviceManager (deviceManager)
 {  
   verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be between 20% and 80%, preferably 50%
   verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
@@ -19,30 +19,29 @@ MainComponent::MainComponent (AudioPluginFormatManager& formatManager, AudioDevi
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);
   
-  addAndMakeVisible (graphEditor = new GraphEditor (doc));
+  addAndMakeVisible (graphEditor = new GraphEditor (audio.getDocument()));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
   
   deviceManager->addChangeListener (graphEditor);
   
-  graphPlayer.setProcessor (&doc.getGraph());
   
-  keyState.addListener (&graphPlayer.getMidiMessageCollector());
+  keyState.addListener (&audio.getGraphPlayer().getMidiMessageCollector());
   
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
-  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(doc));
-  addAndMakeVisible (paramView = new ParamView(doc));
+  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audio.getDocument()));
+  addAndMakeVisible (paramView = new ParamView(audio.getDocument()));
   addAndMakeVisible (codeEditor = new CodeEditor());
   addAndMakeVisible (statusBar = new TooltipBar());
   
-  deviceManager->addAudioCallback (&graphPlayer);
-  deviceManager->addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
+//  deviceManager->addAudioCallback (&graphPlayer);
+//  deviceManager->addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
   
   graphEditor->updateComponents();
 }
 
-MainComponent::MainComponent (AudioPluginFormatManager& formatManager)
-: doc (formatManager)
+MainComponent::MainComponent (PMixAudio& audio)
+: audio(audio)
 , deviceManager (0)
 {
   verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be between 20% and 80%, preferably 50%
@@ -51,19 +50,19 @@ MainComponent::MainComponent (AudioPluginFormatManager& formatManager)
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);
   
-  addAndMakeVisible (graphEditor = new GraphEditor (doc));
+  addAndMakeVisible (graphEditor = new GraphEditor (audio.getDocument()));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
   
   //deviceManager->addChangeListener (graphEditor);
   
-  graphPlayer.setProcessor (&doc.getGraph());
+//  graphPlayer.setProcessor (&doc.getGraph());
   
-  keyState.addListener (&graphPlayer.getMidiMessageCollector());
+  keyState.addListener (&audio.getGraphPlayer().getMidiMessageCollector());
   
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
-  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(doc));
-  addAndMakeVisible (paramView = new ParamView(doc));
+  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audio.getDocument()));
+  addAndMakeVisible (paramView = new ParamView(audio.getDocument()));
   addAndMakeVisible (codeEditor = new CodeEditor());
   addAndMakeVisible (statusBar = new TooltipBar());
   
@@ -75,16 +74,16 @@ MainComponent::MainComponent (AudioPluginFormatManager& formatManager)
 
 MainComponent::~MainComponent()
 {
-  deviceManager->removeAudioCallback (&graphPlayer);
-  deviceManager->removeMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
+//  deviceManager->removeAudioCallback (&graphPlayer);
+//  deviceManager->removeMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
   deviceManager->removeChangeListener (graphEditor);
   
   deleteAllChildren();
   
-  graphPlayer.setProcessor (nullptr);
-  keyState.removeListener (&graphPlayer.getMidiMessageCollector());
+  //graphPlayer.setProcessor (nullptr);
+  keyState.removeListener (&audio.getGraphPlayer().getMidiMessageCollector());
   
-  doc.clear();
+  //doc.clear();
 }
 
 void MainComponent::resized()

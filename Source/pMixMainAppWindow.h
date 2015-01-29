@@ -11,7 +11,6 @@ ApplicationProperties& getAppProperties();
 class MainAppWindow    : public DocumentWindow,
                           public MenuBarModel,
                           public ApplicationCommandTarget,
-                          public ChangeListener,
                           public FileDragAndDropTarget
 {
 public:
@@ -21,9 +20,6 @@ public:
   //DocumentWindow
   void closeButtonPressed();
   
-  //ChangeListener
-  void changeListenerCallback (ChangeBroadcaster*);
-
   //FileDragAndDropTarget
   bool isInterestedInFileDrag (const StringArray& files);
   void fileDragEnter (const StringArray& files, int, int);
@@ -50,10 +46,6 @@ public:
   MainComponent* getMainComponent() const;
 
 private:
-  OwnedArray <PluginDescription> internalTypes;
-  KnownPluginList knownPluginList;
-  KnownPluginList::SortMethod pluginSortMethod;
-  AudioPluginFormatManager formatManager;
   AudioDeviceManager* deviceManager;
   
   class PluginListWindow;

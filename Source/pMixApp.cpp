@@ -22,7 +22,6 @@ void pMixApp::initialise (const String& commandLine)
   mainWindow->setUsingNativeTitleBar (true);
 
   commandManager.registerAllCommandsForTarget (this);
-  //commandManager.registerAllCommandsForTarget (mainWindow);
 
   mainWindow->menuItemsChanged();
 

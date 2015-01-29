@@ -4,9 +4,16 @@
               bundleIdentifier="com.OliLarkin.pMix" includeBinaryInAppConfig="1"
               jucerVersion="3.1.1" companyName="OliLarkin">
   <MAINGROUP id="FiV8Cl" name="pMix">
-    <FILE id="BhRF6l" name="pMix_about.png" compile="0" resource="1" file="BinaryData/pMix_about.png"/>
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
     <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
+      <GROUP id="{0EE3E71E-3E66-6D8E-96D1-19B55B6F2917}" name="App">
+        <FILE id="RdcPAb" name="pMixMainAppWindow.cpp" compile="1" resource="0"
+              file="Source/pMixMainAppWindow.cpp"/>
+        <FILE id="C0NjfE" name="pMixMainAppWindow.h" compile="0" resource="0"
+              file="Source/pMixMainAppWindow.h"/>
+        <FILE id="NgTWTW" name="pMixApp.cpp" compile="1" resource="0" file="Source/pMixApp.cpp"/>
+        <FILE id="QyuONq" name="pMixApp.h" compile="0" resource="0" file="Source/pMixApp.h"/>
+      </GROUP>
       <GROUP id="{BD6E503A-5AF1-EE48-6B73-1E762F377B78}" name="meter">
         <FILE id="LdrQpu" name="jucetice_MeterComponent.cpp" compile="1" resource="0"
               file="Source/meter/jucetice_MeterComponent.cpp"/>
@@ -19,10 +26,6 @@
             file="Source/pMixAppProperties.h"/>
       <FILE id="wluBoV" name="pMixCommandManager.h" compile="0" resource="0"
             file="Source/pMixCommandManager.h"/>
-      <FILE id="atxxnI" name="pMixMainComponent.cpp" compile="1" resource="0"
-            file="Source/pMixMainComponent.cpp"/>
-      <FILE id="cjM5RC" name="pMixMainComponent.h" compile="0" resource="0"
-            file="Source/pMixMainComponent.h"/>
       <FILE id="PSI7MM" name="pMixCodeEditor.cpp" compile="1" resource="0"
             file="Source/pMixCodeEditor.cpp"/>
       <FILE id="wnQxO5" name="pMixCodeEditor.h" compile="0" resource="0"
@@ -53,8 +56,10 @@
             file="Source/pMixGraphEditor.cpp"/>
       <FILE id="RIOJxZ" name="pMixGraphEditor.h" compile="0" resource="0"
             file="Source/pMixGraphEditor.h"/>
-      <FILE id="NgTWTW" name="pMixApp.cpp" compile="1" resource="0" file="Source/pMixApp.cpp"/>
-      <FILE id="QyuONq" name="pMixApp.h" compile="0" resource="0" file="Source/pMixApp.h"/>
+      <FILE id="atxxnI" name="pMixMainComponent.cpp" compile="1" resource="0"
+            file="Source/pMixMainComponent.cpp"/>
+      <FILE id="cjM5RC" name="pMixMainComponent.h" compile="0" resource="0"
+            file="Source/pMixMainComponent.h"/>
       <FILE id="Yv0Fxf" name="pMixPrefsComponent.cpp" compile="1" resource="0"
             file="Source/pMixPrefsComponent.cpp"/>
       <FILE id="ZVZFfk" name="pMixPrefsComponent.h" compile="0" resource="0"
@@ -63,10 +68,8 @@
             file="Source/pMixInternalFilters.cpp"/>
       <FILE id="cQ4d1f" name="pMixInternalFilters.h" compile="0" resource="0"
             file="Source/pMixInternalFilters.h"/>
-      <FILE id="RdcPAb" name="pMixMainAppWindow.cpp" compile="1" resource="0"
-            file="Source/pMixMainAppWindow.cpp"/>
-      <FILE id="C0NjfE" name="pMixMainAppWindow.h" compile="0" resource="0"
-            file="Source/pMixMainAppWindow.h"/>
+      <FILE id="odL5qk" name="pMixAudio.cpp" compile="1" resource="0" file="Source/pMixAudio.cpp"/>
+      <FILE id="oy6H27" name="pMixAudio.h" compile="0" resource="0" file="Source/pMixAudio.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

@@ -21,10 +21,10 @@ public:
     const File deadMansPedalFile (getAppProperties().getUserSettings()
                                   ->getFile().getSiblingFile ("RecentlyCrashedPluginsList"));
 
-    setContentOwned (new PluginListComponent (formatManager,
-                     owner.knownPluginList,
-                     deadMansPedalFile,
-                     getAppProperties().getUserSettings()), true);
+//    setContentOwned (new PluginListComponent (formatManager,
+//                     owner.knownPluginList,
+//                     deadMansPedalFile,
+//                     getAppProperties().getUserSettings()), true);
 
     setResizable (true, false);
     setResizeLimits (300, 400, 800, 1500);
@@ -56,8 +56,7 @@ MainAppWindow::MainAppWindow(AudioDeviceManager* deviceManager)
   : DocumentWindow (JUCEApplication::getInstance()->getApplicationName(), Colours::lightgrey, DocumentWindow::allButtons)
   , deviceManager(deviceManager)
 {
-  formatManager.addDefaultFormats();
-  formatManager.addFormat (new InternalPluginFormat());
+
 
   setResizable (true, false);
   setResizeLimits (500, 400, 10000, 10000);
@@ -68,19 +67,6 @@ MainAppWindow::MainAppWindow(AudioDeviceManager* deviceManager)
   restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
 
   setVisible (true);
-
-  InternalPluginFormat internalFormat;
-  internalFormat.getAllTypes (internalTypes);
-
-  ScopedPointer<XmlElement> savedPluginList (getAppProperties().getUserSettings()->getXmlValue ("pluginList"));
-
-  if (savedPluginList != nullptr)
-    knownPluginList.recreateFromXml (*savedPluginList);
-
-  pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()
-                     ->getIntValue ("pluginSortMethod", KnownPluginList::sortByManufacturer);
-
-  knownPluginList.addChangeListener (this);
 
   addKeyListener (getCommandManager().getKeyMappings());
 
@@ -113,8 +99,6 @@ MainAppWindow::~MainAppWindow()
   setMenuBar (nullptr);
 #endif
 
-  knownPluginList.removeChangeListener (this);
-
   getAppProperties().getUserSettings()->setValue ("mainWindowPos", getWindowStateAsString());
   clearContentComponent();
 }
@@ -136,21 +120,6 @@ bool MainAppWindow::tryToQuitApplication()
   }
 
   return false;
-}
-
-void MainAppWindow::changeListenerCallback (ChangeBroadcaster*)
-{
-  menuItemsChanged();
-
-  // save the plugin list every time it gets chnaged, so that if we're scanning
-  // and it crashes, we've still saved the previous ones
-  ScopedPointer<XmlElement> savedPluginList (knownPluginList.createXml());
-
-  if (savedPluginList != nullptr)
-  {
-    getAppProperties().getUserSettings()->setValue ("pluginList", savedPluginList);
-    getAppProperties().saveIfNeeded();
-  }
 }
 
 StringArray MainAppWindow::getMenuBarNames()
@@ -228,11 +197,11 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     menu.addCommandItem (&getCommandManager(), CommandIDs::showPluginListEditor);
 
     PopupMenu sortTypeMenu;
-    sortTypeMenu.addItem (200, "List plugins in default order",      true, pluginSortMethod == KnownPluginList::defaultOrder);
-    sortTypeMenu.addItem (201, "List plugins in alphabetical order", true, pluginSortMethod == KnownPluginList::sortAlphabetically);
-    sortTypeMenu.addItem (202, "List plugins by category",           true, pluginSortMethod == KnownPluginList::sortByCategory);
-    sortTypeMenu.addItem (203, "List plugins by manufacturer",       true, pluginSortMethod == KnownPluginList::sortByManufacturer);
-    sortTypeMenu.addItem (204, "List plugins based on the directory structure", true, pluginSortMethod == KnownPluginList::sortByFileSystemLocation);
+//    sortTypeMenu.addItem (200, "List plugins in default order",      true, pluginSortMethod == KnownPluginList::defaultOrder);
+//    sortTypeMenu.addItem (201, "List plugins in alphabetical order", true, pluginSortMethod == KnownPluginList::sortAlphabetically);
+//    sortTypeMenu.addItem (202, "List plugins by category",           true, pluginSortMethod == KnownPluginList::sortByCategory);
+//    sortTypeMenu.addItem (203, "List plugins by manufacturer",       true, pluginSortMethod == KnownPluginList::sortByManufacturer);
+//    sortTypeMenu.addItem (204, "List plugins based on the directory structure", true, pluginSortMethod == KnownPluginList::sortByFileSystemLocation);
     menu.addSubMenu ("Plugin menu type", sortTypeMenu);
   }
 
