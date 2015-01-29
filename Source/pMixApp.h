@@ -1,5 +1,16 @@
-#ifndef __PMIXAPP_JUCEHEADER__
-#define __PMIXAPP_JUCEHEADER__
+/*
+ ==============================================================================
+ 
+ pMixApp.h
+ Author:  Oliver Larkin
+ 
+ The top level class for the app.
+ 
+ ==============================================================================
+ */
+
+#ifndef PMIXAPP_H_INCLUDED
+#define PMIXAPP_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixMainAppWindow.h"
@@ -19,7 +30,7 @@ public:
   const String getApplicationName();
   const String getApplicationVersion();
   bool moreThanOneInstanceAllowed();
-  void showAudioSettings();
+//  void showAudioSettings();
 
   pMixLookAndFeel lookAndFeel;
   
@@ -29,4 +40,4 @@ private:
 //  SplashScreen* splash;
 };
 
-#endif //__PMIXAPP_JUCEHEADER__
+#endif //PMIXAPP_H_INCLUDED

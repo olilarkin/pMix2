@@ -19,7 +19,7 @@ MainComponent::MainComponent (PMixAudio& audio, AudioDeviceManager* deviceManage
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);
   
-  addAndMakeVisible (graphEditor = new GraphEditor (audio.getDocument()));
+  addAndMakeVisible (graphEditor = new GraphEditor (audio));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
   
   deviceManager->addChangeListener (graphEditor);
@@ -29,8 +29,8 @@ MainComponent::MainComponent (PMixAudio& audio, AudioDeviceManager* deviceManage
   
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
-  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audio.getDocument()));
-  addAndMakeVisible (paramView = new ParamView(audio.getDocument()));
+  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audio));
+  addAndMakeVisible (paramView = new ParamView(audio));
   addAndMakeVisible (codeEditor = new CodeEditor());
   addAndMakeVisible (statusBar = new TooltipBar());
   
@@ -50,7 +50,7 @@ MainComponent::MainComponent (PMixAudio& audio)
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);
   
-  addAndMakeVisible (graphEditor = new GraphEditor (audio.getDocument()));
+  addAndMakeVisible (graphEditor = new GraphEditor (audio));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
   
   //deviceManager->addChangeListener (graphEditor);
@@ -61,8 +61,8 @@ MainComponent::MainComponent (PMixAudio& audio)
   
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
-  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audio.getDocument()));
-  addAndMakeVisible (paramView = new ParamView(audio.getDocument()));
+  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audio));
+  addAndMakeVisible (paramView = new ParamView(audio));
   addAndMakeVisible (codeEditor = new CodeEditor());
   addAndMakeVisible (statusBar = new TooltipBar());
   

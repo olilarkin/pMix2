@@ -3,7 +3,7 @@
 #define _INTERPOLATIONSPACE_H_
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "pMixDocument.h"
+#include "pMixAudio.h"
 
 class InterpolationSpaceLabel : public Label
 {
@@ -32,13 +32,13 @@ class InterpolationSpacePreset : public Component
 private:
   ComponentDragger myDragger;
   ComponentBoundsConstrainer boundsConstrainer;
-  PMixDocument& doc;
+  PMixAudio& audio;
   Rectangle<int> startBounds;
   Rectangle<int> endBounds;
   InterpolationSpaceLabel* label;
     
 public:
-  InterpolationSpacePreset(PMixDocument& doc, String& initalLabel);
+  InterpolationSpacePreset(PMixAudio& audio, String& initalLabel);
   ~InterpolationSpacePreset ();
   void resized ();
   void mouseDown (const MouseEvent& e);
@@ -53,13 +53,13 @@ class InterpolationSpaceComponent  : public Component
 {
 private:
   //TooltipWindow tooltipWindow;
-  PMixDocument& doc;
+  PMixAudio& audio;
   Random mRand;
   SelectedItemSet<Component*> selectedItems;
   LassoComponent<Component*> lassoComp;
   
 public:
-  InterpolationSpaceComponent (PMixDocument& doc);
+  InterpolationSpaceComponent (PMixAudio& audio);
   ~InterpolationSpaceComponent ();
   void resized ();
   void paint (Graphics& g);

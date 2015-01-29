@@ -83,10 +83,10 @@ void ProcessorParameterPropertyComp::timerCallback()
   }
 }
 
-ParamView::ParamView(PMixDocument& graph_)
-: graph (graph_)
+ParamView::ParamView(PMixAudio& audio)
+: audio (audio)
 {
-  graph.addChangeListener (this);
+  audio.getDoc().addChangeListener (this);
   
   setOpaque (true);
   addAndMakeVisible (&panel);
@@ -94,7 +94,7 @@ ParamView::ParamView(PMixDocument& graph_)
 
 ParamView::~ParamView()
 {
-  graph.removeChangeListener (this);
+  audio.getDoc().removeChangeListener (this);
 }
 
 void ParamView::paint (Graphics& g)
@@ -113,7 +113,7 @@ void ParamView::changeListenerCallback (ChangeBroadcaster* source)
   
   for (int i = 0; i < sectionNodes.size(); i++) 
   {
-    const AudioProcessorGraph::Node::Ptr f (graph.getNodeForId(sectionNodes[i]));
+    const AudioProcessorGraph::Node::Ptr f (audio.getDoc().getNodeForId(sectionNodes[i]));
     
     if (f == nullptr) 
     {
@@ -127,9 +127,9 @@ void ParamView::changeListenerCallback (ChangeBroadcaster* source)
     panel.clear();
   }
   
-  for (int i = graph.getNumFilters(); --i >= 0;)
+  for (int i = audio.getDoc().getNumFilters(); --i >= 0;)
   {
-    const AudioProcessorGraph::Node::Ptr f (graph.getNode (i));
+    const AudioProcessorGraph::Node::Ptr f (audio.getDoc().getNode (i));
     
     if   (f->getProcessor()->getName() != "Audio Input"
           && f->getProcessor()->getName() != "Audio Output" 

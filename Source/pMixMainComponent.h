@@ -39,10 +39,8 @@ private:
   GraphEditor* graphEditor;
   Component* keyboardComp;
   Component* statusBar;
-  
   InterpolationSpaceComponent* interpolationSpace;
   ParamView* paramView;
-  
   StretchableLayoutManager verticalLayout;
   StretchableLayoutResizerBar* verticalDividerBar;
   

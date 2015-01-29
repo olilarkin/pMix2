@@ -10,61 +10,61 @@ static double snapToIntegerZoom (double zoom)
   return 1.0 / (int) (1.0 / zoom + 0.5);
 }
 
-class MainAppWindow::PluginListWindow  : public DocumentWindow
-{
-public:
-  PluginListWindow (MainAppWindow& owner_, AudioPluginFormatManager& formatManager)
-    : DocumentWindow ("Available Plugins", Colours::white,
-                      DocumentWindow::minimiseButton | DocumentWindow::closeButton),
-    owner (owner_)
-  {
-    const File deadMansPedalFile (getAppProperties().getUserSettings()
-                                  ->getFile().getSiblingFile ("RecentlyCrashedPluginsList"));
-
-//    setContentOwned (new PluginListComponent (formatManager,
-//                     owner.knownPluginList,
-//                     deadMansPedalFile,
-//                     getAppProperties().getUserSettings()), true);
-
-    setResizable (true, false);
-    setResizeLimits (300, 400, 800, 1500);
-    setTopLeftPosition (60, 60);
-
-    restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("listWindowPos"));
-    setVisible (true);
-  }
-
-  ~PluginListWindow()
-  {
-    getAppProperties().getUserSettings()->setValue ("listWindowPos", getWindowStateAsString());
-
-    clearContentComponent();
-  }
-
-  void closeButtonPressed()
-  {
-    owner.pluginListWindow = nullptr;
-  }
-
-private:
-  MainAppWindow& owner;
-
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginListWindow)
-};
+//class MainAppWindow::PluginListWindow  : public DocumentWindow
+//{
+//public:
+//  PluginListWindow (MainAppWindow& owner_, AudioPluginFormatManager& formatManager)
+//    : DocumentWindow ("Available Plugins", Colours::white,
+//                      DocumentWindow::minimiseButton | DocumentWindow::closeButton),
+//    owner (owner_)
+//  {
+//    const File deadMansPedalFile (getAppProperties().getUserSettings()
+//                                  ->getFile().getSiblingFile ("RecentlyCrashedPluginsList"));
+//
+////    setContentOwned (new PluginListComponent (formatManager,
+////                     owner.knownPluginList,
+////                     deadMansPedalFile,
+////                     getAppProperties().getUserSettings()), true);
+//
+//    setResizable (true, false);
+//    setResizeLimits (300, 400, 800, 1500);
+//    setTopLeftPosition (60, 60);
+//
+//    restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("listWindowPos"));
+//    setVisible (true);
+//  }
+//
+//  ~PluginListWindow()
+//  {
+//    getAppProperties().getUserSettings()->setValue ("listWindowPos", getWindowStateAsString());
+//
+//    clearContentComponent();
+//  }
+//
+//  void closeButtonPressed()
+//  {
+//    owner.pluginListWindow = nullptr;
+//  }
+//
+//private:
+//  MainAppWindow& owner;
+//
+//  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginListWindow)
+//};
 
 MainAppWindow::MainAppWindow(AudioDeviceManager* deviceManager)
   : DocumentWindow (JUCEApplication::getInstance()->getApplicationName(), Colours::lightgrey, DocumentWindow::allButtons)
   , deviceManager(deviceManager)
 {
 
-
+  setUsingNativeTitleBar (true);
   setResizable (true, false);
   setResizeLimits (500, 400, 10000, 10000);
   centreWithSize (800, 600);
 
-  setContentOwned (new MainComponent (formatManager, deviceManager), false);
+  setContentOwned (new MainComponent (audio, deviceManager), false);
 
-  restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
+//  restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
 
   setVisible (true);
 
@@ -113,7 +113,7 @@ bool MainAppWindow::tryToQuitApplication()
   PluginWindow::closeAllCurrentlyOpenWindows();
 
   if (getMainComponent() == nullptr
-      || getMainComponent()->getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+      || getAudio().getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
   {
     JUCEApplication::quit();
     return true;
@@ -124,7 +124,7 @@ bool MainAppWindow::tryToQuitApplication()
 
 StringArray MainAppWindow::getMenuBarNames()
 {
-  const char* const names[] = { "File", "Edit", "View", "Plugins", "Options", nullptr };
+  const char* const names[] = { "File", "Edit", "View", nullptr };
 
   return StringArray (names);
 }
@@ -181,29 +181,31 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     menu.addCommandItem (&getCommandManager(), CommandIDs::zoomOut);
     menu.addCommandItem (&getCommandManager(), CommandIDs::zoomNormal);
   }
-  else if (topLevelMenuIndex == 3)
-  {
-    // "Plugins" menu
-    PopupMenu pluginsMenu;
-    addPluginsToMenu (pluginsMenu);
-    menu.addSubMenu ("Create plugin", pluginsMenu);
-    menu.addSeparator();
-    menu.addItem (250, "Delete all plugins");
-  }
-  else if (topLevelMenuIndex == 4)
-  {
-    // "Options" menu
-
-    menu.addCommandItem (&getCommandManager(), CommandIDs::showPluginListEditor);
-
-    PopupMenu sortTypeMenu;
+//  else if (topLevelMenuIndex == 3)
+//  {
+//    // "Plugins" menu
+//    PopupMenu pluginsMenu;
+//    addPluginsToMenu (pluginsMenu);
+//    menu.addSubMenu ("Create plugin", pluginsMenu);
+//    menu.addSeparator();
+//    menu.addItem (250, "Delete all plugins");
+//  }
+//  else if (topLevelMenuIndex == 4)
+//  {
+//    // "Options" menu
+//
+//    menu.addCommandItem (&getCommandManager(), CommandIDs::showPluginListEditor);
+//
+//    KnownPluginList::SortMethod pluginSortMethod = audio.getSortMethod();
+//    
+//    PopupMenu sortTypeMenu;
 //    sortTypeMenu.addItem (200, "List plugins in default order",      true, pluginSortMethod == KnownPluginList::defaultOrder);
 //    sortTypeMenu.addItem (201, "List plugins in alphabetical order", true, pluginSortMethod == KnownPluginList::sortAlphabetically);
 //    sortTypeMenu.addItem (202, "List plugins by category",           true, pluginSortMethod == KnownPluginList::sortByCategory);
 //    sortTypeMenu.addItem (203, "List plugins by manufacturer",       true, pluginSortMethod == KnownPluginList::sortByManufacturer);
 //    sortTypeMenu.addItem (204, "List plugins based on the directory structure", true, pluginSortMethod == KnownPluginList::sortByFileSystemLocation);
-    menu.addSubMenu ("Plugin menu type", sortTypeMenu);
-  }
+//    menu.addSubMenu ("Plugin menu type", sortTypeMenu);
+//  }
 
   return menu;
 }
@@ -215,7 +217,7 @@ void MainAppWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
   if (menuItemID == 250)
   {
     if (mainComponent != nullptr)
-      mainComponent->getDoc().clear();
+      audio.getDoc().clear();
   }
   else if (menuItemID >= 100 && menuItemID < 200)
   {
@@ -223,18 +225,16 @@ void MainAppWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
     recentFiles.restoreFromString (getAppProperties().getUserSettings()
                                    ->getValue ("recentPMixDocumentFiles"));
 
-    if (mainComponent != nullptr && mainComponent->getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
-      mainComponent->getDoc().loadFrom (recentFiles.getFile (menuItemID - 100), true);
+    if (mainComponent != nullptr && audio.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+      audio.getDoc().loadFrom (recentFiles.getFile (menuItemID - 100), true);
   }
   else if (menuItemID >= 200 && menuItemID < 210)
   {
-    if (menuItemID == 200)     pluginSortMethod = KnownPluginList::defaultOrder;
-    else if (menuItemID == 201)     pluginSortMethod = KnownPluginList::sortAlphabetically;
-    else if (menuItemID == 202)     pluginSortMethod = KnownPluginList::sortByCategory;
-    else if (menuItemID == 203)     pluginSortMethod = KnownPluginList::sortByManufacturer;
-    else if (menuItemID == 204)     pluginSortMethod = KnownPluginList::sortByFileSystemLocation;
-
-    getAppProperties().getUserSettings()->setValue ("pluginSortMethod", (int) pluginSortMethod);
+    if (menuItemID == 200)          audio.setPluginSortMethod(KnownPluginList::defaultOrder);
+    else if (menuItemID == 201)     audio.setPluginSortMethod(KnownPluginList::sortAlphabetically);
+    else if (menuItemID == 202)     audio.setPluginSortMethod(KnownPluginList::sortByCategory);
+    else if (menuItemID == 203)     audio.setPluginSortMethod(KnownPluginList::sortByManufacturer);
+    else if (menuItemID == 204)     audio.setPluginSortMethod(KnownPluginList::sortByFileSystemLocation);
 
     menuItemsChanged();
   }
@@ -244,32 +244,6 @@ void MainAppWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
 //                  proportionOfWidth  (0.3f + Random::getSystemRandom().nextFloat() * 0.6f),
 //                  proportionOfHeight (0.3f + Random::getSystemRandom().nextFloat() * 0.6f));
 //  }
-}
-
-void MainAppWindow::createPlugin (const PluginDescription* desc, int x, int y)
-{
-  MainComponent* const mainComponent = getMainComponent();
-
-  if (mainComponent != nullptr)
-    mainComponent->createNewPlugin (desc, x, y);
-}
-
-void MainAppWindow::addPluginsToMenu (PopupMenu& m) const
-{
-  for (int i = 0; i < internalTypes.size(); ++i)
-    m.addItem (i + 1, internalTypes.getUnchecked(i)->name);
-
-  m.addSeparator();
-
-  knownPluginList.addToMenu (m, pluginSortMethod);
-}
-
-const PluginDescription* MainAppWindow::getChosenType (const int menuID) const
-{
-  if (menuID >= 1 && menuID < 1 + internalTypes.size())
-    return internalTypes [menuID - 1];
-
-  return knownPluginList.getType (knownPluginList.getIndexChosenByMenu (menuID));
 }
 
 ApplicationCommandTarget* MainAppWindow::getNextCommandTarget()
@@ -446,26 +420,26 @@ bool MainAppWindow::perform (const InvocationInfo& info)
   switch (info.commandID)
   {
     case CommandIDs::open:
-      if (mainComponent != nullptr && mainComponent->getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
-        mainComponent->getDoc().loadFromUserSpecifiedFile (true);
+      if (mainComponent != nullptr && audio.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+        audio.getDoc().loadFromUserSpecifiedFile (true);
 
       break;
 
     case CommandIDs::save:
       if (mainComponent != nullptr)
-        mainComponent->getDoc().save (true, true);
+        audio.getDoc().save (true, true);
       break;
 
     case CommandIDs::saveAs:
       if (mainComponent != nullptr)
-        mainComponent->getDoc().saveAs (File::nonexistent, true, true, true);
+        audio.getDoc().saveAs (File::nonexistent, true, true, true);
       break;
 
     case CommandIDs::showPluginListEditor:
-      if (pluginListWindow == nullptr)
-        pluginListWindow = new PluginListWindow (*this, formatManager);
+//      if (pluginListWindow == nullptr)
+//        pluginListWindow = new PluginListWindow (*this, formatManager);
 
-      pluginListWindow->toFront (true);
+//      pluginListWindow->toFront (true);
       break;
 
     case CommandIDs::showAudioSettings:
@@ -486,12 +460,12 @@ bool MainAppWindow::perform (const InvocationInfo& info)
       
     case CommandIDs::undo:
       // TODO
-      mainComponent->getDoc().getUndoManager().undo();
+      audio.getDoc().getUndoManager().undo();
       break;
       
     case CommandIDs::redo:
       // TODO
-      mainComponent->getDoc().getUndoManager().redo();
+      audio.getDoc().getUndoManager().redo();
       break;
       
     case CommandIDs::zoomIn:      getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() * 2.0)); break;
@@ -528,21 +502,21 @@ void MainAppWindow::filesDropped (const StringArray& files, int x, int y)
 
   if (mainComponent != nullptr)
   {
-    if (files.size() == 1 && File (files[0]).hasFileExtension (filenameSuffix))
-    {
-      if (mainComponent->getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
-        mainComponent->getDoc().loadFrom (File (files[0]), true);
-    }
-    else
-    {
-      OwnedArray <PluginDescription> typesFound;
-      knownPluginList.scanAndAddDragAndDroppedFiles (formatManager, files, typesFound);
-
-      Point<int> pos (mainComponent->getLocalPoint (this, Point<int> (x, y)));
-
-      for (int i = 0; i < jmin (5, typesFound.size()); ++i)
-        createPlugin (typesFound.getUnchecked(i), pos.getX(), pos.getY());
-    }
+//    if (files.size() == 1 && File (files[0]).hasFileExtension (filenameSuffix))
+//    {
+//      if (audio.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+//        audio.getDoc().loadFrom (File (files[0]), true);
+//    }
+//    else
+//    {
+//      OwnedArray <PluginDescription> typesFound;
+//      audio.getKnownPluginList().scanAndAddDragAndDroppedFiles (formatManager, files, typesFound);
+//
+//      Point<int> pos (mainComponent->getLocalPoint (this, Point<int> (x, y)));
+//
+//      for (int i = 0; i < jmin (5, typesFound.size()); ++i)
+//        createPlugin (typesFound.getUnchecked(i), pos.getX(), pos.getY());
+//    }
   }
 }
 

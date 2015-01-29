@@ -19,16 +19,15 @@ void pMixApp::initialise (const String& commandLine)
   LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
 
   mainWindow = new MainAppWindow(&deviceManager);
-  mainWindow->setUsingNativeTitleBar (true);
 
   commandManager.registerAllCommandsForTarget (this);
 
-  mainWindow->menuItemsChanged();
+//  mainWindow->menuItemsChanged();
 
-  if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getMainComponent() != nullptr)
-  {
-    mainWindow->getMainComponent()->getDoc().loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
-  }
+//  if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getMainComponent() != nullptr)
+//  {
+//    mainWindow->getMainComponent()->getDoc().loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
+//  }
   
   ScopedPointer<XmlElement> savedAudioState (getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
   
@@ -49,36 +48,36 @@ void pMixApp::systemRequestedQuit()
     JUCEApplicationBase::quit();
 }
 
-void pMixApp::showAudioSettings()
-{
-  AudioDeviceSelectorComponent audioSettingsComp (deviceManager,
-                                                  0, 256,
-                                                  0, 256,
-                                                  true, true, true, false);
-  
-  audioSettingsComp.setSize (500, 450);
-  
-  DialogWindow::LaunchOptions o;
-  o.content.setNonOwned (&audioSettingsComp);
-  o.dialogTitle                   = "Audio Settings";
-  o.componentToCentreAround       = mainWindow->getMainComponent();
-  o.dialogBackgroundColour        = Colours::grey;
-  o.escapeKeyTriggersCloseButton  = true;
-  o.useNativeTitleBar             = true;
-  o.resizable                     = false;
-  
-  o.runModal();
-  
-  ScopedPointer<XmlElement> audioState (deviceManager.createStateXml());
-  
-  getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
-  getAppProperties().getUserSettings()->saveIfNeeded();
-  
-  MainComponent* const mainComponent = mainWindow->getMainComponent();
-  
-  if (mainComponent != nullptr)
-    mainComponent->getDoc().removeIllegalConnections();
-}
+//void pMixApp::showAudioSettings()
+//{
+//  AudioDeviceSelectorComponent audioSettingsComp (deviceManager,
+//                                                  0, 256,
+//                                                  0, 256,
+//                                                  true, true, true, false);
+//  
+//  audioSettingsComp.setSize (500, 450);
+//  
+//  DialogWindow::LaunchOptions o;
+//  o.content.setNonOwned (&audioSettingsComp);
+//  o.dialogTitle                   = "Audio Settings";
+//  o.componentToCentreAround       = mainWindow->getMainComponent();
+//  o.dialogBackgroundColour        = Colours::grey;
+//  o.escapeKeyTriggersCloseButton  = true;
+//  o.useNativeTitleBar             = true;
+//  o.resizable                     = false;
+//  
+//  o.runModal();
+//  
+//  ScopedPointer<XmlElement> audioState (deviceManager.createStateXml());
+//  
+//  getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
+//  getAppProperties().getUserSettings()->saveIfNeeded();
+//  
+//  MainComponent* const mainComponent = mainWindow->getMainComponent();
+//  
+//  if (mainComponent != nullptr)
+//    mainComponent->getDoc().removeIllegalConnections();
+//}
 
 const String pMixApp::getApplicationName()       { return "pMix"; }
 const String pMixApp::getApplicationVersion()    { return ProjectInfo::versionString; }

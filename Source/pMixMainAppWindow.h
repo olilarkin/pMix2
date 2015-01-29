@@ -1,17 +1,28 @@
-#ifndef __MAINAPPWINDOW_JUCEHEADER__
-#define __MAINAPPWINDOW_JUCEHEADER__
+/*
+ ==============================================================================
+ 
+ pMixMainAppWindow.h
+ Author:  Oliver Larkin
+ 
+ The top level window for the app.
+ 
+ ==============================================================================
+ */
 
-#include "pMixDocument.h"
+#ifndef PMIXMAINAPPWINDOW_H_INCLUDED
+#define PMIXMAINAPPWINDOW_H_INCLUDED
+
+#include "pMixAudio.h"
 #include "pMixMainComponent.h"
 #include "pMixCommandIDs.h"
 
 ApplicationCommandManager& getCommandManager();
 ApplicationProperties& getAppProperties();
 
-class MainAppWindow    : public DocumentWindow,
-                          public MenuBarModel,
-                          public ApplicationCommandTarget,
-                          public FileDragAndDropTarget
+class MainAppWindow : public DocumentWindow,
+                      public MenuBarModel,
+                      public ApplicationCommandTarget,
+                      public FileDragAndDropTarget
 {
 public:
   MainAppWindow(AudioDeviceManager* deviceManager);
@@ -40,13 +51,11 @@ public:
 
   //Unique
   bool tryToQuitApplication();
-  void createPlugin (const PluginDescription* desc, int x, int y);
-  void addPluginsToMenu (PopupMenu& m) const;
-  const PluginDescription* getChosenType (const int menuID) const;
   MainComponent* getMainComponent() const;
-
+  PMixAudio& getAudio() { return audio; }
 private:
   AudioDeviceManager* deviceManager;
+  PMixAudio audio;
   
   class PluginListWindow;
   ScopedPointer <PluginListWindow> pluginListWindow;
@@ -55,4 +64,4 @@ private:
 };
 
 
-#endif   // __MAINAPPWINDOW_JUCEHEADER__
+#endif   // PMIXMAINAPPWINDOW_H_INCLUDED
