@@ -5,8 +5,6 @@
 #include "pMixAppProperties.h"
 #include "pMixAudio.h"
 
-static pMixAppPropertiesHolder ph;
-
 class PMixPluginAudioProcessor  : public AudioProcessor
 {
 public:

@@ -208,7 +208,7 @@ Result PMixDocument::saveDocument (const File& file)
 File PMixDocument::getLastDocumentOpened()
 {
   RecentlyOpenedFilesList recentFiles;
-  recentFiles.restoreFromString (getAppProperties().getUserSettings()
+  recentFiles.restoreFromString (audio.getAppProperties().getUserSettings()
                                  ->getValue ("recentPMixDocumentFiles"));
 
   return recentFiles.getFile (0);
@@ -217,12 +217,12 @@ File PMixDocument::getLastDocumentOpened()
 void PMixDocument::setLastDocumentOpened (const File& file)
 {
   RecentlyOpenedFilesList recentFiles;
-  recentFiles.restoreFromString (getAppProperties().getUserSettings()
+  recentFiles.restoreFromString (audio.getAppProperties().getUserSettings()
                                  ->getValue ("recentPMixDocumentFiles"));
 
   recentFiles.addFile (file);
 
-  getAppProperties().getUserSettings()
+  audio.getAppProperties().getUserSettings()
   ->setValue ("recentPMixDocumentFiles", recentFiles.toString());
 }
 

@@ -16,25 +16,25 @@ static double snapToIntegerZoom (double zoom)
 //                      DocumentWindow::minimiseButton | DocumentWindow::closeButton),
 //    owner (owner_)
 //  {
-//    const File deadMansPedalFile (getAppProperties().getUserSettings()
+//    const File deadMansPedalFile (audio.getAppProperties().getUserSettings()
 //                                  ->getFile().getSiblingFile ("RecentlyCrashedPluginsList"));
 //
 ////    setContentOwned (new PluginListComponent (formatManager,
 ////                     owner.knownPluginList,
 ////                     deadMansPedalFile,
-////                     getAppProperties().getUserSettings()), true);
+////                     audio.getAppProperties().getUserSettings()), true);
 //
 //    setResizable (true, false);
 //    setResizeLimits (300, 400, 800, 1500);
 //    setTopLeftPosition (60, 60);
 //
-//    restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("listWindowPos"));
+//    restoreWindowStateFromString (audio.getAppProperties().getUserSettings()->getValue ("listWindowPos"));
 //    setVisible (true);
 //  }
 //
 //  ~PluginListWindow()
 //  {
-//    getAppProperties().getUserSettings()->setValue ("listWindowPos", getWindowStateAsString());
+//    audio.getAppProperties().getUserSettings()->setValue ("listWindowPos", getWindowStateAsString());
 //
 //    clearContentComponent();
 //  }
@@ -62,7 +62,7 @@ MainAppWindow::MainAppWindow(PMixAudio& audio)
 
   setContentOwned (new MainComponent (audio), false);
 
-  restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
+  restoreWindowStateFromString (audio.getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
 
   setVisible (true);
 
@@ -101,7 +101,7 @@ MainAppWindow::~MainAppWindow()
 
   //deviceManager->removeChangeListener (graphEditor);
   
-  getAppProperties().getUserSettings()->setValue ("mainWindowPos", getWindowStateAsString());
+  audio.getAppProperties().getUserSettings()->setValue ("mainWindowPos", getWindowStateAsString());
   clearContentComponent();
 }
 
@@ -141,7 +141,7 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     menu.addCommandItem (&getCommandManager(), CommandIDs::open);
 
     RecentlyOpenedFilesList recentFiles;
-    recentFiles.restoreFromString (getAppProperties().getUserSettings()
+    recentFiles.restoreFromString (audio.getAppProperties().getUserSettings()
                                    ->getValue ("recentPMixDocumentFiles"));
 
     PopupMenu recentFilesMenu;
@@ -224,7 +224,7 @@ void MainAppWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
   else if (menuItemID >= 100 && menuItemID < 200)
   {
     RecentlyOpenedFilesList recentFiles;
-    recentFiles.restoreFromString (getAppProperties().getUserSettings()
+    recentFiles.restoreFromString (audio.getAppProperties().getUserSettings()
                                    ->getValue ("recentPMixDocumentFiles"));
 
     if (mainComponent != nullptr && audio.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)

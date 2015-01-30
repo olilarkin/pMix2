@@ -31,6 +31,8 @@ public:
     appProperties = nullptr;
   }
   
+  ApplicationProperties& getAppProperties() { return *appProperties; }
+  
   ScopedPointer<ApplicationProperties> appProperties;
 };
 

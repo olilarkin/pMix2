@@ -14,11 +14,13 @@
 
 #include "pMixDocument.h"
 #include "pMixInternalFilters.h"
+#include "pMixAppProperties.h"
 
 ApplicationCommandManager& getCommandManager();
 ApplicationProperties& getAppProperties();
 
 class PMixAudio : public ChangeListener
+                , public pMixAppPropertiesHolder
 {
 public:
   PMixAudio();

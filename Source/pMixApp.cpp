@@ -4,7 +4,9 @@
 #error "If you're building the audio plugin host, you probably want to enable VST and/or AU support"
 #endif
 
-pMixApp::pMixApp() {}
+pMixApp::pMixApp()
+{
+}
 
 void pMixApp::initialise (const String& commandLine)
 {
@@ -32,7 +34,7 @@ void pMixApp::initialise (const String& commandLine)
 //    mainWindow->getMainComponent()->getDoc().loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
 //  }
   
-  ScopedPointer<XmlElement> savedAudioState (getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
+  ScopedPointer<XmlElement> savedAudioState (audio.getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
   
   mainWindow->getAudio().getDoc().initialize();
   deviceManager.initialise (256, 256, savedAudioState, true);
@@ -92,8 +94,6 @@ bool pMixApp::moreThanOneInstanceAllowed()       { return false; }
 
 static pMixApp& getApp()                         { return *dynamic_cast<pMixApp*>(JUCEApplication::getInstance()); }
 ApplicationCommandManager& getCommandManager()   { return getApp().commandManager; }
-ApplicationProperties& getAppProperties()        { return *getApp().appProperties; }
-
 
 // This kicks the whole thing off..
 START_JUCE_APPLICATION (pMixApp)

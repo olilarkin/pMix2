@@ -15,11 +15,9 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixMainAppWindow.h"
 #include "pMixLookAndFeel.h"
-#include "pMixAppProperties.h"
 #include "pMixCommandManager.h"
 
 class pMixApp : public JUCEApplication
-              , public pMixAppPropertiesHolder
               , public pMixCommandManagerHolder
 {
 public:

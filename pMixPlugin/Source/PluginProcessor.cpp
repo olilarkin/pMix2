@@ -1,8 +1,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-ApplicationProperties& getAppProperties() { return *ph.appProperties; }
-
 PMixPluginAudioProcessor::PMixPluginAudioProcessor()
 {
 }
