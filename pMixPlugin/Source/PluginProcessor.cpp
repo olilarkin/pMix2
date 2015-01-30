@@ -114,9 +114,6 @@ void PMixPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 {
   audioEngine.getGraph().setPlayConfigDetails (getNumInputChannels(), getNumOutputChannels(), sampleRate, samplesPerBlock);
   audioEngine.getGraph().prepareToPlay (sampleRate, samplesPerBlock);
-
-//  audio.getGraph().addConnection (myProcessor->getNodeID(), 0, ioProcOutNode->id, 0);
-//  audio.getGraph().addConnection (myProcessor->getNodeID(), 1, ioProcOutNode->id, 1);
 }
 
 void PMixPluginAudioProcessor::releaseResources()
