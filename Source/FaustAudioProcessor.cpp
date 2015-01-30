@@ -60,6 +60,23 @@ void FaustAudioProcessor::fillInPluginDescription (PluginDescription& descriptio
   description.numOutputChannels = mDSP->getNumOutputs();
 }
 
+//static
+void FaustAudioProcessor::fillInitialInPluginDescription (PluginDescription& description)
+{
+  description.name = "Faust Effect";
+  description.descriptiveName = "JIT compiled Faust Effect";
+  description.pluginFormatName = "Faust JIT compiled";
+  description.category = "na";
+  description.manufacturerName = "bleh";
+  description.version = "0.0.1";
+  description.fileOrIdentifier = "";
+  description.lastFileModTime = Time(0);
+  description.isInstrument = false;
+  description.hasSharedContainer = false;
+  description.numInputChannels = 1;
+  description.numOutputChannels = 1;
+}
+
 void FaustAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
   setPlayConfigDetails(mDSP->getNumInputs(),  mDSP->getNumOutputs(), sampleRate, samplesPerBlock);

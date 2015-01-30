@@ -10,7 +10,7 @@
 #ifndef FAUSTAUDIOPROCESSOR_H_INCLUDED
 #define FAUSTAUDIOPROCESSOR_H_INCLUDED
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 
 #define FAUSTFLOAT float
 
@@ -22,7 +22,8 @@ public:
   FaustAudioProcessor();
   ~FaustAudioProcessor();
   
-  virtual void fillInPluginDescription (PluginDescription& description) const override;
+  void fillInPluginDescription (PluginDescription& description) const override;
+  static void fillInitialInPluginDescription (PluginDescription& description);
 
   void prepareToPlay (double sampleRate, int samplesPerBlock) override;
   void releaseResources() override;
