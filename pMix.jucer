@@ -54,6 +54,10 @@
             file="Source/pMixGraphEditor.cpp"/>
       <FILE id="RIOJxZ" name="pMixGraphEditor.h" compile="0" resource="0"
             file="Source/pMixGraphEditor.h"/>
+      <FILE id="hP2Oht" name="pMixPluginWindow.cpp" compile="1" resource="0"
+            file="Source/pMixPluginWindow.cpp"/>
+      <FILE id="eUeKMz" name="pMixPluginWindow.h" compile="0" resource="0"
+            file="Source/pMixPluginWindow.h"/>
       <FILE id="atxxnI" name="pMixMainComponent.cpp" compile="1" resource="0"
             file="Source/pMixMainComponent.cpp"/>
       <FILE id="cjM5RC" name="pMixMainComponent.h" compile="0" resource="0"

@@ -62,6 +62,7 @@ OBJECTS := \
   $(OBJDIR)/pMixParamView_95a42e7.o \
   $(OBJDIR)/pMixDocument_9b99d1f0.o \
   $(OBJDIR)/pMixGraphEditor_f95221f0.o \
+  $(OBJDIR)/pMixPluginWindow_8e0c1d8.o \
   $(OBJDIR)/pMixMainComponent_71d6859.o \
   $(OBJDIR)/pMixPrefsComponent_29159002.o \
   $(OBJDIR)/pMixInternalFilters_8e34e293.o \
@@ -150,6 +151,11 @@ $(OBJDIR)/pMixDocument_9b99d1f0.o: ../../Source/pMixDocument.cpp
 $(OBJDIR)/pMixGraphEditor_f95221f0.o: ../../Source/pMixGraphEditor.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixGraphEditor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixPluginWindow_8e0c1d8.o: ../../Source/pMixPluginWindow.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixPluginWindow.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixMainComponent_71d6859.o: ../../Source/pMixMainComponent.cpp
