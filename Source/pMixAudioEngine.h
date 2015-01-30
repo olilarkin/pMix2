@@ -14,13 +14,10 @@
 
 #include "pMixDocument.h"
 #include "pMixInternalFilters.h"
-#include "pMixAppProperties.h"
 
 ApplicationCommandManager& getCommandManager();
-ApplicationProperties& getAppProperties();
 
 class PMixAudioEngine : public ChangeListener
-                , public pMixAppPropertiesHolder
 {
 public:
   PMixAudioEngine();
@@ -32,6 +29,7 @@ public:
   KnownPluginList& getKnownPluginList() { return knownPluginList; }
   KnownPluginList::SortMethod getSortMethod() noexcept { return pluginSortMethod; }
   PMixDocument &getDoc() noexcept { return doc; }
+  ApplicationProperties& getAppProperties() { return *appProperties; }
 
   void setPluginSortMethod(KnownPluginList::SortMethod sortMethod);
   
@@ -50,6 +48,8 @@ private:
   AudioProcessorGraph graph;
   AudioPluginFormatManager formatManager;
   
+  ScopedPointer<ApplicationProperties> appProperties;
+
   PMixDocument doc;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixAudioEngine)

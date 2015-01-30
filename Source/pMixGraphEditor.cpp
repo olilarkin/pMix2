@@ -568,7 +568,7 @@ GraphEditor* PinComponent::getGraphPanel() const noexcept
 #pragma mark -
 #pragma mark MovePluginAction
 
-MovePluginAction::MovePluginAction (PMixAudioEngine& audio, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
+MovePluginAction::MovePluginAction (PMixAudioEngine& audioEngine, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
 : audioEngine(audioEngine)
 , filterComponent(filterComponent)
 , nodeID(nodeID)

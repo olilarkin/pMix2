@@ -3,7 +3,7 @@
 
 PMixPluginAudioProcessor::PMixPluginAudioProcessor()
 {
-  getAudio().getDoc().initialize();
+  audioEngine.getDoc().initialize();
 }
 
 PMixPluginAudioProcessor::~PMixPluginAudioProcessor()
@@ -112,8 +112,8 @@ void PMixPluginAudioProcessor::changeProgramName (int index, const String& newNa
 
 void PMixPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-  audio.getGraph().setPlayConfigDetails (getNumInputChannels(), getNumOutputChannels(), sampleRate, samplesPerBlock);
-  audio.getGraph().prepareToPlay (sampleRate, samplesPerBlock);
+  audioEngine.getGraph().setPlayConfigDetails (getNumInputChannels(), getNumOutputChannels(), sampleRate, samplesPerBlock);
+  audioEngine.getGraph().prepareToPlay (sampleRate, samplesPerBlock);
 
 //  audio.getGraph().addConnection (myProcessor->getNodeID(), 0, ioProcOutNode->id, 0);
 //  audio.getGraph().addConnection (myProcessor->getNodeID(), 1, ioProcOutNode->id, 1);
@@ -121,12 +121,12 @@ void PMixPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 
 void PMixPluginAudioProcessor::releaseResources()
 {
-audio.getGraph().releaseResources();
+  audioEngine.getGraph().releaseResources();
 }
 
 void PMixPluginAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-  audio.getGraph().processBlock (buffer, midiMessages);
+  audioEngine.getGraph().processBlock (buffer, midiMessages);
 }
 
 bool PMixPluginAudioProcessor::hasEditor() const

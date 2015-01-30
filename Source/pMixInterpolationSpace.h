@@ -38,7 +38,7 @@ private:
   InterpolationSpaceLabel* label;
     
 public:
-  InterpolationSpacePreset(PMixAudioEngine& audio, String& initalLabel);
+  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel);
   ~InterpolationSpacePreset ();
   void resized ();
   void mouseDown (const MouseEvent& e);

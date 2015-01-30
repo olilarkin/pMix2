@@ -17,7 +17,6 @@
 #include "pMixCommandIDs.h"
 
 ApplicationCommandManager& getCommandManager();
-ApplicationProperties& getAppProperties();
 
 class MainAppWindow : public DocumentWindow,
                       public MenuBarModel,

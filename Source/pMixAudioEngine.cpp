@@ -12,6 +12,16 @@
 PMixAudioEngine::PMixAudioEngine()
 : doc(*this)
 {
+  // initialise our settings file..
+  
+  PropertiesFile::Options options;
+  options.applicationName     = "pMix";
+  options.filenameSuffix      = "settings";
+  options.osxLibrarySubFolder = "Preferences";
+  
+  appProperties = new ApplicationProperties();
+  appProperties->setStorageParameters (options);
+  
   formatManager.addDefaultFormats();
   formatManager.addFormat (new InternalPluginFormat());
   
@@ -33,6 +43,7 @@ PMixAudioEngine::~PMixAudioEngine()
 {
   knownPluginList.removeChangeListener (this);  
   doc.clear();
+  appProperties = nullptr;
 }
 
 void PMixAudioEngine::changeListenerCallback (ChangeBroadcaster* broadcaster)

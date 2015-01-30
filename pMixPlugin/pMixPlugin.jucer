@@ -22,8 +22,6 @@
               file="../Source/FaustAudioProcessor.cpp"/>
         <FILE id="FquO7I" name="FaustAudioProcessor.h" compile="0" resource="0"
               file="../Source/FaustAudioProcessor.h"/>
-        <FILE id="Ca7LcE" name="pMixAppProperties.h" compile="0" resource="0"
-              file="../Source/pMixAppProperties.h"/>
         <FILE id="rTh7Ts" name="pMixCodeEditor.cpp" compile="1" resource="0"
               file="../Source/pMixCodeEditor.cpp"/>
         <FILE id="y3b3r7" name="pMixCodeEditor.h" compile="0" resource="0"

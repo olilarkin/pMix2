@@ -2,8 +2,7 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "pMixAppProperties.h"
-#include "pMixAudio.h"
+#include "pMixAudioEngine.h"
 
 class PMixPluginAudioProcessor  : public AudioProcessor
 {
@@ -48,10 +47,10 @@ public:
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
   
-  PMixAudio& getAudio() { return audio; }
+  PMixAudioEngine& getAudioEngine() { return audioEngine; }
   
 private:
-  PMixAudio audio;
+  PMixAudioEngine audioEngine;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixPluginAudioProcessor)
 };

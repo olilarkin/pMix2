@@ -15,7 +15,7 @@ class PinComponent;
 class CreatePluginAction  : public UndoableAction
 {
 public:
-  CreatePluginAction (PMixAudioEngine& audio, const PluginDescription* desc, double x, double y) noexcept;
+  CreatePluginAction (PMixAudioEngine& audioEngine, const PluginDescription* desc, double x, double y) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -105,7 +105,7 @@ private:
 class MovePluginAction  : public UndoableAction
 {
 public:
-  MovePluginAction (PMixAudioEngine& audio, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
+  MovePluginAction (PMixAudioEngine& audioEngine, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -125,7 +125,7 @@ private:
 class FilterComponent : public Component
 {
 public:
-  FilterComponent (PMixAudioEngine& audio, const uint32 filterID_);
+  FilterComponent (PMixAudioEngine& audioEngine, const uint32 filterID_);
   ~FilterComponent();
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);

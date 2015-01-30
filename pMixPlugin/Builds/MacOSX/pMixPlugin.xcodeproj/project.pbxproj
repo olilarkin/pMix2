@@ -837,7 +837,6 @@
 		D2BD25C91D37031146A5AAB2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_Time.cpp"; path = "../../../../../juce/modules/juce_core/time/juce_Time.cpp"; sourceTree = "SOURCE_ROOT"; };
 		D2CBA39F0CDD743A22C372B8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_OpenGLImage.cpp"; path = "../../../../../juce/modules/juce_opengl/opengl/juce_OpenGLImage.cpp"; sourceTree = "SOURCE_ROOT"; };
 		D2FC61F36F8046F0286EF76E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ComponentListener.h"; path = "../../../../../juce/modules/juce_gui_basics/components/juce_ComponentListener.h"; sourceTree = "SOURCE_ROOT"; };
-		D3216542DD6C0D4B3930BACC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixAppProperties.h; path = ../../../Source/pMixAppProperties.h; sourceTree = "SOURCE_ROOT"; };
 		D3AF14F7E3B1B7DC19D97A58 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_MixerAudioSource.cpp"; path = "../../../../../juce/modules/juce_audio_basics/sources/juce_MixerAudioSource.cpp"; sourceTree = "SOURCE_ROOT"; };
 		D44D850DA1AE05A6BFE68446 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_PathIterator.cpp"; path = "../../../../../juce/modules/juce_graphics/geometry/juce_PathIterator.cpp"; sourceTree = "SOURCE_ROOT"; };
 		D4711566BF33CDA9544A8BEB = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ChangeListener.h"; path = "../../../../../juce/modules/juce_events/broadcasters/juce_ChangeListener.h"; sourceTree = "SOURCE_ROOT"; };
@@ -997,7 +996,6 @@
 					5BAACE03053C79B6A9F7F6E8,
 					7659F6F0D9F7452D75033B5D,
 					65DE6E5D02CDC1C897F28A2F,
-					D3216542DD6C0D4B3930BACC,
 					342EC22DAC449A703BD806BB,
 					A51D1245DAA349752A348C72,
 					0D34978567381D16821BA894,

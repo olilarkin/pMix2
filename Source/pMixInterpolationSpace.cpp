@@ -31,7 +31,7 @@ int MovePresetAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audio, String& initalLabel)
+InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel)
 : audioEngine(audioEngine)
 {
   addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));

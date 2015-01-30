@@ -4,7 +4,7 @@
 PMixPluginAudioProcessorEditor::PMixPluginAudioProcessorEditor (PMixPluginAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
-  mainComponent = new MainComponent (processor.getAudio());
+  mainComponent = new MainComponent (processor.getAudioEngine());
   addAndMakeVisible(mainComponent);
   
   setSize (1000, 700);

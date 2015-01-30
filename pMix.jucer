@@ -22,8 +22,6 @@
       </GROUP>
       <FILE id="zVO2XV" name="pMixCommandIDs.h" compile="0" resource="0"
             file="Source/pMixCommandIDs.h"/>
-      <FILE id="VyEfrv" name="pMixAppProperties.h" compile="0" resource="0"
-            file="Source/pMixAppProperties.h"/>
       <FILE id="wluBoV" name="pMixCommandManager.h" compile="0" resource="0"
             file="Source/pMixCommandManager.h"/>
       <FILE id="PSI7MM" name="pMixCodeEditor.cpp" compile="1" resource="0"
