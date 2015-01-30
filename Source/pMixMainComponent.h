@@ -10,7 +10,6 @@
 #ifndef MAINCOMPONENT_H_INCLUDED
 #define MAINCOMPONENT_H_INCLUDED
 
-#include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixAudio.h"
 #include "pMixInterpolationSpace.h"
 #include "pMixGraphEditor.h"
@@ -26,7 +25,7 @@ public:
   void resized();
   void setZoom (double scale);
   double getZoom() const;
-  //PMixDocument& getDoc() { return doc; }
+
 private:
   PMixAudio& audio;  
   MidiKeyboardState keyState;

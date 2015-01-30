@@ -1,7 +1,7 @@
 #ifndef __PARAMVIEW_JUCEHEADER__
 #define __PARAMVIEW_JUCEHEADER__
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 #include "pMixAudio.h"
 
 class ParamSlider  : public Slider

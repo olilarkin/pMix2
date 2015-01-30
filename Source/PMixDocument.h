@@ -1,7 +1,7 @@
 #ifndef __PMixDocument_JUCEHEADER__
 #define __PMixDocument_JUCEHEADER__
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 
 const char* const filenameSuffix = ".pmix";
 const char* const filenameWildcard = "*.pmix";

@@ -18,8 +18,6 @@
               file="../Source/FaustAudioProcessor.cpp"/>
         <FILE id="FquO7I" name="FaustAudioProcessor.h" compile="0" resource="0"
               file="../Source/FaustAudioProcessor.h"/>
-        <FILE id="n3JBj6" name="pMixApp.cpp" compile="1" resource="0" file="../Source/pMixApp.cpp"/>
-        <FILE id="XJZNrW" name="pMixApp.h" compile="0" resource="0" file="../Source/pMixApp.h"/>
         <FILE id="Ca7LcE" name="pMixAppProperties.h" compile="0" resource="0"
               file="../Source/pMixAppProperties.h"/>
         <FILE id="nc3fJ2" name="pMixAudio.cpp" compile="1" resource="0" file="../Source/pMixAudio.cpp"/>
@@ -51,10 +49,6 @@
               file="../Source/pMixLookAndFeel.cpp"/>
         <FILE id="YeKmnR" name="pMixLookAndFeel.h" compile="0" resource="0"
               file="../Source/pMixLookAndFeel.h"/>
-        <FILE id="MyLgR2" name="pMixMainAppWindow.cpp" compile="1" resource="0"
-              file="../Source/pMixMainAppWindow.cpp"/>
-        <FILE id="hJT0Ao" name="pMixMainAppWindow.h" compile="0" resource="0"
-              file="../Source/pMixMainAppWindow.h"/>
         <FILE id="B9Hn3M" name="pMixMainComponent.cpp" compile="1" resource="0"
               file="../Source/pMixMainComponent.cpp"/>
         <FILE id="YQA0Q6" name="pMixMainComponent.h" compile="0" resource="0"

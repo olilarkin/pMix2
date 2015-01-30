@@ -2,7 +2,7 @@
 #ifndef _INTERPOLATIONSPACE_H_
 #define _INTERPOLATIONSPACE_H_
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 #include "pMixAudio.h"
 
 class InterpolationSpaceLabel : public Label

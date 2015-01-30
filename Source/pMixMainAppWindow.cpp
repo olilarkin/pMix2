@@ -1,6 +1,4 @@
-#include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixMainAppWindow.h"
-#include "pMixInternalFilters.h"
 
 static double snapToIntegerZoom (double zoom)
 {
@@ -52,9 +50,9 @@ static double snapToIntegerZoom (double zoom)
 //  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginListWindow)
 //};
 
-MainAppWindow::MainAppWindow(AudioDeviceManager* deviceManager)
+MainAppWindow::MainAppWindow(PMixAudio& audio)
   : DocumentWindow (JUCEApplication::getInstance()->getApplicationName(), Colours::lightgrey, DocumentWindow::allButtons)
-  , deviceManager(deviceManager)
+  , audio(audio)
 {
 
   setUsingNativeTitleBar (true);
@@ -64,7 +62,7 @@ MainAppWindow::MainAppWindow(AudioDeviceManager* deviceManager)
 
   setContentOwned (new MainComponent (audio), false);
 
-//  restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
+  restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
 
   setVisible (true);
 
@@ -88,8 +86,6 @@ MainAppWindow::MainAppWindow(AudioDeviceManager* deviceManager)
   
   getCommandManager().setFirstCommandTarget (this);
   
-  deviceManager->addAudioCallback (&audio.getGraphPlayer());
-  deviceManager->addMidiInputCallback (String::empty, &audio.getGraphPlayer().getMidiMessageCollector());
   //deviceManager->addChangeListener (graphEditor);
 }
 
@@ -103,8 +99,6 @@ MainAppWindow::~MainAppWindow()
   setMenuBar (nullptr);
 #endif
 
-  deviceManager->removeAudioCallback (&audio.getGraphPlayer());
-  deviceManager->removeMidiInputCallback (String::empty, &audio.getGraphPlayer().getMidiMessageCollector());
   //deviceManager->removeChangeListener (graphEditor);
   
   getAppProperties().getUserSettings()->setValue ("mainWindowPos", getWindowStateAsString());

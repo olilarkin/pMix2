@@ -12,8 +12,6 @@
 #ifndef PMIXAUDIO_H_INCLUDED
 #define PMIXAUDIO_H_INCLUDED
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
 #include "pMixDocument.h"
 #include "pMixInternalFilters.h"
 

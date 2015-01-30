@@ -25,7 +25,7 @@ class MainAppWindow : public DocumentWindow,
                       public FileDragAndDropTarget
 {
 public:
-  MainAppWindow(AudioDeviceManager* deviceManager);
+  MainAppWindow(PMixAudio& audio);
   ~MainAppWindow();
 
   //DocumentWindow
@@ -54,8 +54,7 @@ public:
   MainComponent* getMainComponent() const;
   PMixAudio& getAudio() { return audio; }
 private:
-  AudioDeviceManager* deviceManager;
-  PMixAudio audio;
+  PMixAudio& audio;
   
   class PluginListWindow;
   ScopedPointer <PluginListWindow> pluginListWindow;

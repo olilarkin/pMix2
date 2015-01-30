@@ -1,6 +1,5 @@
-#include "../JuceLibraryCode/JuceHeader.h"
+//#include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixInternalFilters.h"
-#include "pMixDocument.h"
 #include "FaustAudioProcessor.h"
 
 InternalPluginFormat::InternalPluginFormat()
@@ -26,9 +25,7 @@ InternalPluginFormat::InternalPluginFormat()
   }
   
   {
-    //TODO:, probably the wrong place for this
-    FaustAudioProcessor p;
-    p.fillInPluginDescription (faustDesc);
+    FaustAudioProcessor::fillInitialInPluginDescription (faustDesc);
   }
 }
 

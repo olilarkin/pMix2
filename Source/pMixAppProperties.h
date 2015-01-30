@@ -10,8 +10,6 @@
 #ifndef PMIXAPPPROPERTIES_H_INCLUDED
 #define PMIXAPPPROPERTIES_H_INCLUDED
 
-//#include "../JuceLibraryCode/JuceHeader.h"
-
 class pMixAppPropertiesHolder
 {
 public:

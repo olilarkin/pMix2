@@ -2,7 +2,7 @@
 #ifndef __pMixLookAndFeel_JUCEHEADER__
 #define __pMixLookAndFeel_JUCEHEADER__
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 
 class pMixLookAndFeel : public LookAndFeel_V3
 {

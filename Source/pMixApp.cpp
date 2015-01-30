@@ -18,11 +18,14 @@ void pMixApp::initialise (const String& commandLine)
 
   LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
 
-  mainWindow = new MainAppWindow(&deviceManager);
+  mainWindow = new MainAppWindow(audio);
+  
+  deviceManager.addAudioCallback (&audio.getGraphPlayer());
+  deviceManager.addMidiInputCallback (String::empty, &audio.getGraphPlayer().getMidiMessageCollector());
 
   commandManager.registerAllCommandsForTarget (this);
 
-//  mainWindow->menuItemsChanged();
+  mainWindow->menuItemsChanged();
 
 //  if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getMainComponent() != nullptr)
 //  {
@@ -37,6 +40,9 @@ void pMixApp::initialise (const String& commandLine)
 
 void pMixApp::shutdown()
 {
+  deviceManager.removeAudioCallback (&audio.getGraphPlayer());
+  deviceManager.removeMidiInputCallback (String::empty, &audio.getGraphPlayer().getMidiMessageCollector());
+  
   mainWindow = nullptr;
   LookAndFeel::setDefaultLookAndFeel (nullptr);
 }

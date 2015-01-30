@@ -10,7 +10,7 @@
 #ifndef CODEEDITOR_H_INCLUDED
 #define CODEEDITOR_H_INCLUDED
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 
 class CodeEditor : public Component
 {

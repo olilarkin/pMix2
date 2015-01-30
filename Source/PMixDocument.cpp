@@ -1,8 +1,5 @@
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "pMixMainAppWindow.h"
 #include "pMixDocument.h"
-#include "pMixInternalFilters.h"
-#include "pMixGraphEditor.h"
+#include "pMixAudio.h"
 
 const int PMixDocument::midiChannelNumber = 0x1000;
 
@@ -77,7 +74,7 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
 
 void PMixDocument::removeFilter (const uint32 id)
 {
-  PluginWindow::closeCurrentlyOpenWindowsFor (id);
+  //PluginWindow::closeCurrentlyOpenWindowsFor (id);
 
   if (audio.getGraph().removeNode (id))
     changed();
@@ -172,7 +169,7 @@ void PMixDocument::removeConnection (uint32 sourceFilterUID, int sourceFilterCha
 
 void PMixDocument::clear()
 {
-  PluginWindow::closeAllCurrentlyOpenWindows();
+  //PluginWindow::closeAllCurrentlyOpenWindows();
 
   audio.getGraph().clear();
   changed();

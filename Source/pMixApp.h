@@ -37,6 +37,7 @@ public:
 private:
   ScopedPointer<MainAppWindow> mainWindow;
   AudioDeviceManager deviceManager;
+  PMixAudio audio;
 //  SplashScreen* splash;
 };
 

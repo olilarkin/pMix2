@@ -3,6 +3,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixAppProperties.h"
+#include "pMixAudio.h"
 
 static pMixAppPropertiesHolder ph;
 
@@ -12,7 +13,6 @@ public:
 
   PMixPluginAudioProcessor();
   ~PMixPluginAudioProcessor();
-
 
   void prepareToPlay (double sampleRate, int samplesPerBlock) override;
   void releaseResources() override;
@@ -50,7 +50,8 @@ public:
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
   
-  private:
+private:
+  PMixAudio audio;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixPluginAudioProcessor)
 };
