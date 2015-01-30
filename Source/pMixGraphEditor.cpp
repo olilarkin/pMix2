@@ -1,7 +1,6 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixGraphEditor.h"
 #include "pMixInternalFilters.h"
-#include "pMixMainAppWindow.h"
 
 #pragma mark -
 #pragma mark CreatePluginAction
@@ -233,15 +232,9 @@ void GraphEditor::mouseDown (const MouseEvent& e)
   if (e.mods.isPopupMenu())
   {
     PopupMenu m;
-
-    if (MainAppWindow* const mainWindow = findParentComponentOfClass<MainAppWindow>())
-    {
-      audio.addPluginsToMenu (m);
-
-      const int r = m.show();
-
-      createNewPlugin (audio.getChosenType (r), e.x, e.y);
-    }
+    audio.addPluginsToMenu (m);
+    const int r = m.show();
+    createNewPlugin (audio.getChosenType (r), e.x, e.y);
   }
   else
   {

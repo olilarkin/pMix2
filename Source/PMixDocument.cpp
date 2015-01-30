@@ -11,26 +11,18 @@ PMixDocument::PMixDocument (PMixAudio& audio)
                      filenameWildcard,
                      "Load a pMix patch",
                      "Save a pMix patch"),
-                     formatManager (audio.getFormatManager()),
-                     graph(audio.getGraph()),
+                     audio(audio),
                      lastUID (0),
                      snapGridPixels (8),
                      snapActive (true),
                      snapShown (true),
                      componentOverlayOpacity (0.33f)
 {
-//  InternalPluginFormat internalFormat;
-
-//  addFilter (internalFormat.getDescriptionFor (InternalPluginFormat::audioInputFilter),  0.5f,  0.1f);
-//  addFilter (internalFormat.getDescriptionFor (InternalPluginFormat::midiInputFilter),   0.25f, 0.1f);
-//  addFilter (internalFormat.getDescriptionFor (InternalPluginFormat::audioOutputFilter), 0.5f,  0.9f);
-
-  setChangedFlag (false);
 }
 
 PMixDocument::~PMixDocument()
 {
-  graph.clear();
+  audio.getGraph().clear();
 }
 
 uint32 PMixDocument::getNextUID() noexcept
@@ -40,17 +32,17 @@ uint32 PMixDocument::getNextUID() noexcept
 
 int PMixDocument::getNumFilters() const noexcept
 {
-  return graph.getNumNodes();
+  return audio.getGraph().getNumNodes();
 }
 
 const AudioProcessorGraph::Node::Ptr PMixDocument::getNode (const int index) const noexcept
 {
-  return graph.getNode (index);
+  return audio.getGraph().getNode (index);
 }
 
 const AudioProcessorGraph::Node::Ptr PMixDocument::getNodeForId (const uint32 uid) const noexcept
 {
-  return graph.getNodeForId (uid);
+  return audio.getGraph().getNodeForId (uid);
 }
 
 uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double y)
@@ -61,8 +53,8 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
   {
     String errorMessage;
 
-    if (AudioPluginInstance* instance = formatManager.createPluginInstance (*desc, graph.getSampleRate(), graph.getBlockSize(), errorMessage))
-      node = graph.addNode (instance);
+    if (AudioPluginInstance* instance = audio.getFormatManager().createPluginInstance (*desc, audio.getGraph().getSampleRate(), audio.getGraph().getBlockSize(), errorMessage))
+      node = audio.getGraph().addNode (instance);
 
     if (node != nullptr)
     {
@@ -87,25 +79,25 @@ void PMixDocument::removeFilter (const uint32 id)
 {
   PluginWindow::closeCurrentlyOpenWindowsFor (id);
 
-  if (graph.removeNode (id))
+  if (audio.getGraph().removeNode (id))
     changed();
 }
 
 void PMixDocument::disconnectFilter (const uint32 id)
 {
-  if (graph.disconnectNode (id))
+  if (audio.getGraph().disconnectNode (id))
     changed();
 }
 
 void PMixDocument::removeIllegalConnections()
 {
-  if (graph.removeIllegalConnections())
+  if (audio.getGraph().removeIllegalConnections())
     changed();
 }
 
 void PMixDocument::setNodePosition (const int nodeId, double x, double y)
 {
-  const AudioProcessorGraph::Node::Ptr n (graph.getNodeForId (nodeId));
+  const AudioProcessorGraph::Node::Ptr n (audio.getGraph().getNodeForId (nodeId));
 
   if (n != nullptr)
   {
@@ -118,7 +110,7 @@ void PMixDocument::getNodePosition (const int nodeId, double& x, double& y) cons
 {
   x = y = 0;
 
-  const AudioProcessorGraph::Node::Ptr n (graph.getNodeForId (nodeId));
+  const AudioProcessorGraph::Node::Ptr n (audio.getGraph().getNodeForId (nodeId));
 
   if (n != nullptr)
   {
@@ -130,32 +122,32 @@ void PMixDocument::getNodePosition (const int nodeId, double& x, double& y) cons
 
 int PMixDocument::getNumConnections() const noexcept
 {
-  return graph.getNumConnections();
+  return audio.getGraph().getNumConnections();
 }
 
 const AudioProcessorGraph::Connection* PMixDocument::getConnection (const int index) const noexcept
 {
-  return graph.getConnection (index);
+  return audio.getGraph().getConnection (index);
 }
 
 const AudioProcessorGraph::Connection* PMixDocument::getConnectionBetween (uint32 sourceFilterUID, int sourceFilterChannel,
     uint32 destFilterUID, int destFilterChannel) const noexcept
 {
-  return graph.getConnectionBetween (sourceFilterUID, sourceFilterChannel,
+  return audio.getGraph().getConnectionBetween (sourceFilterUID, sourceFilterChannel,
                                      destFilterUID, destFilterChannel);
 }
 
 bool PMixDocument::canConnect (uint32 sourceFilterUID, int sourceFilterChannel,
                               uint32 destFilterUID, int destFilterChannel) const noexcept
 {
-  return graph.canConnect (sourceFilterUID, sourceFilterChannel,
+  return audio.getGraph().canConnect (sourceFilterUID, sourceFilterChannel,
                            destFilterUID, destFilterChannel);
 }
 
 bool PMixDocument::addConnection (uint32 sourceFilterUID, int sourceFilterChannel,
                                  uint32 destFilterUID, int destFilterChannel)
 {
-  const bool result = graph.addConnection (sourceFilterUID, sourceFilterChannel,
+  const bool result = audio.getGraph().addConnection (sourceFilterUID, sourceFilterChannel,
                       destFilterUID, destFilterChannel);
 
   if (result)
@@ -166,14 +158,14 @@ bool PMixDocument::addConnection (uint32 sourceFilterUID, int sourceFilterChanne
 
 void PMixDocument::removeConnection (const int index)
 {
-  graph.removeConnection (index);
+  audio.getGraph().removeConnection (index);
   changed();
 }
 
 void PMixDocument::removeConnection (uint32 sourceFilterUID, int sourceFilterChannel,
                                     uint32 destFilterUID, int destFilterChannel)
 {
-  if (graph.removeConnection (sourceFilterUID, sourceFilterChannel,
+  if (audio.getGraph().removeConnection (sourceFilterUID, sourceFilterChannel,
                               destFilterUID, destFilterChannel))
     changed();
 }
@@ -182,7 +174,7 @@ void PMixDocument::clear()
 {
   PluginWindow::closeAllCurrentlyOpenWindows();
 
-  graph.clear();
+  audio.getGraph().clear();
   changed();
 }
 
@@ -281,7 +273,7 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
 
   String errorMessage;
 
-  AudioPluginInstance* instance = formatManager.createPluginInstance (pd, graph.getSampleRate(), graph.getBlockSize(), errorMessage);
+  AudioPluginInstance* instance = audio.getFormatManager().createPluginInstance (pd, audio.getGraph().getSampleRate(), audio.getGraph().getBlockSize(), errorMessage);
 
   if (instance == nullptr)
   {
@@ -291,7 +283,7 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   if (instance == nullptr)
     return;
 
-  AudioProcessorGraph::Node::Ptr node (graph.addNode (instance, xml.getIntAttribute ("uid")));
+  AudioProcessorGraph::Node::Ptr node (audio.getGraph().addNode (instance, xml.getIntAttribute ("uid")));
 
   if (const XmlElement* const state = xml.getChildByName ("STATE"))
   {
@@ -311,12 +303,12 @@ XmlElement* PMixDocument::createXml() const
 {
   XmlElement* xml = new XmlElement ("PMixDocument");
 
-  for (int i = 0; i < graph.getNumNodes(); ++i)
-    xml->addChildElement (createNodeXml (graph.getNode (i)));
+  for (int i = 0; i < audio.getGraph().getNumNodes(); ++i)
+    xml->addChildElement (createNodeXml (audio.getGraph().getNode (i)));
 
-  for (int i = 0; i < graph.getNumConnections(); ++i)
+  for (int i = 0; i < audio.getGraph().getNumConnections(); ++i)
   {
-    const AudioProcessorGraph::Connection* const fc = graph.getConnection(i);
+    const AudioProcessorGraph::Connection* const fc = audio.getGraph().getConnection(i);
 
     XmlElement* e = new XmlElement ("CONNECTION");
 
@@ -357,7 +349,7 @@ void PMixDocument::restoreFromXml (const XmlElement& xml)
                    e->getIntAttribute ("dstChannel"));
   }
 
-  graph.removeIllegalConnections();
+  audio.getGraph().removeIllegalConnections();
 }
 
 bool PMixDocument::isSnapActive (const bool disableIfCtrlKeyDown) const noexcept
@@ -412,3 +404,15 @@ bool PMixDocument::perform (UndoableAction* const action, const String& actionNa
 {
   return undoManager.perform (action, actionName);
 }
+
+void PMixDocument::initialize()
+{
+  InternalPluginFormat internalFormat;
+  
+  addFilter (internalFormat.getDescriptionFor (InternalPluginFormat::audioInputFilter),  0.5f,  0.1f);
+  addFilter (internalFormat.getDescriptionFor (InternalPluginFormat::midiInputFilter),   0.25f, 0.1f);
+  addFilter (internalFormat.getDescriptionFor (InternalPluginFormat::audioOutputFilter), 0.5f,  0.9f);
+  
+  setChangedFlag (false);
+}
+

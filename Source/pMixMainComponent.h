@@ -19,7 +19,6 @@
 class MainComponent  : public Component
 {
 public:
-  MainComponent (PMixAudio& audio, AudioDeviceManager* deviceManager);
   MainComponent (PMixAudio& audio);
   ~MainComponent();
   
@@ -29,10 +28,7 @@ public:
   double getZoom() const;
   //PMixDocument& getDoc() { return doc; }
 private:
-  PMixAudio& audio;
-  
-  AudioDeviceManager* deviceManager;
-//  AudioProcessorPlayer& graphPlayer;
+  PMixAudio& audio;  
   MidiKeyboardState keyState;
   
   CodeEditor* codeEditor;

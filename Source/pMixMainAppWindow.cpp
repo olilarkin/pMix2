@@ -62,7 +62,7 @@ MainAppWindow::MainAppWindow(AudioDeviceManager* deviceManager)
   setResizeLimits (500, 400, 10000, 10000);
   centreWithSize (800, 600);
 
-  setContentOwned (new MainComponent (audio, deviceManager), false);
+  setContentOwned (new MainComponent (audio), false);
 
 //  restoreWindowStateFromString (getAppProperties().getUserSettings()->getValue ("mainWindowPos"));
 
@@ -87,11 +87,15 @@ MainAppWindow::MainAppWindow(AudioDeviceManager* deviceManager)
 #endif
   
   getCommandManager().setFirstCommandTarget (this);
+  
+  deviceManager->addAudioCallback (&audio.getGraphPlayer());
+  deviceManager->addMidiInputCallback (String::empty, &audio.getGraphPlayer().getMidiMessageCollector());
+  //deviceManager->addChangeListener (graphEditor);
 }
 
 MainAppWindow::~MainAppWindow()
 {
-  pluginListWindow = nullptr;
+//  pluginListWindow = nullptr;
 
 #if JUCE_MAC
   setMacMainMenu (nullptr);
@@ -99,6 +103,10 @@ MainAppWindow::~MainAppWindow()
   setMenuBar (nullptr);
 #endif
 
+  deviceManager->removeAudioCallback (&audio.getGraphPlayer());
+  deviceManager->removeMidiInputCallback (String::empty, &audio.getGraphPlayer().getMidiMessageCollector());
+  //deviceManager->removeChangeListener (graphEditor);
+  
   getAppProperties().getUserSettings()->setValue ("mainWindowPos", getWindowStateAsString());
   clearContentComponent();
 }
@@ -228,16 +236,16 @@ void MainAppWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
     if (mainComponent != nullptr && audio.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
       audio.getDoc().loadFrom (recentFiles.getFile (menuItemID - 100), true);
   }
-  else if (menuItemID >= 200 && menuItemID < 210)
-  {
-    if (menuItemID == 200)          audio.setPluginSortMethod(KnownPluginList::defaultOrder);
-    else if (menuItemID == 201)     audio.setPluginSortMethod(KnownPluginList::sortAlphabetically);
-    else if (menuItemID == 202)     audio.setPluginSortMethod(KnownPluginList::sortByCategory);
-    else if (menuItemID == 203)     audio.setPluginSortMethod(KnownPluginList::sortByManufacturer);
-    else if (menuItemID == 204)     audio.setPluginSortMethod(KnownPluginList::sortByFileSystemLocation);
-
-    menuItemsChanged();
-  }
+//  else if (menuItemID >= 200 && menuItemID < 210)
+//  {
+//    if (menuItemID == 200)          audio.setPluginSortMethod(KnownPluginList::defaultOrder);
+//    else if (menuItemID == 201)     audio.setPluginSortMethod(KnownPluginList::sortAlphabetically);
+//    else if (menuItemID == 202)     audio.setPluginSortMethod(KnownPluginList::sortByCategory);
+//    else if (menuItemID == 203)     audio.setPluginSortMethod(KnownPluginList::sortByManufacturer);
+//    else if (menuItemID == 204)     audio.setPluginSortMethod(KnownPluginList::sortByFileSystemLocation);
+//
+//    menuItemsChanged();
+//  }
 //  else
 //  {
 //    createPlugin (getChosenType (menuItemID),

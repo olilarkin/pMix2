@@ -31,6 +31,7 @@ void pMixApp::initialise (const String& commandLine)
   
   ScopedPointer<XmlElement> savedAudioState (getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
   
+  mainWindow->getAudio().getDoc().initialize();
   deviceManager.initialise (256, 256, savedAudioState, true);
 }
 

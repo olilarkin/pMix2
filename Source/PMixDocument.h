@@ -61,11 +61,11 @@ public:
 
   UndoManager& getUndoManager() noexcept                                  { return undoManager; }
 
+  void initialize();
+  
 private:
   UndoManager undoManager;
-
-  AudioPluginFormatManager& formatManager;
-  AudioProcessorGraph& graph;
+  PMixAudio& audio;
   uint32 lastUID;
   uint32 getNextUID() noexcept;
   void createNodeFromXml (const XmlElement& xml);

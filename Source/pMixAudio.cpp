@@ -27,11 +27,16 @@ PMixAudio::PMixAudio()
   ->getIntValue ("pluginSortMethod", KnownPluginList::sortByManufacturer);
   
   knownPluginList.addChangeListener (this);
+  
+  graphPlayer.setProcessor(&graph);
 }
 
 PMixAudio::~PMixAudio()
 {
   knownPluginList.removeChangeListener (this);
+  
+  graphPlayer.setProcessor (nullptr);
+  doc.clear();
 }
 
 void PMixAudio::changeListenerCallback (ChangeBroadcaster* broadcaster)

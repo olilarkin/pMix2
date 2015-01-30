@@ -1,7 +1,7 @@
 #ifndef __GRAPHEDITOR_JUCEHEADER__
 #define __GRAPHEDITOR_JUCEHEADER__
 
-#include "pMixDocument.h"
+#include "pMixAudio.h"
 #include "pMixParamView.h"
 //#include "pMixParamTreeView.h"
 

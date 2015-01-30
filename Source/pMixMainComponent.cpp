@@ -9,40 +9,8 @@
 
 #include "pMixMainComponent.h"
 
-MainComponent::MainComponent (PMixAudio& audio, AudioDeviceManager* deviceManager)
-: audio(audio)
-, deviceManager (deviceManager)
-{  
-  verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be between 20% and 80%, preferably 50%
-  verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
-  verticalLayout.setItemLayout (2, 150, -1.0, -0.65);  // the components on the right must be at least 150 pixels wide, preferably 50% of the total width
-  verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
-  addAndMakeVisible (verticalDividerBar);
-  
-  addAndMakeVisible (graphEditor = new GraphEditor (audio));
-  //  addAndMakeVisible (treeView = new ParamTreeView(graph));
-  
-  deviceManager->addChangeListener (graphEditor);
-  
-  
-  keyState.addListener (&audio.getGraphPlayer().getMidiMessageCollector());
-  
-  addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
-  
-  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audio));
-  addAndMakeVisible (paramView = new ParamView(audio));
-  addAndMakeVisible (codeEditor = new CodeEditor());
-  addAndMakeVisible (statusBar = new TooltipBar());
-  
-//  deviceManager->addAudioCallback (&graphPlayer);
-//  deviceManager->addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
-  
-  graphEditor->updateComponents();
-}
-
 MainComponent::MainComponent (PMixAudio& audio)
 : audio(audio)
-, deviceManager (0)
 {
   verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be between 20% and 80%, preferably 50%
   verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
@@ -52,11 +20,7 @@ MainComponent::MainComponent (PMixAudio& audio)
   
   addAndMakeVisible (graphEditor = new GraphEditor (audio));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
-  
-  //deviceManager->addChangeListener (graphEditor);
-  
-//  graphPlayer.setProcessor (&doc.getGraph());
-  
+    
   keyState.addListener (&audio.getGraphPlayer().getMidiMessageCollector());
   
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
@@ -65,25 +29,15 @@ MainComponent::MainComponent (PMixAudio& audio)
   addAndMakeVisible (paramView = new ParamView(audio));
   addAndMakeVisible (codeEditor = new CodeEditor());
   addAndMakeVisible (statusBar = new TooltipBar());
-  
-  //deviceManager->addAudioCallback (&graphPlayer);
-  //deviceManager->addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
-  
+    
   graphEditor->updateComponents();
 }
 
 MainComponent::~MainComponent()
-{
-//  deviceManager->removeAudioCallback (&graphPlayer);
-//  deviceManager->removeMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
-  deviceManager->removeChangeListener (graphEditor);
-  
+{  
   deleteAllChildren();
   
-  //graphPlayer.setProcessor (nullptr);
   keyState.removeListener (&audio.getGraphPlayer().getMidiMessageCollector());
-  
-  //doc.clear();
 }
 
 void MainComponent::resized()
