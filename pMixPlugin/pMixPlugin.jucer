@@ -14,6 +14,10 @@
   <MAINGROUP id="AyXwwn" name="pMixPlugin">
     <GROUP id="{8923BDF0-8D2C-0D4F-E35D-890C89D5DF51}" name="Source">
       <GROUP id="{723E4500-EB17-731D-8B10-B7C846C86094}" name="pMix">
+        <FILE id="taVrpc" name="pMixPluginWindow.cpp" compile="1" resource="0"
+              file="../Source/pMixPluginWindow.cpp"/>
+        <FILE id="l8GPil" name="pMixPluginWindow.h" compile="0" resource="0"
+              file="../Source/pMixPluginWindow.h"/>
         <FILE id="m8HIzw" name="pMixAudioEngine.cpp" compile="1" resource="0"
               file="../Source/pMixAudioEngine.cpp"/>
         <FILE id="kGuObF" name="pMixAudioEngine.h" compile="0" resource="0"
