@@ -1,15 +1,15 @@
 /*
   ==============================================================================
 
-    pMixAudio.cpp
+    pMixAudioEngine.cpp
     Author:  Oliver Larkin
 
   ==============================================================================
 */
 
-#include "pMixAudio.h"
+#include "pMixAudioEngine.h"
 
-PMixAudio::PMixAudio()
+PMixAudioEngine::PMixAudioEngine()
 : doc(*this)
 {
   formatManager.addDefaultFormats();
@@ -29,13 +29,13 @@ PMixAudio::PMixAudio()
   knownPluginList.addChangeListener (this);  
 }
 
-PMixAudio::~PMixAudio()
+PMixAudioEngine::~PMixAudioEngine()
 {
   knownPluginList.removeChangeListener (this);  
   doc.clear();
 }
 
-void PMixAudio::changeListenerCallback (ChangeBroadcaster* broadcaster)
+void PMixAudioEngine::changeListenerCallback (ChangeBroadcaster* broadcaster)
 {
   if (broadcaster == &knownPluginList)
   {
@@ -53,13 +53,13 @@ void PMixAudio::changeListenerCallback (ChangeBroadcaster* broadcaster)
   }
 }
 
-void PMixAudio::setPluginSortMethod(KnownPluginList::SortMethod sortMethod)
+void PMixAudioEngine::setPluginSortMethod(KnownPluginList::SortMethod sortMethod)
 {
   pluginSortMethod = sortMethod;
   getAppProperties().getUserSettings()->setValue ("pluginSortMethod", (int) pluginSortMethod);
 }
 
-void PMixAudio::addPluginsToMenu (PopupMenu& m) const
+void PMixAudioEngine::addPluginsToMenu (PopupMenu& m) const
 {
   for (int i = 0; i < internalTypes.size(); ++i)
     m.addItem (i + 1, internalTypes.getUnchecked(i)->name);
@@ -69,7 +69,7 @@ void PMixAudio::addPluginsToMenu (PopupMenu& m) const
   knownPluginList.addToMenu (m, pluginSortMethod);
 }
 
-const PluginDescription* PMixAudio::getChosenType (const int menuID) const
+const PluginDescription* PMixAudioEngine::getChosenType (const int menuID) const
 {
   if (menuID >= 1 && menuID < 1 + internalTypes.size())
     return internalTypes [menuID - 1];

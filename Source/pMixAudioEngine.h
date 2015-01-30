@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    pMixAudio.h
+    pMixAudioEngine.h
     Author:  Oliver Larkin
  
   This class contains the main audio side of pMix and owns the document. It exists before the GUI and should be capable of playing a graph without GUI.
@@ -19,12 +19,12 @@
 ApplicationCommandManager& getCommandManager();
 ApplicationProperties& getAppProperties();
 
-class PMixAudio : public ChangeListener
+class PMixAudioEngine : public ChangeListener
                 , public pMixAppPropertiesHolder
 {
 public:
-  PMixAudio();
-  ~PMixAudio();
+  PMixAudioEngine();
+  ~PMixAudioEngine();
   
   AudioProcessorGraph& getGraph() noexcept { return graph; }
   //AudioProcessorPlayer& getGraphPlayer() noexcept { return graphPlayer; }
@@ -52,7 +52,7 @@ private:
   
   PMixDocument doc;
   
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixAudio)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixAudioEngine)
 };
 
 

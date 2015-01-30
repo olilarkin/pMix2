@@ -18,7 +18,7 @@ void pMixApp::initialise (const String& commandLine)
   
 
 
-  mainWindow = new MainAppWindow(audio);
+  mainWindow = new MainAppWindow(audioEngine);
   
   deviceManager.addAudioCallback (&graphPlayer);
   deviceManager.addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
@@ -32,9 +32,9 @@ void pMixApp::initialise (const String& commandLine)
 //    mainWindow->getMainComponent()->getDoc().loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
 //  }
   
-  ScopedPointer<XmlElement> savedAudioState (audio.getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
-  graphPlayer.setProcessor(&audio.getGraph());
-  mainWindow->getAudio().getDoc().initialize();
+  ScopedPointer<XmlElement> savedAudioState (audioEngine.getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
+  graphPlayer.setProcessor(&audioEngine.getGraph());
+  audioEngine.getDoc().initialize();
   deviceManager.initialise (256, 256, savedAudioState, true);
 }
 

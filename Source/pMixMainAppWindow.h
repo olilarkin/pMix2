@@ -12,7 +12,7 @@
 #ifndef PMIXMAINAPPWINDOW_H_INCLUDED
 #define PMIXMAINAPPWINDOW_H_INCLUDED
 
-#include "pMixAudio.h"
+#include "pMixAudioEngine.h"
 #include "pMixMainComponent.h"
 #include "pMixCommandIDs.h"
 
@@ -25,7 +25,7 @@ class MainAppWindow : public DocumentWindow,
                       public FileDragAndDropTarget
 {
 public:
-  MainAppWindow(PMixAudio& audio);
+  MainAppWindow(PMixAudioEngine& audioEngine);
   ~MainAppWindow();
 
   //DocumentWindow
@@ -52,9 +52,9 @@ public:
   //Unique
   bool tryToQuitApplication();
   MainComponent* getMainComponent() const;
-  PMixAudio& getAudio() { return audio; }
+  PMixAudioEngine& getAudioEngine() { return audioEngine; }
 private:
-  PMixAudio& audio;
+  PMixAudioEngine& audioEngine;
   
   class PluginListWindow;
   ScopedPointer <PluginListWindow> pluginListWindow;

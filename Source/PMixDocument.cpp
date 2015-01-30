@@ -1,14 +1,14 @@
 #include "pMixDocument.h"
-#include "pMixAudio.h"
+#include "pMixAudioEngine.h"
 
 const int PMixDocument::midiChannelNumber = 0x1000;
 
-PMixDocument::PMixDocument (PMixAudio& audio)
+PMixDocument::PMixDocument (PMixAudioEngine& audioEngine)
 : FileBasedDocument (filenameSuffix,
                      filenameWildcard,
                      "Load a pMix patch",
                      "Save a pMix patch"),
-                     audio(audio),
+                     audioEngine(audioEngine),
                      lastUID (0),
                      snapGridPixels (8),
                      snapActive (true),
@@ -19,7 +19,7 @@ PMixDocument::PMixDocument (PMixAudio& audio)
 
 PMixDocument::~PMixDocument()
 {
-  audio.getGraph().clear();
+  audioEngine.getGraph().clear();
 }
 
 uint32 PMixDocument::getNextUID() noexcept
@@ -29,17 +29,17 @@ uint32 PMixDocument::getNextUID() noexcept
 
 int PMixDocument::getNumFilters() const noexcept
 {
-  return audio.getGraph().getNumNodes();
+  return audioEngine.getGraph().getNumNodes();
 }
 
 const AudioProcessorGraph::Node::Ptr PMixDocument::getNode (const int index) const noexcept
 {
-  return audio.getGraph().getNode (index);
+  return audioEngine.getGraph().getNode (index);
 }
 
 const AudioProcessorGraph::Node::Ptr PMixDocument::getNodeForId (const uint32 uid) const noexcept
 {
-  return audio.getGraph().getNodeForId (uid);
+  return audioEngine.getGraph().getNodeForId (uid);
 }
 
 uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double y)
@@ -50,8 +50,8 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
   {
     String errorMessage;
 
-    if (AudioPluginInstance* instance = audio.getFormatManager().createPluginInstance (*desc, audio.getGraph().getSampleRate(), audio.getGraph().getBlockSize(), errorMessage))
-      node = audio.getGraph().addNode (instance);
+    if (AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (*desc, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage))
+      node = audioEngine.getGraph().addNode (instance);
 
     if (node != nullptr)
     {
@@ -76,25 +76,25 @@ void PMixDocument::removeFilter (const uint32 id)
 {
   //PluginWindow::closeCurrentlyOpenWindowsFor (id);
 
-  if (audio.getGraph().removeNode (id))
+  if (audioEngine.getGraph().removeNode (id))
     changed();
 }
 
 void PMixDocument::disconnectFilter (const uint32 id)
 {
-  if (audio.getGraph().disconnectNode (id))
+  if (audioEngine.getGraph().disconnectNode (id))
     changed();
 }
 
 void PMixDocument::removeIllegalConnections()
 {
-  if (audio.getGraph().removeIllegalConnections())
+  if (audioEngine.getGraph().removeIllegalConnections())
     changed();
 }
 
 void PMixDocument::setNodePosition (const int nodeId, double x, double y)
 {
-  const AudioProcessorGraph::Node::Ptr n (audio.getGraph().getNodeForId (nodeId));
+  const AudioProcessorGraph::Node::Ptr n (audioEngine.getGraph().getNodeForId (nodeId));
 
   if (n != nullptr)
   {
@@ -107,7 +107,7 @@ void PMixDocument::getNodePosition (const int nodeId, double& x, double& y) cons
 {
   x = y = 0;
 
-  const AudioProcessorGraph::Node::Ptr n (audio.getGraph().getNodeForId (nodeId));
+  const AudioProcessorGraph::Node::Ptr n (audioEngine.getGraph().getNodeForId (nodeId));
 
   if (n != nullptr)
   {
@@ -119,32 +119,32 @@ void PMixDocument::getNodePosition (const int nodeId, double& x, double& y) cons
 
 int PMixDocument::getNumConnections() const noexcept
 {
-  return audio.getGraph().getNumConnections();
+  return audioEngine.getGraph().getNumConnections();
 }
 
 const AudioProcessorGraph::Connection* PMixDocument::getConnection (const int index) const noexcept
 {
-  return audio.getGraph().getConnection (index);
+  return audioEngine.getGraph().getConnection (index);
 }
 
 const AudioProcessorGraph::Connection* PMixDocument::getConnectionBetween (uint32 sourceFilterUID, int sourceFilterChannel,
     uint32 destFilterUID, int destFilterChannel) const noexcept
 {
-  return audio.getGraph().getConnectionBetween (sourceFilterUID, sourceFilterChannel,
+  return audioEngine.getGraph().getConnectionBetween (sourceFilterUID, sourceFilterChannel,
                                      destFilterUID, destFilterChannel);
 }
 
 bool PMixDocument::canConnect (uint32 sourceFilterUID, int sourceFilterChannel,
                               uint32 destFilterUID, int destFilterChannel) const noexcept
 {
-  return audio.getGraph().canConnect (sourceFilterUID, sourceFilterChannel,
+  return audioEngine.getGraph().canConnect (sourceFilterUID, sourceFilterChannel,
                            destFilterUID, destFilterChannel);
 }
 
 bool PMixDocument::addConnection (uint32 sourceFilterUID, int sourceFilterChannel,
                                  uint32 destFilterUID, int destFilterChannel)
 {
-  const bool result = audio.getGraph().addConnection (sourceFilterUID, sourceFilterChannel,
+  const bool result = audioEngine.getGraph().addConnection (sourceFilterUID, sourceFilterChannel,
                       destFilterUID, destFilterChannel);
 
   if (result)
@@ -155,14 +155,14 @@ bool PMixDocument::addConnection (uint32 sourceFilterUID, int sourceFilterChanne
 
 void PMixDocument::removeConnection (const int index)
 {
-  audio.getGraph().removeConnection (index);
+  audioEngine.getGraph().removeConnection (index);
   changed();
 }
 
 void PMixDocument::removeConnection (uint32 sourceFilterUID, int sourceFilterChannel,
                                     uint32 destFilterUID, int destFilterChannel)
 {
-  if (audio.getGraph().removeConnection (sourceFilterUID, sourceFilterChannel,
+  if (audioEngine.getGraph().removeConnection (sourceFilterUID, sourceFilterChannel,
                               destFilterUID, destFilterChannel))
     changed();
 }
@@ -171,7 +171,7 @@ void PMixDocument::clear()
 {
   //PluginWindow::closeAllCurrentlyOpenWindows();
 
-  audio.getGraph().clear();
+  audioEngine.getGraph().clear();
   changed();
 }
 
@@ -208,7 +208,7 @@ Result PMixDocument::saveDocument (const File& file)
 File PMixDocument::getLastDocumentOpened()
 {
   RecentlyOpenedFilesList recentFiles;
-  recentFiles.restoreFromString (audio.getAppProperties().getUserSettings()
+  recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()
                                  ->getValue ("recentPMixDocumentFiles"));
 
   return recentFiles.getFile (0);
@@ -217,12 +217,12 @@ File PMixDocument::getLastDocumentOpened()
 void PMixDocument::setLastDocumentOpened (const File& file)
 {
   RecentlyOpenedFilesList recentFiles;
-  recentFiles.restoreFromString (audio.getAppProperties().getUserSettings()
+  recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()
                                  ->getValue ("recentPMixDocumentFiles"));
 
   recentFiles.addFile (file);
 
-  audio.getAppProperties().getUserSettings()
+  audioEngine.getAppProperties().getUserSettings()
   ->setValue ("recentPMixDocumentFiles", recentFiles.toString());
 }
 
@@ -270,7 +270,7 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
 
   String errorMessage;
 
-  AudioPluginInstance* instance = audio.getFormatManager().createPluginInstance (pd, audio.getGraph().getSampleRate(), audio.getGraph().getBlockSize(), errorMessage);
+  AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
 
   if (instance == nullptr)
   {
@@ -280,7 +280,7 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   if (instance == nullptr)
     return;
 
-  AudioProcessorGraph::Node::Ptr node (audio.getGraph().addNode (instance, xml.getIntAttribute ("uid")));
+  AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().addNode (instance, xml.getIntAttribute ("uid")));
 
   if (const XmlElement* const state = xml.getChildByName ("STATE"))
   {
@@ -300,12 +300,12 @@ XmlElement* PMixDocument::createXml() const
 {
   XmlElement* xml = new XmlElement ("PMixDocument");
 
-  for (int i = 0; i < audio.getGraph().getNumNodes(); ++i)
-    xml->addChildElement (createNodeXml (audio.getGraph().getNode (i)));
+  for (int i = 0; i < audioEngine.getGraph().getNumNodes(); ++i)
+    xml->addChildElement (createNodeXml (audioEngine.getGraph().getNode (i)));
 
-  for (int i = 0; i < audio.getGraph().getNumConnections(); ++i)
+  for (int i = 0; i < audioEngine.getGraph().getNumConnections(); ++i)
   {
-    const AudioProcessorGraph::Connection* const fc = audio.getGraph().getConnection(i);
+    const AudioProcessorGraph::Connection* const fc = audioEngine.getGraph().getConnection(i);
 
     XmlElement* e = new XmlElement ("CONNECTION");
 
@@ -346,7 +346,7 @@ void PMixDocument::restoreFromXml (const XmlElement& xml)
                    e->getIntAttribute ("dstChannel"));
   }
 
-  audio.getGraph().removeIllegalConnections();
+  audioEngine.getGraph().removeIllegalConnections();
 }
 
 bool PMixDocument::isSnapActive (const bool disableIfCtrlKeyDown) const noexcept

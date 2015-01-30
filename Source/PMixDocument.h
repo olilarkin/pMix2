@@ -6,12 +6,12 @@
 const char* const filenameSuffix = ".pmix";
 const char* const filenameWildcard = "*.pmix";
 
-class PMixAudio;
+class PMixAudioEngine;
 
 class PMixDocument   : public FileBasedDocument
 {
 public:
-  PMixDocument (PMixAudio& audio);
+  PMixDocument (PMixAudioEngine& audioEngine);
   ~PMixDocument();
   
   int getNumFilters() const noexcept;
@@ -65,7 +65,7 @@ public:
   
 private:
   UndoManager undoManager;
-  PMixAudio& audio;
+  PMixAudioEngine& audioEngine;
   uint32 lastUID;
   uint32 getNextUID() noexcept;
   void createNodeFromXml (const XmlElement& xml);

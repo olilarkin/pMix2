@@ -9,8 +9,8 @@
 
 #include "pMixMainComponent.h"
 
-MainComponent::MainComponent (PMixAudio& audio)
-: audio(audio)
+MainComponent::MainComponent (PMixAudioEngine& audioEngine)
+: audioEngine(audioEngine)
 {
   LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
 
@@ -20,15 +20,15 @@ MainComponent::MainComponent (PMixAudio& audio)
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);
   
-  addAndMakeVisible (graphEditor = new GraphEditor (audio));
+  addAndMakeVisible (graphEditor = new GraphEditor (audioEngine));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
     
   //keyState.addListener (&audio.getGraphPlayer().getMidiMessageCollector());
   
-  addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
+  //addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
-  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audio));
-  addAndMakeVisible (paramView = new ParamView(audio));
+  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audioEngine));
+  addAndMakeVisible (paramView = new ParamView(audioEngine));
   addAndMakeVisible (codeEditor = new CodeEditor());
   addAndMakeVisible (statusBar = new TooltipBar());
     

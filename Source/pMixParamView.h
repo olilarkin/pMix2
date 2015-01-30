@@ -2,7 +2,7 @@
 #define __PARAMVIEW_JUCEHEADER__
 
 #include "JuceHeader.h"
-#include "pMixAudio.h"
+#include "pMixAudioEngine.h"
 
 class ParamSlider  : public Slider
 {
@@ -45,7 +45,7 @@ class ParamView : public Component
                 , public ChangeListener
 {
 public:  
-  ParamView(PMixAudio& audio);
+  ParamView(PMixAudioEngine& audioEngine);
   
   ~ParamView();
   void paint (Graphics& g) override;
@@ -54,7 +54,7 @@ public:
   void addEditor(AudioProcessor* p);
   
 private:
-  PMixAudio& audio;
+  PMixAudioEngine& audioEngine;
   Array<uint32> sectionNodes;
   PropertyPanel panel;
 };

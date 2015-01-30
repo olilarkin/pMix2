@@ -68,8 +68,10 @@
             file="Source/pMixInternalFilters.cpp"/>
       <FILE id="cQ4d1f" name="pMixInternalFilters.h" compile="0" resource="0"
             file="Source/pMixInternalFilters.h"/>
-      <FILE id="odL5qk" name="pMixAudio.cpp" compile="1" resource="0" file="Source/pMixAudio.cpp"/>
-      <FILE id="oy6H27" name="pMixAudio.h" compile="0" resource="0" file="Source/pMixAudio.h"/>
+      <FILE id="odL5qk" name="pMixAudioEngine.cpp" compile="1" resource="0"
+            file="Source/pMixAudioEngine.cpp"/>
+      <FILE id="oy6H27" name="pMixAudioEngine.h" compile="0" resource="0"
+            file="Source/pMixAudioEngine.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

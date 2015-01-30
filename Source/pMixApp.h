@@ -33,7 +33,7 @@ private:
   ScopedPointer<MainAppWindow> mainWindow;
   AudioDeviceManager deviceManager;
   AudioProcessorPlayer graphPlayer;
-  PMixAudio audio;
+  PMixAudioEngine audioEngine;
 //  SplashScreen* splash;
 };
 

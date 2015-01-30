@@ -1,7 +1,7 @@
 #ifndef __GRAPHEDITOR_JUCEHEADER__
 #define __GRAPHEDITOR_JUCEHEADER__
 
-#include "pMixAudio.h"
+#include "pMixAudioEngine.h"
 #include "pMixParamView.h"
 //#include "pMixParamTreeView.h"
 
@@ -15,13 +15,13 @@ class PinComponent;
 class CreatePluginAction  : public UndoableAction
 {
 public:
-  CreatePluginAction (PMixAudio& audio, const PluginDescription* desc, double x, double y) noexcept;
+  CreatePluginAction (PMixAudioEngine& audio, const PluginDescription* desc, double x, double y) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
-  PMixAudio& audio;
+  PMixAudioEngine& audioEngine;
   double x, y;
   const PluginDescription* desc;
   uint32 nodeID;
@@ -36,7 +36,7 @@ class GraphEditor : public Component,
                     public LassoSource<Component*>
 {
 public:
-  GraphEditor (PMixAudio& audio);
+  GraphEditor (PMixAudioEngine& audioEngine);
   ~GraphEditor();
 
   void paint (Graphics& g);
@@ -66,7 +66,7 @@ public:
   SelectedItemSet<Component*>& getLassoSelection();
 
 private:
-  PMixAudio& audio;
+  PMixAudioEngine& audioEngine;
   LassoComponent<Component*> lassoComp;
   SelectedItemSet<Component*> selectedItems;
   ScopedPointer<ConnectorComponent> draggingConnector;
@@ -81,7 +81,7 @@ class PinComponent : public Component,
                      public SettableTooltipClient
 {
 public:
-  PinComponent (PMixAudio& audio, const uint32 filterID_, const int index_, const bool isInput_);
+  PinComponent (PMixAudioEngine& audio, const uint32 filterID_, const int index_, const bool isInput_);
   void paint (Graphics& g);
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
@@ -92,7 +92,7 @@ public:
   const bool isInput;
   
 private:
-  PMixAudio& audio;
+  PMixAudioEngine& audioEngine;
   
   GraphEditor* getGraphPanel() const noexcept;
   
@@ -105,13 +105,13 @@ private:
 class MovePluginAction  : public UndoableAction
 {
 public:
-  MovePluginAction (PMixAudio& audio, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
+  MovePluginAction (PMixAudioEngine& audio, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
-  PMixAudio& audio;
+  PMixAudioEngine& audioEngine;
   FilterComponent* filterComponent;
   uint32 nodeID;
   Point<double> startPos;
@@ -125,7 +125,7 @@ private:
 class FilterComponent : public Component
 {
 public:
-  FilterComponent (PMixAudio& audio, const uint32 filterID_);
+  FilterComponent (PMixAudioEngine& audio, const uint32 filterID_);
   ~FilterComponent();
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
@@ -136,7 +136,7 @@ public:
   void getPinPos (const int index, const bool isInput, float& x, float& y);
   void update();
   
-  PMixAudio& audio;
+  PMixAudioEngine& audioEngine;
   const uint32 filterID;
   int numInputs, numOutputs;
   
@@ -164,7 +164,7 @@ class ConnectorComponent   : public Component
                            , public SettableTooltipClient
 {
 public:
-  ConnectorComponent (PMixAudio& audio);
+  ConnectorComponent (PMixAudioEngine& audioEngine);
   void setInput (const uint32 sourceFilterID_, const int sourceFilterChannel_);
   void setOutput (const uint32 destFilterID_, const int destFilterChannel_);
   void dragStart (int x, int y);
@@ -183,7 +183,7 @@ public:
   int sourceFilterChannel, destFilterChannel;
   
 private:
-  PMixAudio& audio;
+  PMixAudioEngine& audioEngine;
   float lastInputX, lastInputY, lastOutputX, lastOutputY;
   Path linePath, hitPath;
   bool dragging;

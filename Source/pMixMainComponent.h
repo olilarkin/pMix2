@@ -10,7 +10,7 @@
 #ifndef MAINCOMPONENT_H_INCLUDED
 #define MAINCOMPONENT_H_INCLUDED
 
-#include "pMixAudio.h"
+#include "pMixAudioEngine.h"
 #include "pMixInterpolationSpace.h"
 #include "pMixGraphEditor.h"
 #include "pMixCodeEditor.h"
@@ -19,7 +19,7 @@
 class MainComponent  : public Component
 {
 public:
-  MainComponent (PMixAudio& audio);
+  MainComponent (PMixAudioEngine& audioEngine);
   ~MainComponent();
   
   void createNewPlugin (const PluginDescription* desc, int x, int y);
@@ -30,7 +30,7 @@ public:
 private:  
   pMixLookAndFeel lookAndFeel;
 
-  PMixAudio& audio;  
+  PMixAudioEngine& audioEngine;  
   //MidiKeyboardState keyState;
   
   CodeEditor* codeEditor;

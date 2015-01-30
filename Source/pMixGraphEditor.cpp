@@ -3,8 +3,8 @@
 #pragma mark -
 #pragma mark CreatePluginAction
 
-CreatePluginAction::CreatePluginAction (PMixAudio& audio, const PluginDescription* desc, double x, double y) noexcept
-: audio(audio)
+CreatePluginAction::CreatePluginAction (PMixAudioEngine& audioEngine, const PluginDescription* desc, double x, double y) noexcept
+: audioEngine(audioEngine)
 , x(x)
 , y(y)
 , desc(desc)
@@ -13,7 +13,7 @@ CreatePluginAction::CreatePluginAction (PMixAudio& audio, const PluginDescriptio
 
 bool CreatePluginAction::perform()
 {
-  nodeID = audio.getDoc().addFilter (desc, x, y);
+  nodeID = audioEngine.getDoc().addFilter (desc, x, y);
   
   if (nodeID < 0xFFFFFFFF)
     return true;
@@ -24,7 +24,7 @@ bool CreatePluginAction::perform()
 
 bool CreatePluginAction::undo()
 {
-  audio.getDoc().removeFilter(nodeID);
+  audioEngine.getDoc().removeFilter(nodeID);
   
   return true;
 }
@@ -202,10 +202,10 @@ void PluginWindow::closeButtonPressed()
 #pragma mark -
 #pragma mark GraphEditor
 
-GraphEditor::GraphEditor (PMixAudio& audio)
-  : audio (audio)
+GraphEditor::GraphEditor (PMixAudioEngine& audioEngine)
+  : audioEngine (audioEngine)
 {
-  audio.getDoc().addChangeListener (this);
+  audioEngine.getDoc().addChangeListener (this);
   selectedItems.addChangeListener(this);
 
   setOpaque (true);
@@ -213,7 +213,7 @@ GraphEditor::GraphEditor (PMixAudio& audio)
 
 GraphEditor::~GraphEditor()
 {
-  audio.getDoc().removeChangeListener (this);
+  audioEngine.getDoc().removeChangeListener (this);
   selectedItems.removeChangeListener (this);
   draggingConnector = nullptr;
   removeChildComponent (&lassoComp);
@@ -230,9 +230,9 @@ void GraphEditor::mouseDown (const MouseEvent& e)
   if (e.mods.isPopupMenu())
   {
     PopupMenu m;
-    audio.addPluginsToMenu (m);
+    audioEngine.addPluginsToMenu (m);
     const int r = m.show();
-    createNewPlugin (audio.getChosenType (r), e.x, e.y);
+    createNewPlugin (audioEngine.getChosenType (r), e.x, e.y);
   }
   else
   {
@@ -258,8 +258,8 @@ void GraphEditor::createNewPlugin (const PluginDescription* desc, int x, int y)
 {
   if (desc != nullptr)
   {
-    audio.getDoc().beginTransaction();
-    audio.getDoc().perform(new CreatePluginAction(audio, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add plug-in"));
+    audioEngine.getDoc().beginTransaction();
+    audioEngine.getDoc().perform(new CreatePluginAction(audioEngine, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add plug-in"));
   }
 }
 
@@ -334,7 +334,7 @@ void GraphEditor::updateComponents()
 
     if (cc != nullptr && cc != draggingConnector)
     {
-      if (audio.getDoc().getConnectionBetween (cc->sourceFilterID, cc->sourceFilterChannel,
+      if (audioEngine.getDoc().getConnectionBetween (cc->sourceFilterID, cc->sourceFilterChannel,
                                       cc->destFilterID, cc->destFilterChannel) == nullptr)
       {
         delete cc;
@@ -346,25 +346,25 @@ void GraphEditor::updateComponents()
     }
   }
 
-  for (int i = audio.getDoc().getNumFilters(); --i >= 0;)
+  for (int i = audioEngine.getDoc().getNumFilters(); --i >= 0;)
   {
-    const AudioProcessorGraph::Node::Ptr f (audio.getDoc().getNode (i));
+    const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
 
     if (getComponentForFilter (f->nodeId) == 0)
     {
-      FilterComponent* const comp = new FilterComponent (audio, f->nodeId);
+      FilterComponent* const comp = new FilterComponent (audioEngine, f->nodeId);
       addAndMakeVisible (comp);
       comp->update();
     }
   }
 
-  for (int i = audio.getDoc().getNumConnections(); --i >= 0;)
+  for (int i = audioEngine.getDoc().getNumConnections(); --i >= 0;)
   {
-    const AudioProcessorGraph::Connection* const c = audio.getDoc().getConnection (i);
+    const AudioProcessorGraph::Connection* const c = audioEngine.getDoc().getConnection (i);
 
     if (getComponentForConnection (*c) == 0)
     {
-      ConnectorComponent* const comp = new ConnectorComponent (audio);
+      ConnectorComponent* const comp = new ConnectorComponent (audioEngine);
       addAndMakeVisible (comp);
 
       comp->setInput (c->sourceNodeId, c->sourceChannelIndex);
@@ -380,7 +380,7 @@ void GraphEditor::beginConnectorDrag (const uint32 sourceFilterID, const int sou
   draggingConnector = dynamic_cast <ConnectorComponent*> (e.originalComponent);
 
   if (draggingConnector == nullptr)
-    draggingConnector = new ConnectorComponent (audio);
+    draggingConnector = new ConnectorComponent (audioEngine);
 
   draggingConnector->setInput (sourceFilterID, sourceFilterChannel);
   draggingConnector->setOutput (destFilterID, destFilterChannel);
@@ -420,7 +420,7 @@ void GraphEditor::dragConnector (const MouseEvent& e)
         dstChannel = pin->index;
       }
 
-      if (audio.getDoc().canConnect (srcFilter, srcChannel, dstFilter, dstChannel))
+      if (audioEngine.getDoc().canConnect (srcFilter, srcChannel, dstFilter, dstChannel))
       {
         x = pin->getParentComponent()->getX() + pin->getX() + pin->getWidth() / 2;
         y = pin->getParentComponent()->getY() + pin->getY() + pin->getHeight() / 2;
@@ -471,7 +471,7 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
       dstChannel = pin->index;
     }
 
-    audio.getDoc().addConnection (srcFilter, srcChannel, dstFilter, dstChannel);
+    audioEngine.getDoc().addConnection (srcFilter, srcChannel, dstFilter, dstChannel);
   }
 }
 
@@ -496,13 +496,13 @@ SelectedItemSet <Component*>& GraphEditor::getLassoSelection()
 #pragma mark -
 #pragma mark PinComponent
 
-PinComponent::PinComponent (PMixAudio& audio, const uint32 filterID_, const int index_, const bool isInput_)
+PinComponent::PinComponent (PMixAudioEngine& audioEngine, const uint32 filterID_, const int index_, const bool isInput_)
 : filterID (filterID_),
 index (index_),
 isInput (isInput_),
-audio(audio)
+audioEngine(audioEngine)
 {
-  if (const AudioProcessorGraph::Node::Ptr node = audio.getDoc().getNodeForId (filterID_))
+  if (const AudioProcessorGraph::Node::Ptr node = audioEngine.getDoc().getNodeForId (filterID_))
   {
     String tip;
     
@@ -568,8 +568,8 @@ GraphEditor* PinComponent::getGraphPanel() const noexcept
 #pragma mark -
 #pragma mark MovePluginAction
 
-MovePluginAction::MovePluginAction (PMixAudio& audio, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
-: audio(audio)
+MovePluginAction::MovePluginAction (PMixAudioEngine& audio, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
+: audioEngine(audioEngine)
 , filterComponent(filterComponent)
 , nodeID(nodeID)
 , startPos(startPos)
@@ -579,14 +579,14 @@ MovePluginAction::MovePluginAction (PMixAudio& audio, FilterComponent* filterCom
 
 bool MovePluginAction::perform()
 {      
-  audio.getDoc().setNodePosition (nodeID, endPos.x, endPos.y);
+  audioEngine.getDoc().setNodePosition (nodeID, endPos.x, endPos.y);
   filterComponent->getGraphPanel()->updateComponents();
   return true;
 }
 
 bool MovePluginAction::undo()
 {      
-  audio.getDoc().setNodePosition (nodeID, startPos.x, startPos.y);
+  audioEngine.getDoc().setNodePosition (nodeID, startPos.x, startPos.y);
   filterComponent->getGraphPanel()->updateComponents();
   return true;
 }
@@ -599,8 +599,8 @@ int MovePluginAction::getSizeInUnits()
 #pragma mark -
 #pragma mark FilterComponent
 
-FilterComponent::FilterComponent (PMixAudio& audio, const uint32 filterID_)
-: audio (audio),
+FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 filterID_)
+: audioEngine (audioEngine),
 filterID (filterID_),
 numInputs (0),
 numOutputs (0),
@@ -633,7 +633,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     m.addItem (1, "Delete this filter");
     m.addItem (2, "Disconnect all pins");
     
-    if (AudioProcessorGraph::Node::Ptr f = audio.getDoc().getNodeForId (filterID))
+    if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
     {
       AudioProcessor* const processor = f->getProcessor();
       jassert (processor != nullptr);
@@ -653,16 +653,16 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     
     if (r == 1)
     {
-      audio.getDoc().removeFilter (filterID);
+      audioEngine.getDoc().removeFilter (filterID);
       return;
     }
     else if (r == 2)
     {
-      audio.getDoc().disconnectFilter (filterID);
+      audioEngine.getDoc().disconnectFilter (filterID);
     }
     else
     {        
-      if (AudioProcessorGraph::Node::Ptr f = audio.getDoc().getNodeForId (filterID))
+      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
       {
         AudioProcessor* const processor = f->getProcessor();
         jassert (processor != nullptr);
@@ -701,7 +701,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
   {
     moving = true;
     getGraphPanel()->getLassoSelection().selectOnly(this);
-    audio.getDoc().getNodePosition(filterID, startPos.x, startPos.y);
+    audioEngine.getDoc().getNodePosition(filterID, startPos.x, startPos.y);
   }
 }
 
@@ -717,7 +717,7 @@ void FilterComponent::mouseDrag (const MouseEvent& e)
     endPos.x = (pos.getX() + getWidth() / 2) / (double) getParentWidth();
     endPos.y = (pos.getY() + getHeight() / 2) / (double) getParentHeight();
     
-    audio.getDoc().setNodePosition (filterID, endPos.x, endPos.y);
+    audioEngine.getDoc().setNodePosition (filterID, endPos.x, endPos.y);
     
     getGraphPanel()->updateComponents();
   }
@@ -727,7 +727,7 @@ void FilterComponent::mouseUp (const MouseEvent& e)
 {
   if (e.mouseWasClicked() && e.getNumberOfClicks() == 2)
   {
-    if (const AudioProcessorGraph::Node::Ptr f = audio.getDoc().getNodeForId (filterID))
+    if (const AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
     {
       AudioProcessor* const processor = f->getProcessor();
       String name = processor->getName();
@@ -740,13 +740,13 @@ void FilterComponent::mouseUp (const MouseEvent& e)
   }
   else if (! e.mouseWasClicked())
   {
-    audio.getDoc().setChangedFlag (true);
+    audioEngine.getDoc().setChangedFlag (true);
     
     if (moving) 
     {
       moving = false;
-      audio.getDoc().beginTransaction();
-      audio.getDoc().perform(new MovePluginAction(audio, this, filterID, startPos, endPos), "move plug-in");
+      audioEngine.getDoc().beginTransaction();
+      audioEngine.getDoc().perform(new MovePluginAction(audioEngine, this, filterID, startPos, endPos), "move plug-in");
     }
   }    
 }
@@ -818,7 +818,7 @@ void FilterComponent::getPinPos (const int index, const bool isInput, float& x, 
 
 void FilterComponent::update()
 {
-  const AudioProcessorGraph::Node::Ptr f (audio.getDoc().getNodeForId (filterID));
+  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (filterID));
   
   if (f == nullptr)
   {
@@ -850,7 +850,7 @@ void FilterComponent::update()
   
   {
     double x, y;
-    audio.getDoc().getNodePosition (filterID, x, y);
+    audioEngine.getDoc().getNodePosition (filterID, x, y);
     setCentreRelative ((float) x, (float) y);
   }
   
@@ -863,16 +863,16 @@ void FilterComponent::update()
     
     int i;
     for (i = 0; i < f->getProcessor()->getNumInputChannels(); ++i)
-      addAndMakeVisible (new PinComponent (audio, filterID, i, true));
+      addAndMakeVisible (new PinComponent (audioEngine, filterID, i, true));
     
     if (f->getProcessor()->acceptsMidi())
-      addAndMakeVisible (new PinComponent (audio, filterID, PMixDocument::midiChannelNumber, true));
+      addAndMakeVisible (new PinComponent (audioEngine, filterID, PMixDocument::midiChannelNumber, true));
     
     for (i = 0; i < f->getProcessor()->getNumOutputChannels(); ++i)
-      addAndMakeVisible (new PinComponent (audio, filterID, i, false));
+      addAndMakeVisible (new PinComponent (audioEngine, filterID, i, false));
     
     if (f->getProcessor()->producesMidi())
-      addAndMakeVisible (new PinComponent (audio, filterID, PMixDocument::midiChannelNumber, false));
+      addAndMakeVisible (new PinComponent (audioEngine, filterID, PMixDocument::midiChannelNumber, false));
     
     resized();
   }
@@ -886,12 +886,12 @@ GraphEditor* FilterComponent::getGraphPanel() const noexcept
 #pragma mark -
 #pragma mark ConnectorComponent
 
-ConnectorComponent::ConnectorComponent (PMixAudio& audio)
+ConnectorComponent::ConnectorComponent (PMixAudioEngine& audioEngine)
 : sourceFilterID (0),
 destFilterID (0),
 sourceFilterChannel (0),
 destFilterChannel (0),
-audio (audio),
+audioEngine (audioEngine),
 lastInputX (0),
 lastInputY (0),
 lastOutputX (0),
@@ -1023,7 +1023,7 @@ void ConnectorComponent::mouseDrag (const MouseEvent& e)
   {
     dragging = true;
     
-    audio.getDoc().removeConnection (sourceFilterID, sourceFilterChannel, destFilterID, destFilterChannel);
+    audioEngine.getDoc().removeConnection (sourceFilterID, sourceFilterChannel, destFilterID, destFilterChannel);
     
     double distanceFromStart, distanceFromEnd;
     getDistancesFromEnds (e.x, e.y, distanceFromStart, distanceFromEnd);
