@@ -14,7 +14,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixMainAppWindow.h"
-#include "pMixLookAndFeel.h"
 #include "pMixCommandManager.h"
 
 class pMixApp : public JUCEApplication
@@ -29,12 +28,11 @@ public:
   const String getApplicationVersion();
   bool moreThanOneInstanceAllowed();
 //  void showAudioSettings();
-
-  pMixLookAndFeel lookAndFeel;
   
 private:
   ScopedPointer<MainAppWindow> mainWindow;
   AudioDeviceManager deviceManager;
+  AudioProcessorPlayer graphPlayer;
   PMixAudio audio;
 //  SplashScreen* splash;
 };

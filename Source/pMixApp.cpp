@@ -18,12 +18,10 @@ void pMixApp::initialise (const String& commandLine)
   
 
 
-  LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
-
   mainWindow = new MainAppWindow(audio);
   
-  deviceManager.addAudioCallback (&audio.getGraphPlayer());
-  deviceManager.addMidiInputCallback (String::empty, &audio.getGraphPlayer().getMidiMessageCollector());
+  deviceManager.addAudioCallback (&graphPlayer);
+  deviceManager.addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
 
   commandManager.registerAllCommandsForTarget (this);
 
@@ -35,18 +33,18 @@ void pMixApp::initialise (const String& commandLine)
 //  }
   
   ScopedPointer<XmlElement> savedAudioState (audio.getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
-  
+  graphPlayer.setProcessor(&audio.getGraph());
   mainWindow->getAudio().getDoc().initialize();
   deviceManager.initialise (256, 256, savedAudioState, true);
 }
 
 void pMixApp::shutdown()
 {
-  deviceManager.removeAudioCallback (&audio.getGraphPlayer());
-  deviceManager.removeMidiInputCallback (String::empty, &audio.getGraphPlayer().getMidiMessageCollector());
-  
+  deviceManager.removeAudioCallback (&graphPlayer);
+  deviceManager.removeMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
+  graphPlayer.setProcessor (nullptr);
+
   mainWindow = nullptr;
-  LookAndFeel::setDefaultLookAndFeel (nullptr);
 }
 
 void pMixApp::systemRequestedQuit()

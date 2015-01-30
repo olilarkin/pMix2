@@ -14,6 +14,7 @@
 #include "pMixInterpolationSpace.h"
 #include "pMixGraphEditor.h"
 #include "pMixCodeEditor.h"
+#include "pMixLookAndFeel.h"
 
 class MainComponent  : public Component
 {
@@ -26,9 +27,11 @@ public:
   void setZoom (double scale);
   double getZoom() const;
 
-private:
+private:  
+  pMixLookAndFeel lookAndFeel;
+
   PMixAudio& audio;  
-  MidiKeyboardState keyState;
+  //MidiKeyboardState keyState;
   
   CodeEditor* codeEditor;
   GraphEditor* graphEditor;

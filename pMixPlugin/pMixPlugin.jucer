@@ -7,7 +7,7 @@
               pluginManufacturerCode="oliL" pluginCode="pMix" pluginChannelConfigs="{2, 2}"
               pluginIsSynth="0" pluginWantsMidiIn="1" pluginProducesMidiOut="1"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="1"
-              pluginAUExportPrefix="pMixPluginAU" pluginRTASCategory="" aaxIdentifier="com.yourcompany.pMixPlugin"
+              pluginAUExportPrefix="pMixPluginAU" pluginRTASCategory="" aaxIdentifier="com.OliLarkin.pMixPlugin"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.1"
               companyWebsite="www.olilarkin.co.uk" companyEmail="contact@olilarkin.co.uk"
               companyName="Oli Larkin Plugins">

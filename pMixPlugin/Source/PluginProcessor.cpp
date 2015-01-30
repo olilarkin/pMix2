@@ -3,6 +3,7 @@
 
 PMixPluginAudioProcessor::PMixPluginAudioProcessor()
 {
+  getAudio().getDoc().initialize();
 }
 
 PMixPluginAudioProcessor::~PMixPluginAudioProcessor()

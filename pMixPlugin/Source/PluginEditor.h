@@ -3,7 +3,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-
+#include "pMixMainComponent.h"
 
 class PMixPluginAudioProcessorEditor  : public AudioProcessorEditor
 {
@@ -16,6 +16,7 @@ public:
 
 private:
   PMixPluginAudioProcessor& processor;
+  ScopedPointer<MainComponent> mainComponent;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixPluginAudioProcessorEditor)
 };

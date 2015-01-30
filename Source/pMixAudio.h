@@ -27,7 +27,7 @@ public:
   ~PMixAudio();
   
   AudioProcessorGraph& getGraph() noexcept { return graph; }
-  AudioProcessorPlayer& getGraphPlayer() noexcept { return graphPlayer; }
+  //AudioProcessorPlayer& getGraphPlayer() noexcept { return graphPlayer; }
   AudioPluginFormatManager& getFormatManager() noexcept { return formatManager; }
   KnownPluginList& getKnownPluginList() { return knownPluginList; }
   KnownPluginList::SortMethod getSortMethod() noexcept { return pluginSortMethod; }
@@ -48,7 +48,6 @@ private:
   KnownPluginList::SortMethod pluginSortMethod;
   
   AudioProcessorGraph graph;
-  AudioProcessorPlayer graphPlayer;
   AudioPluginFormatManager formatManager;
   
   PMixDocument doc;

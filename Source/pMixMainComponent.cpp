@@ -12,6 +12,8 @@
 MainComponent::MainComponent (PMixAudio& audio)
 : audio(audio)
 {
+  LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
+
   verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be between 20% and 80%, preferably 50%
   verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
   verticalLayout.setItemLayout (2, 150, -1.0, -0.65);  // the components on the right must be at least 150 pixels wide, preferably 50% of the total width
@@ -21,7 +23,7 @@ MainComponent::MainComponent (PMixAudio& audio)
   addAndMakeVisible (graphEditor = new GraphEditor (audio));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
     
-  keyState.addListener (&audio.getGraphPlayer().getMidiMessageCollector());
+  //keyState.addListener (&audio.getGraphPlayer().getMidiMessageCollector());
   
   addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
@@ -34,10 +36,12 @@ MainComponent::MainComponent (PMixAudio& audio)
 }
 
 MainComponent::~MainComponent()
-{  
+{
+  LookAndFeel::setDefaultLookAndFeel (nullptr);
+
   deleteAllChildren();
   
-  keyState.removeListener (&audio.getGraphPlayer().getMidiMessageCollector());
+  //keyState.removeListener (&audio.getGraphPlayer().getMidiMessageCollector());
 }
 
 void MainComponent::resized()

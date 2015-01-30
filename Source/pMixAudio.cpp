@@ -26,16 +26,12 @@ PMixAudio::PMixAudio()
   pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()
   ->getIntValue ("pluginSortMethod", KnownPluginList::sortByManufacturer);
   
-  knownPluginList.addChangeListener (this);
-  
-  graphPlayer.setProcessor(&graph);
+  knownPluginList.addChangeListener (this);  
 }
 
 PMixAudio::~PMixAudio()
 {
-  knownPluginList.removeChangeListener (this);
-  
-  graphPlayer.setProcessor (nullptr);
+  knownPluginList.removeChangeListener (this);  
   doc.clear();
 }
 
