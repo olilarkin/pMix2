@@ -1,0 +1,38 @@
+built in:
+
+- multichannel audio file player
+- multichannel audio file recorder
+- multichannel meter (maybe faust based?)
+- mono vu meter?
+- spectrum draw
+- multichannel convolution
+- midi keyboard
+
+(to rewrite in faust?)
+- crackle machine
+- formant filter
+- basicGVerb
+- LFO Chopper
+
+- options to oversample
+
+- faust effect
+  - pitch shifer
+  - tambura.dsp
+  - dual freq shifter.dsp
+  - dronebox.dsp
+  - stereo freq shifter.dsp
+  - thru zero flanger.dsp
+  - weird phaser.dsp
+  - barber pole phaser.dsp
+  - harmonic oscillator.dsp
+  - blipper.dsp
+  - various delays
+  - quad mix
+  - quad pan
+
+- faust synth 
+  
+- csound effect
+- csound synth
+

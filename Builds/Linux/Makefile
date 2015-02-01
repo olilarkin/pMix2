@@ -51,19 +51,21 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/pMixPrefsComponent_29159002.o \
+  $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
+  $(OBJDIR)/pMixCodeEditor_9c72070f.o \
+  $(OBJDIR)/pMixWebBrowser_3e333589.o \
+  $(OBJDIR)/pMixFileBrowser_37eaaf21.o \
+  $(OBJDIR)/pMixConsole_f8903cec.o \
+  $(OBJDIR)/pMixParamView_95a42e7.o \
+  $(OBJDIR)/pMixParamTreeView_a13fce25.o \
+  $(OBJDIR)/pMixGraphEditor_f95221f0.o \
   $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
   $(OBJDIR)/FaustGenFactory_4ded9ad6.o \
-  $(OBJDIR)/pMixPrefsComponent_29159002.o \
   $(OBJDIR)/pMixMainAppWindow_68a956cd.o \
   $(OBJDIR)/pMixApp_f4968cb6.o \
-  $(OBJDIR)/jucetice_MeterComponent_8e4f0daa.o \
-  $(OBJDIR)/pMixCodeEditor_9c72070f.o \
-  $(OBJDIR)/pMixParamTreeView_a13fce25.o \
   $(OBJDIR)/pMixLookAndFeel_bf43c93.o \
-  $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
-  $(OBJDIR)/pMixParamView_95a42e7.o \
   $(OBJDIR)/pMixDocument_9b99d1f0.o \
-  $(OBJDIR)/pMixGraphEditor_f95221f0.o \
   $(OBJDIR)/pMixPluginWindow_8e0c1d8.o \
   $(OBJDIR)/pMixMainComponent_71d6859.o \
   $(OBJDIR)/pMixInternalFilters_8e34e293.o \
@@ -99,6 +101,51 @@ strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
 
+$(OBJDIR)/pMixPrefsComponent_29159002.o: ../../Source/pMixPrefsComponent.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixPrefsComponent.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixInterpolationSpace_b9dffb17.o: ../../Source/pMixInterpolationSpace.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixInterpolationSpace.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixCodeEditor_9c72070f.o: ../../Source/pMixCodeEditor.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixCodeEditor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixWebBrowser_3e333589.o: ../../Source/pMixWebBrowser.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixWebBrowser.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixFileBrowser_37eaaf21.o: ../../Source/pMixFileBrowser.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixFileBrowser.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixConsole_f8903cec.o: ../../Source/pMixConsole.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixConsole.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixParamView_95a42e7.o: ../../Source/pMixParamView.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixParamView.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixParamTreeView_a13fce25.o: ../../Source/pMixParamTreeView.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixParamTreeView.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixGraphEditor_f95221f0.o: ../../Source/pMixGraphEditor.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixGraphEditor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
 $(OBJDIR)/FaustAudioProcessor_fbc83018.o: ../../Source/FaustAudioProcessor.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling FaustAudioProcessor.cpp"
@@ -107,11 +154,6 @@ $(OBJDIR)/FaustAudioProcessor_fbc83018.o: ../../Source/FaustAudioProcessor.cpp
 $(OBJDIR)/FaustGenFactory_4ded9ad6.o: ../../Source/FaustGenFactory.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling FaustGenFactory.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/pMixPrefsComponent_29159002.o: ../../Source/pMixPrefsComponent.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixPrefsComponent.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixMainAppWindow_68a956cd.o: ../../Source/pMixMainAppWindow.cpp
@@ -124,44 +166,14 @@ $(OBJDIR)/pMixApp_f4968cb6.o: ../../Source/pMixApp.cpp
 	@echo "Compiling pMixApp.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/jucetice_MeterComponent_8e4f0daa.o: ../../Source/meter/jucetice_MeterComponent.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling jucetice_MeterComponent.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/pMixCodeEditor_9c72070f.o: ../../Source/pMixCodeEditor.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixCodeEditor.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/pMixParamTreeView_a13fce25.o: ../../Source/pMixParamTreeView.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixParamTreeView.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
 $(OBJDIR)/pMixLookAndFeel_bf43c93.o: ../../Source/pMixLookAndFeel.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixLookAndFeel.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/pMixInterpolationSpace_b9dffb17.o: ../../Source/pMixInterpolationSpace.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixInterpolationSpace.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/pMixParamView_95a42e7.o: ../../Source/pMixParamView.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixParamView.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
 $(OBJDIR)/pMixDocument_9b99d1f0.o: ../../Source/pMixDocument.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixDocument.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/pMixGraphEditor_f95221f0.o: ../../Source/pMixGraphEditor.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixGraphEditor.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixPluginWindow_8e0c1d8.o: ../../Source/pMixPluginWindow.cpp

@@ -8,6 +8,7 @@
 */
 
 #include "pMixMainComponent.h"
+#include "pMixFileBrowser.cpp"
 
 MainComponent::MainComponent (PMixAudioEngine& audioEngine)
 : audioEngine(audioEngine)
@@ -28,6 +29,10 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   //addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
   addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audioEngine));
+  
+  addAndMakeVisible (fileBrowser = new AudioPlaybackDemo());
+  addAndMakeVisible(webBrowser = new WebBrowserComponent());
+  webBrowser->goToURL("file:///Users/oli/Dev/MyFaustProjects/Projects/Tambura/Tambura-svg/process.svg");
   addAndMakeVisible (paramView = new ParamView(audioEngine));
   addAndMakeVisible (codeEditor = new CodeEditor());
   addAndMakeVisible (statusBar = new TooltipBar());
@@ -46,7 +51,7 @@ MainComponent::~MainComponent()
 
 void MainComponent::resized()
 {
-  Component* vcomps[] = { graphEditor, verticalDividerBar, interpolationSpace };
+  Component* vcomps[] = { graphEditor, verticalDividerBar, codeEditor };
   
   verticalLayout.layOutComponents (vcomps, 3,
                                    0, 0, getWidth(), getHeight(),

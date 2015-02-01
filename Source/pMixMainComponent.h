@@ -37,6 +37,8 @@ private:
   GraphEditor* graphEditor;
   Component* keyboardComp;
   Component* statusBar;
+  Component* fileBrowser;
+  WebBrowserComponent* webBrowser;
   InterpolationSpaceComponent* interpolationSpace;
   ParamView* paramView;
   StretchableLayoutManager verticalLayout;
