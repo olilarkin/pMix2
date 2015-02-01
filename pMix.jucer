@@ -6,6 +6,22 @@
   <MAINGROUP id="FiV8Cl" name="pMix">
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
     <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
+      <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
+        <FILE id="DBJuQb" name="FaustAudioProcessor.cpp" compile="1" resource="0"
+              file="Source/FaustAudioProcessor.cpp"/>
+        <FILE id="Q4Vrll" name="FaustAudioProcessor.h" compile="0" resource="0"
+              file="Source/FaustAudioProcessor.h"/>
+        <FILE id="T4zcqX" name="FaustGenFactory.cpp" compile="1" resource="0"
+              file="Source/FaustGenFactory.cpp"/>
+        <FILE id="OHwBYB" name="FaustGenFactory.h" compile="0" resource="0"
+              file="Source/FaustGenFactory.h"/>
+      </GROUP>
+      <GROUP id="{20315D0D-BC0E-C90C-E078-C1352DBCEEED}" name="Preferences">
+        <FILE id="nIOF0l" name="pMixPrefsComponent.cpp" compile="1" resource="0"
+              file="Source/pMixPrefsComponent.cpp"/>
+        <FILE id="nzzW3r" name="pMixPrefsComponent.h" compile="0" resource="0"
+              file="Source/pMixPrefsComponent.h"/>
+      </GROUP>
       <GROUP id="{0EE3E71E-3E66-6D8E-96D1-19B55B6F2917}" name="App">
         <FILE id="RdcPAb" name="pMixMainAppWindow.cpp" compile="1" resource="0"
               file="Source/pMixMainAppWindow.cpp"/>
@@ -28,14 +44,6 @@
             file="Source/pMixCodeEditor.cpp"/>
       <FILE id="wnQxO5" name="pMixCodeEditor.h" compile="0" resource="0"
             file="Source/pMixCodeEditor.h"/>
-      <FILE id="DBJuQb" name="FaustAudioProcessor.cpp" compile="1" resource="0"
-            file="Source/FaustAudioProcessor.cpp"/>
-      <FILE id="Q4Vrll" name="FaustAudioProcessor.h" compile="0" resource="0"
-            file="Source/FaustAudioProcessor.h"/>
-      <FILE id="T4zcqX" name="FaustGenFactory.cpp" compile="1" resource="0"
-            file="Source/FaustGenFactory.cpp"/>
-      <FILE id="OHwBYB" name="FaustGenFactory.h" compile="0" resource="0"
-            file="Source/FaustGenFactory.h"/>
       <FILE id="NRahlO" name="pMixParamTreeView.cpp" compile="1" resource="0"
             file="Source/pMixParamTreeView.cpp"/>
       <FILE id="iyOFme" name="pMixLookAndFeel.cpp" compile="1" resource="0"
@@ -66,10 +74,6 @@
             file="Source/pMixMainComponent.cpp"/>
       <FILE id="cjM5RC" name="pMixMainComponent.h" compile="0" resource="0"
             file="Source/pMixMainComponent.h"/>
-      <FILE id="Yv0Fxf" name="pMixPrefsComponent.cpp" compile="1" resource="0"
-            file="Source/pMixPrefsComponent.cpp"/>
-      <FILE id="ZVZFfk" name="pMixPrefsComponent.h" compile="0" resource="0"
-            file="Source/pMixPrefsComponent.h"/>
       <FILE id="zqfuWQ" name="pMixInternalFilters.cpp" compile="1" resource="0"
             file="Source/pMixInternalFilters.cpp"/>
       <FILE id="cQ4d1f" name="pMixInternalFilters.h" compile="0" resource="0"

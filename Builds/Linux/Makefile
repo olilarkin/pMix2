@@ -51,12 +51,13 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
+  $(OBJDIR)/FaustGenFactory_4ded9ad6.o \
+  $(OBJDIR)/pMixPrefsComponent_29159002.o \
   $(OBJDIR)/pMixMainAppWindow_68a956cd.o \
   $(OBJDIR)/pMixApp_f4968cb6.o \
   $(OBJDIR)/jucetice_MeterComponent_8e4f0daa.o \
   $(OBJDIR)/pMixCodeEditor_9c72070f.o \
-  $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
-  $(OBJDIR)/FaustGenFactory_4ded9ad6.o \
   $(OBJDIR)/pMixParamTreeView_a13fce25.o \
   $(OBJDIR)/pMixLookAndFeel_bf43c93.o \
   $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
@@ -65,7 +66,6 @@ OBJECTS := \
   $(OBJDIR)/pMixGraphEditor_f95221f0.o \
   $(OBJDIR)/pMixPluginWindow_8e0c1d8.o \
   $(OBJDIR)/pMixMainComponent_71d6859.o \
-  $(OBJDIR)/pMixPrefsComponent_29159002.o \
   $(OBJDIR)/pMixInternalFilters_8e34e293.o \
   $(OBJDIR)/pMixAudioEngine_de4ed8cd.o \
   $(OBJDIR)/juce_audio_basics_2442e4ea.o \
@@ -99,6 +99,21 @@ strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
 
+$(OBJDIR)/FaustAudioProcessor_fbc83018.o: ../../Source/FaustAudioProcessor.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling FaustAudioProcessor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/FaustGenFactory_4ded9ad6.o: ../../Source/FaustGenFactory.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling FaustGenFactory.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixPrefsComponent_29159002.o: ../../Source/pMixPrefsComponent.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixPrefsComponent.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
 $(OBJDIR)/pMixMainAppWindow_68a956cd.o: ../../Source/pMixMainAppWindow.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixMainAppWindow.cpp"
@@ -117,16 +132,6 @@ $(OBJDIR)/jucetice_MeterComponent_8e4f0daa.o: ../../Source/meter/jucetice_MeterC
 $(OBJDIR)/pMixCodeEditor_9c72070f.o: ../../Source/pMixCodeEditor.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixCodeEditor.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/FaustAudioProcessor_fbc83018.o: ../../Source/FaustAudioProcessor.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling FaustAudioProcessor.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/FaustGenFactory_4ded9ad6.o: ../../Source/FaustGenFactory.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling FaustGenFactory.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixParamTreeView_a13fce25.o: ../../Source/pMixParamTreeView.cpp
@@ -167,11 +172,6 @@ $(OBJDIR)/pMixPluginWindow_8e0c1d8.o: ../../Source/pMixPluginWindow.cpp
 $(OBJDIR)/pMixMainComponent_71d6859.o: ../../Source/pMixMainComponent.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixMainComponent.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/pMixPrefsComponent_29159002.o: ../../Source/pMixPrefsComponent.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixPrefsComponent.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixInternalFilters_8e34e293.o: ../../Source/pMixInternalFilters.cpp

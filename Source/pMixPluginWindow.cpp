@@ -21,7 +21,7 @@ type (t)
   setUsingNativeTitleBar(true);
   //setDropShadowEnabled(false);
   setContentOwned (pluginEditor, true);
-  
+
   setTopLeftPosition (owner->properties.getWithDefault ("uiLastX", Random::getSystemRandom().nextInt (500)),
                       owner->properties.getWithDefault ("uiLastY", Random::getSystemRandom().nextInt (500)));
   setVisible (true);
