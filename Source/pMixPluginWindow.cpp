@@ -12,22 +12,19 @@
 class PluginWindow;
 static Array <PluginWindow*> activePluginWindows;
 
-PluginWindow::PluginWindow (Component* const pluginEditor,
-                            AudioProcessorGraph::Node* const o,
-                            WindowFormatType t)
-: DocumentWindow (pluginEditor->getName(), Colours::lightblue,
-                  DocumentWindow::minimiseButton | DocumentWindow::closeButton),
+PluginWindow::PluginWindow (Component* const pluginEditor, AudioProcessorGraph::Node* const o, WindowFormatType t)
+: DocumentWindow (pluginEditor->getName(), Colours::lightblue, DocumentWindow::minimiseButton | DocumentWindow::closeButton),
 owner (o),
 type (t)
 {
   setSize (400, 300);
-  
+  setUsingNativeTitleBar(true);
+  //setDropShadowEnabled(false);
   setContentOwned (pluginEditor, true);
   
   setTopLeftPosition (owner->properties.getWithDefault ("uiLastX", Random::getSystemRandom().nextInt (500)),
                       owner->properties.getWithDefault ("uiLastY", Random::getSystemRandom().nextInt (500)));
   setVisible (true);
-  
   activePluginWindows.add (this);
 }
 
