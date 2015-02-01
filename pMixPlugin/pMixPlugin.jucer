@@ -14,6 +14,16 @@
   <MAINGROUP id="AyXwwn" name="pMixPlugin">
     <GROUP id="{8923BDF0-8D2C-0D4F-E35D-890C89D5DF51}" name="Source">
       <GROUP id="{723E4500-EB17-731D-8B10-B7C846C86094}" name="pMix">
+        <GROUP id="{73074A0B-8FC5-C225-CA50-71BB74C20300}" name="Faust">
+          <FILE id="kUfRnk" name="FaustAudioProcessor.cpp" compile="1" resource="0"
+                file="../Source/FaustAudioProcessor.cpp"/>
+          <FILE id="FquO7I" name="FaustAudioProcessor.h" compile="0" resource="0"
+                file="../Source/FaustAudioProcessor.h"/>
+          <FILE id="LMyfdk" name="FaustGenFactory.cpp" compile="1" resource="0"
+                file="../Source/FaustGenFactory.cpp"/>
+          <FILE id="mFUulE" name="FaustGenFactory.h" compile="0" resource="0"
+                file="../Source/FaustGenFactory.h"/>
+        </GROUP>
         <FILE id="taVrpc" name="pMixPluginWindow.cpp" compile="1" resource="0"
               file="../Source/pMixPluginWindow.cpp"/>
         <FILE id="l8GPil" name="pMixPluginWindow.h" compile="0" resource="0"
@@ -22,10 +32,6 @@
               file="../Source/pMixAudioEngine.cpp"/>
         <FILE id="kGuObF" name="pMixAudioEngine.h" compile="0" resource="0"
               file="../Source/pMixAudioEngine.h"/>
-        <FILE id="kUfRnk" name="FaustAudioProcessor.cpp" compile="1" resource="0"
-              file="../Source/FaustAudioProcessor.cpp"/>
-        <FILE id="FquO7I" name="FaustAudioProcessor.h" compile="0" resource="0"
-              file="../Source/FaustAudioProcessor.h"/>
         <FILE id="rTh7Ts" name="pMixCodeEditor.cpp" compile="1" resource="0"
               file="../Source/pMixCodeEditor.cpp"/>
         <FILE id="y3b3r7" name="pMixCodeEditor.h" compile="0" resource="0"
