@@ -14,7 +14,28 @@
 
 #define FAUSTFLOAT float
 
-#include "faust/llvm-dsp.h"
+#define DEFAULT_SOURCE_CODE "import(\"math.lib\"); \nimport(\"maxmsp.lib\"); \nimport(\"music.lib\"); \nimport(\"oscillator.lib\"); \nimport(\"reduce.lib\"); \nimport(\"filter.lib\"); \nimport(\"effect.lib\"); \n \nprocess=_,_;"
+#define FAUSTGEN_VERSION "0.99b"
+#define FAUST_PDF_DOCUMENTATION "faust-quick-reference.pdf"
+
+#ifdef __APPLE__
+//#include "bench-llvm.cpp"
+#define FAUST_LIBRARY_PATH "/Contents/Resources/"
+#define FAUST_DRAW_PATH "/var/tmp/"
+#define SEPARATOR '/'
+#endif
+
+#ifdef WIN32
+#define FAUST_LIBRARY_PATH "\\faustgen-resources\\"
+#define FAUST_DRAW_PATH "\\faustgen-resources\\"
+#define SEPARATOR '\\'
+#endif
+
+#define LLVM_OPTIMIZATION 3
+#define DEFAULT_CODE "process = _,*(0.1);"
+
+
+#include "FaustGenFactory.h"
 
 class FaustAudioProcessor  : public AudioPluginInstance
 {
@@ -54,19 +75,22 @@ public:
   
   int getNumPrograms() override;
   int getCurrentProgram() override;
-  void setCurrentProgram (int /*index*/) override;
-  const String getProgramName (int /*index*/) override;
-  void changeProgramName (int /*index*/, const String& /*newName*/) override;
+  void setCurrentProgram (int index) override;
+  const String getProgramName (int index) override;
+  void changeProgramName (int index, const String& newName) override;
   
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
   
+//Unique
+  void create_dsp(bool init);
+  void free_dsp();
+  bool allocate_factory(const string& effect_name);
+
 private:
-  llvm_dsp_factory* mFactory;
-  dsp* mDSP;
-  
-  std::string mError_msg;
-  
+  faustgen_factory* fDSPfactory;
+  llvm_dsp* fDSP;
+    
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioProcessor)
 };
 

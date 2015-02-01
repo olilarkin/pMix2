@@ -56,6 +56,7 @@ OBJECTS := \
   $(OBJDIR)/jucetice_MeterComponent_8e4f0daa.o \
   $(OBJDIR)/pMixCodeEditor_9c72070f.o \
   $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
+  $(OBJDIR)/FaustGenFactory_4ded9ad6.o \
   $(OBJDIR)/pMixParamTreeView_a13fce25.o \
   $(OBJDIR)/pMixLookAndFeel_bf43c93.o \
   $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
@@ -121,6 +122,11 @@ $(OBJDIR)/pMixCodeEditor_9c72070f.o: ../../Source/pMixCodeEditor.cpp
 $(OBJDIR)/FaustAudioProcessor_fbc83018.o: ../../Source/FaustAudioProcessor.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling FaustAudioProcessor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/FaustGenFactory_4ded9ad6.o: ../../Source/FaustGenFactory.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling FaustGenFactory.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixParamTreeView_a13fce25.o: ../../Source/pMixParamTreeView.cpp

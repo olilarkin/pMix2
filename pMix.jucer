@@ -32,6 +32,10 @@
             file="Source/FaustAudioProcessor.cpp"/>
       <FILE id="Q4Vrll" name="FaustAudioProcessor.h" compile="0" resource="0"
             file="Source/FaustAudioProcessor.h"/>
+      <FILE id="T4zcqX" name="FaustGenFactory.cpp" compile="1" resource="0"
+            file="Source/FaustGenFactory.cpp"/>
+      <FILE id="OHwBYB" name="FaustGenFactory.h" compile="0" resource="0"
+            file="Source/FaustGenFactory.h"/>
       <FILE id="NRahlO" name="pMixParamTreeView.cpp" compile="1" resource="0"
             file="Source/pMixParamTreeView.cpp"/>
       <FILE id="iyOFme" name="pMixLookAndFeel.cpp" compile="1" resource="0"

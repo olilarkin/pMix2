@@ -10,38 +10,19 @@
 #include "FaustAudioProcessor.h"
 
 FaustAudioProcessor::FaustAudioProcessor()
-: mFactory(nullptr)
+: fDSPfactory(nullptr)
+, fDSP(nullptr)
 {
-//  int argc = 3;
-//    const char* argv[argc];
-//  argv[0] = "-vec";
-//  argv[1] = "-lv";
-//  argv[2] = " 1";
-//  
   // Faust program
   std::string faust_program = "process = +;";
   
-  mFactory = createDSPFactoryFromString("test", faust_program, 0, nullptr, "", mError_msg, 3);
+  allocate_factory("Test");
   
-  if (mFactory != nullptr)
-  {
-    mDSP = createDSPInstance(mFactory);
-
-    if (mDSP)
-    {
-      printf("success");
-    }
-  }
-  
-  updateHostDisplay();
+  create_dsp(true);
 }
 
 FaustAudioProcessor::~FaustAudioProcessor()
 {
-  if (mFactory != nullptr)
-  {
-    deleteDSPFactory(mFactory);
-  }
 }
 
 void FaustAudioProcessor::fillInPluginDescription (PluginDescription& description) const
@@ -56,8 +37,8 @@ void FaustAudioProcessor::fillInPluginDescription (PluginDescription& descriptio
   description.lastFileModTime = Time(0);
   description.isInstrument = false;
   description.hasSharedContainer = false;
-  description.numInputChannels = mDSP->getNumInputs();
-  description.numOutputChannels = mDSP->getNumOutputs();
+  description.numInputChannels = fDSP->getNumInputs();
+  description.numOutputChannels = fDSP->getNumOutputs();
 }
 
 //static
@@ -79,8 +60,8 @@ void FaustAudioProcessor::fillInitialInPluginDescription (PluginDescription& des
 
 void FaustAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-  setPlayConfigDetails(mDSP->getNumInputs(),  mDSP->getNumOutputs(), sampleRate, samplesPerBlock);
-  mDSP->init(sampleRate);
+  setPlayConfigDetails(fDSP->getNumInputs(),  fDSP->getNumOutputs(), sampleRate, samplesPerBlock);
+  fDSP->init(sampleRate);
 }
 
 void FaustAudioProcessor::releaseResources()
@@ -90,7 +71,7 @@ void FaustAudioProcessor::releaseResources()
 
 void FaustAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-  mDSP->compute(buffer.getNumSamples(), (FAUSTFLOAT**)buffer.getArrayOfReadPointers(), (FAUSTFLOAT**)buffer.getArrayOfWritePointers());
+  fDSP->compute(buffer.getNumSamples(), (FAUSTFLOAT**)buffer.getArrayOfReadPointers(), (FAUSTFLOAT**)buffer.getArrayOfWritePointers());
 }
 
 void FaustAudioProcessor::reset()
@@ -213,4 +194,71 @@ void FaustAudioProcessor::getStateInformation (MemoryBlock& destData)
 
 void FaustAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
+}
+
+void FaustAudioProcessor::create_dsp(bool init)
+{
+  if (fDSPfactory->lock())
+  {
+    fDSP = fDSPfactory->create_dsp_aux(this);
+    assert(fDSP);
+    
+    // Initialize User Interface (here connnection with controls)
+    //fDSP->buildUserInterface(&fDSPUI);
+    
+    // Initialize at the system's sampling rate
+    fDSP->init(getSampleRate());
+    
+    // Setup MAX audio IO
+//    bool dspstate = false;
+    
+//    if ((m_siginlets != fDSP->getNumInputs()) || (m_sigoutlets != fDSP->getNumOutputs())) {
+//      // Number of ins/outs have changed... possibly stop IO
+//      dspstate = sys_getdspobjdspstate((t_object*)&m_ob);
+//      if (dspstate) {
+//        dsp_status("stop");
+//      }
+//    }
+    
+//    setupIO(&faustgen::perform, &faustgen::init, fDSP->getNumInputs(), fDSP->getNumOutputs(), init);
+    
+    // Possibly restart IO
+//    if (dspstate) {
+//      dsp_status("start");
+//    }
+
+    fDSPfactory->unlock();
+  }
+  else
+  {
+//    post("Mutex lock cannot be taken...");
+  }
+  
+  updateHostDisplay();
+}
+
+void FaustAudioProcessor::free_dsp()
+{
+  deleteDSPInstance(fDSP);
+  //fDSPUI.clear();
+  fDSP = 0;
+}
+
+bool FaustAudioProcessor::allocate_factory(const string& effect_name)
+{
+  bool res = false;
+  
+  if (faustgen_factory::gFactoryMap.find(effect_name) != faustgen_factory::gFactoryMap.end())
+  {
+    fDSPfactory = faustgen_factory::gFactoryMap[effect_name];
+  }
+  else
+  {
+    fDSPfactory = new faustgen_factory(effect_name);
+    faustgen_factory::gFactoryMap[effect_name] = fDSPfactory;
+    res = true;
+  }
+  
+  fDSPfactory->add_instance(this);
+  return res;
 }
