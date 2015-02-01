@@ -8,9 +8,11 @@
 
 		218037BFD69384EF31E75543 = {isa = PBXBuildFile; fileRef = 80897B5CCE8DB16E0C6B6301; };
 		F67BFB9A977E53FEE4BEBE73 = {isa = PBXBuildFile; fileRef = E463C5D01A6B3EAD97F10120; };
+		CCA3D28189BA65C5BB73597B = {isa = PBXBuildFile; fileRef = 9C243BD05852F81D62413DD2; };
 		7C0DB175BCE6294A3DDEB459 = {isa = PBXBuildFile; fileRef = FCCB4CF281EF0715169942A8; };
 		3C8510C4D06DCFD8DA811E83 = {isa = PBXBuildFile; fileRef = 4283CEC6DE53A6AFF1C54F10; };
 		87967C6E81DA6DC081F2BAA3 = {isa = PBXBuildFile; fileRef = AE4851744C0FD7A1F638A012; };
+		809FF12992040368B4BD6328 = {isa = PBXBuildFile; fileRef = 1E83DBFEE2EC8B253139956C; };
 		B6381412CA32EDCF7D9DE9CB = {isa = PBXBuildFile; fileRef = DB363627D69F8EE1E1419465; };
 		441C96D9C3F52847530F379B = {isa = PBXBuildFile; fileRef = 46548BAD434294960328C9FA; };
 		5ABFA1DBA62FF3E3DD7A38E8 = {isa = PBXBuildFile; fileRef = 9DFE3C3DB7DC435A6C252BAC; };
@@ -164,6 +166,7 @@
 		1E0568C2D385F7CEBC0E099A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_StretchableLayoutManager.cpp"; path = "../../../../../juce/modules/juce_gui_basics/layout/juce_StretchableLayoutManager.cpp"; sourceTree = "SOURCE_ROOT"; };
 		1E2AE1025FFF36E54090DE81 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_VSTMidiEventList.h"; path = "../../../../../juce/modules/juce_audio_processors/format_types/juce_VSTMidiEventList.h"; sourceTree = "SOURCE_ROOT"; };
 		1E35DB721316662976203DDF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_MessageManager.h"; path = "../../../../../juce/modules/juce_events/messages/juce_MessageManager.h"; sourceTree = "SOURCE_ROOT"; };
+		1E83DBFEE2EC8B253139956C = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		1EB464C2C3FADBCD18EDBA2C = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_posix_SharedCode.h"; path = "../../../../../juce/modules/juce_core/native/juce_posix_SharedCode.h"; sourceTree = "SOURCE_ROOT"; };
 		1ECE942630EBB74475477555 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ChildProcess.h"; path = "../../../../../juce/modules/juce_core/threads/juce_ChildProcess.h"; sourceTree = "SOURCE_ROOT"; };
 		1EDB4524260EBA3F38517127 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixPluginWindow.h; path = ../../../Source/pMixPluginWindow.h; sourceTree = "SOURCE_ROOT"; };
@@ -622,6 +625,7 @@
 		9B8A8F8D71ED46D25D912EE4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_DrawableComposite.h"; path = "../../../../../juce/modules/juce_gui_basics/drawables/juce_DrawableComposite.h"; sourceTree = "SOURCE_ROOT"; };
 		9B9BB4566458B48E8D33C74D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_TextDiff.h"; path = "../../../../../juce/modules/juce_core/text/juce_TextDiff.h"; sourceTree = "SOURCE_ROOT"; };
 		9BE1D3F3EFF4F1CAD50E6938 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_UIViewComponent.h"; path = "../../../../../juce/modules/juce_gui_extra/embedding/juce_UIViewComponent.h"; sourceTree = "SOURCE_ROOT"; };
+		9C243BD05852F81D62413DD2 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		9C3E49F47EB36A3665F72227 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ComponentMovementWatcher.h"; path = "../../../../../juce/modules/juce_gui_basics/layout/juce_ComponentMovementWatcher.h"; sourceTree = "SOURCE_ROOT"; };
 		9C5F18F5F2F26569D51E631B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_FileSearchPathListComponent.cpp"; path = "../../../../../juce/modules/juce_gui_basics/filebrowser/juce_FileSearchPathListComponent.cpp"; sourceTree = "SOURCE_ROOT"; };
 		9CA929AEBA4B7731C0219217 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -2143,9 +2147,11 @@
 		9661F6ACF11B4F5C4C579C9E = {isa = PBXGroup; children = (
 					80897B5CCE8DB16E0C6B6301,
 					E463C5D01A6B3EAD97F10120,
+					9C243BD05852F81D62413DD2,
 					FCCB4CF281EF0715169942A8,
 					4283CEC6DE53A6AFF1C54F10,
 					AE4851744C0FD7A1F638A012,
+					1E83DBFEE2EC8B253139956C,
 					DB363627D69F8EE1E1419465,
 					46548BAD434294960328C9FA,
 					9DFE3C3DB7DC435A6C252BAC,
@@ -2179,7 +2185,7 @@
 					"JUCE_APP_VERSION_HEX=0x10000", );
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
-				HEADER_SEARCH_PATHS = ("~/Dev/SDKs/Steinberg/vstsdk2.4", "../../JuceLibraryCode", "../../../../../juce/modules", "/usr/local/include", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("\"~/Dev/SDKs/Steinberg/VST3 SDK\"", "~/Dev/SDKs/Steinberg/vstsdk2.4", "../../JuceLibraryCode", "../../../../../juce/modules", "/usr/local/include", "$(inherited)");
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
 				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"/usr/local/lib\"", "\"/opt/local/lib\"", "\"/opt/local/libexec/llvm-3.5/lib\"");
@@ -2210,7 +2216,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
-				HEADER_SEARCH_PATHS = ("~/Dev/SDKs/Steinberg/vstsdk2.4", "../../JuceLibraryCode", "../../../../../juce/modules", "/usr/local/include", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("\"~/Dev/SDKs/Steinberg/VST3 SDK\"", "~/Dev/SDKs/Steinberg/vstsdk2.4", "../../JuceLibraryCode", "../../../../../juce/modules", "/usr/local/include", "$(inherited)");
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
 				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"/usr/local/lib\"", "\"/opt/local/lib\"", "\"/opt/local/libexec/llvm-3.5/lib\"");
@@ -2305,9 +2311,11 @@
 		3BC4A636165D69ECF0881689 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (
 					218037BFD69384EF31E75543,
 					F67BFB9A977E53FEE4BEBE73,
+					CCA3D28189BA65C5BB73597B,
 					7C0DB175BCE6294A3DDEB459,
 					3C8510C4D06DCFD8DA811E83,
 					87967C6E81DA6DC081F2BAA3,
+					809FF12992040368B4BD6328,
 					B6381412CA32EDCF7D9DE9CB,
 					441C96D9C3F52847530F379B,
 					5ABFA1DBA62FF3E3DD7A38E8,
