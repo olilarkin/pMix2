@@ -51,7 +51,6 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
-  $(OBJDIR)/SplitComponent_4c4bd10c.o \
   $(OBJDIR)/pMixPrefsComponent_29159002.o \
   $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
   $(OBJDIR)/pMixCodeEditor_9c72070f.o \
@@ -61,6 +60,7 @@ OBJECTS := \
   $(OBJDIR)/pMixParamView_95a42e7.o \
   $(OBJDIR)/pMixParamTreeView_a13fce25.o \
   $(OBJDIR)/pMixGraphEditor_f95221f0.o \
+  $(OBJDIR)/SplitComponent_4c4bd10c.o \
   $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
   $(OBJDIR)/FaustGenFactory_4ded9ad6.o \
   $(OBJDIR)/pMixMainAppWindow_68a956cd.o \
@@ -101,11 +101,6 @@ clean:
 strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
-
-$(OBJDIR)/SplitComponent_4c4bd10c.o: ../../Source/SplitComponent.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling SplitComponent.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixPrefsComponent_29159002.o: ../../Source/pMixPrefsComponent.cpp
 	-@mkdir -p $(OBJDIR)
@@ -150,6 +145,11 @@ $(OBJDIR)/pMixParamTreeView_a13fce25.o: ../../Source/pMixParamTreeView.cpp
 $(OBJDIR)/pMixGraphEditor_f95221f0.o: ../../Source/pMixGraphEditor.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixGraphEditor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/SplitComponent_4c4bd10c.o: ../../Source/SplitComponent.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling SplitComponent.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/FaustAudioProcessor_fbc83018.o: ../../Source/FaustAudioProcessor.cpp

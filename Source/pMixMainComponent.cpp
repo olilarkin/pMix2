@@ -8,7 +8,6 @@
 */
 
 #include "pMixMainComponent.h"
-#include "pMixFileBrowser.cpp"
 
 MainComponent::MainComponent (PMixAudioEngine& audioEngine)
 : audioEngine(audioEngine)
@@ -30,15 +29,15 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   
   interpolationSpace = new InterpolationSpaceComponent(audioEngine);
   
-  //addAndMakeVisible (fileBrowser = new AudioPlaybackDemo());
+  fileBrowser = new FileBrowser();
   //addAndMakeVisible(webBrowser = new WebBrowserComponent());
   webBrowser = new WebBrowserComponent();
   webBrowser->goToURL("file:///Users/oli/Dev/MyFaustProjects/Projects/Tambura/Tambura-svg/process.svg");
-  addAndMakeVisible (paramView = new ParamView(audioEngine));
+  paramView = new ParamView(audioEngine);
   codeEditor = new CodeEditor();
   addAndMakeVisible (statusBar = new TooltipBar());
   
-  addAndMakeVisible(splitComponent = new SplitComponent(*codeEditor, *webBrowser, false));
+  addAndMakeVisible(splitComponent = new SplitComponent(*interpolationSpace, *fileBrowser, false));
 
   graphEditor->updateComponents();
 }
@@ -47,7 +46,9 @@ MainComponent::~MainComponent()
 {
   LookAndFeel::setDefaultLookAndFeel (nullptr);
 
-  deleteAllChildren();
+  removeAllChildren();
+
+  //deleteAllChildren();
   
   //keyState.removeListener (&audio.getGraphPlayer().getMidiMessageCollector());
 }

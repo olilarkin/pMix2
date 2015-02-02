@@ -35,6 +35,7 @@ pMixPrefsComponent::pMixPrefsComponent ()
     tabbedComponent->addTab (TRANS("Controllers"), Colours::lightgrey, 0, false);
     tabbedComponent->addTab (TRANS("Audio"), Colours::lightgrey, 0, false);
     tabbedComponent->addTab (TRANS("Plug-Ins"), Colours::lightgrey, 0, false);
+    tabbedComponent->addTab (TRANS("Colours"), Colours::lightgrey, 0, false);
     tabbedComponent->setCurrentTabIndex (0);
 
 
@@ -112,6 +113,8 @@ BEGIN_JUCER_METADATA
     <TAB name="Audio" colour="ffd3d3d3" useJucerComp="0" contentClassName=""
          constructorParams="" jucerComponentFile=""/>
     <TAB name="Plug-Ins" colour="ffd3d3d3" useJucerComp="0" contentClassName=""
+         constructorParams="" jucerComponentFile=""/>
+    <TAB name="Colours" colour="ffd3d3d3" useJucerComp="0" contentClassName=""
          constructorParams="" jucerComponentFile=""/>
   </TABBEDCOMPONENT>
 </JUCER_COMPONENT>
