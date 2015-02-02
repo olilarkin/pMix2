@@ -51,6 +51,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/SplitComponent_4c4bd10c.o \
   $(OBJDIR)/pMixPrefsComponent_29159002.o \
   $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
   $(OBJDIR)/pMixCodeEditor_9c72070f.o \
@@ -100,6 +101,11 @@ clean:
 strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/SplitComponent_4c4bd10c.o: ../../Source/SplitComponent.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling SplitComponent.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixPrefsComponent_29159002.o: ../../Source/pMixPrefsComponent.cpp
 	-@mkdir -p $(OBJDIR)

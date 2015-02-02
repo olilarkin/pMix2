@@ -15,6 +15,7 @@
 #include "pMixGraphEditor.h"
 #include "pMixCodeEditor.h"
 #include "pMixLookAndFeel.h"
+#include "SplitComponent.h"
 
 class MainComponent  : public Component
 {
@@ -33,13 +34,14 @@ private:
   PMixAudioEngine& audioEngine;  
   //MidiKeyboardState keyState;
   
-  CodeEditor* codeEditor;
+  SplitComponent* splitComponent;
+  ScopedPointer<CodeEditor> codeEditor;
   GraphEditor* graphEditor;
   Component* keyboardComp;
   Component* statusBar;
   Component* fileBrowser;
-  WebBrowserComponent* webBrowser;
-  InterpolationSpaceComponent* interpolationSpace;
+  ScopedPointer<WebBrowserComponent> webBrowser;
+  ScopedPointer<InterpolationSpaceComponent> interpolationSpace;
   ParamView* paramView;
   StretchableLayoutManager verticalLayout;
   StretchableLayoutResizerBar* verticalDividerBar;

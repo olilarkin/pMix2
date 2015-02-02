@@ -15,7 +15,7 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
 {
   LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
 
-  verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the font list must be between 20% and 80%, preferably 50%
+  verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the ... must be between 20% and 80%, preferably 50%
   verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
   verticalLayout.setItemLayout (2, 150, -1.0, -0.65);  // the components on the right must be at least 150 pixels wide, preferably 50% of the total width
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
@@ -28,15 +28,18 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   
   //addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
-  addAndMakeVisible (interpolationSpace = new InterpolationSpaceComponent(audioEngine));
+  interpolationSpace = new InterpolationSpaceComponent(audioEngine);
   
-  addAndMakeVisible (fileBrowser = new AudioPlaybackDemo());
-  addAndMakeVisible(webBrowser = new WebBrowserComponent());
+  //addAndMakeVisible (fileBrowser = new AudioPlaybackDemo());
+  //addAndMakeVisible(webBrowser = new WebBrowserComponent());
+  webBrowser = new WebBrowserComponent();
   webBrowser->goToURL("file:///Users/oli/Dev/MyFaustProjects/Projects/Tambura/Tambura-svg/process.svg");
   addAndMakeVisible (paramView = new ParamView(audioEngine));
-  addAndMakeVisible (codeEditor = new CodeEditor());
+  codeEditor = new CodeEditor();
   addAndMakeVisible (statusBar = new TooltipBar());
-    
+  
+  addAndMakeVisible(splitComponent = new SplitComponent(*codeEditor, *webBrowser, false));
+
   graphEditor->updateComponents();
 }
 
@@ -51,7 +54,10 @@ MainComponent::~MainComponent()
 
 void MainComponent::resized()
 {
-  Component* vcomps[] = { graphEditor, verticalDividerBar, codeEditor };
+  if (!splitComponent->GetSplitBarPosition())
+    splitComponent->SetSplitBarPosition(getHeight() / 2.);
+
+  Component* vcomps[] = { graphEditor, verticalDividerBar, splitComponent };
   
   verticalLayout.layOutComponents (vcomps, 3,
                                    0, 0, getWidth(), getHeight(),

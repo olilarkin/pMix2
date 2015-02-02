@@ -26,7 +26,7 @@ CodeEditor::CodeEditor()
 
 void CodeEditor::paint (Graphics& g)
 {
-  g.fillAll (Colours::lightgrey);
+  //g.fillAll (Colours::lightgrey);
 }
 
 void CodeEditor::resized()
