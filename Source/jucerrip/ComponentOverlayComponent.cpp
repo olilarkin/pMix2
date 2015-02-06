@@ -224,5 +224,6 @@ void ComponentOverlayComponent::applyBoundsToComponent (Component* component, co
 
 void ComponentOverlayComponent::showPopupMenu()
 {
-    ComponentTypeHandler::getHandlerFor (*target)->showPopupMenu (target, layout);
+  //TODO:
+    //ComponentTypeHandler::getHandlerFor (*target)->showPopupMenu (target, layout);
 }

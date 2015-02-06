@@ -76,9 +76,10 @@ private:
 
             if (layout.getSelectedSet().getNumSelected() == 1) // xxx need to cope with multiple
             {
-                if (Component* comp = layout.getSelectedSet().getSelectedItem (0))
-                    if (ComponentTypeHandler* const type = ComponentTypeHandler::getHandlerFor (*comp))
-                        type->addPropertiesToPropertyPanel (comp, document, propsPanel);
+              //TODO:
+//                if (Component* comp = layout.getSelectedSet().getSelectedItem (0))
+//                    if (ComponentTypeHandler* const type = ComponentTypeHandler::getHandlerFor (*comp))
+//                        type->addPropertiesToPropertyPanel (comp, document, propsPanel);
             }
         }
 

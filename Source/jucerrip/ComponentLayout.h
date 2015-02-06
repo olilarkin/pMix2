@@ -22,7 +22,7 @@ public:
     void clearComponents();
     void removeComponent (Component* comp, const bool undoable);
 
-    Component* addNewComponent (ComponentTypeHandler* const type, int x, int y);
+    //Component* addNewComponent (ComponentTypeHandler* const type, int x, int y);
     Component* addComponentFromXml (const XmlElement& xml, const bool undoable);
 
     Component* findComponentWithId (const int64 componentId) const;

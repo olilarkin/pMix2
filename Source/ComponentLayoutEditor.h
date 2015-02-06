@@ -1,60 +1,90 @@
-#ifndef COMPONENTLAYOUTEDITOR_H_INCLUDED
-#define COMPONENTLAYOUTEDITOR_H_INCLUDED
+/*
+ *  ComponentLayoutEditor.h
+ *  
+ *  Original written by Haydxn
+ *  Modified by Jordan Hochenbaum on 10/25/10.
+ *  http://www.rawmaterialsoftware.com/viewtopic.php?f=6&t=2635
+ *
+ */
 
-#include "ComponentOverlayComponent.h"
-#include "PMixDocument.h"
-#include "SnapGridPainter.h"
+#ifndef _COMPONENTLAYOUTEDITOR_H_
+#define _COMPONENTLAYOUTEDITOR_H_
 
-class ComponentLayoutEditor  : public Component,
-                               public ChangeListener,
-                               public FileDragAndDropTarget,
-                               public DragAndDropTarget,
-                               public LassoSource<Component*>
+#include "JuceHeader.h"
+
+//=============================================================================
+class ChildAlias   :   public Component
 {
 public:
-    ComponentLayoutEditor (PMixDocument& document, ComponentLayout& layout);
-    ~ComponentLayoutEditor();
-
-    void paint (Graphics&) override;
-    void resized() override;
-    void visibilityChanged() override;
-    void changeListenerCallback (ChangeBroadcaster*) override;
-
-    void mouseDown (const MouseEvent&) override;
-    void mouseDrag (const MouseEvent&) override;
-    void mouseUp (const MouseEvent&) override;
-    bool keyPressed (const KeyPress&) override;
-
-    bool isInterestedInFileDrag (const StringArray& files) override;
-    void filesDropped (const StringArray& filenames, int x, int y) override;
-
-    bool isInterestedInDragSource (const SourceDetails& dragSourceDetails) override;
-    void itemDropped (const SourceDetails& dragSourceDetails) override;
-
-
-    ComponentLayout& getLayout() const noexcept                 { return layout; }
-
-    void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
-
-    SelectedItemSet<Component*>& getLassoSelection();
-
-    void refreshAllComponents();
-    void updateOverlayPositions();
-
-    ComponentOverlayComponent* getOverlayCompFor (Component*) const;
-
-    Rectangle<int> getComponentArea() const;
-    Image createComponentLayerSnapshot() const;
-
+  ChildAlias (Component* targetChild);
+  ~ChildAlias ();
+  
+  void resized ();
+  void paint (Graphics& g);
+  
+  const Component* getTargetChild ();
+  
+  void updateFromTarget ();
+  void applyToTarget ();
+  
+  virtual void userChangedBounds ();
+  virtual void userStartedChangingBounds ();
+  virtual void userStoppedChangingBounds ();
+  
+  bool boundsChangedSinceStart ();
+  
+  void mouseEnter (const MouseEvent& e);
+  void mouseExit (const MouseEvent& e);
+  void mouseDown (const MouseEvent& e);
+  void mouseUp (const MouseEvent& e);
+  void mouseDrag (const MouseEvent& e);
+  
 private:
-    PMixDocument& document;
-    ComponentLayout& layout;
-    Component* subCompHolder;
+  
+  CriticalSection bounds;
+  ComponentBoundsConstrainer*  constrainer;
 
-    LassoComponent<Component*> lassoComp;
-    SnapGridPainter grid;
-    bool firstResize;
+  ComponentDragger dragger;
+  SafePointer<Component> target;
+  bool interest;
+  bool userAdjusting;
+  Rectangle<int> startBounds;
+  ComponentBoundsConstrainer* resizeContainer; //added resizeContainer to limit resizing sizes
+  ResizableBorderComponent* resizer;
 };
 
+//=============================================================================
+class ComponentLayoutEditor   :   public Component
+{
+public:
 
-#endif   // COMPONENTLAYOUTEDITOR_H_INCLUDED
+  enum ColourIds
+  {
+    aliasIdleColour,
+    aliasHoverColour
+  };
+
+  ComponentLayoutEditor ();
+  ~ComponentLayoutEditor ();
+
+  void resized ();
+  void paint (Graphics& g);
+
+  void setTargetComponent (Component* target);
+
+  void bindWithTarget ();
+  void updateFrames ();
+
+  void enablementChanged ();
+  const Component* getTarget ();
+
+  private:
+
+  virtual ChildAlias* createAlias (Component* child);
+
+  SafePointer<Component> target;
+  OwnedArray<ChildAlias> frames;
+
+};
+
+#endif//_COMPONENTLAYOUTEDITOR_H_

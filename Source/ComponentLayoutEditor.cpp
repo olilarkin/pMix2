@@ -1,399 +1,267 @@
-//#include "../../jucer_Headers.h"
-//#include "../../Application/jucer_Application.h"
+/*
+ *  ComponentLayoutEditor.cpp
+ *  
+ *  Original written by Haydxn
+ *  Modified by Jordan Hochenbaum on 10/25/10.
+ *  http://www.rawmaterialsoftware.com/viewtopic.php?f=6&t=2635
+ *
+ */
 #include "ComponentLayoutEditor.h"
-//#include "../ui/jucer_JucerCommandIDs.h"
-//#include "../jucer_ObjectTypes.h"
-//#include "../components/jucer_JucerComponentHandler.h"
 
-class SubComponentHolderComp : public Component
+ChildAlias::ChildAlias (Component* targetChild)
+:   target (targetChild)
+{ 
+  resizeContainer = new ComponentBoundsConstrainer();
+  resizeContainer->setMinimumSize(target.getComponent()->getWidth()/2, target.getComponent()->getHeight()/2); //set minimum size so objects cant be resized too small
+  resizer = new ResizableBorderComponent (this,resizeContainer);
+  addAndMakeVisible (resizer);
+  resizer->addMouseListener (this,false);
+  constrainer = new ComponentBoundsConstrainer();
+  
+  interest = false;
+  userAdjusting = false;
+  
+  updateFromTarget ();
+  setRepaintsOnMouseActivity (true);
+}
+
+ChildAlias::~ChildAlias ()
 {
-public:
-    SubComponentHolderComp (PMixDocument& doc,
-                            SnapGridPainter& g)
-       : document (doc), grid (g),
-         dontFillBackground (false)
+  delete resizer;
+}
+
+void ChildAlias::resized ()
+{
+  resizer->setBounds (0,0,getWidth(),getHeight());
+  
+  if (resizer->isMouseButtonDown ())
+  {
+    applyToTarget ();
+  }
+}
+
+void ChildAlias::paint (Graphics& g)
+{
+  Colour c;
+  if (interest)
+    c = findColour (ComponentLayoutEditor::aliasHoverColour,true);
+  else c = findColour (ComponentLayoutEditor::aliasIdleColour,true);
+  
+  g.setColour (c.withMultipliedAlpha (0.3f));
+  g.fillAll ();
+  g.setColour (c);
+  g.drawRect (0,0,getWidth(),getHeight(),1);
+}
+
+const Component* ChildAlias::getTargetChild ()
+{
+  return target.getComponent ();
+}
+
+void ChildAlias::updateFromTarget ()
+{
+  if (target != NULL)
+    //if (!target.hasBeenDeleted ())
+  {
+    setBounds ( target.getComponent ()->getBounds () );
+  }
+}
+
+void ChildAlias::applyToTarget ()
+{
+  if (target != NULL)
+    //!target.hasBeenDeleted ())
+  {
+    Component* c = (Component*) target.getComponent ();
+    c->toFront(false); //added this to bring the the component to the front
+    c->setBounds (getBounds ());
+    userChangedBounds ();
+  }
+}
+
+void ChildAlias::userChangedBounds ()
+{
+  //update minimum onscreen amounts so that object can't be resized past the screen area
+  resizeContainer->setMinimumOnscreenAmounts(getHeight()+target.getComponent()->getHeight(), getWidth()+target.getComponent()->getWidth(), 
+                         getHeight()+target.getComponent()->getHeight(), getWidth()+target.getComponent()->getWidth());
+  
+}
+
+void ChildAlias::userStartedChangingBounds ()
+{
+}
+
+void ChildAlias::userStoppedChangingBounds ()
+{
+}
+
+bool ChildAlias::boundsChangedSinceStart ()
+{
+  return startBounds != getBounds ();
+}
+
+
+void ChildAlias::mouseDown (const MouseEvent& e)
+{
+  toFront (true);
+  if (e.eventComponent == resizer)
+  {
+  }
+  else
+  {
+    //added a constrainer so that components can't be dragged off-screen
+    constrainer->setMinimumOnscreenAmounts(getHeight(), getWidth(), getHeight(), getWidth());
+    dragger.startDraggingComponent (this, e);
+  }
+  userAdjusting = true;
+  startBounds = getBounds ();
+  userStartedChangingBounds ();
+}
+
+void ChildAlias::mouseUp (const MouseEvent& e)
+{ 
+  if (e.eventComponent == resizer)
+  {
+  }
+  else
+  {
+    //add this to reset MainComponent to have keyboard focus so that keyboard shortcuts (eg. lock/unlock) still work / intercept the messages
+    getTopLevelComponent()->getChildComponent(0)->grabKeyboardFocus(); 
+  }
+  if (userAdjusting) userStoppedChangingBounds ();
+  userAdjusting = false;
+  
+}
+
+void ChildAlias::mouseDrag (const MouseEvent& e)
+{
+  if (e.eventComponent == resizer)
+  {
+  }
+  else
+  {
+    if (!e.mouseWasClicked ())
     {
-        setInterceptsMouseClicks (false, false);
-        setWantsKeyboardFocus (false);
-        setFocusContainer (true);
+      dragger.dragComponent (this, e, constrainer);
+      applyToTarget ();
     }
+  }
+}
 
-    void paint (Graphics& g)
+void ChildAlias::mouseEnter (const MouseEvent& e)
+{
+  interest = true;
+  repaint ();
+}
+
+void ChildAlias::mouseExit (const MouseEvent& e)
+{
+  interest = false;
+  repaint ();
+}
+
+//=============================================================================
+ComponentLayoutEditor::ComponentLayoutEditor ()
+:   target (0)
+{
+  setColour (ComponentLayoutEditor::aliasIdleColour,Colours::lightgrey.withAlpha(0.2f));
+  setColour (ComponentLayoutEditor::aliasHoverColour,Colours::white.withAlpha(0.5f));
+    setInterceptsMouseClicks (false, true); 
+}
+
+ComponentLayoutEditor::~ComponentLayoutEditor ()
+{
+  //if (target != getTopLevelComponent()->getChildComponent(0) ){deleteAndZero(target);} //added this to make sure we dont remove our background component
+  //if (target) { deleteAndZero (target); } //original
+}
+
+void ComponentLayoutEditor::resized ()
+{
+  for (int i=0; i<frames.size(); i++)
+  {
+    frames.getUnchecked(i)->updateFromTarget ();
+  }
+}
+
+void ComponentLayoutEditor::paint (Graphics& g)
+{
+}
+
+void ComponentLayoutEditor::setTargetComponent (Component* targetComp)
+{
+  jassert (targetComp);
+  jassert (targetComp->getParentComponent() == getParentComponent());
+  
+  if (target)
+  {
+    if (target.getComponent() == targetComp) return;
+    deleteAndZero (target);
+  }
+  
+  target = targetComp;
+  bindWithTarget ();
+}
+
+void ComponentLayoutEditor::bindWithTarget ()
+{
+  if (target != NULL)
+    //if (target && !target->hasBeenDeleted ())
+  {
+    Component* t = (Component*) target.getComponent ();
+    Component* p = t->getParentComponent ();    
+    p->addAndMakeVisible (this);
+    setBounds (t->getBounds ());
+    
+    updateFrames ();
+  }
+}
+
+void ComponentLayoutEditor::updateFrames ()
+{
+  frames.clear ();
+  
+  if (target != NULL)
+    //if (target && !target->hasBeenDeleted ())
+  {
+    Component* t = (Component*) target.getComponent ();
+    
+    int n = t->getNumChildComponents ();
+    for (int i=0; i<n; i++)
     {
-        if (! dontFillBackground)
-        {
-            if (PaintRoutine* const background = document.getPaintRoutine (0))
-            {
-                background->fillWithBackground (g, false);
-                background->drawElements (g, getLocalBounds());
-
-                grid.draw (g, background);
-            }
-            else
-                grid.draw (g, nullptr);
-        }
-    }
-
-    void resized()
-    {
-        if (! getBounds().isEmpty())
-        {
-            int numTimesToTry = 10;
-
-            while (--numTimesToTry >= 0)
-            {
-                bool anyCompsMoved = false;
-
-                for (int i = 0; i < getNumChildComponents(); ++i)
+      Component* c = t->getChildComponent (i);
+      if (c)
+      {
+                ChildAlias* alias = createAlias (c);
+                if (alias)
                 {
-                    Component* comp = getChildComponent (i);
-
-                    if (ComponentTypeHandler* const type = ComponentTypeHandler::getHandlerFor (*comp))
-                    {
-                        const Rectangle<int> newBounds (type->getComponentPosition (comp)
-                                                          .getRectangle (getLocalBounds(),
-                                                                         document.getComponentLayout()));
-
-                        anyCompsMoved = anyCompsMoved || (comp->getBounds() != newBounds);
-                        comp->setBounds (newBounds);
-                    }
+          frames.add (alias);
+          addAndMakeVisible (alias);
                 }
-
-                // repeat this loop until they've all stopped shuffling (might require a few
-                // loops for all the relative positioned comps to settle down)
-                if (! anyCompsMoved)
-                    break;
-            }
-        }
+      }
     }
-
-    void moved()
-    {
-        ((ComponentLayoutEditor*) getParentComponent())->updateOverlayPositions();
-    }
-
-    PMixDocument& document;
-    SnapGridPainter& grid;
-    bool dontFillBackground;
-};
-
-ComponentLayoutEditor::ComponentLayoutEditor (PMixDocument& doc, ComponentLayout& cl)
-    : document (doc), layout (cl), firstResize (true)
-{
-    setWantsKeyboardFocus (true);
-
-    addAndMakeVisible (subCompHolder = new SubComponentHolderComp (document, grid));
-
-    refreshAllComponents();
-
-    setSize (document.getInitialWidth(),
-             document.getInitialHeight());
+  }
 }
 
-ComponentLayoutEditor::~ComponentLayoutEditor()
+void ComponentLayoutEditor::enablementChanged ()
 {
-    document.removeChangeListener (this);
-
-    removeChildComponent (&lassoComp);
-    deleteAllChildren();
+  if (isEnabled ())
+  {
+    setVisible (true);
+  }
+  else
+  {
+    setVisible (false);
+  }
 }
 
-void ComponentLayoutEditor::visibilityChanged()
-{
-    document.beginTransaction();
 
-    if (isVisible())
-    {
-        refreshAllComponents();
-        document.addChangeListener (this);
-    }
-    else
-    {
-        document.removeChangeListener (this);
-    }
+const Component* ComponentLayoutEditor::getTarget ()
+{
+  if (target) return target.getComponent ();
+  return 0;
 }
 
-void ComponentLayoutEditor::changeListenerCallback (ChangeBroadcaster*)
+ChildAlias* ComponentLayoutEditor::createAlias (Component* child)
 {
-    refreshAllComponents();
-}
-
-void ComponentLayoutEditor::paint (Graphics&)
-{
-}
-
-void ComponentLayoutEditor::resized()
-{
-    if (firstResize && getWidth() > 0 && getHeight() > 0)
-    {
-        firstResize = false;
-        refreshAllComponents();
-    }
-
-    subCompHolder->setBounds (getComponentArea());
-    updateOverlayPositions();
-}
-
-Rectangle<int> ComponentLayoutEditor::getComponentArea() const
-{
-    const int editorEdgeGap = 4;
-
-    if (document.isFixedSize())
-        return Rectangle<int> ((getWidth() - document.getInitialWidth()) / 2,
-                               (getHeight() - document.getInitialHeight()) / 2,
-                               document.getInitialWidth(),
-                               document.getInitialHeight());
-
-    return Rectangle<int> (editorEdgeGap, editorEdgeGap,
-                           getWidth() - editorEdgeGap * 2,
-                           getHeight() - editorEdgeGap * 2);
-}
-
-Image ComponentLayoutEditor::createComponentLayerSnapshot() const
-{
-    ((SubComponentHolderComp*) subCompHolder)->dontFillBackground = true;
-    Image im = subCompHolder->createComponentSnapshot (Rectangle<int> (0, 0, subCompHolder->getWidth(), subCompHolder->getHeight()));
-    ((SubComponentHolderComp*) subCompHolder)->dontFillBackground = false;
-
-    return im;
-}
-
-void ComponentLayoutEditor::updateOverlayPositions()
-{
-    for (int i = getNumChildComponents(); --i >= 0;)
-        if (ComponentOverlayComponent* const overlay = dynamic_cast <ComponentOverlayComponent*> (getChildComponent (i)))
-            overlay->updateBoundsToMatchTarget();
-}
-
-void ComponentLayoutEditor::refreshAllComponents()
-{
-    for (int i = getNumChildComponents(); --i >= 0;)
-    {
-        ScopedPointer<ComponentOverlayComponent> overlay (dynamic_cast <ComponentOverlayComponent*> (getChildComponent (i)));
-
-        if (overlay != nullptr && layout.containsComponent (overlay->target))
-            overlay.release();
-    }
-
-    for (int i = subCompHolder->getNumChildComponents(); --i >= 0;)
-    {
-        Component* const comp = subCompHolder->getChildComponent (i);
-
-        if (! layout.containsComponent (comp))
-            subCompHolder->removeChildComponent (comp);
-    }
-
-    Component* lastComp = nullptr;
-    Component* lastOverlay = nullptr;
-
-    for (int i = layout.getNumComponents(); --i >= 0;)
-    {
-        Component* const c = layout.getComponent (i);
-        jassert (c != nullptr);
-
-        ComponentOverlayComponent* overlay = getOverlayCompFor (c);
-
-        bool isNewOverlay = false;
-
-        if (overlay == 0)
-        {
-            ComponentTypeHandler* const handler = ComponentTypeHandler::getHandlerFor (*c);
-            jassert (handler != nullptr);
-
-            overlay = handler->createOverlayComponent (c, layout);
-
-            addAndMakeVisible (overlay);
-            isNewOverlay = true;
-        }
-
-        if (lastOverlay != nullptr)
-            overlay->toBehind (lastOverlay);
-        else
-            overlay->toFront (false);
-
-        lastOverlay = overlay;
-
-        subCompHolder->addAndMakeVisible (c);
-
-        if (lastComp != nullptr)
-            c->toBehind (lastComp);
-        else
-            c->toFront (false);
-
-        lastComp = c;
-
-        c->setWantsKeyboardFocus (false);
-        c->setFocusContainer (true);
-
-        if (isNewOverlay)
-            overlay->updateBoundsToMatchTarget();
-    }
-
-    if (grid.updateFromDesign (document))
-        subCompHolder->repaint();
-
-    subCompHolder->setBounds (getComponentArea());
-    subCompHolder->resized();
-}
-
-void ComponentLayoutEditor::mouseDown (const MouseEvent& e)
-{
-    if (e.mods.isPopupMenu())
-    {
-        ApplicationCommandManager* commandManager = &IntrojucerApp::getCommandManager();
-
-        PopupMenu m;
-
-        m.addCommandItem (commandManager, JucerCommandIDs::editCompLayout);
-        m.addCommandItem (commandManager, JucerCommandIDs::editCompGraphics);
-        m.addSeparator();
-
-        for (int i = 0; i < ObjectTypes::numComponentTypes; ++i)
-            m.addCommandItem (commandManager, JucerCommandIDs::newComponentBase + i);
-
-        m.show();
-    }
-    else
-    {
-        addChildComponent (lassoComp);
-        lassoComp.beginLasso (e, this);
-    }
-}
-
-void ComponentLayoutEditor::mouseDrag (const MouseEvent& e)
-{
-    lassoComp.toFront (false);
-    lassoComp.dragLasso (e);
-}
-
-void ComponentLayoutEditor::mouseUp (const MouseEvent& e)
-{
-    lassoComp.endLasso();
-    removeChildComponent (&lassoComp);
-
-    if (e.mouseWasClicked() && ! e.mods.isAnyModifierKeyDown())
-        layout.getSelectedSet().deselectAll();
-}
-
-static void moveOrStretch (ComponentLayout& layout, int x, int y, bool snap, bool stretch)
-{
-    if (stretch)
-        layout.stretchSelectedComps (x, y, snap);
-    else
-        layout.moveSelectedComps (x, y, snap);
-}
-
-bool ComponentLayoutEditor::keyPressed (const KeyPress& key)
-{
-    const bool snap = key.getModifiers().isAltDown();
-    const bool stretch = key.getModifiers().isShiftDown();
-
-    const int amount = snap ? document.getSnappingGridSize() + 1
-                            : 1;
-
-    if (key.isKeyCode (KeyPress::rightKey))
-    {
-        moveOrStretch (layout, amount, 0, snap, stretch);
-    }
-    else if (key.isKeyCode (KeyPress::downKey))
-    {
-        moveOrStretch (layout, 0,amount, snap, stretch);
-    }
-    else if (key.isKeyCode (KeyPress::leftKey))
-    {
-        moveOrStretch (layout, -amount, 0, snap, stretch);
-    }
-    else if (key.isKeyCode (KeyPress::upKey))
-    {
-        moveOrStretch (layout, 0, -amount, snap, stretch);
-    }
-    else
-    {
-        return false;
-    }
-
-    return true;
-}
-
-bool ComponentLayoutEditor::isInterestedInFileDrag (const StringArray& filenames)
-{
-    const File f (filenames [0]);
-    return f.hasFileExtension (".cpp");
-}
-
-void ComponentLayoutEditor::filesDropped (const StringArray& filenames, int x, int y)
-{
-    const File f (filenames [0]);
-
-    if (PMixDocument::isValidJucerCppFile (f))
-    {
-        JucerComponentHandler jucerDocHandler;
-        layout.getDocument()->beginTransaction();
-
-        if (TestComponent* newOne = dynamic_cast<TestComponent*> (layout.addNewComponent (&jucerDocHandler,
-                                                                                          x - subCompHolder->getX(),
-                                                                                          y - subCompHolder->getY())))
-        {
-            JucerComponentHandler::setJucerComponentFile (*layout.getDocument(), newOne,
-                                                          f.getRelativePathFrom (document.getCppFile().getParentDirectory()));
-            layout.getSelectedSet().selectOnly (newOne);
-        }
-
-        layout.getDocument()->beginTransaction();
-    }
-}
-
-bool ComponentLayoutEditor::isInterestedInDragSource (const SourceDetails& dragSourceDetails)
-{
-    if (dragSourceDetails.description != projectItemDragType)
-        return false;
-
-    OwnedArray<Project::Item> selectedNodes;
-    ProjectContentComponent::getSelectedProjectItemsBeingDragged (dragSourceDetails, selectedNodes);
-
-    return selectedNodes.size() > 0;
-}
-
-void ComponentLayoutEditor::itemDropped (const SourceDetails& dragSourceDetails)
-{
-    OwnedArray <Project::Item> selectedNodes;
-    ProjectContentComponent::getSelectedProjectItemsBeingDragged (dragSourceDetails, selectedNodes);
-
-    StringArray filenames;
-
-    for (int i = 0; i < selectedNodes.size(); ++i)
-        if (selectedNodes.getUnchecked(i)->getFile().hasFileExtension (".cpp"))
-            filenames.add (selectedNodes.getUnchecked(i)->getFile().getFullPathName());
-
-    filesDropped (filenames, dragSourceDetails.localPosition.x, dragSourceDetails.localPosition.y);
-}
-
-ComponentOverlayComponent* ComponentLayoutEditor::getOverlayCompFor (Component* compToFind) const
-{
-    for (int i = getNumChildComponents(); --i >= 0;)
-    {
-        if (ComponentOverlayComponent* const overlay = dynamic_cast <ComponentOverlayComponent*> (getChildComponent (i)))
-            if (overlay->target == compToFind)
-                return overlay;
-    }
-
-    return nullptr;
-}
-
-void ComponentLayoutEditor::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
-{
-    const Rectangle<int> lasso (area - subCompHolder->getPosition());
-
-    for (int i = 0; i < subCompHolder->getNumChildComponents(); ++i)
-    {
-        Component* c = subCompHolder->getChildComponent (i);
-
-        if (c->getBounds().intersects (lasso))
-            results.add (c);
-    }
-}
-
-SelectedItemSet <Component*>& ComponentLayoutEditor::getLassoSelection()
-{
-    return layout.getSelectedSet();
+  return new ChildAlias (child);
 }

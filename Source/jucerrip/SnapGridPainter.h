@@ -25,14 +25,14 @@ public:
         return false;
     }
 
-    void draw (Graphics& g, PaintRoutine* backgroundGraphics)
+    void draw (Graphics& g/*, PaintRoutine* backgroundGraphics*/)
     {
         if (snapShown && snapGridSize > 2)
         {
             Colour col (Colours::black);
 
-            if (backgroundGraphics != nullptr)
-                col = backgroundGraphics->getBackgroundColour().contrasting();
+//            if (backgroundGraphics != nullptr)
+//                col = backgroundGraphics->getBackgroundColour().contrasting();
 
             const Rectangle<int> clip (g.getClipBounds());
 
