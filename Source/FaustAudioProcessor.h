@@ -32,7 +32,7 @@
 #endif
 
 #define LLVM_OPTIMIZATION 3
-#define DEFAULT_CODE "process = _,*(0.1);"
+#define DEFAULT_CODE "process = _,_;"
 
 
 #include "FaustGenFactory.h"
@@ -86,7 +86,8 @@ public:
   void create_dsp(bool init);
   void free_dsp();
   bool allocate_factory(const string& effect_name);
-
+  void update_sourcecode();
+  
 private:
   faustgen_factory* fDSPfactory;
   llvm_dsp* fDSP;

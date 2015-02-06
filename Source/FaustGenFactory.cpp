@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 int faustgen_factory::gFaustCounter = 0;
-map<string, faustgen_factory*> faustgen_factory::gFactoryMap;
+map<String, faustgen_factory*> faustgen_factory::gFactoryMap;
 
 //===================
 // Faust DSP Factory
@@ -51,15 +51,15 @@ static string getTarget() { return ""; }
 //  }
 //};
 
-faustgen_factory::faustgen_factory(const string& name)
+faustgen_factory::faustgen_factory(const String& name)
 {
   fUpdateInstance = 0;
   fName = name;
   fDSPfactory = 0;
-  fBitCodeSize = 0;
-  fBitCode = 0;
-  fSourceCodeSize = 0;
-  fSourceCode = 0;
+//  fBitCodeSize = 0;
+//  fBitCode = 0;
+//  fSourceCodeSize = 0;
+//  fSourceCode = 0;
   gFaustCounter++;
   fFaustNumber = gFaustCounter;
   
@@ -114,10 +114,10 @@ faustgen_factory::faustgen_factory(const string& name)
 
 faustgen_factory::~faustgen_factory()
 {
-//  free_dsp_factory();
-//  free_sourcecode();
-//  free_bitcode();
-//  
+  free_dsp_factory();
+  //free_sourcecode();
+  //free_bitcode();
+
 //  remove_svg();
 //  systhread_mutex_free(fDSPMutex);
 }
@@ -130,7 +130,7 @@ faustgen_factory::~faustgen_factory()
 //    fSourceCode = 0;
 //  }
 //}
-//
+
 //void faustgen_factory::free_bitcode()
 //{
 //  if (fBitCode) {
@@ -139,24 +139,24 @@ faustgen_factory::~faustgen_factory()
 //    fBitCode = 0;
 //  }
 //}
-//
-//void faustgen_factory::free_dsp_factory()
-//{
-//  if (lock()) {
-//    
-//    // Free all instances
-//    set<FaustAudioProcessor*>::const_iterator it;
-//    for (it = fInstances.begin(); it != fInstances.end(); it++) {
-//      (*it)->free_dsp();
-//    }
-//    
-//    //deleteDSPFactory(fDSPfactory);
-//    fDSPfactory = 0;
-//    unlock();
-//  } else {
-//    printf("Mutex lock cannot be taken...");
-//  }
-//}
+
+void faustgen_factory::free_dsp_factory()
+{
+  if (lock()) {
+    
+    // Free all instances
+    set<FaustAudioProcessor*>::const_iterator it;
+    for (it = fInstances.begin(); it != fInstances.end(); it++) {
+      (*it)->free_dsp();
+    }
+    
+    //deleteDSPFactory(fDSPfactory); //commented out in faustgen~
+    fDSPfactory = 0;
+    unlock();
+  } else {
+    printf("Mutex lock cannot be taken...");
+  }
+}
 
 //llvm_dsp_factory* faustgen_factory::create_factory_from_bitcode()
 //{
@@ -193,15 +193,15 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
   StringVectorIt it;
   int i = 0;
   for (it = fCompileOptions.begin(); it != fCompileOptions.end(); it++) {
-    argv[i++] = (char*)(*it).c_str();
+    argv[i++] = (char*)(*it).toRawUTF8();
   }
   
   // Generate SVG file
-  if (!generateAuxFilesFromString(name_app, *fSourceCode, fCompileOptions.size(), argv, error)) {
+  if (!generateAuxFilesFromString(name_app, fSourceCode.toStdString() , fCompileOptions.size(), argv, error)) {
     printf("Generate SVG error : %s", error.c_str());
   }
   
-  llvm_dsp_factory* factory = createDSPFactoryFromString(name_app, *fSourceCode, fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
+  llvm_dsp_factory* factory = createDSPFactoryFromString(name_app, fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
   
   if (factory)
   {
@@ -244,7 +244,7 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
 //  }
   
   // Otherwise tries to create from source code
-  if (fSourceCodeSize > 0)
+  if (fSourceCode.length() > 0)
   {
     fDSPfactory = create_factory_from_sourcecode(instance);
     if (fDSPfactory)
@@ -557,10 +557,10 @@ end:
 //#endif
 //}
 
-void faustgen_factory::update_sourcecode(int size, char* source_code, FaustAudioProcessor* instance)
+void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudioProcessor* instance)
 {
   // Recompile only if text has been changed
-  if (strcmp(source_code, *fSourceCode) != 0) {
+  if (fSourceCode != source_code) {
     
     // Update all instances
     set<FaustAudioProcessor*>::const_iterator it;
@@ -569,25 +569,23 @@ void faustgen_factory::update_sourcecode(int size, char* source_code, FaustAudio
 //    }
     
     // Delete the existing Faust module
-//    free_dsp_factory();
-//    
-//    // Free the memory allocated for fSourceCode
-//    free_sourcecode();
-//    
-//    // Free the memory allocated for fBitCode
-//    free_bitcode();
-//    
-//    // Allocate the right memory for fSourceCode
-//    fSourceCode = sysmem_newhandleclear(size + 1);
-//    sysmem_copyptr(source_code, *fSourceCode, size);
-//    fSourceCodeSize = size;
-//    
-//    // Update all instances
-//    fUpdateInstance = instance;
-//    for (it = fInstances.begin(); it != fInstances.end(); it++) {
-//      (*it)->update_sourcecode();
-//    }
-//    
+    free_dsp_factory();
+    
+    // Free the memory allocated for fSourceCode
+    //free_sourcecode();
+    
+    // Free the memory allocated for fBitCode
+    //free_bitcode();
+    
+    // Allocate the right memory for fSourceCode
+    fSourceCode = source_code;
+    
+    // Update all instances
+    fUpdateInstance = instance;
+    for (it = fInstances.begin(); it != fInstances.end(); it++) {
+      (*it)->update_sourcecode();
+    }
+    
   } else {
     printf("DSP code has not been changed...");
   }

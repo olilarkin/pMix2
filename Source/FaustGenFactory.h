@@ -13,12 +13,13 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <string>
+//#include <string>
 #include <set>
 #include <vector>
 #include <map>
 
 #include "faust/llvm-dsp.h"
+#include "JuceHeader.h"
 
 class FaustAudioProcessor;
 
@@ -26,34 +27,36 @@ using namespace std;
 
 class faustgen_factory
 {
-  typedef vector<string>::const_iterator StringVectorIt;
+  typedef vector<String>::const_iterator StringVectorIt;
   
 private:
   
   set<FaustAudioProcessor*> fInstances;      // set of all DSP
   llvm_dsp_factory* fDSPfactory;  // pointer to the LLVM Faust factory
+
+  String fSourceCode;
+  String fBitCode;
+//  long fSourceCodeSize;           // length of source code string
+//  char** fSourceCode;             // source code string
+//  
+//  long fBitCodeSize;              // length of the bitcode string
+//  char** fBitCode;                // bitcode string
   
-  long fSourceCodeSize;           // length of source code string
-  char** fSourceCode;             // source code string
+  vector<String> fLibraryPath;    // path towards the Faust libraries
+  String fDrawPath;               // path where to put SVG files
   
-  long fBitCodeSize;              // length of the bitcode string
-  char** fBitCode;                // bitcode string
-  
-  vector<string> fLibraryPath;    // path towards the Faust libraries
-  string fDrawPath;               // path where to put SVG files
-  
-  vector<string> fOptions;        // options set in the 'compileoptions' message
+  vector<String> fOptions;        // options set in the 'compileoptions' message
   
   int fFaustNumber;               // faustgen object's number inside the patcher
   
-  faustgen_factory* fUpdateInstance;      // the instance that inited an update
+  FaustAudioProcessor* fUpdateInstance;      // the instance that inited an update
   
-  string fName;                   // name of the DSP group
-  string fJSON;                   // JSON
+  String fName;                   // name of the DSP group
+  String fJSON;                   // JSON
   
 //  t_systhread_mutex fDSPMutex;    // mutex to protect RT audio thread when recompiling DSP
   
-  vector<string> fCompileOptions; // Faust compiler options
+  vector<String> fCompileOptions; // Faust compiler options
 
 //  bool open_file(const char* file);
 //  bool open_file(const char* appl, const char* file);
@@ -64,7 +67,7 @@ private:
   
 public:
   
-  faustgen_factory(const string& name);
+  faustgen_factory(const String& name);
   
   ~faustgen_factory();
   
@@ -72,10 +75,10 @@ public:
   llvm_dsp_factory* create_factory_from_sourcecode(FaustAudioProcessor* instance);
   llvm_dsp* create_dsp_aux(FaustAudioProcessor* instance);
   
-//  void free_dsp_factory();
+  void free_dsp_factory();
 //  void free_sourcecode();
 //  void free_bitcode();
-//  
+
 //  void default_compile_options();
 //  void print_compile_options();
   
@@ -90,10 +93,10 @@ public:
 //  void librarypath(long inlet, t_symbol* s);
   
 //  char* get_sourcecode() { return *fSourceCode; }
-//  
+//
 //  const char* get_json() { return fJSON.c_str(); }
 //  
-  void update_sourcecode(int size, char* source_code, FaustAudioProcessor* instance);
+  void update_sourcecode(int size, String source_code, FaustAudioProcessor* instance);
   
 //  void compileoptions(long inlet, t_symbol* s, long argc, t_atom* argv);
   
@@ -125,7 +128,7 @@ public:
   
   static int gFaustCounter;       // global variable to count the number of faustgen objects inside the patcher
   
-  static map<string, faustgen_factory*> gFactoryMap;
+  static map<String, faustgen_factory*> gFactoryMap;
 };
 
 

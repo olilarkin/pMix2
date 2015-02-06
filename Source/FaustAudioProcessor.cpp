@@ -262,3 +262,12 @@ bool FaustAudioProcessor::allocate_factory(const string& effect_name)
   fDSPfactory->add_instance(this);
   return res;
 }
+
+void FaustAudioProcessor::update_sourcecode()
+{
+  // Create a new DSP instance
+  create_dsp(false);
+
+  // faustgen~ state is modified...
+  //set_dirty();
+}
