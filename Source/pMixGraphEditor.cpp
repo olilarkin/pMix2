@@ -42,7 +42,8 @@ GraphEditor::GraphEditor (PMixAudioEngine& audioEngine)
 {
   audioEngine.getDoc().addChangeListener (this);
   selectedItems.addChangeListener(this);
-
+  setWantsKeyboardFocus(true);
+  
   setOpaque (true);
 }
 
