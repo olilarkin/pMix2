@@ -92,7 +92,7 @@ public:
 //  void write(long inlet, t_symbol* s);
 //  void librarypath(long inlet, t_symbol* s);
   
-//  char* get_sourcecode() { return *fSourceCode; }
+  String get_sourcecode() { return fSourceCode; }
 //
 //  const char* get_json() { return fJSON.c_str(); }
 //  

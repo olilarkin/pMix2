@@ -20,24 +20,27 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);
   
+
   addAndMakeVisible (graphEditor = new GraphEditor (audioEngine));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
-    
+
   //keyState.addListener (&audio.getGraphPlayer().getMidiMessageCollector());
   
   //addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
   
   interpolationSpace = new InterpolationSpaceComponent(audioEngine);
   
+  
   fileBrowser = new FileBrowser();
   //addAndMakeVisible(webBrowser = new WebBrowserComponent());
   webBrowser = new WebBrowserComponent();
   webBrowser->goToURL("file:///Users/oli/Dev/MyFaustProjects/Projects/Tambura/Tambura-svg/process.svg");
   paramView = new ParamView(audioEngine);
-  codeEditor = new CodeEditor();
+  codeEditor = new CodeEditor(audioEngine);
+  graphEditor->addChangeListener(codeEditor);
   addAndMakeVisible (statusBar = new TooltipBar());
   
-  addAndMakeVisible(splitComponent = new SplitComponent(*interpolationSpace, *fileBrowser, false));
+  addAndMakeVisible(splitComponent = new SplitComponent(*codeEditor, *webBrowser, false));
 
   graphEditor->updateComponents();
 }
@@ -46,6 +49,8 @@ MainComponent::~MainComponent()
 {
   LookAndFeel::setDefaultLookAndFeel (nullptr);
 
+  //graphEditor->removeAllChangeListeners();
+  
   removeAllChildren();
 
   //deleteAllChildren();
@@ -64,6 +69,9 @@ void MainComponent::resized()
                                    0, 0, getWidth(), getHeight(),
                                    false,     // lay out side-by-side
                                    true);     // resize the components' heights as well as widths
+  
+//  graphEditor->setBounds(getBounds());
+//  layoutEditor->setTargetComponent(graphEditor);
 }
 
 void MainComponent::createNewPlugin (const PluginDescription* desc, int x, int y)

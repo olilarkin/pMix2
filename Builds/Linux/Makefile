@@ -51,6 +51,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/pMixPrefsControllers_939ed25c.o \
   $(OBJDIR)/pMixPrefsComponent_29159002.o \
   $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
   $(OBJDIR)/pMixCodeEditor_9c72070f.o \
@@ -101,6 +102,11 @@ clean:
 strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/pMixPrefsControllers_939ed25c.o: ../../Source/pMixPrefsControllers.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixPrefsControllers.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixPrefsComponent_29159002.o: ../../Source/pMixPrefsComponent.cpp
 	-@mkdir -p $(OBJDIR)

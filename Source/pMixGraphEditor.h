@@ -34,7 +34,8 @@ private:
 
 class GraphEditor : public Component,
                     public ChangeListener,
-                    public LassoSource<Component*>
+                    public LassoSource<Component*>,
+                    public ChangeBroadcaster
 {
 public:
   GraphEditor (PMixAudioEngine& audioEngine);

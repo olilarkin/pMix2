@@ -8,6 +8,10 @@
     <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
       <GROUP id="{CAF3F9DD-46F9-316E-823D-FDCCC4B33FF3}" name="Panels">
         <GROUP id="{20315D0D-BC0E-C90C-E078-C1352DBCEEED}" name="Preferences">
+          <FILE id="C9MfeN" name="pMixPrefsControllers.cpp" compile="1" resource="0"
+                file="Source/pMixPrefsControllers.cpp"/>
+          <FILE id="lpq53r" name="pMixPrefsControllers.h" compile="0" resource="0"
+                file="Source/pMixPrefsControllers.h"/>
           <FILE id="nIOF0l" name="pMixPrefsComponent.cpp" compile="1" resource="0"
                 file="Source/pMixPrefsComponent.cpp"/>
           <FILE id="nzzW3r" name="pMixPrefsComponent.h" compile="0" resource="0"

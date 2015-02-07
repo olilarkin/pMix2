@@ -45,7 +45,6 @@ private:
   ScopedPointer<ParamView> paramView;
   StretchableLayoutManager verticalLayout;
   ScopedPointer<StretchableLayoutResizerBar> verticalDividerBar;
-  
   //  ParamTreeView* treeView;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

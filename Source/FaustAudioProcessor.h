@@ -87,6 +87,7 @@ public:
   void free_dsp();
   bool allocate_factory(const string& effect_name);
   void update_sourcecode();
+  String get_sourcecode();
   
 private:
   faustgen_factory* fDSPfactory;

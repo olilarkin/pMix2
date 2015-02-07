@@ -60,6 +60,7 @@ faustgen_factory::faustgen_factory(const String& name)
 //  fBitCode = 0;
 //  fSourceCodeSize = 0;
 //  fSourceCode = 0;
+  fSourceCode = DEFAULT_CODE;
   gFaustCounter++;
   fFaustNumber = gFaustCounter;
   

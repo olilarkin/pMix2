@@ -150,6 +150,8 @@ void GraphEditor::changeListenerCallback (ChangeBroadcaster* source)
 {
   if (source == &selectedItems)
   {
+    sendChangeMessage();
+
     repaint();
   }
   else

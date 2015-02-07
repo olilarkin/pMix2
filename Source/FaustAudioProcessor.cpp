@@ -271,3 +271,8 @@ void FaustAudioProcessor::update_sourcecode()
   // faustgen~ state is modified...
   //set_dirty();
 }
+
+String FaustAudioProcessor::get_sourcecode()
+{
+  return fDSPfactory->get_sourcecode();
+}
