@@ -15,6 +15,7 @@
 
 class CodeEditor : public Component
                  , public ChangeListener
+                 , public Button::Listener
 {
 public:
   CodeEditor(PMixAudioEngine& audioEngine);
@@ -24,12 +25,14 @@ public:
   void resized() override;
   
   void changeListenerCallback (ChangeBroadcaster* source);
-
+  void buttonClicked (Button* button);
+  
 private:
   CPlusPlusCodeTokeniser cppTokeniser;
   CodeDocument codeDocument;
   ScopedPointer<CodeEditorComponent> editor;
   PMixAudioEngine& audioEngine;
+  TextButton compileButton;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CodeEditor);
 };

@@ -13,10 +13,13 @@
 
 CodeEditor::CodeEditor(PMixAudioEngine& audioEngine)
 : audioEngine(audioEngine)
+, compileButton("Compile")
 {
   addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &cppTokeniser));
-  
+  addAndMakeVisible (&compileButton);
   editor->loadContent ("");
+  
+  compileButton.addListener(this);
 }
 
 void CodeEditor::paint (Graphics& g)
@@ -27,8 +30,8 @@ void CodeEditor::paint (Graphics& g)
 void CodeEditor::resized()
 {
   Rectangle<int> r (getLocalBounds().reduced (8));
-  
-  editor->setBounds (r.withTrimmedTop (8));
+  compileButton.setBounds(8, 8, 100, 20 );
+  editor->setBounds (r.withTrimmedTop (40));
 }
 
 void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
@@ -52,4 +55,10 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
       }
     }
   }
+}
+
+void CodeEditor::buttonClicked (Button* button)
+{
+  if (button == &compileButton)
+    editor->loadContent("compiled");
 }
