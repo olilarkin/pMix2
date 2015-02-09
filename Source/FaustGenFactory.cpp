@@ -605,3 +605,22 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //  }
 //  sysfile_close(fh);
 //}
+
+bool faustgen_factory::try_lock()
+{
+  return fDSPMutex.tryEnter();
+}
+
+bool faustgen_factory::lock()
+{
+  fDSPMutex.enter();
+  
+  return true; //TODO: ??
+}
+
+void faustgen_factory::unlock()
+{
+  fDSPMutex.exit();
+  
+  return;
+}
