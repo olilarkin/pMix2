@@ -9,17 +9,21 @@
 
 #include "pMixCodeEditor.h"
 #include "pMixGraphEditor.h"
-#include "FaustAudioProcessor.h"
 
 CodeEditor::CodeEditor(PMixAudioEngine& audioEngine)
 : audioEngine(audioEngine)
 , compileButton("Compile")
+, svgButton("View SVG")
+, selectedFaustAudioProcessor(nullptr)
 {
   addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &cppTokeniser));
   addAndMakeVisible (&compileButton);
+  addAndMakeVisible (&svgButton);
+
   editor->loadContent ("");
   
   compileButton.addListener(this);
+  svgButton.addListener(this);
 }
 
 void CodeEditor::paint (Graphics& g)
@@ -31,6 +35,7 @@ void CodeEditor::resized()
 {
   Rectangle<int> r (getLocalBounds().reduced (8));
   compileButton.setBounds(8, 8, 100, 20 );
+  svgButton.setBounds(108, 8, 100, 20 );
   editor->setBounds (r.withTrimmedTop (40));
 }
 
@@ -50,15 +55,28 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
         
         if (faustProc)
         {
+          selectedFaustAudioProcessor = faustProc;
           editor->loadContent(faustProc->get_sourcecode());
+          return;
         }
       }
     }
   }
+  
+  selectedFaustAudioProcessor = nullptr;
+  editor->loadContent("");
 }
 
 void CodeEditor::buttonClicked (Button* button)
 {
-  if (button == &compileButton)
-    editor->loadContent("compiled");
+  if (selectedFaustAudioProcessor != nullptr)
+  {
+    if (button == &compileButton)
+    {
+    }
+    else if (button == &svgButton)
+    {
+      selectedFaustAudioProcessor->getFactory()->display_svg();
+    }
+  }
 }

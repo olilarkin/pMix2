@@ -18,22 +18,19 @@
 #define FAUSTGEN_VERSION "0.99b"
 #define FAUST_PDF_DOCUMENTATION "faust-quick-reference.pdf"
 
-#ifdef __APPLE__
-//#include "bench-llvm.cpp"
-#define FAUST_LIBRARY_PATH "/Contents/Resources/"
-#define FAUST_DRAW_PATH "/var/tmp/"
-#define SEPARATOR '/'
-#endif
-
-#ifdef WIN32
-#define FAUST_LIBRARY_PATH "\\faustgen-resources\\"
-#define FAUST_DRAW_PATH "\\faustgen-resources\\"
-#define SEPARATOR '\\'
+#if JUCE_MAC
+  //#include "bench-llvm.cpp"
+  #define FAUST_LIBRARY_PATH "/Contents/Resources/"
+  #define FAUST_DRAW_PATH "/var/tmp/"
+  #define SEPARATOR '/'
+#elif JUCE_WIN32
+  #define FAUST_LIBRARY_PATH "\\faustgen-resources\\"
+  #define FAUST_DRAW_PATH "\\faustgen-resources\\"
+  #define SEPARATOR '\\'
 #endif
 
 #define LLVM_OPTIMIZATION 3
 #define DEFAULT_CODE "process = _,_;"
-
 
 #include "FaustGenFactory.h"
 
@@ -88,7 +85,7 @@ public:
   bool allocate_factory(const string& effect_name);
   void update_sourcecode();
   String get_sourcecode();
-  
+  faustgen_factory* getFactory() { return fDSPfactory; }
 private:
   faustgen_factory* fDSPfactory;
   llvm_dsp* fDSP;

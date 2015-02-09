@@ -16,13 +16,13 @@
 int faustgen_factory::gFaustCounter = 0;
 map<String, faustgen_factory*> faustgen_factory::gFactoryMap;
 
-#ifdef __APPLE__
+#if JUCE_MAC
 static string getTarget()
 {
   int tmp;
   return (sizeof(&tmp) == 8) ? "" : "i386-apple-darwin10.6.0";
 }
-#else
+#elif JUCE_WIN32
 static string getTarget() { return ""; }
 #endif
 
@@ -58,7 +58,7 @@ faustgen_factory::faustgen_factory(const String& name)
   gFaustCounter++;
   fFaustNumber = gFaustCounter;
   
-#ifdef __APPLE__
+#if JUCE_MAC
   // OSX only : access to the pMix bundle
   CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMix"));
   CFURLRef faustgen_ref = CFBundleCopyBundleURL(faustgen_bundle);
@@ -116,7 +116,8 @@ faustgen_factory::~faustgen_factory()
 
 void faustgen_factory::free_dsp_factory()
 {
-  if (lock()) {
+  if (lock())
+  {
     
     // Free all instances
     set<FaustAudioProcessor*>::const_iterator it;
@@ -127,7 +128,9 @@ void faustgen_factory::free_dsp_factory()
     //deleteDSPFactory(fDSPfactory); //commented out in faustgen~
     fDSPfactory = 0;
     unlock();
-  } else {
+  }
+  else
+  {
     LOG("Mutex lock cannot be taken...");
   }
 }
@@ -154,8 +157,8 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
   sprintf(name_app, "faustgen-%d", fFaustNumber);
   
   // To be sure we get a correct SVG diagram...
-//  remove_svg();
-//  
+  remove_svg();
+  
   default_compile_options();
   print_compile_options();
   
@@ -166,12 +169,14 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
   assert(fCompileOptions.size() < 64);
   StringVectorIt it;
   int i = 0;
-  for (it = fCompileOptions.begin(); it != fCompileOptions.end(); it++) {
+  for (it = fCompileOptions.begin(); it != fCompileOptions.end(); it++)
+  {
     argv[i++] = (char*)(*it).toRawUTF8();
   }
   
   // Generate SVG file
-  if (!generateAuxFilesFromString(name_app, fSourceCode.toStdString() , fCompileOptions.size(), argv, error)) {
+  if (!generateAuxFilesFromString(name_app, fSourceCode.toStdString() , fCompileOptions.size(), argv, error))
+  {
     LOG("Generate SVG error : " + error);
   }
   
@@ -430,67 +435,69 @@ void faustgen_factory::default_compile_options()
 //  }
 //}
 
-//bool faustgen_factory::try_open_svg()
-//{
-//  // Open the svg diagram file inside a web browser
-//  char command[512];
-//#ifdef WIN32
-//  sprintf(command, "type \"file:///%sfaustgen-%d-svg/process.svg\"", fDrawPath.c_str(), fFaustNumber);
-//#else
-//  sprintf(command, "open -a Safari \"file://%sfaustgen-%d-svg/process.svg\"", fDrawPath.c_str(), fFaustNumber);
-//#endif
-//  return (system(command) == 0);
-//}
-//
-//void faustgen_factory::open_svg()
-//{
-//  // Open the svg diagram file inside a web browser
-//  char command[512];
-//#ifdef WIN32
-//  sprintf(command, "start \"\" \"file:///%sfaustgen-%d-svg/process.svg\"", fDrawPath.c_str(), fFaustNumber);
-//#else
-//  sprintf(command, "open -a Safari \"file://%sfaustgen-%d-svg/process.svg\"", fDrawPath.c_str(), fFaustNumber);
-//#endif
-//  //LOG("open_svg %s", command);
-//  system(command);
-//}
-//
-//void faustgen_factory::remove_svg()
-//{
-//  // Possibly done by "compileoptions" or display_svg
-//  char command[512];
-//#ifdef WIN32
-//  sprintf(command, "rmdir /S/Q \"%sfaustgen-%d-svg\"", fDrawPath.c_str(), fFaustNumber);
-//#else
-//  sprintf(command, "rm -r \"%sfaustgen-%d-svg\"", fDrawPath.c_str(), fFaustNumber);
-//#endif
-//  system(command);
-//}
-//
-//void faustgen_factory::display_svg()
-//{
-//  // Try to open SVG svg diagram file inside a web browser
-//  if (!try_open_svg()) {
-//    
-//    LOG("SVG diagram not available, recompile to produce it");
-//    
-//    // Force recompilation to produce it
-//    llvm_dsp_factory* factory = create_factory_from_sourcecode(0);
-//    //deleteDSPFactory(factory);
-//    
-//    // Open the SVG diagram file inside a web browser
-//    open_svg();
-//  }
-//}
+bool faustgen_factory::try_open_svg()
+{
+  // Open the svg diagram file inside a web browser
+  char command[512];
+#ifdef WIN32
+  sprintf(command, "type \"file:///%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
+#else
+  sprintf(command, "open -a Safari \"file://%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
+#endif
+  return (system(command) == 0);
+}
+
+void faustgen_factory::open_svg()
+{
+  // Open the svg diagram file inside a web browser
+  char command[512];
+#ifdef WIN32
+  sprintf(command, "start \"\" \"file:///%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
+#else
+  sprintf(command, "open -a Safari \"file://%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
+#endif
+  //LOG("open_svg %s", command);
+  system(command);
+}
+
+void faustgen_factory::remove_svg()
+{
+  // Possibly done by "compileoptions" or display_svg
+  char command[512];
+#ifdef WIN32
+  sprintf(command, "rmdir /S/Q \"%sfaustgen-%d-svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
+#else
+  sprintf(command, "rm -r \"%sfaustgen-%d-svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
+#endif
+  system(command);
+}
+
+void faustgen_factory::display_svg()
+{
+  // Try to open SVG svg diagram file inside a web browser
+  if (!try_open_svg())
+  {
+    LOG("SVG diagram not available, recompile to produce it");
+    
+    // Force recompilation to produce it
+    llvm_dsp_factory* factory = create_factory_from_sourcecode(0);
+    //deleteDSPFactory(factory); // commented out in faustgen~
+    
+    // Open the SVG diagram file inside a web browser
+    open_svg();
+  }
+}
 
 void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudioProcessor* instance)
 {
   // Recompile only if text has been changed
-  if (fSourceCode != source_code) {
+  if (fSourceCode != source_code)
+  {
     
     // Update all instances
     set<FaustAudioProcessor*>::const_iterator it;
-//    for (it = fInstances.begin(); it != fInstances.end(); it++) {
+//    for (it = fInstances.begin(); it != fInstances.end(); it++)
+//    {
 //      (*it)->hilight_off();
 //    }
     
@@ -501,7 +508,8 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
     
     // Update all instances
     fUpdateInstance = instance;
-    for (it = fInstances.begin(); it != fInstances.end(); it++) {
+    for (it = fInstances.begin(); it != fInstances.end(); it++)
+    {
       (*it)->update_sourcecode();
     }
     

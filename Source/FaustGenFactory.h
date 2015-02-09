@@ -93,10 +93,11 @@ public:
   void update_sourcecode(int size, String source_code, FaustAudioProcessor* instance);
     
   // Compile DSP with -svg option and display the SVG files
-//  bool try_open_svg();
-//  void open_svg();
-//  void remove_svg();
-//  void display_svg();
+  bool try_open_svg();
+  void open_svg();
+  void remove_svg();
+  void display_svg();
+  
 //  void display_pdf();
 //  void display_libraries();
 //  void display_libraries_aux(const char* lib);

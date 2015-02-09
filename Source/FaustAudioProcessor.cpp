@@ -268,7 +268,7 @@ void FaustAudioProcessor::update_sourcecode()
   // Create a new DSP instance
   create_dsp(false);
 
-  // faustgen~ state is modified...
+  // state is modified...
   //set_dirty();
 }
 
