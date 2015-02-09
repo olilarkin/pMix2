@@ -14,6 +14,7 @@
 #include "pMixInterpolationSpace.h"
 #include "pMixGraphEditor.h"
 #include "pMixCodeEditor.h"
+#include "pMixWebBrowser.h"
 #include "pMixLookAndFeel.h"
 #include "SplitComponent.h"
 #include "pMixFileBrowser.h"
@@ -40,7 +41,7 @@ private:
   ScopedPointer<GraphEditor> graphEditor;
   ScopedPointer<TooltipBar> statusBar;
   ScopedPointer<FileBrowser> fileBrowser;
-  ScopedPointer<WebBrowserComponent> webBrowser;
+  ScopedPointer<WebBrowser> webBrowser;
   ScopedPointer<InterpolationSpaceComponent> interpolationSpace;
   ScopedPointer<ParamView> paramView;
   StretchableLayoutManager verticalLayout;

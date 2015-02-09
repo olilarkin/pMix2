@@ -93,7 +93,8 @@ public:
   void open_svg();
   void remove_svg();
   void display_svg();
-
+  String get_svg_path();
+  
   void add_instance(FaustAudioProcessor* dsp) { fInstances.insert(dsp); }
   void remove_instance(FaustAudioProcessor* dsp)
   {

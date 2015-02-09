@@ -182,7 +182,7 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
   if (fDSPfactory)
   {
     dsp = createDSPInstance(fDSPfactory);
-    logStr.formatted("Factory already allocated, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+    logStr << "Factory already allocated, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
     LOG(logStr);
     goto end;
   }
@@ -195,7 +195,7 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
     {
       //metadataDSPFactory(fDSPfactory, &meta);
       dsp = createDSPInstance(fDSPfactory);
-      logStr.formatted("Compilation from bitcode succeeded, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+      logStr << "Compilation from bitcode succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
       LOG(logStr);
       goto end;
     }
@@ -209,7 +209,7 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
     {
 //      metadataDSPFactory(fDSPfactory, &meta);
       dsp = createDSPInstance(fDSPfactory);
-      logStr.formatted("Compilation from source code succeeded, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+      logStr << "Compilation from source code succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
       LOG(logStr);
       goto end;
     }
@@ -218,7 +218,7 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
   // Otherwise creates default DSP keeping the same input/output number
   fDSPfactory = createDSPFactoryFromString("default", DEFAULT_CODE, 0, 0, getTarget(), error, LLVM_OPTIMIZATION);
   dsp = createDSPInstance(fDSPfactory);
-  logStr.formatted("Allocation of default DSP succeeded, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+  logStr << "Allocation of default DSP succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
   LOG(logStr);
   
 end:
@@ -460,6 +460,13 @@ void faustgen_factory::display_svg()
     // Open the SVG diagram file inside a web browser
     open_svg();
   }
+}
+
+String faustgen_factory::get_svg_path()
+{
+  String path;
+  path << "file://" << fDrawPath << "faustgen-" << fFaustNumber << "-svg/process.svg";
+  return path;
 }
 
 void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudioProcessor* instance)

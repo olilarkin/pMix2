@@ -33,11 +33,12 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   
   fileBrowser = new FileBrowser();
   //addAndMakeVisible(webBrowser = new WebBrowserComponent());
-  webBrowser = new WebBrowserComponent();
-  webBrowser->goToURL("file:///Users/oli/Dev/MyFaustProjects/Projects/Tambura/Tambura-svg/process.svg");
+  webBrowser = new WebBrowser(audioEngine);
   paramView = new ParamView(audioEngine);
   codeEditor = new CodeEditor(audioEngine);
   graphEditor->addChangeListener(codeEditor);
+  graphEditor->addChangeListener(webBrowser);
+
   addAndMakeVisible (statusBar = new TooltipBar());
   
   addAndMakeVisible(splitComponent = new SplitComponent(*codeEditor, *webBrowser, false));
