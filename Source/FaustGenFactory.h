@@ -18,6 +18,7 @@
 #include <vector>
 #include <map>
 
+#include "base64.h"
 #include "faust/llvm-dsp.h"
 #include "JuceHeader.h"
 
@@ -36,11 +37,6 @@ private:
 
   String fSourceCode;
   String fBitCode;
-//  long fSourceCodeSize;           // length of source code string
-//  char** fSourceCode;             // source code string
-//  
-//  long fBitCodeSize;              // length of the bitcode string
-//  char** fBitCode;                // bitcode string
   
   vector<String> fLibraryPath;    // path towards the Faust libraries
   String fDrawPath;               // path where to put SVG files
@@ -60,10 +56,10 @@ private:
 
 //  bool open_file(const char* file);
 //  bool open_file(const char* appl, const char* file);
-//  
-//  void add_library_path(const string& library_path);
-//  void add_compile_option(const string& key, const string& value);
-//  void add_compile_option(const string& value);
+  
+  void add_library_path(const String& library_path);
+  void add_compile_option(const String& key, const String& value);
+  void add_compile_option(const String& value);
   
 public:
   
@@ -71,22 +67,20 @@ public:
   
   ~faustgen_factory();
   
-  //llvm_dsp_factory* create_factory_from_bitcode();
+  llvm_dsp_factory* create_factory_from_bitcode();
   llvm_dsp_factory* create_factory_from_sourcecode(FaustAudioProcessor* instance);
   llvm_dsp* create_dsp_aux(FaustAudioProcessor* instance);
   
   void free_dsp_factory();
-//  void free_sourcecode();
-//  void free_bitcode();
-
-//  void default_compile_options();
-//  void print_compile_options();
+  
+  void default_compile_options();
+  void print_compile_options();
   
 //  void getfromdictionary(t_dictionary* d);
 //  void appendtodictionary(t_dictionary* d);
   
-//  int get_number() { return fFaustNumber; }
-//  string get_name() { return fName; }
+  int get_number() { return fFaustNumber; }
+  String get_name() { return fName; }
   
 //  void read(long inlet, t_symbol* s);
 //  void write(long inlet, t_symbol* s);
@@ -97,9 +91,7 @@ public:
 //  const char* get_json() { return fJSON.c_str(); }
 //  
   void update_sourcecode(int size, String source_code, FaustAudioProcessor* instance);
-  
-//  void compileoptions(long inlet, t_symbol* s, long argc, t_atom* argv);
-  
+    
   // Compile DSP with -svg option and display the SVG files
 //  bool try_open_svg();
 //  void open_svg();

@@ -11,12 +11,10 @@
 #include "FaustAudioProcessor.h"
 #include <stdio.h>
 
+#define LOG Logger::getCurrentLogger()->writeToLog
+
 int faustgen_factory::gFaustCounter = 0;
 map<String, faustgen_factory*> faustgen_factory::gFactoryMap;
-
-//===================
-// Faust DSP Factory
-//===================
 
 #ifdef __APPLE__
 static string getTarget()
@@ -46,7 +44,7 @@ static string getTarget() { return ""; }
 //  void declare(const char* key, const char* value)
 //  {
 //    if ((strcmp("name", key) == 0) || (strcmp("author", key) == 0)) {
-//      printf("%s : %s", key, value);
+//      LOG("%s : %s", key, value);
 //    }
 //  }
 //};
@@ -56,29 +54,25 @@ faustgen_factory::faustgen_factory(const String& name)
   fUpdateInstance = 0;
   fName = name;
   fDSPfactory = 0;
-//  fBitCodeSize = 0;
-//  fBitCode = 0;
-//  fSourceCodeSize = 0;
-//  fSourceCode = 0;
   fSourceCode = DEFAULT_CODE;
   gFaustCounter++;
   fFaustNumber = gFaustCounter;
   
-//#ifdef __APPLE__
-//  // OSX only : access to the fautgen~ bundle
-//  CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.grame.faustgen"));
-//  CFURLRef faustgen_ref = CFBundleCopyBundleURL(faustgen_bundle);
-//  UInt8 bundle_path[512];
-//  Boolean res = CFURLGetFileSystemRepresentation(faustgen_ref, true, bundle_path, 512);
-//  assert(res);
-//  
-//  // Built the complete resource path
-//  fLibraryPath.push_back(string((const char*)bundle_path) + string(FAUST_LIBRARY_PATH));
-//  
-//  // Draw path in temporary folder
-//  fDrawPath = string(FAUST_DRAW_PATH);
-//#endif
-//  
+#ifdef __APPLE__
+  // OSX only : access to the pMix bundle
+  CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMix"));
+  CFURLRef faustgen_ref = CFBundleCopyBundleURL(faustgen_bundle);
+  UInt8 bundle_path[512];
+  Boolean res = CFURLGetFileSystemRepresentation(faustgen_ref, true, bundle_path, 512);
+  assert(res);
+  
+  // Built the complete resource path
+  fLibraryPath.push_back(string((const char*)bundle_path) + string(FAUST_LIBRARY_PATH));
+  
+  // Draw path in temporary folder
+  fDrawPath = string(FAUST_DRAW_PATH);
+#endif
+//
 //#ifdef WIN32
 //  HMODULE handle = LoadLibrary("faustgen~.mxe");
 //  if (handle) {
@@ -94,7 +88,7 @@ faustgen_factory::faustgen_factory(const String& name)
 //    // Gets the temp path env string (no guarantee it's a valid path).
 //    DWORD dwRetVal = GetTempPath(MAX_PATH, lpTempPathBuffer);
 //    if (dwRetVal > MAX_PATH || (dwRetVal == 0)) {
-//      printf("GetTempPath failed...");
+//      LOG("GetTempPath failed...");
 //      // Try our value instead...
 //      fDrawPath = string(str_name) + string(FAUST_DRAW_PATH);
 //    } else {
@@ -102,44 +96,23 @@ faustgen_factory::faustgen_factory(const String& name)
 //    }
 //    FreeLibrary(handle);
 //  } else {
-//    printf("Error : cannot locate faustgen~.mxe...");
+//    LOG("Error : cannot locate faustgen~.mxe...");
 //    fDrawPath = "";
 //  }
 //#endif
   
 //  t_max_err err = systhread_mutex_new(&fDSPMutex, SYSTHREAD_MUTEX_NORMAL);
 //  if (err != MAX_ERR_NONE) {
-//    printf("Cannot allocate mutex...");
+//    LOG("Cannot allocate mutex...");
 //  }
 }
 
 faustgen_factory::~faustgen_factory()
 {
   free_dsp_factory();
-  //free_sourcecode();
-  //free_bitcode();
-
 //  remove_svg();
 //  systhread_mutex_free(fDSPMutex);
 }
-
-//void faustgen_factory::free_sourcecode()
-//{
-//  if (fSourceCode) {
-////    sysmem_freehandle(fSourceCode);
-//    fSourceCodeSize = 0;
-//    fSourceCode = 0;
-//  }
-//}
-
-//void faustgen_factory::free_bitcode()
-//{
-//  if (fBitCode) {
-////    sysmem_freehandle(fBitCode);
-//    fBitCodeSize = 0;
-//    fBitCode = 0;
-//  }
-//}
 
 void faustgen_factory::free_dsp_factory()
 {
@@ -155,25 +128,25 @@ void faustgen_factory::free_dsp_factory()
     fDSPfactory = 0;
     unlock();
   } else {
-    printf("Mutex lock cannot be taken...");
+    LOG("Mutex lock cannot be taken...");
   }
 }
 
-//llvm_dsp_factory* faustgen_factory::create_factory_from_bitcode()
-//{
-//  string decoded_bitcode = base64_decode(*fBitCode, fBitCodeSize);
-//  return readDSPFactoryFromBitcode(decoded_bitcode, getTarget(), LLVM_OPTIMIZATION);
+llvm_dsp_factory* faustgen_factory::create_factory_from_bitcode()
+{
+  string decoded_bitcode = base64_decode(fBitCode.toRawUTF8(), strlen(fBitCode.toRawUTF8()));
+  return readDSPFactoryFromBitcode(decoded_bitcode, getTarget(), LLVM_OPTIMIZATION);
   
   /*
-   // Alternate model using machine code
+    Alternate model using machine code
    return readDSPFactoryFromMachine(decoded_bitcode);
    */
   
   /*
-   // Alternate model using LLVM IR
+    Alternate model using LLVM IR
    return readDSPFactoryFromIR(*fBitCode, getTarget(), LLVM_OPTIMIZATION);
    */
-//}
+}
 
 llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioProcessor* instance)
 {
@@ -183,8 +156,8 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
   // To be sure we get a correct SVG diagram...
 //  remove_svg();
 //  
-//  default_compile_options();
-//  print_compile_options();
+  default_compile_options();
+  print_compile_options();
   
   // Prepare compile options
   string error;
@@ -199,7 +172,7 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
   
   // Generate SVG file
   if (!generateAuxFilesFromString(name_app, fSourceCode.toStdString() , fCompileOptions.size(), argv, error)) {
-    printf("Generate SVG error : %s", error.c_str());
+    LOG("Generate SVG error : " + error);
   }
   
   llvm_dsp_factory* factory = createDSPFactoryFromString(name_app, fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
@@ -214,7 +187,7 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
 //    {
 //      instance->hilight_on(error);
 //    }
-    printf("Invalid Faust code or compile options : %s", error.c_str());
+    LOG("Invalid Faust code or compile options : %s" + error);
     return 0;
   }
 }
@@ -224,25 +197,30 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
   llvm_dsp* dsp = 0;
 //  Max_Meta meta;
   string error;
-  
+  String logStr;
+
   // Factory already allocated
   if (fDSPfactory)
   {
     dsp = createDSPInstance(fDSPfactory);
-    printf("Factory already allocated, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+    logStr.formatted("Factory already allocated, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+    LOG(logStr);
     goto end;
   }
   
   // Tries to create from bitcode
-//  if (fBitCodeSize > 0) {
-//    fDSPfactory = create_factory_from_bitcode();
-//    if (fDSPfactory) {
-//      metadataDSPFactory(fDSPfactory, &meta);
-//      dsp = createDSPInstance(fDSPfactory);
-//      printf("Compilation from bitcode succeeded, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
-//      goto end;
-//    }
-//  }
+  if (fBitCode.length() > 0)
+  {
+    fDSPfactory = create_factory_from_bitcode();
+    if (fDSPfactory)
+    {
+      //metadataDSPFactory(fDSPfactory, &meta);
+      dsp = createDSPInstance(fDSPfactory);
+      logStr.formatted("Compilation from bitcode succeeded, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+      LOG(logStr);
+      goto end;
+    }
+  }
   
   // Otherwise tries to create from source code
   if (fSourceCode.length() > 0)
@@ -252,7 +230,8 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
     {
 //      metadataDSPFactory(fDSPfactory, &meta);
       dsp = createDSPInstance(fDSPfactory);
-      printf("Compilation from source code succeeded, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+      logStr.formatted("Compilation from source code succeeded, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+      LOG(logStr);
       goto end;
     }
   }
@@ -260,7 +239,8 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
   // Otherwise creates default DSP keeping the same input/output number
   fDSPfactory = createDSPFactoryFromString("default", DEFAULT_CODE, 0, 0, getTarget(), error, LLVM_OPTIMIZATION);
   dsp = createDSPInstance(fDSPfactory);
-  printf("Allocation of default DSP succeeded, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+  logStr.formatted("Allocation of default DSP succeeded, %i input(s), %i output(s)", dsp->getNumInputs(), dsp->getNumOutputs());
+  LOG(logStr);
   
 end:
   
@@ -275,81 +255,89 @@ end:
   return dsp;
 }
 
-//void faustgen_factory::add_library_path(const string& library_path)
-//{
-//  if ((library_path != "") && find(fLibraryPath.begin(), fLibraryPath.end(), library_path) == fLibraryPath.end()) {
-//    fLibraryPath.push_back(library_path);
-//  }
-//}
-//
-//void faustgen_factory::add_compile_option(const string& key, const string& value)
-//{
-//  if ((value != "") && find(fCompileOptions.begin(), fCompileOptions.end(), value) == fCompileOptions.end()) {
-//    fCompileOptions.push_back(key);
-//    fCompileOptions.push_back(value);
-//  }
-//}
-//
-//void faustgen_factory::add_compile_option(const string& value)
-//{
-//  if ((value != "") && find(fCompileOptions.begin(), fCompileOptions.end(), value) == fCompileOptions.end()) {
-//    fCompileOptions.push_back(value);
-//  }
-//}
-//
-//void faustgen_factory::print_compile_options()
-//{
-//  if (fCompileOptions.size() > 0) {
-//    printf("-----------------------------");
-//    StringVectorIt it;
-//    for (it = fCompileOptions.begin(); it != fCompileOptions.end(); it++) {
-//      printf("Compile option = %s", (*it).c_str());
-//    }
-//    printf("-----------------------------");
-//  }
-//}
+void faustgen_factory::add_library_path(const String& library_path)
+{
+  if ((library_path != "") && find(fLibraryPath.begin(), fLibraryPath.end(), library_path) == fLibraryPath.end())
+  {
+    fLibraryPath.push_back(library_path);
+  }
+}
 
-//void faustgen_factory::default_compile_options()
-//{
-//  // Clear and set default value
-//  fCompileOptions.clear();
-//  
-//  // By default when double
-//  if (sizeof(FAUSTFLOAT) == 8) {
-//    add_compile_option("-double");
-//  }
-//  
-//  // Add -svg to current compile options
-//  add_compile_option("-svg");
-//  
-//  // All library paths
-//  StringVectorIt it;
-//  for (it = fLibraryPath.begin(); it != fLibraryPath.end(); it++) {
-//    add_compile_option("-I", *it);
-//  }
-//  
-//  // Draw path
-//  add_compile_option("-O", fDrawPath);
-//  
-//  // All options set in the 'compileoptions' message
-//  for (it = fOptions.begin(); it != fOptions.end(); it++) {
-//    add_compile_option(*it);
-//  }
-//  
-//  // Vector mode by default
-//  /*
-//   add_compile_option("-vec");
-//   add_compile_option("-lv");
-//   add_compile_option("1");
-//   */
-//  /*
-//   Seems not necessary...
-//   fCompileOptions.push_back("-vs");
-//   stringstream num;
-//   num << sys_getblksize();
-//   add_compile_option(num.str());
-//   */
-//}
+void faustgen_factory::add_compile_option(const String& key, const String& value)
+{
+  if ((value != "") && find(fCompileOptions.begin(), fCompileOptions.end(), value) == fCompileOptions.end())
+  {
+    fCompileOptions.push_back(key);
+    fCompileOptions.push_back(value);
+  }
+}
+
+void faustgen_factory::add_compile_option(const String& value)
+{
+  if ((value != "") && find(fCompileOptions.begin(), fCompileOptions.end(), value) == fCompileOptions.end())
+  {
+    fCompileOptions.push_back(value);
+  }
+}
+
+void faustgen_factory::print_compile_options()
+{
+  if (fCompileOptions.size() > 0)
+  {
+    LOG("-----------------------------");
+    StringVectorIt it;
+    for (it = fCompileOptions.begin(); it != fCompileOptions.end(); it++)
+    {
+      LOG("Compile option =" + *it);
+    }
+    LOG("-----------------------------");
+  }
+}
+
+void faustgen_factory::default_compile_options()
+{
+  // Clear and set default value
+  fCompileOptions.clear();
+  
+  // By default when double
+  if (sizeof(FAUSTFLOAT) == 8)
+  {
+    add_compile_option("-double");
+  }
+  
+  // Add -svg to current compile options
+  add_compile_option("-svg");
+  
+  // All library paths
+  StringVectorIt it;
+  for (it = fLibraryPath.begin(); it != fLibraryPath.end(); it++)
+  {
+    add_compile_option("-I", *it);
+  }
+  
+  // Draw path
+  add_compile_option("-O", fDrawPath);
+  
+  // All options set in the 'compileoptions' message
+  for (it = fOptions.begin(); it != fOptions.end(); it++)
+  {
+    add_compile_option(*it);
+  }
+  
+  // Vector mode by default
+  /*
+   add_compile_option("-vec");
+   add_compile_option("-lv");
+   add_compile_option("1");
+   */
+  /*
+   Seems not necessary...
+   fCompileOptions.push_back("-vs");
+   stringstream num;
+   num << sys_getblksize();
+   add_compile_option(num.str());
+   */
+}
 
 //void faustgen_factory::getfromdictionary(t_dictionary* d)
 //{
@@ -358,10 +346,10 @@ end:
 //  t_max_err err = dictionary_getstring(d, gensym("version"), &faustgen_version);
 //  
 //  if (err != MAX_ERR_NONE) {
-//    printf("Cannot read \"version\" key, so ignore bitcode, force recompilation and use default compileoptions");
+//    LOG("Cannot read \"version\" key, so ignore bitcode, force recompilation and use default compileoptions");
 //    goto read_sourcecode;
 //  } else if (strcmp(faustgen_version, FAUSTGEN_VERSION) != 0) {
-//    printf("Older version of faustgen~ (%s versus %s), so ignore bitcode, force recompilation and use default compileoptions", FAUSTGEN_VERSION, faustgen_version);
+//    LOG("Older version of faustgen~ (%s versus %s), so ignore bitcode, force recompilation and use default compileoptions", FAUSTGEN_VERSION, faustgen_version);
 //    goto read_sourcecode;
 //  }
 //  
@@ -374,7 +362,7 @@ end:
 //  
 //  // If OK read bitcode
 //  
-//  //printf("read bitcode fBitCodeSize %d\n", fBitCodeSize);
+//  //LOG("read bitcode fBitCodeSize %d\n", fBitCodeSize);
 //  
 //  fBitCode = sysmem_newhandleclear(fBitCodeSize + 1);             // We need to use a size larger by one for the null terminator
 //  const char* bitcode;
@@ -384,7 +372,7 @@ end:
 //    fBitCodeSize = 0;
 //  }
 //  
-//  //printf("read bitcode fBitCodeSize OK %d\n", fBitCodeSize);
+//  //LOG("read bitcode fBitCodeSize OK %d\n", fBitCodeSize);
 //  
 //read_sourcecode:
 //  
@@ -415,7 +403,7 @@ end:
 // This function saves the necessary data inside the json file (Faust sourcecode)
 //void faustgen_factory::appendtodictionary(t_dictionary* d)
 //{
-//  printf("Saving object version, sourcecode and bitcode...");
+//  LOG("Saving object version, sourcecode and bitcode...");
 //  
 //  // Save faustgen~ version
 //  dictionary_appendstring(d, gensym("version"), FAUSTGEN_VERSION);
@@ -463,7 +451,7 @@ end:
 //#else
 //  sprintf(command, "open -a Safari \"file://%sfaustgen-%d-svg/process.svg\"", fDrawPath.c_str(), fFaustNumber);
 //#endif
-//  //printf("open_svg %s", command);
+//  //LOG("open_svg %s", command);
 //  system(command);
 //}
 //
@@ -484,7 +472,7 @@ end:
 //  // Try to open SVG svg diagram file inside a web browser
 //  if (!try_open_svg()) {
 //    
-//    printf("SVG diagram not available, recompile to produce it");
+//    LOG("SVG diagram not available, recompile to produce it");
 //    
 //    // Force recompilation to produce it
 //    llvm_dsp_factory* factory = create_factory_from_sourcecode(0);
@@ -493,69 +481,6 @@ end:
 //    // Open the SVG diagram file inside a web browser
 //    open_svg();
 //  }
-//}
-//
-//bool faustgen_factory::open_file(const char* file)
-//{
-//  char command[512];
-//#ifdef WIN32
-//  sprintf(command, "start \"\" \"%s%s\"", (*fLibraryPath.begin()).c_str(), file);
-//#else
-//  sprintf(command, "open \"%s%s\"", (*fLibraryPath.begin()).c_str(), file);
-//#endif
-//  printf(command);
-//  return (system(command) == 0);
-//}
-//
-//bool faustgen_factory::open_file(const char* appl, const char* file)
-//{
-//  char command[512];
-//#ifdef WIN32
-//  sprintf(command, "start \"\" %s \"%s%s\"", appl, (*fLibraryPath.begin()).c_str(), file);
-//#else
-//  sprintf(command, "open -a %s \"%s%s\"", appl, (*fLibraryPath.begin()).c_str(), file);
-//#endif
-//  return (system(command) == 0);
-//}
-//
-//void faustgen_factory::display_pdf()
-//{
-//  // Open the PDF documentation
-//  open_file(FAUST_PDF_DOCUMENTATION);
-//}
-//
-//void faustgen_factory::display_libraries_aux(const char* lib)
-//{
-//  const char* appl;
-//  int i = 0;
-//  
-//  while ((appl = TEXT_APPL_LIST[i++]) && (strcmp(appl, "") != 0)) {
-//    if (open_file(appl, lib)) {
-//      break;
-//    }
-//  }
-//}
-//
-//void faustgen_factory::display_libraries()
-//{
-//  // Open the libraries
-//#ifdef WIN32
-//  open_file("effect.lib");
-//  open_file("filter.lib");
-//  open_file("math.lib");
-//  open_file("maxmsp.lib");
-//  open_file("music.lib");
-//  open_file("oscillator.lib");
-//  open_file("reduce.lib");
-//#else
-//  display_libraries_aux("effect.lib");
-//  display_libraries_aux("filter.lib");
-//  display_libraries_aux("math.lib");
-//  display_libraries_aux("maxmsp.lib");
-//  display_libraries_aux("music.lib");
-//  display_libraries_aux("oscillator.lib");
-//  display_libraries_aux("reduce.lib");
-//#endif
 //}
 
 void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudioProcessor* instance)
@@ -571,14 +496,7 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
     
     // Delete the existing Faust module
     free_dsp_factory();
-    
-    // Free the memory allocated for fSourceCode
-    //free_sourcecode();
-    
-    // Free the memory allocated for fBitCode
-    //free_bitcode();
-    
-    // Allocate the right memory for fSourceCode
+
     fSourceCode = source_code;
     
     // Update all instances
@@ -587,17 +505,12 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
       (*it)->update_sourcecode();
     }
     
-  } else {
-    printf("DSP code has not been changed...");
+  }
+  else
+  {
+    LOG("DSP code has not been changed...");
   }
 }
-
-//void faustgen_factory::librarypath(long inlet, t_symbol* s)
-//{
-//  if (s != gensym("")) {
-//    add_library_path(getFolderFromPath(s->s_name));
-//  }
-//}
 
 //void faustgen_factory::read(long inlet, t_symbol* s)
 //{
@@ -611,14 +524,14 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //  if (s == gensym("")) {
 //    filename[0] = 0;
 //    if (open_dialog(filename, &path, (t_fourcc*)&type, (t_fourcc*)&type, 1)) {
-//      printf("Faust DSP file not found");
+//      LOG("Faust DSP file not found");
 //      return;
 //    }
 //    // Otherwise locate the file
 //  } else {
 //    strcpy(filename, s->s_name);
 //    if (locatefile_extended(filename, &path, (t_fourcc*)&type, (t_fourcc*)&type, 1)) {
-//      printf("Faust DSP file '%s' not found", filename);
+//      LOG("Faust DSP file '%s' not found", filename);
 //      return;
 //    }
 //  }
@@ -626,7 +539,7 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //  // File found, open it and recompile DSP
 //  err = path_opensysfile(filename, path, &fh, READ_PERM);
 //  if (err) {
-//    printf("Faust DSP file '%s' cannot be opened", filename);
+//    LOG("Faust DSP file '%s' cannot be opened", filename);
 //    return;
 //  }
 //  
@@ -638,7 +551,7 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //  
 //  err = sysfile_readtextfile(fh, fSourceCode, 0, (t_sysfile_text_flags)(TEXT_LB_UNIX | TEXT_NULL_TERMINATE));
 //  if (err) {
-//    printf("Faust DSP file '%s' cannot be read", filename);
+//    LOG("Faust DSP file '%s' cannot be read", filename);
 //  }
 //  
 //  sysfile_close(fh);
@@ -669,12 +582,12 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //  if (s == gensym("")) {
 //    filename[0] = 0;
 //    if (saveas_dialog(filename, &path, NULL)) {
-//      printf("Faust DSP file not found");
+//      LOG("Faust DSP file not found");
 //      return;
 //    } else {
 //      err = path_createsysfile(filename, path, type, &fh);
 //      if (err) {
-//        printf("Faust DSP file '%s' cannot be created", filename);
+//        LOG("Faust DSP file '%s' cannot be created", filename);
 //        return;
 //      }
 //    }
@@ -682,16 +595,16 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //  } else {
 //    strcpy(filename, s->s_name);
 //    if (locatefile_extended(filename, &path, (t_fourcc*)&type, (t_fourcc*)&type, 1)) {
-//      printf("Faust DSP file '%s' not found, so tries to create it", filename);
+//      LOG("Faust DSP file '%s' not found, so tries to create it", filename);
 //      err = path_createsysfile(filename, path, type, &fh);
 //      if (err) {
-//        printf("Faust DSP file '%s' cannot be created", filename);
+//        LOG("Faust DSP file '%s' cannot be created", filename);
 //        return;
 //      }
 //    } else {
 //      err = path_opensysfile(filename, path, &fh, WRITE_PERM);
 //      if (err) {
-//        printf("Faust DSP file '%s' cannot be opened", filename);
+//        LOG("Faust DSP file '%s' cannot be opened", filename);
 //        return;
 //      }
 //    }
@@ -699,17 +612,17 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //  
 //  err = sysfile_writetextfile(fh, fSourceCode, (t_sysfile_text_flags)(TEXT_LB_UNIX | TEXT_NULL_TERMINATE));
 //  if (err) {
-//    printf("Faust DSP file '%s' cannot be written", filename);
+//    LOG("Faust DSP file '%s' cannot be written", filename);
 //  }
 //  sysfile_close(fh);
 //}
 
 //void faustgen_factory::compileoptions(long inlet, t_symbol* s, long argc, t_atom* argv)
 //{
-//  printf("Compiler options modified for faustgen");
+//  LOG("Compiler options modified for faustgen");
 //  
 //  if (argc == 0) {
-//    printf("No argument entered, no additional compilation option will be used");
+//    LOG("No argument entered, no additional compilation option will be used");
 //  }
 //  
 //  // Clear options
@@ -729,7 +642,7 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //        break;
 //      }
 //      case A_FLOAT:
-//        printf("Invalid compiler option argument - float");
+//        LOG("Invalid compiler option argument - float");
 //        break;
 //      case A_SYM:
 //        // Add options to default ones
@@ -740,21 +653,21 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //        }
 //        break;
 //      default:
-//        printf("Invalid compiler option argument - unknown");
+//        LOG("Invalid compiler option argument - unknown");
 //        break;
 //    }
 //  }
 //  
 //  if (optimize) {
 //    
-//    printf("Start looking for optimal compilation options...");
+//    LOG("Start looking for optimal compilation options...");
 //    
 //#ifndef WIN32
 //    FaustLLVMOptimizer optimizer(string(*fSourceCode), (*fLibraryPath.begin()).c_str(), getTarget(), 2000, sys_getblksize());
 //    fOptions = optimizer.findOptimize();
 //#endif
 //    
-//    printf("Optimal compilation options found");
+//    LOG("Optimal compilation options found");
 //  }
 //  
 //  // Delete the existing Faust module

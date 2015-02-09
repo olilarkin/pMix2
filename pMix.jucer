@@ -52,6 +52,8 @@
               file="Source/SplitComponent.h"/>
       </GROUP>
       <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
+        <FILE id="dwn5QF" name="base64.cpp" compile="1" resource="0" file="Source/base64.cpp"/>
+        <FILE id="hZveRP" name="base64.h" compile="0" resource="0" file="Source/base64.h"/>
         <FILE id="DBJuQb" name="FaustAudioProcessor.cpp" compile="1" resource="0"
               file="Source/FaustAudioProcessor.cpp"/>
         <FILE id="Q4Vrll" name="FaustAudioProcessor.h" compile="0" resource="0"

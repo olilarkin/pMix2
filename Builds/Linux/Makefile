@@ -62,6 +62,7 @@ OBJECTS := \
   $(OBJDIR)/pMixParamTreeView_a13fce25.o \
   $(OBJDIR)/pMixGraphEditor_f95221f0.o \
   $(OBJDIR)/SplitComponent_4c4bd10c.o \
+  $(OBJDIR)/base64_4cbda138.o \
   $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
   $(OBJDIR)/FaustGenFactory_4ded9ad6.o \
   $(OBJDIR)/pMixMainAppWindow_68a956cd.o \
@@ -156,6 +157,11 @@ $(OBJDIR)/pMixGraphEditor_f95221f0.o: ../../Source/pMixGraphEditor.cpp
 $(OBJDIR)/SplitComponent_4c4bd10c.o: ../../Source/SplitComponent.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling SplitComponent.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/base64_4cbda138.o: ../../Source/base64.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling base64.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/FaustAudioProcessor_fbc83018.o: ../../Source/FaustAudioProcessor.cpp
