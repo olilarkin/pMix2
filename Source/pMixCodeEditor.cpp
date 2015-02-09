@@ -73,6 +73,7 @@ void CodeEditor::buttonClicked (Button* button)
   {
     if (button == &compileButton)
     {
+      selectedFaustAudioProcessor->getFactory()->update_sourcecode(codeDocument.getAllContent(), selectedFaustAudioProcessor);
     }
     else if (button == &svgButton)
     {
