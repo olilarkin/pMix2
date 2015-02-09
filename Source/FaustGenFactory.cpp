@@ -469,7 +469,7 @@ String faustgen_factory::get_svg_path()
   return path;
 }
 
-void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudioProcessor* instance)
+void faustgen_factory::update_sourcecode(String source_code, FaustAudioProcessor* instance)
 {
   // Recompile only if text has been changed
   if (fSourceCode != source_code)

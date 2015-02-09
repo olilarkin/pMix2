@@ -13,7 +13,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-//#include <string>
+
 #include <set>
 #include <vector>
 #include <map>
@@ -86,7 +86,7 @@ public:
 //
 //  const char* get_json() { return fJSON.c_str(); }
 //  
-  void update_sourcecode(int size, String source_code, FaustAudioProcessor* instance);
+  void update_sourcecode(String source_code, FaustAudioProcessor* instance);
     
   // Compile DSP with -svg option and display the SVG files
   bool try_open_svg();
