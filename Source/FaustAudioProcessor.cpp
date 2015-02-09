@@ -13,10 +13,17 @@ FaustAudioProcessor::FaustAudioProcessor()
 : fDSPfactory(nullptr)
 , fDSP(nullptr)
 {
-  // Faust program
-  std::string faust_program = "process = +;";
+  bool res = false;
   
-  allocate_factory("Test");
+  // Empty (= no name) FaustAudioProcessor will be internally separated as groups with different names
+  if (!fDSPfactory)
+  {
+    string effect_name;
+    stringstream num;
+    num << faustgen_factory::gFaustCounter;
+    effect_name = "faustgen_factory-" + num.str();
+    res = allocate_factory(effect_name);
+  }
   
   create_dsp(true);
 }
@@ -209,29 +216,13 @@ void FaustAudioProcessor::create_dsp(bool init)
     // Initialize at the system's sampling rate
     fDSP->init(getSampleRate());
     
-    // Setup MAX audio IO
-//    bool dspstate = false;
+    //TODO: create Audio IO
     
-//    if ((m_siginlets != fDSP->getNumInputs()) || (m_sigoutlets != fDSP->getNumOutputs())) {
-//      // Number of ins/outs have changed... possibly stop IO
-//      dspstate = sys_getdspobjdspstate((t_object*)&m_ob);
-//      if (dspstate) {
-//        dsp_status("stop");
-//      }
-//    }
-    
-//    setupIO(&faustgen::perform, &faustgen::init, fDSP->getNumInputs(), fDSP->getNumOutputs(), init);
-    
-    // Possibly restart IO
-//    if (dspstate) {
-//      dsp_status("start");
-//    }
-
     fDSPfactory->unlock();
   }
   else
   {
-//    post("Mutex lock cannot be taken...");
+    LOG("Mutex lock cannot be taken...");
   }
   
   updateHostDisplay();

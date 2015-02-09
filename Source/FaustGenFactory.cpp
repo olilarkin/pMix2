@@ -11,8 +11,6 @@
 #include "FaustAudioProcessor.h"
 #include <stdio.h>
 
-#define LOG Logger::getCurrentLogger()->writeToLog
-
 int faustgen_factory::gFaustCounter = 0;
 map<String, faustgen_factory*> faustgen_factory::gFactoryMap;
 

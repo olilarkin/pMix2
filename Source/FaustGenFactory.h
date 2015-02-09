@@ -22,6 +22,8 @@
 #include "faust/llvm-dsp.h"
 #include "JuceHeader.h"
 
+#define LOG Logger::getCurrentLogger()->writeToLog
+
 class FaustAudioProcessor;
 
 using namespace std;
