@@ -22,8 +22,6 @@
 #include "faust/llvm-dsp.h"
 #include "JuceHeader.h"
 
-#define LOG Logger::getCurrentLogger()->writeToLog
-
 class FaustAudioProcessor;
 
 using namespace std;
@@ -56,9 +54,6 @@ private:
   
   vector<String> fCompileOptions; // Faust compiler options
 
-//  bool open_file(const char* file);
-//  bool open_file(const char* appl, const char* file);
-  
   void add_library_path(const String& library_path);
   void add_compile_option(const String& key, const String& value);
   void add_compile_option(const String& value);
@@ -84,9 +79,8 @@ public:
   int get_number() { return fFaustNumber; }
   String get_name() { return fName; }
   
-//  void read(long inlet, t_symbol* s);
-//  void write(long inlet, t_symbol* s);
-//  void librarypath(long inlet, t_symbol* s);
+//  void read(File path);
+//  void write(File path);
   
   String get_sourcecode() { return fSourceCode; }
 //
@@ -99,18 +93,15 @@ public:
   void open_svg();
   void remove_svg();
   void display_svg();
-  
-//  void display_pdf();
-//  void display_libraries();
-//  void display_libraries_aux(const char* lib);
-  
+
   void add_instance(FaustAudioProcessor* dsp) { fInstances.insert(dsp); }
   void remove_instance(FaustAudioProcessor* dsp)
   {
     fInstances.erase(dsp);
     
     // Last instance : remove factory from global table and commit suicide...
-    if (fInstances.size() == 0) {
+    if (fInstances.size() == 0)
+    {
       gFactoryMap.erase(fName);
       delete this;
     }

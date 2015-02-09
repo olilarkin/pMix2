@@ -32,6 +32,8 @@
 #define LLVM_OPTIMIZATION 3
 #define DEFAULT_CODE "process = _,_;"
 
+#define LOG Logger::getCurrentLogger()->writeToLog
+
 #include "FaustGenFactory.h"
 
 class FaustAudioProcessor  : public AudioPluginInstance

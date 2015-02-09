@@ -2273,10 +2273,12 @@
 					77BE31C450DAEB585BACC237,
 					4AB8E989220619F1C4139E41,
 					A35F435CAA78A9E053209B1D, ); runOnlyForDeploymentPostprocessing = 0; };
+		1A15EB62D8BE255A8ACBF995 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "cp $SRCROOT/../../FaustLibs/* $SRCROOT/build/Debug/pMix.app/Contents/Resources/"; };
 		0B8CA6223FC75F4829FB208F = {isa = PBXNativeTarget; buildConfigurationList = D111D18F29DD70C317CFB47C; buildPhases = (
 					33D1B4E3831DD4AA5ECB8954,
 					674FB0D9939A8034BF79821D,
-					D15DAEA322B5F59463B6284F, ); buildRules = ( ); dependencies = ( ); name = pMix; productName = pMix; productReference = 126D8AE032B4A6AE1C95F13E; productInstallPath = "$(HOME)/Applications"; productType = "com.apple.product-type.application"; };
+					D15DAEA322B5F59463B6284F,
+					1A15EB62D8BE255A8ACBF995, ); buildRules = ( ); dependencies = ( ); name = pMix; productName = pMix; productReference = 126D8AE032B4A6AE1C95F13E; productInstallPath = "$(HOME)/Applications"; productType = "com.apple.product-type.application"; };
 		F172D84D6DCBDF84DA006D98 = {isa = PBXProject; buildConfigurationList = EE59693213785429BCFA43D5; attributes = { LastUpgradeCheck = 0440; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = F3C576EFF2B61061AF5C0D69; projectDirPath = ""; projectRoot = ""; targets = ( 0B8CA6223FC75F4829FB208F ); };
 	};
 	rootObject = F172D84D6DCBDF84DA006D98;

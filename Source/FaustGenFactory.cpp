@@ -24,29 +24,6 @@ static string getTarget()
 static string getTarget() { return ""; }
 #endif
 
-//static string getFolderFromFilename(const string& fullpath)
-//{
-//  size_t first = fullpath.find_first_of(SEPARATOR);
-//  size_t last = fullpath.find_last_of(SEPARATOR);
-//  return (first != string::npos && last != string::npos) ? fullpath.substr(first, last - first) : "";
-//}
-//
-//static string getFolderFromPath(const string& fullpath)
-//{
-//  size_t first = fullpath.find_first_of(SEPARATOR);
-//  return (first != string::npos) ? fullpath.substr(first, fullpath.size() - first) : "";
-//}
-//
-//struct Max_Meta : public Meta
-//{
-//  void declare(const char* key, const char* value)
-//  {
-//    if ((strcmp("name", key) == 0) || (strcmp("author", key) == 0)) {
-//      LOG("%s : %s", key, value);
-//    }
-//  }
-//};
-
 faustgen_factory::faustgen_factory(const String& name)
 {
   fUpdateInstance = 0;
@@ -108,7 +85,7 @@ faustgen_factory::faustgen_factory(const String& name)
 faustgen_factory::~faustgen_factory()
 {
   free_dsp_factory();
-//  remove_svg();
+  remove_svg();
 //  systhread_mutex_free(fDSPMutex);
 }
 
@@ -116,7 +93,6 @@ void faustgen_factory::free_dsp_factory()
 {
   if (lock())
   {
-    
     // Free all instances
     set<FaustAudioProcessor*>::const_iterator it;
     for (it = fInstances.begin(); it != fInstances.end(); it++) {
@@ -518,7 +494,7 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
   }
 }
 
-//void faustgen_factory::read(long inlet, t_symbol* s)
+//void faustgen_factory::read(File path)
 //{
 //  char filename[MAX_FILENAME_CHARS];
 //  short path = 0;
@@ -576,7 +552,7 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //  }
 //}
 
-//void faustgen_factory::write(long inlet, t_symbol* s)
+//void faustgen_factory::write(File path)
 //{
 //  char filename[MAX_FILENAME_CHARS];
 //  short path = 0;
@@ -621,70 +597,4 @@ void faustgen_factory::update_sourcecode(int size, String source_code, FaustAudi
 //    LOG("Faust DSP file '%s' cannot be written", filename);
 //  }
 //  sysfile_close(fh);
-//}
-
-//void faustgen_factory::compileoptions(long inlet, t_symbol* s, long argc, t_atom* argv)
-//{
-//  LOG("Compiler options modified for faustgen");
-//  
-//  if (argc == 0) {
-//    LOG("No argument entered, no additional compilation option will be used");
-//  }
-//  
-//  // Clear options
-//  fOptions.clear();
-//  bool optimize = false;
-//  int i;
-//  t_atom* ap;
-//  
-//  // Increment ap each time to get to the next atom
-//  for (i = 0, ap = argv; i < argc; i++, ap++) {
-//    switch (atom_gettype(ap)) {
-//      case A_LONG: {
-//        stringstream num;
-//        num << atom_getlong(ap);
-//        string res = num.str();
-//        fOptions.push_back(res.c_str());
-//        break;
-//      }
-//      case A_FLOAT:
-//        LOG("Invalid compiler option argument - float");
-//        break;
-//      case A_SYM:
-//        // Add options to default ones
-//        if (strcmp("-opt", atom_getsym(ap)->s_name) == 0) {
-//          optimize = true;
-//        } else {
-//          fOptions.push_back(atom_getsym(ap)->s_name);
-//        }
-//        break;
-//      default:
-//        LOG("Invalid compiler option argument - unknown");
-//        break;
-//    }
-//  }
-//  
-//  if (optimize) {
-//    
-//    LOG("Start looking for optimal compilation options...");
-//    
-//#ifndef WIN32
-//    FaustLLVMOptimizer optimizer(string(*fSourceCode), (*fLibraryPath.begin()).c_str(), getTarget(), 2000, sys_getblksize());
-//    fOptions = optimizer.findOptimize();
-//#endif
-//    
-//    LOG("Optimal compilation options found");
-//  }
-//  
-//  // Delete the existing Faust module
-//  free_dsp_factory();
-//  
-//  // Free the memory allocated for fBitCode
-//  free_bitcode();
-//  
-//  // Update all instances
-//  set<faustgen*>::const_iterator it;
-//  for (it = fInstances.begin(); it != fInstances.end(); it++) {
-//    (*it)->update_sourcecode();
-//  }
 //}
