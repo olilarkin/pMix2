@@ -78,7 +78,9 @@ void FaustAudioProcessor::releaseResources()
 
 void FaustAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-  if (fDSPfactory->try_lock())
+  const ScopedLock lock(fDSPfactory->fDSPMutex);
+  
+  if (fDSP != nullptr)
     fDSP->compute(buffer.getNumSamples(), (FAUSTFLOAT**)buffer.getArrayOfReadPointers(), (FAUSTFLOAT**)buffer.getArrayOfWritePointers());
 }
 
@@ -206,25 +208,18 @@ void FaustAudioProcessor::setStateInformation (const void* data, int sizeInBytes
 
 void FaustAudioProcessor::create_dsp(bool init)
 {
-  if (fDSPfactory->lock())
-  {
-    fDSP = fDSPfactory->create_dsp_aux(this);
-    assert(fDSP);
-    
-    // Initialize User Interface (here connnection with controls)
-    //fDSP->buildUserInterface(&fDSPUI);
-    
-    // Initialize at the system's sampling rate
-    fDSP->init(getSampleRate());
-    
-    //TODO: create Audio IO
-    
-    fDSPfactory->unlock();
-  }
-  else
-  {
-    LOG("Mutex lock cannot be taken...");
-  }
+  const ScopedLock lock(fDSPfactory->fDSPMutex);
+
+  fDSP = fDSPfactory->create_dsp_aux(this);
+  assert(fDSP);
+  
+  // Initialize User Interface (here connnection with controls)
+  //fDSP->buildUserInterface(&fDSPUI);
+  
+  // Initialize at the system's sampling rate
+  fDSP->init(getSampleRate());
+  
+  //TODO: create Audio IO
   
   updateHostDisplay();
 }

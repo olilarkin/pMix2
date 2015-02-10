@@ -50,8 +50,6 @@ private:
   String fName;                   // name of the DSP group
   String fJSON;                   // JSON
   
-  CriticalSection fDSPMutex;    // mutex to protect RT audio thread when recompiling DSP
-  
   vector<String> fCompileOptions; // Faust compiler options
 
   void add_library_path(const String& library_path);
@@ -59,7 +57,8 @@ private:
   void add_compile_option(const String& value);
   
 public:
-  
+  CriticalSection fDSPMutex;    // mutex to protect RT audio thread when recompiling DSP
+
   faustgen_factory(const String& name);
   
   ~faustgen_factory();
@@ -107,11 +106,7 @@ public:
       delete this;
     }
   }
-  
-  bool try_lock();
-  bool lock();
-  void unlock();
-  
+
   static int gFaustCounter;       // global variable to count the number of faustgen objects inside the patcher
   
   static map<String, faustgen_factory*> gFactoryMap;

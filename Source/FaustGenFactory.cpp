@@ -96,8 +96,10 @@ faustgen_factory::~faustgen_factory()
 
 void faustgen_factory::free_dsp_factory()
 {
-  if (lock())
-  {
+  const ScopedLock lock(fDSPMutex);
+  
+//  if (lock())
+//  {
     // Free all instances
     set<FaustAudioProcessor*>::const_iterator it;
     for (it = fInstances.begin(); it != fInstances.end(); it++) {
@@ -106,12 +108,12 @@ void faustgen_factory::free_dsp_factory()
     
     //deleteDSPFactory(fDSPfactory); //commented out in faustgen~
     fDSPfactory = 0;
-    unlock();
-  }
-  else
-  {
-    LOG("Mutex lock cannot be taken...");
-  }
+//    unlock();
+//  }
+//  else
+//  {
+//    LOG("Mutex lock cannot be taken...");
+//  }
 }
 
 llvm_dsp_factory* faustgen_factory::create_factory_from_bitcode()
@@ -610,22 +612,3 @@ void faustgen_factory::update_sourcecode(String source_code, FaustAudioProcessor
 //  }
 //  sysfile_close(fh);
 //}
-
-bool faustgen_factory::try_lock()
-{
-  return fDSPMutex.tryEnter();
-}
-
-bool faustgen_factory::lock()
-{
-  fDSPMutex.enter();
-  
-  return true; //TODO: ??
-}
-
-void faustgen_factory::unlock()
-{
-  fDSPMutex.exit();
-  
-  return;
-}
