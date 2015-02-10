@@ -31,9 +31,8 @@ public:
   void setZoom (double scale);
   double getZoom() const;
 
-private:  
+private:
   pMixLookAndFeel lookAndFeel;
-
   PMixAudioEngine& audioEngine;  
   
   ScopedPointer<SplitComponent> vsplitComponent;
@@ -51,6 +50,8 @@ private:
   ScopedPointer<StretchableLayoutResizerBar> verticalDividerBar;
   //  ParamTreeView* treeView;
   
+  PMixLogger logger;
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
 

@@ -8,6 +8,7 @@
 */
 
 #include "pMixConsole.h"
+#include "pMixLogger.h"
 
 Console::Console()
 : listBoxModel (messageList)
@@ -18,8 +19,6 @@ Console::Console()
   messageListBox.setModel (&listBoxModel);
   messageListBox.setColour (ListBox::backgroundColourId, Colour (0x32ffffff));
   messageListBox.setColour (ListBox::outlineColourId, Colours::black);
-  
-  addMessageToList("Hello");
 }
 
 Console::~Console()
@@ -53,4 +52,26 @@ void Console::handleAsyncUpdate()
   messageListBox.updateContent();
   messageListBox.scrollToEnsureRowIsOnscreen (messageList.size() - 1);
   messageListBox.repaint();
+}
+
+void Console::changeListenerCallback (ChangeBroadcaster* source)
+{
+  PMixLogger* logger = dynamic_cast<PMixLogger*>(source);
+  
+  if (logger)
+  {
+    String message;
+    while (logger->getLastMessage(message))
+    {
+      postMessageToList(message);
+    }
+  }
+}
+
+void Console::clear()
+{
+  messageList.clear();
+//  messageListBox.updateContent();
+//  messageListBox.scrollToEnsureRowIsOnscreen (messageList.size() - 1);
+//  messageListBox.repaint();
 }

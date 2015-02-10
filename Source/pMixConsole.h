@@ -30,8 +30,9 @@ public:
         if (isPositiveAndBelow (row, messageList.size()))
         {
             g.setColour (Colours::black);
+            const String& message = messageList.getReference (row);
 
-            g.drawText (messageList.getFirst(),
+            g.drawText (message,
                         Rectangle<int> (width, height).reduced (4, 0),
                         Justification::centredLeft, true);
         }
@@ -45,6 +46,7 @@ private:
 
 class Console  : public Component
                , private AsyncUpdater
+               , public ChangeListener
 {
 public:
   Console();
@@ -54,6 +56,10 @@ public:
   
   void resized() override;
 
+  void changeListenerCallback (ChangeBroadcaster* source) override;
+
+  void clear();
+  
 private:
   ListBox messageListBox;
   Array<String> messageList;

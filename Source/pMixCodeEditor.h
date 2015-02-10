@@ -12,6 +12,8 @@
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
+#include "pMixWebBrowser.h"
+#include "pMixConsole.h"
 #include "FaustAudioProcessor.h"
 
 class CodeEditor : public Component
@@ -19,7 +21,7 @@ class CodeEditor : public Component
                  , public Button::Listener
 {
 public:
-  CodeEditor(PMixAudioEngine& audioEngine);
+  CodeEditor(PMixAudioEngine& audioEngine, WebBrowser& webBrowser, Console& console);
   
   void paint (Graphics& g) override;
   
@@ -33,6 +35,9 @@ private:
   CodeDocument codeDocument;
   ScopedPointer<CodeEditorComponent> editor;
   PMixAudioEngine& audioEngine;
+  WebBrowser& webBrowser;
+  Console& console;
+  
   TextButton compileButton;
   TextButton svgButton;
   FaustAudioProcessor* selectedFaustAudioProcessor;

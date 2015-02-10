@@ -20,6 +20,7 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
   addAndMakeVisible (verticalDividerBar);
   
+  Logger::setCurrentLogger(&logger);
 
   addAndMakeVisible (graphEditor = new GraphEditor (audioEngine));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
@@ -27,10 +28,11 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   interpolationSpace = new InterpolationSpaceComponent(audioEngine);
   
   console = new Console();
+  logger.addChangeListener(console);
   fileBrowser = new FileBrowser();
   webBrowser = new WebBrowser(audioEngine);
   paramView = new ParamView(audioEngine);
-  codeEditor = new CodeEditor(audioEngine, *webBrowser);
+  codeEditor = new CodeEditor(audioEngine, *webBrowser, *console);
   graphEditor->addChangeListener(codeEditor);
   graphEditor->addChangeListener(webBrowser);
 
@@ -47,7 +49,8 @@ MainComponent::~MainComponent()
   LookAndFeel::setDefaultLookAndFeel (nullptr);
 
   //graphEditor->removeAllChangeListeners();
-  
+  Logger::setCurrentLogger (nullptr);
+
   removeAllChildren();
 }
 

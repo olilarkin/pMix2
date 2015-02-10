@@ -98,6 +98,8 @@
             file="Source/pMixAudioEngine.cpp"/>
       <FILE id="oy6H27" name="pMixAudioEngine.h" compile="0" resource="0"
             file="Source/pMixAudioEngine.h"/>
+      <FILE id="jnRJK7" name="pMixLogger.cpp" compile="1" resource="0" file="Source/pMixLogger.cpp"/>
+      <FILE id="SviZMa" name="pMixLogger.h" compile="0" resource="0" file="Source/pMixLogger.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

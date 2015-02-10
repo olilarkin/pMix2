@@ -10,8 +10,10 @@
 #include "pMixCodeEditor.h"
 #include "pMixGraphEditor.h"
 
-CodeEditor::CodeEditor(PMixAudioEngine& audioEngine)
+CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, WebBrowser& webBrowser, Console& console)
 : audioEngine(audioEngine)
+, webBrowser(webBrowser)
+, console(console)
 , compileButton("Compile")
 , svgButton("View SVG")
 , selectedFaustAudioProcessor(nullptr)
@@ -73,7 +75,9 @@ void CodeEditor::buttonClicked (Button* button)
   {
     if (button == &compileButton)
     {
+      console.clear();
       selectedFaustAudioProcessor->getFactory()->update_sourcecode(codeDocument.getAllContent(), selectedFaustAudioProcessor);
+      webBrowser.browser->goToURL(selectedFaustAudioProcessor->getFactory()->get_svg_path());
     }
     else if (button == &svgButton)
     {

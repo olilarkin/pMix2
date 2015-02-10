@@ -73,6 +73,7 @@ OBJECTS := \
   $(OBJDIR)/pMixMainComponent_71d6859.o \
   $(OBJDIR)/pMixInternalFilters_8e34e293.o \
   $(OBJDIR)/pMixAudioEngine_de4ed8cd.o \
+  $(OBJDIR)/pMixLogger_a461be5.o \
   $(OBJDIR)/juce_audio_basics_2442e4ea.o \
   $(OBJDIR)/juce_audio_devices_a4c8a728.o \
   $(OBJDIR)/juce_audio_formats_d349f0c8.o \
@@ -212,6 +213,11 @@ $(OBJDIR)/pMixInternalFilters_8e34e293.o: ../../Source/pMixInternalFilters.cpp
 $(OBJDIR)/pMixAudioEngine_de4ed8cd.o: ../../Source/pMixAudioEngine.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixAudioEngine.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixLogger_a461be5.o: ../../Source/pMixLogger.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixLogger.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/juce_audio_basics_2442e4ea.o: ../../JuceLibraryCode/modules/juce_audio_basics/juce_audio_basics.cpp
