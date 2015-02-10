@@ -19,6 +19,7 @@
 #include "SplitComponent.h"
 #include "pMixFileBrowser.h"
 #include "pMixConsole.h"
+#include "pMixLogger.h"
 
 class MainComponent  : public Component
 {

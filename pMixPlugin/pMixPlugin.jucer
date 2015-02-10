@@ -87,6 +87,8 @@
             file="../Source/pMixPluginWindow.cpp"/>
       <FILE id="l8GPil" name="pMixPluginWindow.h" compile="0" resource="0"
             file="../Source/pMixPluginWindow.h"/>
+      <FILE id="k5gFJ7" name="pMixLogger.cpp" compile="1" resource="0" file="../Source/pMixLogger.cpp"/>
+      <FILE id="e6ayDs" name="pMixLogger.h" compile="0" resource="0" file="../Source/pMixLogger.h"/>
       <FILE id="m8HIzw" name="pMixAudioEngine.cpp" compile="1" resource="0"
             file="../Source/pMixAudioEngine.cpp"/>
       <FILE id="kGuObF" name="pMixAudioEngine.h" compile="0" resource="0"
