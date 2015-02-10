@@ -11,12 +11,12 @@ class ConnectorComponent;
 class PinComponent;
 
 #pragma mark -
-#pragma mark CreatePluginAction
+#pragma mark UndoableActions
 
-class CreatePluginAction  : public UndoableAction
+class CreateFilterAction  : public UndoableAction
 {
 public:
-  CreatePluginAction (PMixAudioEngine& audioEngine, const PluginDescription* desc, double x, double y) noexcept;
+  CreateFilterAction (PMixAudioEngine& audioEngine, const PluginDescription* desc, double x, double y) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -26,7 +26,40 @@ private:
   double x, y;
   const PluginDescription* desc;
   uint32 nodeID;
-  JUCE_DECLARE_NON_COPYABLE (CreatePluginAction)
+  JUCE_DECLARE_NON_COPYABLE (CreateFilterAction)
+};
+
+class RemoveFilterAction  : public UndoableAction
+{
+public:
+  RemoveFilterAction (PMixAudioEngine& audioEngine, PluginDescription desc, uint32 nodeID,  double x, double y) noexcept;
+  bool perform();
+  bool undo();
+  int getSizeInUnits();
+  
+private:
+  PMixAudioEngine& audioEngine;
+  double x, y;
+  PluginDescription desc;
+  uint32 nodeID;
+  JUCE_DECLARE_NON_COPYABLE (RemoveFilterAction)
+};
+
+class MoveFilterAction  : public UndoableAction
+{
+public:
+  MoveFilterAction (PMixAudioEngine& audioEngine, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
+  bool perform();
+  bool undo();
+  int getSizeInUnits();
+  
+private:
+  PMixAudioEngine& audioEngine;
+  FilterComponent* filterComponent;
+  uint32 nodeID;
+  Point<double> startPos;
+  Point<double> endPos;
+  JUCE_DECLARE_NON_COPYABLE (MoveFilterAction)
 };
 
 #pragma mark -
@@ -46,7 +79,7 @@ public:
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
   
-  void createNewPlugin (const PluginDescription* desc, int x, int y);
+  void createNewFilter (const PluginDescription* desc, int x, int y);
 
   FilterComponent* getComponentForFilter (uint32 filterID) const;
   ConnectorComponent* getComponentForConnection (const AudioProcessorGraph::Connection& conn) const;
@@ -102,26 +135,6 @@ private:
 };
 
 #pragma mark -
-#pragma mark MovePluginAction
-
-class MovePluginAction  : public UndoableAction
-{
-public:
-  MovePluginAction (PMixAudioEngine& audioEngine, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
-  bool perform();
-  bool undo();
-  int getSizeInUnits();
-  
-private:
-  PMixAudioEngine& audioEngine;
-  FilterComponent* filterComponent;
-  uint32 nodeID;
-  Point<double> startPos;
-  Point<double> endPos;
-  JUCE_DECLARE_NON_COPYABLE (MovePluginAction)
-};
-
-#pragma mark -
 #pragma mark FilterComponent
 
 class FilterComponent : public Component
@@ -151,7 +164,7 @@ private:
   int numIns, numOuts;
   bool moving;
   //DropShadowEffect shadow;
-  friend class MovePluginAction;
+  friend class MoveFilterAction;
   
   GraphEditor* getGraphPanel() const noexcept;
   

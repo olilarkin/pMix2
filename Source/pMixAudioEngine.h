@@ -36,7 +36,7 @@ public:
   // called from GUI classes to populate menus
   void createDeviceMenu (PopupMenu& m) const;
   const PluginDescription* getChosenType (const int menuID) const;
-  
+
   //ChangeListener
   void changeListenerCallback (ChangeBroadcaster* broadcaster);
 

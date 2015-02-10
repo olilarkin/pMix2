@@ -74,7 +74,7 @@ void MainComponent::resized()
 
 void MainComponent::createNewPlugin (const PluginDescription* desc, int x, int y)
 {
-  graphEditor->createNewPlugin (desc, x, y);
+  graphEditor->createNewFilter (desc, x, y);
 }
 
 void MainComponent::setZoom (double scale)

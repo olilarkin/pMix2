@@ -1,9 +1,9 @@
 #include "pMixGraphEditor.h"
 
 #pragma mark -
-#pragma mark CreatePluginAction
+#pragma mark UndoableActions
 
-CreatePluginAction::CreatePluginAction (PMixAudioEngine& audioEngine, const PluginDescription* desc, double x, double y) noexcept
+CreateFilterAction::CreateFilterAction (PMixAudioEngine& audioEngine, const PluginDescription* desc, double x, double y) noexcept
 : audioEngine(audioEngine)
 , x(x)
 , y(y)
@@ -11,7 +11,7 @@ CreatePluginAction::CreatePluginAction (PMixAudioEngine& audioEngine, const Plug
 {
 }
 
-bool CreatePluginAction::perform()
+bool CreateFilterAction::perform()
 {
   nodeID = audioEngine.getDoc().addFilter (desc, x, y);
   
@@ -22,14 +22,74 @@ bool CreatePluginAction::perform()
   
 }
 
-bool CreatePluginAction::undo()
+bool CreateFilterAction::undo()
 {
   audioEngine.getDoc().removeFilter(nodeID);
   
   return true;
 }
 
-int CreatePluginAction::getSizeInUnits()
+int CreateFilterAction::getSizeInUnits()
+{
+  return (int) sizeof (*this); //xxx should be more accurate
+}
+
+RemoveFilterAction::RemoveFilterAction (PMixAudioEngine& audioEngine, PluginDescription desc, uint32 nodeID, double x, double y) noexcept
+: audioEngine(audioEngine)
+, x(x)
+, y(y)
+, desc(desc)
+, nodeID(nodeID)
+{
+}
+
+bool RemoveFilterAction::perform()
+{
+  audioEngine.getDoc().removeFilter (nodeID);
+  
+  if (nodeID < 0xFFFFFFFF)
+    return true;
+  else
+    return false;
+  
+}
+
+bool RemoveFilterAction::undo()
+{
+  audioEngine.getDoc().addFilter(&desc, x, y);
+  
+  return true;
+}
+
+int RemoveFilterAction::getSizeInUnits()
+{
+  return (int) sizeof (*this); //xxx should be more accurate
+}
+
+MoveFilterAction::MoveFilterAction (PMixAudioEngine& audioEngine, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
+: audioEngine(audioEngine)
+, filterComponent(filterComponent)
+, nodeID(nodeID)
+, startPos(startPos)
+, endPos(endPos)
+{
+}
+
+bool MoveFilterAction::perform()
+{
+  audioEngine.getDoc().setNodePosition (nodeID, endPos.x, endPos.y);
+  filterComponent->getGraphPanel()->updateComponents();
+  return true;
+}
+
+bool MoveFilterAction::undo()
+{
+  audioEngine.getDoc().setNodePosition (nodeID, startPos.x, startPos.y);
+  filterComponent->getGraphPanel()->updateComponents();
+  return true;
+}
+
+int MoveFilterAction::getSizeInUnits()
 {
   return (int) sizeof (*this); //xxx should be more accurate
 }
@@ -68,7 +128,7 @@ void GraphEditor::mouseDown (const MouseEvent& e)
     PopupMenu m;
     audioEngine.createDeviceMenu(m);
     const int r = m.show();
-    createNewPlugin (audioEngine.getChosenType (r), e.x, e.y);
+    createNewFilter (audioEngine.getChosenType (r), e.x, e.y);
   }
   else
   {
@@ -90,12 +150,12 @@ void GraphEditor::mouseUp (const MouseEvent& e)
   removeChildComponent (&lassoComp);
 }
 
-void GraphEditor::createNewPlugin (const PluginDescription* desc, int x, int y)
+void GraphEditor::createNewFilter (const PluginDescription* desc, int x, int y)
 {
   if (desc != nullptr)
   {
     audioEngine.getDoc().beginTransaction();
-    audioEngine.getDoc().perform(new CreatePluginAction(audioEngine, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add plug-in"));
+    audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add filter"));
   }
 }
 
@@ -404,37 +464,6 @@ GraphEditor* PinComponent::getGraphPanel() const noexcept
 }
 
 #pragma mark -
-#pragma mark MovePluginAction
-
-MovePluginAction::MovePluginAction (PMixAudioEngine& audioEngine, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
-: audioEngine(audioEngine)
-, filterComponent(filterComponent)
-, nodeID(nodeID)
-, startPos(startPos)
-, endPos(endPos)
-{
-}
-
-bool MovePluginAction::perform()
-{      
-  audioEngine.getDoc().setNodePosition (nodeID, endPos.x, endPos.y);
-  filterComponent->getGraphPanel()->updateComponents();
-  return true;
-}
-
-bool MovePluginAction::undo()
-{      
-  audioEngine.getDoc().setNodePosition (nodeID, startPos.x, startPos.y);
-  filterComponent->getGraphPanel()->updateComponents();
-  return true;
-}
-
-int MovePluginAction::getSizeInUnits()
-{
-  return (int) sizeof (*this); //xxx should be more accurate
-}
-
-#pragma mark -
 #pragma mark FilterComponent
 
 FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 filterID_)
@@ -491,7 +520,22 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     
     if (r == 1)
     {
-      audioEngine.getDoc().removeFilter (filterID);
+      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
+      {
+        AudioPluginInstance* const instance = dynamic_cast<AudioPluginInstance*>(f->getProcessor());
+
+        if (instance)
+        {
+          PluginDescription desc;
+          instance->fillInPluginDescription(desc);
+          
+          double x, y;
+          audioEngine.getDoc().getNodePosition(filterID, x, y);
+          
+          audioEngine.getDoc().beginTransaction();
+          audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, desc, filterID, x, y), TRANS("remove filter"));
+        }
+      }
       return;
     }
     else if (r == 2)
@@ -584,7 +628,7 @@ void FilterComponent::mouseUp (const MouseEvent& e)
     {
       moving = false;
       audioEngine.getDoc().beginTransaction();
-      audioEngine.getDoc().perform(new MovePluginAction(audioEngine, this, filterID, startPos, endPos), "move plug-in");
+      audioEngine.getDoc().perform(new MoveFilterAction(audioEngine, this, filterID, startPos, endPos), "move filter");
     }
   }    
 }
