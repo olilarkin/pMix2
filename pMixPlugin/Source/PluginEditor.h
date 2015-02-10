@@ -17,6 +17,8 @@ public:
 private:
   PMixPluginAudioProcessor& processor;
   ScopedPointer<MainComponent> mainComponent;
+  ScopedPointer<ResizableCornerComponent> resizer;
+  ComponentBoundsConstrainer resizeLimits;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixPluginAudioProcessorEditor)
 };

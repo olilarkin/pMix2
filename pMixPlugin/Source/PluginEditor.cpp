@@ -6,6 +6,9 @@ PMixPluginAudioProcessorEditor::PMixPluginAudioProcessorEditor (PMixPluginAudioP
 {
   mainComponent = new MainComponent (processor.getAudioEngine());
   addAndMakeVisible(mainComponent);
+
+  addAndMakeVisible (resizer = new ResizableCornerComponent (this, &resizeLimits));
+  resizeLimits.setSizeLimits (500, 300, 1920, 1200);
   
   setSize (1000, 700);
 }
@@ -23,4 +26,5 @@ void PMixPluginAudioProcessorEditor::paint (Graphics& g)
 void PMixPluginAudioProcessorEditor::resized()
 {
   mainComponent->setBounds (0, 0, getWidth(), getHeight());
+  resizer->setBounds (getWidth() - 16, getHeight() - 16, 16, 16);
 }

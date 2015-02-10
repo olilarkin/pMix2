@@ -37,6 +37,8 @@
           <FILE id="VQHPHd" name="pMixPrefsComponent.h" compile="0" resource="0"
                 file="../Source/pMixPrefsComponent.h"/>
         </GROUP>
+        <FILE id="zRF3Ya" name="pMixConsole.cpp" compile="1" resource="0" file="../Source/pMixConsole.cpp"/>
+        <FILE id="ezHv61" name="pMixConsole.h" compile="0" resource="0" file="../Source/pMixConsole.h"/>
         <FILE id="Bc6YO4" name="pMixFileBrowser.cpp" compile="1" resource="0"
               file="../Source/pMixFileBrowser.cpp"/>
         <FILE id="UCYaV3" name="pMixFileBrowser.h" compile="0" resource="0"
