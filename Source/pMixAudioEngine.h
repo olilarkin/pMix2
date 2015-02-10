@@ -34,7 +34,7 @@ public:
   void setPluginSortMethod(KnownPluginList::SortMethod sortMethod);
   
   // called from GUI classes to populate menus
-  void addPluginsToMenu (PopupMenu& m) const;
+  void createDeviceMenu (PopupMenu& m) const;
   const PluginDescription* getChosenType (const int menuID) const;
   
   //ChangeListener

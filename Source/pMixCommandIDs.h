@@ -30,6 +30,12 @@ namespace CommandIDs
   static const int showGraphEditor        = 0xf20017;
   static const int showCodeEditor         = 0xf20018;
   static const int showParameters         = 0xf20019;
+  
+  static const int newAudioInput          = 0xe20000;
+  static const int newAudioOutput         = 0xe20001;
+  static const int newMIDIInput           = 0xe20002;
+  static const int newMIDIOutput          = 0xe20003;
+  static const int newFaustEffect         = 0xe20004;
 }
 
 

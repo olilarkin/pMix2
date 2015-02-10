@@ -8,6 +8,7 @@
 */
 
 #include "pMixAudioEngine.h"
+#include "pMixCommandIDs.h"
 
 PMixAudioEngine::PMixAudioEngine()
 : doc(*this)
@@ -70,20 +71,39 @@ void PMixAudioEngine::setPluginSortMethod(KnownPluginList::SortMethod sortMethod
   getAppProperties().getUserSettings()->setValue ("pluginSortMethod", (int) pluginSortMethod);
 }
 
-void PMixAudioEngine::addPluginsToMenu (PopupMenu& m) const
+void PMixAudioEngine::createDeviceMenu (PopupMenu& m) const
 {
-  for (int i = 0; i < internalTypes.size(); ++i)
-    m.addItem (i + 1, internalTypes.getUnchecked(i)->name);
+  PopupMenu ioMenu;
+  
+  ioMenu.addItem (CommandIDs::newAudioInput, internalTypes.getUnchecked(0)->name);
+  ioMenu.addItem (CommandIDs::newAudioOutput, internalTypes.getUnchecked(1)->name);
+  ioMenu.addItem (CommandIDs::newMIDIInput, internalTypes.getUnchecked(2)->name);
+  ioMenu.addItem (CommandIDs::newMIDIOutput, internalTypes.getUnchecked(3)->name);
 
-  m.addSeparator();
+  m.addSubMenu("I/O", ioMenu);
+  
+  PopupMenu faustMenu;
+  faustMenu.addItem(CommandIDs::newFaustEffect, "Effect");
+  faustMenu.addItem(CommandIDs::newFaustEffect, "Synth");
 
-  knownPluginList.addToMenu (m, pluginSortMethod);
+  m.addSubMenu("Faust", faustMenu);
+  
+  PopupMenu pluginsMenu;
+  knownPluginList.addToMenu (pluginsMenu, pluginSortMethod);
+
+  m.addSubMenu("Plugins", pluginsMenu);
 }
 
 const PluginDescription* PMixAudioEngine::getChosenType (const int menuID) const
 {
-  if (menuID >= 1 && menuID < 1 + internalTypes.size())
-    return internalTypes [menuID - 1];
-
-  return knownPluginList.getType (knownPluginList.getIndexChosenByMenu (menuID));
+  switch (menuID)
+  {
+    case CommandIDs::newAudioInput: return internalTypes[0];
+    case CommandIDs::newAudioOutput: return internalTypes[1];
+    case CommandIDs::newMIDIInput: return internalTypes[2];
+    case CommandIDs::newMIDIOutput: return internalTypes[3];
+    case CommandIDs::newFaustEffect: return internalTypes[4];
+    default:
+      return knownPluginList.getType (knownPluginList.getIndexChosenByMenu (menuID));
+  }
 }
