@@ -34,8 +34,13 @@ faustgen_factory::faustgen_factory(const String& name)
   fFaustNumber = gFaustCounter;
   
 #if JUCE_MAC
+  
+#if PMIX_PLUGIN
+  CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMixPlugin"));
+#else
   // OSX only : access to the pMix bundle
   CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMix"));
+#endif
   CFURLRef faustgen_ref = CFBundleCopyBundleURL(faustgen_bundle);
   UInt8 bundle_path[512];
   Boolean res = CFURLGetFileSystemRepresentation(faustgen_ref, true, bundle_path, 512);

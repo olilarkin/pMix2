@@ -17,6 +17,7 @@ PMixPluginAudioProcessorEditor::~PMixPluginAudioProcessorEditor()
 
 void PMixPluginAudioProcessorEditor::paint (Graphics& g)
 {
+  g.fillAll (Colours::lightgrey);
 }
 
 void PMixPluginAudioProcessorEditor::resized()
