@@ -27,8 +27,9 @@ public:
   void changeListenerCallback (ChangeBroadcaster* source);
   //void buttonClicked (Button* button);
   
-private:
   ScopedPointer<WebBrowserComponent> browser;
+
+private:
   PMixAudioEngine& audioEngine;
   FaustAudioProcessor* selectedFaustAudioProcessor;
   

@@ -24,18 +24,13 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   addAndMakeVisible (graphEditor = new GraphEditor (audioEngine));
   //  addAndMakeVisible (treeView = new ParamTreeView(graph));
 
-  //keyState.addListener (&audio.getGraphPlayer().getMidiMessageCollector());
-  
-  //addAndMakeVisible (keyboardComp = new MidiKeyboardComponent (keyState, MidiKeyboardComponent::horizontalKeyboard));
-  
   interpolationSpace = new InterpolationSpaceComponent(audioEngine);
   
   
   fileBrowser = new FileBrowser();
-  //addAndMakeVisible(webBrowser = new WebBrowserComponent());
   webBrowser = new WebBrowser(audioEngine);
   paramView = new ParamView(audioEngine);
-  codeEditor = new CodeEditor(audioEngine);
+  codeEditor = new CodeEditor(audioEngine, *webBrowser);
   graphEditor->addChangeListener(codeEditor);
   graphEditor->addChangeListener(webBrowser);
 
@@ -53,10 +48,6 @@ MainComponent::~MainComponent()
   //graphEditor->removeAllChangeListeners();
   
   removeAllChildren();
-
-  //deleteAllChildren();
-  
-  //keyState.removeListener (&audio.getGraphPlayer().getMidiMessageCollector());
 }
 
 void MainComponent::resized()

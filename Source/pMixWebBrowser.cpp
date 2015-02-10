@@ -27,8 +27,8 @@ void WebBrowser::paint (Graphics& g)
 
 void WebBrowser::resized()
 {
-  Rectangle<int> r (getLocalBounds().reduced (8));
-  browser->setBounds (r.withTrimmedTop (8));
+  Rectangle<int> r (getLocalBounds());
+  browser->setBounds (r);
 }
 
 void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)

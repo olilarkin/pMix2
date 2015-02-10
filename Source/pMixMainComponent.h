@@ -34,7 +34,6 @@ private:
   pMixLookAndFeel lookAndFeel;
 
   PMixAudioEngine& audioEngine;  
-  //MidiKeyboardState keyState;
   
   ScopedPointer<SplitComponent> splitComponent;
   ScopedPointer<CodeEditor> codeEditor;

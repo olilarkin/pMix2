@@ -33,7 +33,7 @@ void CodeEditor::paint (Graphics& g)
 
 void CodeEditor::resized()
 {
-  Rectangle<int> r (getLocalBounds().reduced (8));
+  Rectangle<int> r (getLocalBounds());
   compileButton.setBounds(8, 8, 100, 20 );
   svgButton.setBounds(108, 8, 100, 20 );
   editor->setBounds (r.withTrimmedTop (40));
