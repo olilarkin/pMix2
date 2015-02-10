@@ -2,7 +2,6 @@
   ==============================================================================
 
     pMixConsole.h
-    Created: 1 Feb 2015 9:42:31pm
     Author:  Oliver Larkin
 
   ==============================================================================
@@ -13,10 +12,10 @@
 
 #include "JuceHeader.h"
 
-class pMixConsoleListBoxModel   : public ListBoxModel
+class ConsoleListBoxModel   : public ListBoxModel
 {
 public:
-    pMixConsoleListBoxModel (const Array<String>& list)
+    ConsoleListBoxModel (const Array<String>& list)
         : messageList (list)
     {
     }
@@ -32,13 +31,7 @@ public:
         {
             g.setColour (Colours::black);
 
-            double time = 0;
-
-            g.drawText (String::formatted ("%02d:%02d:%02d",
-                                           ((int) (time / 3600.0)) % 24,
-                                           ((int) (time / 60.0)) % 60,
-                                           ((int) time) % 60)
-                            + "  -  Hello World",
+            g.drawText (messageList.getFirst(),
                         Rectangle<int> (width, height).reduced (4, 0),
                         Justification::centredLeft, true);
         }
@@ -47,10 +40,49 @@ public:
 private:
     const Array<String>& messageList;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (pMixConsoleListBoxModel)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConsoleListBoxModel)
 };
 
+class Console  : public Component
+               , private AsyncUpdater
+{
+public:
+  Console();
+  ~Console();
+  
+  void paint (Graphics& g) override;
+  
+  void resized() override;
 
+private:
+  ListBox messageListBox;
+  Array<String> messageList;
+  ConsoleListBoxModel listBoxModel;
+
+
+  // This is used to dispach an incoming message to the message thread
+  struct IncomingMessageCallback   : public CallbackMessage
+  {
+    IncomingMessageCallback (Console* d, const String& m)
+    : console (d), message (m) {}
+    
+    void messageCallback() override
+    {
+      if (console != nullptr)
+        console->addMessageToList (message);
+    }
+
+    Component::SafePointer<Console> console;
+    String message;
+  };
+
+  void postMessageToList (const String& message);
+  void addMessageToList (const String& message);
+
+  void handleAsyncUpdate() override;
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Console);
+};
 
 
 #endif  // PMIXCONSOLE_H_INCLUDED

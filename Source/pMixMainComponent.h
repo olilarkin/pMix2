@@ -18,6 +18,7 @@
 #include "pMixLookAndFeel.h"
 #include "SplitComponent.h"
 #include "pMixFileBrowser.h"
+#include "pMixConsole.h"
 
 class MainComponent  : public Component
 {
@@ -35,7 +36,10 @@ private:
 
   PMixAudioEngine& audioEngine;  
   
-  ScopedPointer<SplitComponent> splitComponent;
+  ScopedPointer<SplitComponent> vsplitComponent;
+  ScopedPointer<SplitComponent> hsplitComponent;
+
+  ScopedPointer<Console> console;
   ScopedPointer<CodeEditor> codeEditor;
   ScopedPointer<GraphEditor> graphEditor;
   ScopedPointer<TooltipBar> statusBar;

@@ -26,7 +26,7 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
 
   interpolationSpace = new InterpolationSpaceComponent(audioEngine);
   
-  
+  console = new Console();
   fileBrowser = new FileBrowser();
   webBrowser = new WebBrowser(audioEngine);
   paramView = new ParamView(audioEngine);
@@ -36,7 +36,8 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
 
   addAndMakeVisible (statusBar = new TooltipBar());
   
-  addAndMakeVisible(splitComponent = new SplitComponent(*codeEditor, *webBrowser, false));
+  addAndMakeVisible(hsplitComponent = new SplitComponent(*webBrowser, *console, true));
+  addAndMakeVisible(vsplitComponent = new SplitComponent(*codeEditor, *hsplitComponent, false));
 
   graphEditor->updateComponents();
 }
@@ -52,15 +53,20 @@ MainComponent::~MainComponent()
 
 void MainComponent::resized()
 {
-  if (!splitComponent->GetSplitBarPosition())
-    splitComponent->SetSplitBarPosition(getHeight() / 2.);
+  if (!vsplitComponent->GetSplitBarPosition())
+    vsplitComponent->SetSplitBarPosition(getHeight() / 2.);
 
-  Component* vcomps[] = { graphEditor, verticalDividerBar, splitComponent };
+  
+  Component* vcomps[] = { graphEditor, verticalDividerBar, vsplitComponent };
   
   verticalLayout.layOutComponents (vcomps, 3,
                                    0, 0, getWidth(), getHeight(),
                                    false,     // lay out side-by-side
                                    true);     // resize the components' heights as well as widths
+  
+  
+  if (!hsplitComponent->GetSplitBarPosition())
+    hsplitComponent->SetSplitBarPosition(hsplitComponent->getWidth() / 2.);
   
 //  graphEditor->setBounds(getBounds());
 //  layoutEditor->setTargetComponent(graphEditor);
