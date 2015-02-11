@@ -65,10 +65,10 @@ void FaustAudioProcessor::fillInitialInPluginDescription (PluginDescription& des
 void FaustAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
   if (!fDSP)
-    create_dsp(true);
+    create_dsp();
   
-  setPlayConfigDetails(fDSP->getNumInputs(),  fDSP->getNumOutputs(), sampleRate, samplesPerBlock);
   fDSP->init(sampleRate);
+  setPlayConfigDetails(fDSP->getNumInputs(),  fDSP->getNumOutputs(), sampleRate, samplesPerBlock);
 }
 
 void FaustAudioProcessor::releaseResources()
@@ -212,12 +212,14 @@ void FaustAudioProcessor::setStateInformation (const void* data, int sizeInBytes
     if (xmlState->hasTagName ("FAUSTGEN"))
     {
       fDSPfactory->setStateInformation(*xmlState);
-      create_dsp(true);
     }
   }
+  
+  if (!fDSP)
+    create_dsp();
 }
 
-void FaustAudioProcessor::create_dsp(bool init)
+void FaustAudioProcessor::create_dsp()
 {
   const ScopedLock lock(fDSPfactory->fDSPMutex);
 
@@ -228,7 +230,10 @@ void FaustAudioProcessor::create_dsp(bool init)
   //fDSP->buildUserInterface(&fDSPUI);
   
   // Initialize at the system's sampling rate
-  fDSP->init(getSampleRate());
+  if (getSampleRate() == 0)
+    fDSP->init(44100.);
+  else
+    fDSP->init(getSampleRate());
   
   updateHostDisplay();
 }
@@ -262,7 +267,7 @@ bool FaustAudioProcessor::allocate_factory(const string& effect_name)
 void FaustAudioProcessor::update_sourcecode()
 {
   // Create a new DSP instance
-  create_dsp(false);
+  create_dsp();
 
   // state is modified...
   //set_dirty();
