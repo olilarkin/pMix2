@@ -20,8 +20,6 @@ FaustAudioProcessor::FaustAudioProcessor()
     effect_name << "faustgen_factory-" << faustgen_factory::gFaustCounter;
     allocate_factory(effect_name.toStdString());
   }
-  
-  create_dsp(true);
 }
 
 FaustAudioProcessor::~FaustAudioProcessor()
@@ -66,6 +64,9 @@ void FaustAudioProcessor::fillInitialInPluginDescription (PluginDescription& des
 
 void FaustAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+  if (!fDSP)
+    create_dsp(true);
+  
   setPlayConfigDetails(fDSP->getNumInputs(),  fDSP->getNumOutputs(), sampleRate, samplesPerBlock);
   fDSP->init(sampleRate);
 }
@@ -182,25 +183,38 @@ int FaustAudioProcessor::getCurrentProgram()
   return 0;
 }
 
-void FaustAudioProcessor::setCurrentProgram (int /*index*/)
+void FaustAudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const String FaustAudioProcessor::getProgramName (int /*index*/)
+const String FaustAudioProcessor::getProgramName (int index)
 {
   return "Default";
 }
 
-void FaustAudioProcessor::changeProgramName (int /*index*/, const String& /*newName*/)
+void FaustAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
 void FaustAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
+  XmlElement xml ("FAUSTGEN");
+  fDSPfactory->getStateInformation(xml);
+  copyXmlToBinary (xml, destData);
 }
 
 void FaustAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
+  ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+  
+  if (xmlState != nullptr)
+  {
+    if (xmlState->hasTagName ("FAUSTGEN"))
+    {
+      fDSPfactory->setStateInformation(*xmlState);
+      create_dsp(true);
+    }
+  }
 }
 
 void FaustAudioProcessor::create_dsp(bool init)
@@ -215,8 +229,6 @@ void FaustAudioProcessor::create_dsp(bool init)
   
   // Initialize at the system's sampling rate
   fDSP->init(getSampleRate());
-  
-  //TODO: create Audio IO
   
   updateHostDisplay();
 }

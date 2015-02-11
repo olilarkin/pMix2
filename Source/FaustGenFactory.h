@@ -17,7 +17,6 @@
 #include <vector>
 #include <map>
 
-#include "base64.h"
 #include "faust/llvm-dsp.h"
 #include "JuceHeader.h"
 
@@ -71,8 +70,8 @@ public:
   void default_compile_options();
   void print_compile_options();
   
-//  void getfromdictionary(t_dictionary* d);
-//  void appendtodictionary(t_dictionary* d);
+  void getStateInformation (XmlElement& xml);
+  void setStateInformation (XmlElement& xml);
   
   int get_number() { return fFaustNumber; }
   String get_name() { return fName; }

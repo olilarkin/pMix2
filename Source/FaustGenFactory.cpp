@@ -80,46 +80,31 @@ faustgen_factory::faustgen_factory(const String& name)
 //    fDrawPath = "";
 //  }
 //#endif
-  
-//  t_max_err err = systhread_mutex_new(&fDSPMutex, SYSTHREAD_MUTEX_NORMAL);
-//  if (err != MAX_ERR_NONE) {
-//    LOG("Cannot allocate mutex...");
-//  }
 }
 
 faustgen_factory::~faustgen_factory()
 {
   free_dsp_factory();
   remove_svg();
-//  systhread_mutex_free(fDSPMutex);
 }
 
 void faustgen_factory::free_dsp_factory()
 {
   const ScopedLock lock(fDSPMutex);
-  
-//  if (lock())
-//  {
-    // Free all instances
-    set<FaustAudioProcessor*>::const_iterator it;
-    for (it = fInstances.begin(); it != fInstances.end(); it++) {
-      (*it)->free_dsp();
-    }
-    
-    //deleteDSPFactory(fDSPfactory); //commented out in faustgen~
-    fDSPfactory = 0;
-//    unlock();
-//  }
-//  else
-//  {
-//    LOG("Mutex lock cannot be taken...");
-//  }
+
+  // Free all instances
+  set<FaustAudioProcessor*>::const_iterator it;
+  for (it = fInstances.begin(); it != fInstances.end(); it++) {
+    (*it)->free_dsp();
+  }
+
+  //deleteDSPFactory(fDSPfactory); //commented out in faustgen~
+  fDSPfactory = 0;
 }
 
 llvm_dsp_factory* faustgen_factory::create_factory_from_bitcode()
 {
-  string decoded_bitcode = base64_decode(fBitCode.toRawUTF8(), strlen(fBitCode.toRawUTF8()));
-  return readDSPFactoryFromBitcode(decoded_bitcode, getTarget(), LLVM_OPTIMIZATION);
+  return readDSPFactoryFromBitcode(fBitCode.toStdString(), getTarget(), LLVM_OPTIMIZATION);
   
   /*
     Alternate model using machine code
@@ -135,7 +120,7 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_bitcode()
 llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioProcessor* instance)
 {
   String name_app;
-  name_app << "faustgen-" <<fFaustNumber;
+  name_app << "faustgen-" << fFaustNumber;
   
   // To be sure we get a correct SVG diagram...
   remove_svg();
@@ -190,7 +175,6 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
   {
     dsp = createDSPInstance(fDSPfactory);
     logStr << "Factory already allocated, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
-    LOG(logStr);
     goto end;
   }
   
@@ -203,7 +187,6 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
       //metadataDSPFactory(fDSPfactory, &meta);
       dsp = createDSPInstance(fDSPfactory);
       logStr << "Compilation from bitcode succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
-      LOG(logStr);
       goto end;
     }
   }
@@ -217,7 +200,6 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
 //      metadataDSPFactory(fDSPfactory, &meta);
       dsp = createDSPInstance(fDSPfactory);
       logStr << "Compilation from source code succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
-      LOG(logStr);
       goto end;
     }
   }
@@ -226,10 +208,9 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
   fDSPfactory = createDSPFactoryFromString("default", DEFAULT_CODE, 0, 0, getTarget(), error, LLVM_OPTIMIZATION);
   dsp = createDSPInstance(fDSPfactory);
   logStr << "Allocation of default DSP succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
-  LOG(logStr);
   
 end:
-  
+  LOG(logStr);
   assert(dsp);
 
   // Prepare JSON
@@ -325,96 +306,60 @@ void faustgen_factory::default_compile_options()
    */
 }
 
-//void faustgen_factory::getfromdictionary(t_dictionary* d)
-//{
-//  // Read sourcecode "faustgen_version" key
-//  const char* faustgen_version;
-//  t_max_err err = dictionary_getstring(d, gensym("version"), &faustgen_version);
-//  
-//  if (err != MAX_ERR_NONE) {
-//    LOG("Cannot read \"version\" key, so ignore bitcode, force recompilation and use default compileoptions");
-//    goto read_sourcecode;
-//  } else if (strcmp(faustgen_version, FAUSTGEN_VERSION) != 0) {
-//    LOG("Older version of faustgen~ (%s versus %s), so ignore bitcode, force recompilation and use default compileoptions", FAUSTGEN_VERSION, faustgen_version);
-//    goto read_sourcecode;
-//  }
-//  
-//  // Read bitcode size key
-//  err = dictionary_getlong(d, gensym("bitcode_size"), (t_atom_long*)&fBitCodeSize);
-//  if (err != MAX_ERR_NONE) {
-//    fBitCodeSize = 0;
-//    goto read_sourcecode;
-//  }
-//  
-//  // If OK read bitcode
-//  
-//  //LOG("read bitcode fBitCodeSize %d\n", fBitCodeSize);
-//  
-//  fBitCode = sysmem_newhandleclear(fBitCodeSize + 1);             // We need to use a size larger by one for the null terminator
-//  const char* bitcode;
-//  err = dictionary_getstring(d, gensym("bitcode"), &bitcode);     // The retrieved pointer references the string in the dictionary, it is not a copy.
-//  sysmem_copyptr(bitcode, *fBitCode, fBitCodeSize);
-//  if (err != MAX_ERR_NONE) {
-//    fBitCodeSize = 0;
-//  }
-//  
-//  //LOG("read bitcode fBitCodeSize OK %d\n", fBitCodeSize);
-//  
-//read_sourcecode:
-//  
-//  // Read sourcecode size key
-//  err = dictionary_getlong(d, gensym("sourcecode_size"), (t_atom_long*)&fSourceCodeSize);
-//  if (err != MAX_ERR_NONE) {
-//    goto default_sourcecode;
-//  }
-//  
-//  // If OK read sourcecode
-//  fSourceCode = sysmem_newhandleclear(fSourceCodeSize + 1);           // We need to use a size larger by one for the null terminator
-//  const char* sourcecode;
-//  err = dictionary_getstring(d, gensym("sourcecode"), &sourcecode);   // The retrieved pointer references the string in the dictionary, it is not a copy.
-//  sysmem_copyptr(sourcecode, *fSourceCode, fSourceCodeSize);
-//  if (err == MAX_ERR_NONE) {
-//    return;
-//  }
-//  
-//default_sourcecode:
-//  
-//  // Otherwise tries to create from default source code
-//  fSourceCodeSize = strlen(DEFAULT_SOURCE_CODE);
-//  fSourceCode = sysmem_newhandleclear(fSourceCodeSize + 1);
-//  sysmem_copyptr(DEFAULT_SOURCE_CODE, *fSourceCode, fSourceCodeSize);
-//}
+void faustgen_factory::getStateInformation (XmlElement& xml)
+{
+  xml.setAttribute ("version", FAUSTGEN_VERSION);
+  
+  if (fSourceCode.length())
+  {
+    xml.setAttribute ("sourcecode", fSourceCode);
+  }
+  
+  if (fDSPfactory)
+  {
+    string bitcode = writeDSPFactoryToBitcode(fDSPfactory);
+    xml.setAttribute ("bitcode", bitcode);
+  }
+}
 
-// Called when saving the Max patcher
-// This function saves the necessary data inside the json file (Faust sourcecode)
-//void faustgen_factory::appendtodictionary(t_dictionary* d)
-//{
-//  LOG("Saving object version, sourcecode and bitcode...");
-//  
-//  // Save faustgen~ version
-//  dictionary_appendstring(d, gensym("version"), FAUSTGEN_VERSION);
-//  
-//  // Save source code
-//  if (fSourceCodeSize) {
-//    dictionary_appendlong(d, gensym("sourcecode_size"), fSourceCodeSize);
-//    dictionary_appendstring(d, gensym("sourcecode"), *fSourceCode);
-//  }
-//  
-//  // Save bitcode
-//  if (fDSPfactory) {
-//    string bitcode = writeDSPFactoryToBitcode(fDSPfactory);
-//    
-//    // Alternate model using LLVM IR
-//    // string ircode = writeDSPFactoryToIR(fDSPfactory);
-//    
-//    // Alternate model using machine code
-//    //string machinecode = writeDSPFactoryToMachine(fDSPfactory);
-//    
-//    string encoded_bitcode = base64_encode((const unsigned char*)bitcode.c_str(), bitcode.size());
-//    dictionary_appendlong(d, gensym("bitcode_size"), encoded_bitcode.size());
-//    dictionary_appendstring(d, gensym("bitcode"), encoded_bitcode.c_str());
-//  }
-//}
+void faustgen_factory::setStateInformation (XmlElement& xml)
+{
+  String faustgen_version = xml.getStringAttribute("version");
+  String sourcecode;
+  String bitcode;
+  
+  if (faustgen_version == String::empty)
+  {
+    LOG("Cannot read \"version\" key, so ignore bitcode, force recompilation and use default compileoptions");
+    goto default_sourcecode;
+  }
+  else if (faustgen_version != FAUSTGEN_VERSION)
+  {
+    String logStr;
+    logStr << "Older version of faustgen (" << FAUSTGEN_VERSION << "versus " << faustgen_version << "), so ignore bitcode, force recompilation and use default compileoptions";
+    LOG(logStr);
+    goto read_sourcecode;
+  }
+  
+  bitcode = xml.getStringAttribute("bitcode");
+
+  if (bitcode != String::empty)
+  {
+    fBitCode = bitcode;
+  }
+  
+read_sourcecode:
+  sourcecode = xml.getStringAttribute("sourcecode");
+  
+  if (sourcecode != String::empty)
+  {
+    fSourceCode = sourcecode;
+    return;
+  }
+  
+default_sourcecode:
+  fSourceCode = DEFAULT_CODE;
+}
 
 bool faustgen_factory::try_open_svg()
 {
