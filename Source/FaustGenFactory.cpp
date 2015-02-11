@@ -134,14 +134,14 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_bitcode()
 
 llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioProcessor* instance)
 {
-  char name_app[64];
-  sprintf(name_app, "faustgen-%d", fFaustNumber);
+  String name_app;
+  name_app << "faustgen-" <<fFaustNumber;
   
   // To be sure we get a correct SVG diagram...
   remove_svg();
   
   default_compile_options();
-  print_compile_options();
+  //print_compile_options();
   
   // Prepare compile options
   string error;
@@ -156,12 +156,12 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
   }
   
   // Generate SVG file
-  if (!generateAuxFilesFromString(name_app, fSourceCode.toStdString() , fCompileOptions.size(), argv, error))
+  if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString() , fCompileOptions.size(), argv, error))
   {
     LOG("Generate SVG error : " + error);
   }
   
-  llvm_dsp_factory* factory = createDSPFactoryFromString(name_app, fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
+  llvm_dsp_factory* factory = createDSPFactoryFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
   
   if (factory)
   {
