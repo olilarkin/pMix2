@@ -13,16 +13,12 @@ FaustAudioProcessor::FaustAudioProcessor()
 : fDSPfactory(nullptr)
 , fDSP(nullptr)
 {
-  bool res = false;
-  
   // Empty (= no name) FaustAudioProcessor will be internally separated as groups with different names
   if (!fDSPfactory)
   {
-    string effect_name;
-    stringstream num;
-    num << faustgen_factory::gFaustCounter;
-    effect_name = "faustgen_factory-" + num.str();
-    res = allocate_factory(effect_name);
+    String effect_name;
+    effect_name << "faustgen_factory-" << faustgen_factory::gFaustCounter;
+    allocate_factory(effect_name.toStdString());
   }
   
   create_dsp(true);
@@ -30,6 +26,9 @@ FaustAudioProcessor::FaustAudioProcessor()
 
 FaustAudioProcessor::~FaustAudioProcessor()
 {
+  free_dsp();
+  
+  fDSPfactory->remove_instance(this);
 }
 
 void FaustAudioProcessor::fillInPluginDescription (PluginDescription& description) const
@@ -73,7 +72,6 @@ void FaustAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 
 void FaustAudioProcessor::releaseResources()
 {
-  
 }
 
 void FaustAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
@@ -86,7 +84,6 @@ void FaustAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& m
 
 void FaustAudioProcessor::reset()
 {
-  
 }
 
 bool FaustAudioProcessor::hasEditor() const
