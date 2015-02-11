@@ -136,13 +136,20 @@ AudioProcessorEditor* PMixPluginAudioProcessor::createEditor()
   return new PMixPluginAudioProcessorEditor (*this);
 }
 
-
 void PMixPluginAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
+  ScopedPointer<XmlElement> xml = audioEngine.getDoc().createXml();
+  copyXmlToBinary(*xml, destData);
 }
 
 void PMixPluginAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
+  ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+  
+  if (xmlState != nullptr)
+  {
+    audioEngine.getDoc().restoreFromXml(*xmlState);
+  }
 }
 
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()

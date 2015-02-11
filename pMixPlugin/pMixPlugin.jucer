@@ -72,8 +72,6 @@
               file="../Source/pMixInterpolationSpace.h"/>
       </GROUP>
       <GROUP id="{73074A0B-8FC5-C225-CA50-71BB74C20300}" name="Faust">
-        <FILE id="KMuixL" name="base64.cpp" compile="1" resource="0" file="../Source/base64.cpp"/>
-        <FILE id="KSjmFH" name="base64.h" compile="0" resource="0" file="../Source/base64.h"/>
         <FILE id="kUfRnk" name="FaustAudioProcessor.cpp" compile="1" resource="0"
               file="../Source/FaustAudioProcessor.cpp"/>
         <FILE id="FquO7I" name="FaustAudioProcessor.h" compile="0" resource="0"
