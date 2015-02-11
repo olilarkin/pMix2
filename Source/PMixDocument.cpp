@@ -76,8 +76,6 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
 
 void PMixDocument::removeFilter (const uint32 id)
 {
-  //PluginWindow::closeCurrentlyOpenWindowsFor (id);
-
   if (audioEngine.getGraph().removeNode (id))
     changed();
 }
