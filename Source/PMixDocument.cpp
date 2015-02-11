@@ -57,6 +57,8 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
     {
       node->properties.set ("x", x);
       node->properties.set ("y", y);
+      node->properties.set ("uiLastX", 0);
+      node->properties.set ("uiLastY", 0);
       changed();
     }
     else
@@ -188,7 +190,7 @@ Result PMixDocument::loadDocument (const File& file)
   XmlDocument doc (file);
   ScopedPointer<XmlElement> xml (doc.getDocumentElement());
 
-  if (xml == nullptr || ! xml->hasTagName ("PMixDocument"))
+  if (xml == nullptr || ! xml->hasTagName ("PMIXDOC"))
     return Result::fail ("Not a valid pMix file");
 
   restoreFromXml (*xml);
@@ -298,7 +300,7 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
 
 XmlElement* PMixDocument::createXml() const
 {
-  XmlElement* xml = new XmlElement ("PMixDocument");
+  XmlElement* xml = new XmlElement ("PMIXDOC");
 
   for (int i = 0; i < audioEngine.getGraph().getNumNodes(); ++i)
     xml->addChildElement (createNodeXml (audioEngine.getGraph().getNode (i)));
@@ -317,13 +319,13 @@ XmlElement* PMixDocument::createXml() const
     xml->addChildElement (e);
   }
   
-  XmlElement* e = new XmlElement ("MISC");
-
-  e->setAttribute ("snapPixels", snapGridPixels);
-  e->setAttribute ("snapActive", snapActive);
-  e->setAttribute ("snapShown", snapShown);
-  e->setAttribute ("overlayOpacity", String (componentOverlayOpacity, 3));
-  xml->addChildElement (e);
+//  XmlElement* e = new XmlElement ("MISC");
+//
+//  e->setAttribute ("snapPixels", snapGridPixels);
+//  e->setAttribute ("snapActive", snapActive);
+//  e->setAttribute ("snapShown", snapShown);
+//  e->setAttribute ("overlayOpacity", String (componentOverlayOpacity, 3));
+//  xml->addChildElement (e);
 
   return xml;
 }

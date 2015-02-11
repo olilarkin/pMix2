@@ -40,6 +40,7 @@ public:
   String getDocumentTitle();
   Result loadDocument (const File& file);
   Result saveDocument (const File& file);
+
   File getLastDocumentOpened();
   void setLastDocumentOpened (const File& file);
   // The special channel index used to refer to a filter's midi channel
