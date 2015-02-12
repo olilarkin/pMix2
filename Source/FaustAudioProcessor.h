@@ -88,6 +88,8 @@ public:
   void update_sourcecode();
   String get_sourcecode();
   faustgen_factory* getFactory() { return fDSPfactory; }
+  llvm_dsp* getDSP() { return fDSP; }
+
 private:
   faustgen_factory* fDSPfactory;
   llvm_dsp* fDSP;
