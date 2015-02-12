@@ -338,6 +338,9 @@ void PMixDocument::restoreFromXml (const XmlElement& xml)
     changed();
   }
 
+  // without this here, dynamic IO audio processors don't get set up and the connections fail
+  audioEngine.getGraph().prepareToPlay(44100., 1024);
+
   forEachXmlChildElementWithTagName (xml, e, "CONNECTION")
   {
     addConnection ((uint32) e->getIntAttribute ("srcFilter"),
