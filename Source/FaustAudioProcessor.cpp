@@ -224,7 +224,7 @@ void FaustAudioProcessor::create_dsp()
   const ScopedLock lock(fDSPfactory->fDSPMutex);
 
   fDSP = fDSPfactory->create_dsp_aux(this);
-  assert(fDSP);
+  jassert(fDSP);
   
   // Initialize User Interface (here connnection with controls)
   //fDSP->buildUserInterface(&fDSPUI);
