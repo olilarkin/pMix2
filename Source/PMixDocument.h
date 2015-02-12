@@ -36,7 +36,9 @@ public:
                          uint32 destFilterUID, int destFilterChannel);
   void clear();
   XmlElement* createXml() const;
+  void createNodeFromXml (const XmlElement& xml);
   void restoreFromXml (const XmlElement& xml);
+  
   String getDocumentTitle();
   Result loadDocument (const File& file);
   Result saveDocument (const File& file);
@@ -69,7 +71,6 @@ private:
   PMixAudioEngine& audioEngine;
   uint32 lastUID;
   uint32 getNextUID() noexcept;
-  void createNodeFromXml (const XmlElement& xml);
 
   int snapGridPixels;
   bool snapActive, snapShown;
