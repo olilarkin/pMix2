@@ -95,6 +95,8 @@ public:
                            const MouseEvent& e);
   void dragConnector (const MouseEvent& e);
   void endDraggingConnector (const MouseEvent& e);
+
+  void updateFaustNode (const int nodeID, String& newSourceCode);
   
   //LassoSource
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);

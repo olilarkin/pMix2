@@ -1,5 +1,6 @@
 #include "pMixDocument.h"
 #include "pMixAudioEngine.h"
+#include "FaustAudioProcessor.h"
 
 const int PMixDocument::midiChannelNumber = 0x1000;
 
@@ -295,6 +296,47 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
 }
+
+void PMixDocument::createFaustNodeFromXml (XmlElement& xml, String& newSourceCode)
+{
+  PluginDescription pd;
+  
+  forEachXmlChildElement (xml, e)
+  {
+    if (pd.loadFromXml (*e))
+      break;
+  }
+  
+  String errorMessage;
+  
+  AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
+  
+  FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(instance);
+  faustProc->getFactory()->update_sourcecode(newSourceCode, faustProc);
+  
+  // TODO: this is a bit wrong!
+  faustProc->prepareToPlay(44100., 8192);
+  
+  xml.setAttribute("numInputs", faustProc->getNumInputChannels());
+  xml.setAttribute("numOutputs", faustProc->getNumOutputChannels());
+  
+  AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().addNode (instance, xml.getIntAttribute ("uid")));
+  
+  //TODO: reload state if compile failed
+//  if (const XmlElement* const state = xml.getChildByName ("STATE"))
+//  {
+//    MemoryBlock m;
+//    m.fromBase64Encoding (state->getAllSubText());
+//    
+//    node->getProcessor()->setStateInformation (m.getData(), (int) m.getSize());
+//  }
+  
+  node->properties.set ("x", xml.getDoubleAttribute ("x"));
+  node->properties.set ("y", xml.getDoubleAttribute ("y"));
+  node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
+  node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
+}
+
 
 XmlElement* PMixDocument::createXml() const
 {

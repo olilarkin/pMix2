@@ -32,7 +32,7 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   fileBrowser = new FileBrowser();
   webBrowser = new WebBrowser(audioEngine);
   paramView = new ParamView(audioEngine);
-  codeEditor = new CodeEditor(audioEngine, *webBrowser, *console);
+  codeEditor = new CodeEditor(audioEngine, *webBrowser, *console, *graphEditor);
   graphEditor->addChangeListener(codeEditor);
   graphEditor->addChangeListener(webBrowser);
 

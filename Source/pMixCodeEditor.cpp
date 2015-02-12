@@ -10,13 +10,15 @@
 #include "pMixCodeEditor.h"
 #include "pMixGraphEditor.h"
 
-CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, WebBrowser& webBrowser, Console& console)
+CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, WebBrowser& webBrowser, Console& console, GraphEditor& graphEditor)
 : audioEngine(audioEngine)
 , webBrowser(webBrowser)
 , console(console)
+, graphEditor(graphEditor)
 , compileButton("Compile")
 , svgButton("View SVG")
 , selectedFaustAudioProcessor(nullptr)
+, selectedNodeID(0)
 {
   addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &cppTokeniser));
   addAndMakeVisible (&compileButton);
@@ -43,17 +45,16 @@ void CodeEditor::resized()
 
 void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
 {
-  GraphEditor* graphEditor = dynamic_cast<GraphEditor*>(source);
-  
-  if (graphEditor)
+  if (source == &graphEditor)
   {
-    if(graphEditor->getLassoSelection().getNumSelected() == 1)
+    if(graphEditor.getLassoSelection().getNumSelected() == 1)
     {
-      FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor->getLassoSelection().getSelectedItem(0));
+      FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
       
       if (selectedItem)
       {
-        FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(audioEngine.getDoc().getNodeForId(selectedItem->filterID)->getProcessor());
+        selectedNodeID = selectedItem->filterID;
+        FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(audioEngine.getDoc().getNodeForId(selectedNodeID)->getProcessor());
         
         if (faustProc)
         {
@@ -75,9 +76,9 @@ void CodeEditor::buttonClicked (Button* button)
   {
     if (button == &compileButton)
     {
-      console.clear();
-      selectedFaustAudioProcessor->getFactory()->update_sourcecode(codeDocument.getAllContent(), selectedFaustAudioProcessor);
-      webBrowser.browser->goToURL(selectedFaustAudioProcessor->getFactory()->get_svg_path());
+      //console.clear();
+      String newSourceCode = codeDocument.getAllContent();
+      graphEditor.updateFaustNode(selectedNodeID, newSourceCode);
     }
     else if (button == &svgButton)
     {

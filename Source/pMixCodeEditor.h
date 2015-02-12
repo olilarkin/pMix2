@@ -14,6 +14,7 @@
 #include "pMixAudioEngine.h"
 #include "pMixWebBrowser.h"
 #include "pMixConsole.h"
+#include "pMixGraphEditor.h"
 #include "FaustAudioProcessor.h"
 
 class CodeEditor : public Component
@@ -21,7 +22,7 @@ class CodeEditor : public Component
                  , public Button::Listener
 {
 public:
-  CodeEditor(PMixAudioEngine& audioEngine, WebBrowser& webBrowser, Console& console);
+  CodeEditor(PMixAudioEngine& audioEngine, WebBrowser& webBrowser, Console& console, GraphEditor& graphEditor);
   
   void paint (Graphics& g) override;
   
@@ -37,10 +38,12 @@ private:
   PMixAudioEngine& audioEngine;
   WebBrowser& webBrowser;
   Console& console;
+  GraphEditor& graphEditor;
   
   TextButton compileButton;
   TextButton svgButton;
   FaustAudioProcessor* selectedFaustAudioProcessor;
+  uint32 selectedNodeID;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CodeEditor);
 };

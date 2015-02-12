@@ -392,6 +392,38 @@ SelectedItemSet <Component*>& GraphEditor::getLassoSelection()
   return selectedItems;
 }
 
+void GraphEditor::updateFaustNode (const int nodeID, String& newSourceCode)
+{
+  ScopedPointer<XmlElement> temp(audioEngine.getDoc().createXml());
+  const XmlElement tempXml (*temp);
+  
+  audioEngine.getDoc().removeFilter(nodeID);
+  
+  forEachXmlChildElementWithTagName (tempXml, e, "FILTER")
+  {
+    if(nodeID==e->getIntAttribute("uid"))
+    {
+      double origX = e->getDoubleAttribute("x");
+      double origY = e->getDoubleAttribute("y");
+      e->setAttribute("x", origX);
+      e->setAttribute("y", origY);
+//      audioEngine.getDoc().createNodeFromXml(*e);
+      audioEngine.getDoc().createFaustNodeFromXml(*e, newSourceCode);
+      audioEngine.getDoc().changed();
+    }
+  }
+  
+  forEachXmlChildElementWithTagName (tempXml, e, "CONNECTION")
+  {
+    if(e->getIntAttribute ("srcFilter")==nodeID || e->getIntAttribute ("dstFilter")==nodeID)
+    {
+      audioEngine.getDoc().addConnection((uint32) e->getIntAttribute ("srcFilter"), e->getIntAttribute ("srcChannel"), (uint32) e->getIntAttribute ("dstFilter"), e->getIntAttribute ("dstChannel"));
+    }
+  }
+  
+  sendChangeMessage();
+}
+
 #pragma mark -
 #pragma mark PinComponent
 
