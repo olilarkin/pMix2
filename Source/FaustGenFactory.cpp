@@ -20,7 +20,8 @@ static string getTarget()
   int tmp;
   return (sizeof(&tmp) == 8) ? "" : "i386-apple-darwin10.6.0";
 }
-#elif JUCE_WIN32
+#else
+//#elif JUCE_WIN32
 static string getTarget() { return ""; }
 #endif
 
@@ -44,7 +45,7 @@ faustgen_factory::faustgen_factory(const String& name)
   CFURLRef faustgen_ref = CFBundleCopyBundleURL(faustgen_bundle);
   UInt8 bundle_path[512];
   Boolean res = CFURLGetFileSystemRepresentation(faustgen_ref, true, bundle_path, 512);
-  assert(res);
+  jassert(res);
   
   // Built the complete resource path
   fLibraryPath.push_back(string((const char*)bundle_path) + string(FAUST_LIBRARY_PATH));
@@ -132,7 +133,7 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
   string error;
  	const char* argv[64];
   
-  assert(fCompileOptions.size() < 64);
+  jassert(fCompileOptions.size() < 64);
   StringVectorIt it;
   int i = 0;
   for (it = fCompileOptions.begin(); it != fCompileOptions.end(); it++)
@@ -211,7 +212,7 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
   
 end:
   LOG(logStr);
-  assert(dsp);
+  jassert(dsp);
 
   // Prepare JSON
 //  JSONUI builder(m_siginlets, m_sigoutlets);
