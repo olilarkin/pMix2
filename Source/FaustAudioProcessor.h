@@ -30,7 +30,7 @@
 #endif
 
 #define LLVM_OPTIMIZATION 3
-#define DEFAULT_CODE "process = _,_;"
+#define DEFAULT_CODE "process = _;"
 
 #define LOG Logger::getCurrentLogger()->writeToLog
 
