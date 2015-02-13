@@ -158,6 +158,7 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
   {
     menu.addCommandItem (&getCommandManager(), CommandIDs::copy);
     menu.addCommandItem (&getCommandManager(), CommandIDs::paste);
+    menu.addCommandItem (&getCommandManager(), CommandIDs::del);
     menu.addSeparator();
     menu.addCommandItem (&getCommandManager(), CommandIDs::undo);
     menu.addCommandItem (&getCommandManager(), CommandIDs::redo);
@@ -264,17 +265,10 @@ void MainAppWindow::getAllCommands (Array <CommandID>& commands)
     
     CommandIDs::showPrefs ,
     CommandIDs::aboutBox ,
-    
-    CommandIDs::copy ,
-    CommandIDs::paste ,
-    
+
     CommandIDs::undo ,
     CommandIDs::redo ,
     
-    CommandIDs::zoomIn ,
-    CommandIDs::zoomOut ,
-    CommandIDs::zoomNormal ,
-
 //    CommandIDs::newAudioInput          ,
 //    CommandIDs::newAudioOutput         ,
 //    CommandIDs::newMIDIInput           ,
@@ -302,23 +296,17 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
   switch (commandID)
   {
     case CommandIDs::open:
-      result.setInfo ("Open...",
-                      "Opens a pMix patch",
-                      category, 0);
+      result.setInfo ("Open...", "Opens a pMix patch", category, 0);
       result.defaultKeypresses.add (KeyPress ('o', ModifierKeys::commandModifier, 0));
       break;
 
     case CommandIDs::save:
-      result.setInfo ("Save",
-                      "Saves the current patch",
-                      category, 0);
+      result.setInfo ("Save", "Saves the current patch", category, 0);
       result.defaultKeypresses.add (KeyPress ('s', ModifierKeys::commandModifier, 0));
       break;
 
     case CommandIDs::saveAs:
-      result.setInfo ("Save As...",
-                      "Saves a copy of the patch",
-                      category, 0);
+      result.setInfo ("Save As...", "Saves a copy of the patch", category, 0);
       result.defaultKeypresses.add (KeyPress ('s', ModifierKeys::shiftModifier | ModifierKeys::commandModifier, 0));
       break;
 
@@ -330,49 +318,14 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       result.setInfo ("Preferences...", String::empty, category, 0);
       break;
       
-    case CommandIDs::copy:
-      result.setInfo ("Copy",
-                      "Copies the currently selected filter to the clipboard",
-                      category, 0);
-      result.defaultKeypresses.add (KeyPress ('c', ModifierKeys::commandModifier, 0));
-      
-      break;
-    case CommandIDs::paste:
-      result.setInfo ("Paste",
-                      "Pastes from the clipboard",
-                      category, 0);
-      result.defaultKeypresses.add (KeyPress ('p', ModifierKeys::commandModifier, 0));
-      
-      break;
     case CommandIDs::undo:
-      result.setInfo ("Undo",
-                      "Undo the last action",
-                      category, 0);
+      result.setInfo ("Undo", "Undo the last action", category, 0);
       result.defaultKeypresses.add (KeyPress ('z', ModifierKeys::commandModifier, 0));
       
       break;
     case CommandIDs::redo:
-      result.setInfo ("Redo",
-                      "Redo the last action",
-                      category, 0);
+      result.setInfo ("Redo", "Redo the last action", category, 0);
       result.defaultKeypresses.add (KeyPress ('b', ModifierKeys::commandModifier, 0));
-      break;
-    case CommandIDs::zoomIn:
-      result.setInfo (TRANS("Zoom in"), TRANS("Zooms in on the current component."), category, 0);
-//      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
-      result.defaultKeypresses.add (KeyPress (']', ModifierKeys::commandModifier, 0));
-      break;
-      
-    case CommandIDs::zoomOut:
-      result.setInfo (TRANS("Zoom out"), TRANS("Zooms out on the current component."), category, 0);
-//      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
-      result.defaultKeypresses.add (KeyPress ('[', ModifierKeys::commandModifier, 0));
-      break;
-      
-    case CommandIDs::zoomNormal:
-      result.setInfo (TRANS("Zoom to 100%"), TRANS("Restores the zoom level to normal."), category, 0);
-//      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
-      result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
       
     case CommandIDs::showGraphEditor:
@@ -449,15 +402,7 @@ bool MainAppWindow::perform (const InvocationInfo& info)
     case CommandIDs::aboutBox:
       // TODO
       break;
-      
-    case CommandIDs::copy:
-      // TODO
-      break;
 
-    case CommandIDs::paste:
-      // TODO
-      break;
-      
     case CommandIDs::undo:
       // TODO
       audioEngine.getDoc().getUndoManager().undo();
@@ -467,10 +412,6 @@ bool MainAppWindow::perform (const InvocationInfo& info)
       // TODO
       audioEngine.getDoc().getUndoManager().redo();
       break;
-      
-    case CommandIDs::zoomIn:      getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() * 2.0)); break;
-    case CommandIDs::zoomOut:     getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() / 2.0)); break;
-    case CommandIDs::zoomNormal:  getMainComponent()->setZoom (1.0); break;
       
     default:
       return false;

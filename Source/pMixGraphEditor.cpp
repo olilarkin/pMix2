@@ -1,4 +1,5 @@
 #include "pMixGraphEditor.h"
+#include "pMixCommandIDs.h"
 
 #pragma mark -
 #pragma mark UndoableActions
@@ -104,6 +105,8 @@ GraphEditor::GraphEditor (PMixAudioEngine& audioEngine)
   audioEngine.getDoc().addChangeListener (this);
   selectedItems.addChangeListener(this);
   setWantsKeyboardFocus(true);
+  
+  getCommandManager().registerAllCommandsForTarget (this);
   
   setOpaque (true);
 }
@@ -373,6 +376,89 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
     audioEngine.getDoc().addConnection (srcFilter, srcChannel, dstFilter, dstChannel);
   }
 }
+
+#pragma mark -
+#pragma mark ApplicationCommandTarget
+ApplicationCommandTarget* GraphEditor::getNextCommandTarget()
+{
+  return findFirstTargetParentComponent();
+}
+
+void GraphEditor::getAllCommands (Array <CommandID>& commands)
+{
+  // this returns the set of all commands that this target can perform..
+  const CommandID ids[] = {
+    CommandIDs::copy ,
+    CommandIDs::paste ,
+    CommandIDs::del ,
+    CommandIDs::zoomIn ,
+    CommandIDs::zoomOut ,
+    CommandIDs::zoomNormal
+  };
+  
+  commands.addArray (ids, numElementsInArray (ids));
+}
+
+void GraphEditor::getCommandInfo (const CommandID commandID, ApplicationCommandInfo& result)
+{
+  const String category ("General");
+  
+  switch (commandID)
+  {
+    case CommandIDs::copy:
+      result.setInfo ("Copy", "Copies the currently selected items to the clipboard", category, 0);
+      result.defaultKeypresses.add (KeyPress ('c', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::paste:
+      result.setInfo ("Paste", "Pastes from the clipboard", category, 0);
+      result.defaultKeypresses.add (KeyPress ('v', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::del:
+      result.setInfo ("Delete", "Deletes the selection", category, 0);
+      break;
+      
+    case CommandIDs::zoomIn:
+      result.setInfo (TRANS("Zoom in"), TRANS("Zooms in on the current component."), category, 0);
+      result.defaultKeypresses.add (KeyPress (']', ModifierKeys::commandModifier, 0));
+      break;
+      
+    case CommandIDs::zoomOut:
+      result.setInfo (TRANS("Zoom out"), TRANS("Zooms out on the current component."), category, 0);
+      result.defaultKeypresses.add (KeyPress ('[', ModifierKeys::commandModifier, 0));
+      break;
+      
+    case CommandIDs::zoomNormal:
+      result.setInfo (TRANS("Zoom to 100%"), TRANS("Restores the zoom level to normal."), category, 0);
+      result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
+  }
+}
+
+bool GraphEditor::perform (const InvocationInfo& info)
+{
+//  MainComponent* const mainComponent = getMainComponent();
+  
+  switch (info.commandID)
+  {
+    case CommandIDs::copy:
+      // TODO
+      break;
+      
+    case CommandIDs::paste:
+      // TODO
+      break;
+      
+//    case CommandIDs::zoomIn:      getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() * 2.0)); break;
+//    case CommandIDs::zoomOut:     getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() / 2.0)); break;
+//    case CommandIDs::zoomNormal:  getMainComponent()->setZoom (1.0); break;
+      
+    default:
+      return false;
+  }
+  
+  return true;
+}
+
 
 void GraphEditor::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
 {

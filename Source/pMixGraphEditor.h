@@ -68,7 +68,8 @@ private:
 class GraphEditor : public Component,
                     public ChangeListener,
                     public LassoSource<Component*>,
-                    public ChangeBroadcaster
+                    public ChangeBroadcaster,
+                    public ApplicationCommandTarget
 {
 public:
   GraphEditor (PMixAudioEngine& audioEngine);
@@ -101,6 +102,12 @@ public:
   //LassoSource
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
   SelectedItemSet<Component*>& getLassoSelection();
+  
+  //ApplicationCommandTarget
+  ApplicationCommandTarget* getNextCommandTarget();
+  void getAllCommands (Array <CommandID>& commands);
+  void getCommandInfo (CommandID commandID, ApplicationCommandInfo& result);
+  bool perform (const InvocationInfo& info);
 
 private:
   PMixAudioEngine& audioEngine;
