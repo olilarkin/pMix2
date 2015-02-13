@@ -17,6 +17,7 @@
 #include "pMixCommandIDs.h"
 
 ApplicationCommandManager& getCommandManager();
+AudioDeviceManager& getDeviceManager();
 
 class MainAppWindow : public DocumentWindow,
                       public MenuBarModel,
@@ -52,11 +53,12 @@ public:
   bool tryToQuitApplication();
   MainComponent* getMainComponent() const;
   PMixAudioEngine& getAudioEngine() { return audioEngine; }
+  void showPreferences();
 private:
   PMixAudioEngine& audioEngine;
   
-  class PluginListWindow;
-  ScopedPointer <PluginListWindow> pluginListWindow;
+  class PreferencesWindow;
+  ScopedPointer <PreferencesWindow> preferencesWindow;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainAppWindow)
 };

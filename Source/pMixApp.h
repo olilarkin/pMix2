@@ -27,11 +27,11 @@ public:
   const String getApplicationName();
   const String getApplicationVersion();
   bool moreThanOneInstanceAllowed();
-//  void showAudioSettings();
   
+  AudioDeviceManager deviceManager;
+
 private:
   ScopedPointer<MainAppWindow> mainWindow;
-  AudioDeviceManager deviceManager;
   AudioProcessorPlayer graphPlayer;
   PMixAudioEngine audioEngine;
 //  SplashScreen* splash;

@@ -1,4 +1,5 @@
 #include "pMixMainAppWindow.h"
+#include "pMixCommandIDs.h"
 
 static double snapToIntegerZoom (double zoom)
 {
@@ -75,7 +76,7 @@ MainAppWindow::MainAppWindow(PMixAudioEngine& audioEngine)
   PopupMenu pop;
   pop.addCommandItem (&getCommandManager(), CommandIDs::aboutBox);
   pop.addSeparator();
-  pop.addCommandItem (&getCommandManager(), CommandIDs::showAudioSettings);
+  pop.addCommandItem (&getCommandManager(), CommandIDs::showPrefs);
   pop.addSeparator();
   
 #if JUCE_MAC
@@ -172,10 +173,10 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     menu.addSubMenu("Show", showMenu);
 
     PopupMenu floatMenu;
-    floatMenu.addItem (263, "Graph Editor", true, true);
-    floatMenu.addItem (264, "Interpolation Space", true, false);
-    floatMenu.addItem (265, "Code Editor", true, false);
-    floatMenu.addItem (266, "Parameters", true, false);
+    floatMenu.addItem (CommandIDs::floatGraphEditor, "Graph Editor", true, true);
+    floatMenu.addItem (CommandIDs::floatISpace, "Interpolation Space", true, false);
+    floatMenu.addItem (CommandIDs::floatCodeEditor, "Code Editor", true, false);
+    floatMenu.addItem (CommandIDs::floatParameters, "Parameters", true, false);
     menu.addSubMenu("Float", floatMenu);
     
     menu.addSeparator();
@@ -257,24 +258,39 @@ void MainAppWindow::getAllCommands (Array <CommandID>& commands)
 {
   // this returns the set of all commands that this target can perform..
   const CommandID ids[] = { 
-                            CommandIDs::aboutBox,
-                            CommandIDs::open,
-                            CommandIDs::save,
-                            CommandIDs::saveAs,
-                            CommandIDs::showPluginListEditor,
-                            CommandIDs::showAudioSettings,
-                            CommandIDs::copy,
-                            CommandIDs::paste,
-                            CommandIDs::undo,
-                            CommandIDs::redo,
-                            CommandIDs::zoomIn,
-                            CommandIDs::zoomOut,
-                            CommandIDs::zoomNormal,
-                            CommandIDs::showGraphEditor,
-                            CommandIDs::showISpace,
-                            CommandIDs::showCodeEditor,
-                            CommandIDs::showParameters
-                          };
+    CommandIDs::open ,
+    CommandIDs::save ,
+    CommandIDs::saveAs ,
+    
+    CommandIDs::showPrefs ,
+    CommandIDs::aboutBox ,
+    
+    CommandIDs::copy ,
+    CommandIDs::paste ,
+    
+    CommandIDs::undo ,
+    CommandIDs::redo ,
+    
+    CommandIDs::zoomIn ,
+    CommandIDs::zoomOut ,
+    CommandIDs::zoomNormal ,
+
+//    CommandIDs::newAudioInput          ,
+//    CommandIDs::newAudioOutput         ,
+//    CommandIDs::newMIDIInput           ,
+//    CommandIDs::newMIDIOutput          ,
+//    CommandIDs::newFaustEffect         ,
+    
+    CommandIDs::showISpace             ,
+    CommandIDs::showGraphEditor        ,
+    CommandIDs::showCodeEditor         ,
+    CommandIDs::showParameters         ,
+    
+    CommandIDs::floatGraphEditor       ,
+    CommandIDs::floatISpace            ,
+    CommandIDs::floatCodeEditor        ,
+    CommandIDs::floatParameters        ,
+  };
 
   commands.addArray (ids, numElementsInArray (ids));
 }
@@ -306,18 +322,12 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       result.defaultKeypresses.add (KeyPress ('s', ModifierKeys::shiftModifier | ModifierKeys::commandModifier, 0));
       break;
 
-    case CommandIDs::showPluginListEditor:
-      result.setInfo ("Edit the list of available plug-Ins...", String::empty, category, 0);
-      result.addDefaultKeypress ('p', ModifierKeys::commandModifier);
-      break;
-
-    case CommandIDs::showAudioSettings:
-      result.setInfo ("Preferences...", String::empty, category, 0);
-      result.addDefaultKeypress (',', ModifierKeys::commandModifier);
-      break;
-
     case CommandIDs::aboutBox:
       result.setInfo ("About pMix", String::empty, category, 0);
+      break;
+      
+    case CommandIDs::showPrefs:
+      result.setInfo ("Preferences...", String::empty, category, 0);
       break;
       
     case CommandIDs::copy:
@@ -385,31 +395,27 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
-      //TODO: use these:
-//    case StandardApplicationCommandIDs::undo:
-//      break;
-//      
-//    case StandardApplicationCommandIDs::redo:
-//      break;
-//      
-//    case StandardApplicationCommandIDs::cut:
-//      break;
-//      
-//    case StandardApplicationCommandIDs::copy:
-//      break;
-//      
-//    case StandardApplicationCommandIDs::paste:
-//      break;
-//      
-//    case StandardApplicationCommandIDs::del:
-//      break;
-//      
-//    case StandardApplicationCommandIDs::selectAll:
-//      break;
-//      
-//    case StandardApplicationCommandIDs::deselectAll:
-//      break; 
       
+    case CommandIDs::floatGraphEditor:
+      result.setInfo (TRANS("Graph Editor"), TRANS("Floats the Graph Editor"), category, 0);
+      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::floatISpace:
+      result.setInfo (TRANS("Interpolation Space"), TRANS("Floats the Interpolation Space"), category, 0);
+      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::floatCodeEditor:
+      result.setInfo (TRANS("Code Editor"), TRANS("Floats the Code Editor"), category, 0);
+      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::floatParameters:
+      result.setInfo (TRANS("Parameters"), TRANS("Floats the Parameters"), category, 0);
+      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
     default:
       break;
   }
@@ -437,17 +443,9 @@ bool MainAppWindow::perform (const InvocationInfo& info)
         audioEngine.getDoc().saveAs (File::nonexistent, true, true, true);
       break;
 
-    case CommandIDs::showPluginListEditor:
-//      if (pluginListWindow == nullptr)
-//        pluginListWindow = new PluginListWindow (*this, formatManager);
-
-//      pluginListWindow->toFront (true);
+    case CommandIDs::showPrefs:
+      showPreferences();
       break;
-
-    case CommandIDs::showAudioSettings:
-      //showAudioSettings();
-      break;
-
     case CommandIDs::aboutBox:
       // TODO
       break;
@@ -520,6 +518,34 @@ void MainAppWindow::filesDropped (const StringArray& files, int x, int y)
 //        createPlugin (typesFound.getUnchecked(i), pos.getX(), pos.getY());
 //    }
   }
+}
+
+void MainAppWindow::showPreferences()
+{
+  AudioDeviceSelectorComponent audioSettingsComp (getDeviceManager(),
+                                                  0, 256,
+                                                  0, 256,
+                                                  true, true, true, false);
+
+  audioSettingsComp.setSize (500, 450);
+
+  DialogWindow::LaunchOptions o;
+  o.content.setNonOwned (&audioSettingsComp);
+  o.dialogTitle                   = "Audio Settings";
+  o.componentToCentreAround       = getMainComponent();
+  o.dialogBackgroundColour        = Colours::grey;
+  o.escapeKeyTriggersCloseButton  = true;
+  o.useNativeTitleBar             = true;
+  o.resizable                     = false;
+
+  o.runModal();
+
+  ScopedPointer<XmlElement> audioState (getDeviceManager().createStateXml());
+
+  audioEngine.getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
+  audioEngine.getAppProperties().getUserSettings()->saveIfNeeded();
+
+  audioEngine.getDoc().removeIllegalConnections();
 }
 
 MainComponent* MainAppWindow::getMainComponent() const

@@ -55,43 +55,13 @@ void pMixApp::systemRequestedQuit()
     JUCEApplicationBase::quit();
 }
 
-//void pMixApp::showAudioSettings()
-//{
-//  AudioDeviceSelectorComponent audioSettingsComp (deviceManager,
-//                                                  0, 256,
-//                                                  0, 256,
-//                                                  true, true, true, false);
-//  
-//  audioSettingsComp.setSize (500, 450);
-//  
-//  DialogWindow::LaunchOptions o;
-//  o.content.setNonOwned (&audioSettingsComp);
-//  o.dialogTitle                   = "Audio Settings";
-//  o.componentToCentreAround       = mainWindow->getMainComponent();
-//  o.dialogBackgroundColour        = Colours::grey;
-//  o.escapeKeyTriggersCloseButton  = true;
-//  o.useNativeTitleBar             = true;
-//  o.resizable                     = false;
-//  
-//  o.runModal();
-//  
-//  ScopedPointer<XmlElement> audioState (deviceManager.createStateXml());
-//  
-//  getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
-//  getAppProperties().getUserSettings()->saveIfNeeded();
-//  
-//  MainComponent* const mainComponent = mainWindow->getMainComponent();
-//  
-//  if (mainComponent != nullptr)
-//    mainComponent->getDoc().removeIllegalConnections();
-//}
-
 const String pMixApp::getApplicationName()       { return "pMix"; }
 const String pMixApp::getApplicationVersion()    { return ProjectInfo::versionString; }
 bool pMixApp::moreThanOneInstanceAllowed()       { return false; }
 
 static pMixApp& getApp()                         { return *dynamic_cast<pMixApp*>(JUCEApplication::getInstance()); }
 ApplicationCommandManager& getCommandManager()   { return getApp().commandManager; }
+AudioDeviceManager& getDeviceManager()           { return getApp().deviceManager; }
 
 // This kicks the whole thing off..
 START_JUCE_APPLICATION (pMixApp)
