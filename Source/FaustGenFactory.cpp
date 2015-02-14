@@ -155,10 +155,10 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
   }
   else
   {
-//    if (fUpdateInstance == instance)
-//    {
-//      instance->hilight_on(error);
-//    }
+    if (fUpdateInstance == instance)
+    {
+      instance->hilight_on(error);
+    }
     LOG("Invalid Faust code or compile options : %s" + error);
     return 0;
   }
@@ -430,10 +430,10 @@ void faustgen_factory::update_sourcecode(String source_code, FaustAudioProcessor
     
     // Update all instances
     set<FaustAudioProcessor*>::const_iterator it;
-//    for (it = fInstances.begin(); it != fInstances.end(); it++)
-//    {
-//      (*it)->hilight_off();
-//    }
+    for (it = fInstances.begin(); it != fInstances.end(); it++)
+    {
+      (*it)->hilight_off();
+    }
     
     // Delete the existing Faust module
     free_dsp_factory();

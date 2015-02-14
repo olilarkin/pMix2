@@ -89,7 +89,9 @@ public:
   String get_sourcecode();
   faustgen_factory* getFactory() { return fDSPfactory; }
   llvm_dsp* getDSP() { return fDSP; }
-
+  void hilight_on(const String& error);
+  void hilight_off();
+  
 private:
   faustgen_factory* fDSPfactory;
   llvm_dsp* fDSP;

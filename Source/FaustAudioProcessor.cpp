@@ -277,3 +277,13 @@ String FaustAudioProcessor::get_sourcecode()
 {
   return fDSPfactory->get_sourcecode();
 }
+
+void FaustAudioProcessor::hilight_on(const String& error)
+{
+  //TODO:hilight_on
+}
+
+void FaustAudioProcessor::hilight_off()
+{
+  //TODO:hilight_off
+}
