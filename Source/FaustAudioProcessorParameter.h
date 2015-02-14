@@ -23,7 +23,8 @@ public:
   String getName(int maximumStringLength) const override { return name; }
   String getLabel() const override { return unitsLabel; }
   float getValueForText(const String& text) const override;
-  
+  int getNumSteps() const override { return int ((maxValue-minValue) / step ); }
+
 private:
   String name; // Faust calls this "label"
   String unitsLabel; // Metadata in the faust "label" decl
@@ -32,6 +33,10 @@ private:
   float minValue;
   float maxValue;
   float step;
+  
+  String tooltip;
+  String address; // OSC style heirarchy
+  StringArray nEntryLabels;
 };
 
 #endif  // FAUSTAUDIOPROCESSORPARAMETER_H_INCLUDED

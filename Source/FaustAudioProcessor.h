@@ -30,7 +30,7 @@
 #endif
 
 #define LLVM_OPTIMIZATION 3
-#define DEFAULT_CODE "process = _;"
+#define DEFAULT_CODE "gain = nentry(\"gain\", 1., 0., 1., 0.01);\nprocess = _*(gain);"
 
 #define LOG Logger::getCurrentLogger()->writeToLog
 
@@ -87,6 +87,7 @@ public:
   
 private:
   void createParameters();
+  void addFaustParameter(var& element);
   
   faustgen_factory* fDSPfactory;
   llvm_dsp* fDSP;

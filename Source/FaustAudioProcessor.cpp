@@ -262,10 +262,21 @@ void FaustAudioProcessor::hilight_off()
 
 void FaustAudioProcessor::createParameters()
 {
-  var ui = fInterface["ui"][0]["items"];
+  var ui = fInterface["ui"][0]; // skip top level "vgroup"
+  
+  addFaustParameter(ui);
+}
 
-  for (int paramIdx = 0; paramIdx < ui.size(); paramIdx ++)
+void FaustAudioProcessor::addFaustParameter(var& element)
+{
+  if (element["type"] == "vgroup" || element["type"] == "hgroup")
   {
-    addParameter(new FaustAudioProcessorParameter(ui[paramIdx]));
+    for (int idx = 0; idx < element["items"].size(); idx ++)
+    {
+      var subElement = element["items"][idx];
+      addFaustParameter(subElement);
+    }
   }
+  else
+    addParameter(new FaustAudioProcessorParameter(element));
 }
