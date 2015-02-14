@@ -2,7 +2,7 @@
 #define __PTVHEADER__
 
 #include "JuceHeader.h"
-#include "pMixDocument.h"
+#include "pMixAudioEngine.h"
 
 class  ParamTreeViewRootItem  : public TreeViewItem
 {
@@ -36,7 +36,7 @@ private:
 class  ParamTreeViewPluginItem  : public TreeViewItem
 {
 public:
-  ParamTreeViewPluginItem (PMixDocument& graph_, const uint32 filterID_);
+  ParamTreeViewPluginItem (PMixAudioEngine& audioEngine, const uint32 filterID_);
   ~ParamTreeViewPluginItem();
   int getItemWidth() const;
   int getItemHeight() const;
@@ -46,7 +46,7 @@ public:
   void itemOpennessChanged (bool isNowOpen);
 
 private:
-  PMixDocument& graph;
+  PMixAudioEngine& audioEngine;
   const uint32 filterID;
 };
 
@@ -56,7 +56,7 @@ class  ParamTreeView  : public Component,
 /*, public ButtonListener*/
 {
 public:
-  ParamTreeView(PMixDocument& graph_);
+  ParamTreeView(PMixAudioEngine& audioEngine);
   ~ParamTreeView();
   
   void paint (Graphics& g);
@@ -69,7 +69,7 @@ public:
   juce_UseDebuggingNewOperator
 
 private:
-  PMixDocument& graph;
+  PMixAudioEngine& audioEngine;
   ScopedPointer <TreeViewItem> rootItem;
   ScopedPointer <TreeView> treeView;
 

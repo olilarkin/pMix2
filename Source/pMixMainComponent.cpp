@@ -22,8 +22,8 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   
   Logger::setCurrentLogger(&logger);
 
-  addAndMakeVisible (graphEditor = new GraphEditor (audioEngine));
-  //  addAndMakeVisible (treeView = new ParamTreeView(graph));
+  addAndMakeVisible (graphEditor = new GraphEditor(audioEngine));
+  addAndMakeVisible (paramTreeView = new ParamTreeView(audioEngine));
 
   interpolationSpace = new InterpolationSpaceComponent(audioEngine);
   

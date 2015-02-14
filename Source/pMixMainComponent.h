@@ -20,6 +20,7 @@
 #include "pMixFileBrowser.h"
 #include "pMixConsole.h"
 #include "pMixLogger.h"
+#include "pMixParamTreeView.h"
 
 class MainComponent  : public Component
 {
@@ -48,7 +49,7 @@ private:
   ScopedPointer<ParamView> paramView;
   StretchableLayoutManager verticalLayout;
   ScopedPointer<StretchableLayoutResizerBar> verticalDividerBar;
-  //  ParamTreeView* treeView;
+  ScopedPointer<ParamTreeView> paramTreeView;
   
   PMixLogger logger;
 

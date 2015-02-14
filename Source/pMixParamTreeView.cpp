@@ -102,8 +102,8 @@ void ParamTreeViewParamItem::itemOpennessChanged (bool isNowOpen)
 {
 }
   
-ParamTreeViewPluginItem::ParamTreeViewPluginItem (PMixDocument& graph_, const uint32 filterID_)
-: graph (graph_),
+ParamTreeViewPluginItem::ParamTreeViewPluginItem (PMixAudioEngine& audioEngine, const uint32 filterID_)
+: audioEngine (audioEngine),
 filterID (filterID_)
 {
 }
@@ -124,7 +124,7 @@ int ParamTreeViewPluginItem::getItemHeight() const
 
 String ParamTreeViewPluginItem::getUniqueName() const
 {
-  const AudioProcessorGraph::Node::Ptr f (graph.getNodeForId (filterID));
+  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (filterID));
   return f->getProcessor()->getName(); // Unique?
   //  return xml.getTagName();
 }
@@ -137,7 +137,7 @@ bool ParamTreeViewPluginItem::mightContainSubItems()
 
 void ParamTreeViewPluginItem::paintItem (Graphics& g, int width, int height)
 {
-  const AudioProcessorGraph::Node::Ptr f (graph.getNodeForId (filterID));
+  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (filterID));
   
   // if this item is selected, fill it with a background colour..
   if (isSelected())
@@ -161,7 +161,7 @@ void ParamTreeViewPluginItem::itemOpennessChanged (bool isNowOpen)
   {
     if (getNumSubItems() == 0)
     {
-      const AudioProcessorGraph::Node::Ptr f (graph.getNodeForId (filterID));
+      const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (filterID));
       
       for(int i = 0; i < f->getProcessor()->getNumParameters(); i++)
       {
@@ -174,11 +174,11 @@ void ParamTreeViewPluginItem::itemOpennessChanged (bool isNowOpen)
   }
 }
 
-ParamTreeView::ParamTreeView(PMixDocument& graph_)
-: graph (graph_)
+ParamTreeView::ParamTreeView(PMixAudioEngine& audioEngine)
+: audioEngine (audioEngine)
 , treeView (0)
 {
-  graph.addChangeListener (this);
+  audioEngine.getDoc().addChangeListener (this);
   setName ("Tree Views");
   
   rootItem = new  ParamTreeViewRootItem();
@@ -221,16 +221,16 @@ void ParamTreeView::showCustomTreeView()
 void ParamTreeView::changeListenerCallback (ChangeBroadcaster*)
 {
   rootItem->clearSubItems();
-  for(int i = 3; i < graph.getNumFilters(); i++)
+  for(int i = 3; i < audioEngine.getDoc().getNumFilters(); i++)
   {
-    const AudioProcessorGraph::Node::Ptr f (graph.getNode (i));
+    const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
     addPlugin(f->nodeId);
   }
 }
 
 void ParamTreeView::addPlugin(const uint32 filterID_)
 {
-  rootItem->addSubItem (new ParamTreeViewPluginItem (graph, filterID_));
+  rootItem->addSubItem (new ParamTreeViewPluginItem (audioEngine, filterID_));
 }
 
 //void buttonClicked (Button*) {}
