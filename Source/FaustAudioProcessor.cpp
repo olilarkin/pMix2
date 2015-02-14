@@ -8,6 +8,7 @@
 */
 
 #include "FaustAudioProcessor.h"
+#include "FaustAudioProcessorParameter.h"
 
 FaustAudioProcessor::FaustAudioProcessor()
 : fDSPfactory(nullptr)
@@ -100,36 +101,6 @@ AudioProcessorEditor* FaustAudioProcessor::createEditor()
 const String FaustAudioProcessor::getName() const
 {
   return "FaustAudioProcessor";
-}
-
-int FaustAudioProcessor::getNumParameters()
-{
-  return 1;
-}
-
-float FaustAudioProcessor::getParameter (int index)
-{
-  return 0.;
-}
-
-float FaustAudioProcessor::getParameterDefaultValue (int index)
-{
-  return 0.;
-}
-
-void FaustAudioProcessor::setParameter (int index, float newValue)
-{
-  
-}
-
-const String FaustAudioProcessor::getParameterName (int index)
-{
-  return "unknown";
-}
-
-const String FaustAudioProcessor::getParameterText (int index)
-{
-  return "unknown";
 }
 
 const String FaustAudioProcessor::getInputChannelName (int channelIndex) const
@@ -227,7 +198,9 @@ void FaustAudioProcessor::create_dsp()
   jassert(fDSP);
   
   // Initialize User Interface (here connnection with controls)
-  //fDSP->buildUserInterface(&fDSPUI);
+  fInterface = JSON::parse(fDSPfactory->get_json());
+  
+  createParameters();
   
   // Initialize at the system's sampling rate
   if (getSampleRate() == 0)
@@ -241,7 +214,6 @@ void FaustAudioProcessor::create_dsp()
 void FaustAudioProcessor::free_dsp()
 {
   deleteDSPInstance(fDSP);
-  //fDSPUI.clear();
   fDSP = 0;
 }
 
@@ -286,4 +258,14 @@ void FaustAudioProcessor::hilight_on(const String& error)
 void FaustAudioProcessor::hilight_off()
 {
   //TODO:hilight_off
+}
+
+void FaustAudioProcessor::createParameters()
+{
+  var ui = fInterface["ui"][0]["items"];
+
+  for (int paramIdx = 0; paramIdx < ui.size(); paramIdx ++)
+  {
+    addParameter(new FaustAudioProcessorParameter(ui[paramIdx]));
+  }
 }

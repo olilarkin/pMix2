@@ -72,7 +72,6 @@ private:
   PMixAudioEngine& audioEngine;
   ScopedPointer <TreeViewItem> rootItem;
   ScopedPointer <TreeView> treeView;
-
 };
 
 

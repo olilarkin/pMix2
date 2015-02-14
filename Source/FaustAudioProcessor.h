@@ -55,13 +55,6 @@ public:
   
   const String getName() const override;
   
-  int getNumParameters() override;
-  float getParameter (int index) override;
-  float getParameterDefaultValue (int index) override;
-  void setParameter (int index, float newValue) override;
-  const String getParameterName (int index) override;
-  const String getParameterText (int index) override;
-  
   const String getInputChannelName (int channelIndex) const override;
   const String getOutputChannelName (int channelIndex) const override;
   bool isInputChannelStereoPair (int index) const override;
@@ -93,8 +86,11 @@ public:
   void hilight_off();
   
 private:
+  void createParameters();
+  
   faustgen_factory* fDSPfactory;
   llvm_dsp* fDSP;
+  var fInterface;
     
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioProcessor)
 };

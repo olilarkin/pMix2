@@ -215,11 +215,12 @@ end:
   jassert(dsp);
 
   // Prepare JSON
-//  JSONUI builder(m_siginlets, m_sigoutlets);
-//  metadataDSPFactory(fDSPfactory, &builder);
-//  dsp->buildUserInterface(&builder);
-//  fJSON = builder.JSON();
+  JSONUI builder(dsp->getNumInputs(), dsp->getNumOutputs());
+  metadataDSPFactory(fDSPfactory, &builder);
+  dsp->buildUserInterface(&builder);
+  fJSON = String(builder.JSON());
   
+  LOG(fJSON);
   return dsp;
 }
 

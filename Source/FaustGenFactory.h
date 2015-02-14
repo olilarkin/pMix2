@@ -17,6 +17,7 @@
 #include <vector>
 #include <map>
 
+#include "faust/gui/JSONUI.h"
 #include "faust/llvm-dsp.h"
 #include "JuceHeader.h"
 
@@ -46,7 +47,7 @@ private:
   FaustAudioProcessor* fUpdateInstance;      // the instance that inited an update
   
   String fName;                   // name of the DSP group
-  String fJSON;                   // JSON
+  String fJSON;              // JSON
   
   vector<String> fCompileOptions; // Faust compiler options
 
@@ -80,9 +81,9 @@ public:
 //  void write(File path);
   
   String get_sourcecode() { return fSourceCode; }
-//
-//  const char* get_json() { return fJSON.c_str(); }
-//  
+
+  String get_json() { return fJSON; }
+  
   void update_sourcecode(String source_code, FaustAudioProcessor* instance);
     
   // Compile DSP with -svg option and display the SVG files

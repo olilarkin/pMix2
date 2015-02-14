@@ -52,6 +52,10 @@
               file="Source/SplitComponent.h"/>
       </GROUP>
       <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
+        <FILE id="DwMReX" name="FaustAudioProcessorParameter.cpp" compile="1"
+              resource="0" file="Source/FaustAudioProcessorParameter.cpp"/>
+        <FILE id="WsFs9f" name="FaustAudioProcessorParameter.h" compile="0"
+              resource="0" file="Source/FaustAudioProcessorParameter.h"/>
         <FILE id="DBJuQb" name="FaustAudioProcessor.cpp" compile="1" resource="0"
               file="Source/FaustAudioProcessor.cpp"/>
         <FILE id="Q4Vrll" name="FaustAudioProcessor.h" compile="0" resource="0"
@@ -126,8 +130,8 @@
         <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Linux" externalLibraries="faust&#10;crypto&#10;z&#10;curses"
@@ -150,10 +154,10 @@
         <MODULEPATH id="juce_cryptography" path="../../juce/modules"/>
         <MODULEPATH id="juce_core" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
