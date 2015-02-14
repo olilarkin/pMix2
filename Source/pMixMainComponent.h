@@ -42,7 +42,6 @@ private:
   ScopedPointer<Console> console;
   ScopedPointer<CodeEditor> codeEditor;
   ScopedPointer<GraphEditor> graphEditor;
-  ScopedPointer<TooltipBar> statusBar;
   ScopedPointer<FileBrowser> fileBrowser;
   ScopedPointer<WebBrowser> webBrowser;
   ScopedPointer<InterpolationSpaceComponent> interpolationSpace;

@@ -35,8 +35,6 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   codeEditor = new CodeEditor(audioEngine, *webBrowser, *console, *graphEditor);
   graphEditor->addChangeListener(codeEditor);
   graphEditor->addChangeListener(webBrowser);
-
-  addAndMakeVisible (statusBar = new TooltipBar());
   
   addAndMakeVisible(hsplitComponent = new SplitComponent(*webBrowser, *console, true));
   addAndMakeVisible(vsplitComponent = new SplitComponent(*codeEditor, *hsplitComponent, false));

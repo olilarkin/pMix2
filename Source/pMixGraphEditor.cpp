@@ -1107,36 +1107,3 @@ void ConnectorComponent::getDistancesFromEnds (int x, int y, double& distanceFro
   distanceFromStart = juce_hypot (x - (x1 - getX()), y - (y1 - getY()));
   distanceFromEnd = juce_hypot (x - (x2 - getX()), y - (y2 - getY()));
 }
-
-
-#pragma mark -
-#pragma mark TooltipBar
-
-TooltipBar::TooltipBar()
-{
-  startTimer (100);
-}
-
-void TooltipBar::paint (Graphics& g)
-{
-  g.setFont (Font (getHeight() * 0.7f, Font::bold));
-  g.setColour (Colours::black);
-  g.drawFittedText (tip, 10, 0, getWidth() - 12, getHeight(), Justification::centredLeft, 1);
-}
-
-void TooltipBar::timerCallback()
-{
-  Component* const underMouse = Desktop::getInstance().getMainMouseSource().getComponentUnderMouse();
-  TooltipClient* const ttc = dynamic_cast <TooltipClient*> (underMouse);
-
-  String newTip;
-
-  if (ttc != nullptr && ! (underMouse->isMouseButtonDown() || underMouse->isCurrentlyBlockedByAnotherModalComponent()))
-    newTip = ttc->getTooltip();
-
-  if (newTip != tip)
-  {
-    tip = newTip;
-    repaint();
-  }
-}

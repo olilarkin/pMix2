@@ -217,21 +217,4 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConnectorComponent)
 };
 
-#pragma mark -
-#pragma mark TooltipBar
-
-class TooltipBar : public Component
-                 , private Timer
-{
-public:
-  TooltipBar();
-  void paint (Graphics& g);
-  void timerCallback();
-  
-private:
-  String tip;
-  
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TooltipBar)
-};
-
 #endif   // __GraphEditor_JUCEHEADER__
