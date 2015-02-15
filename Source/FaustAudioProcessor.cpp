@@ -100,7 +100,10 @@ AudioProcessorEditor* FaustAudioProcessor::createEditor()
 
 const String FaustAudioProcessor::getName() const
 {
-  return "FaustAudioProcessor";
+  if (fInterface["name"].toString() != String::empty)
+    return fInterface["name"].toString();
+  else
+    return "Faust Effect";
 }
 
 const String FaustAudioProcessor::getInputChannelName (int channelIndex) const
