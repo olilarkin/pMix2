@@ -46,6 +46,14 @@
               file="Source/pMixGraphEditor.cpp"/>
         <FILE id="RIOJxZ" name="pMixGraphEditor.h" compile="0" resource="0"
               file="Source/pMixGraphEditor.h"/>
+        <FILE id="WPt7ep" name="pMixGraphEditorParts.cpp" compile="1" resource="0"
+              file="Source/pMixGraphEditorParts.cpp"/>
+        <FILE id="qdpUgX" name="pMixGraphEditorParts.h" compile="0" resource="0"
+              file="Source/pMixGraphEditorParts.h"/>
+        <FILE id="LThEWc" name="pMixGraphEditorActions.cpp" compile="1" resource="0"
+              file="Source/pMixGraphEditorActions.cpp"/>
+        <FILE id="SLupqP" name="pMixGraphEditorActions.h" compile="0" resource="0"
+              file="Source/pMixGraphEditorActions.h"/>
         <FILE id="LTq3RV" name="SplitComponent.cpp" compile="1" resource="0"
               file="Source/SplitComponent.cpp"/>
         <FILE id="VL0byW" name="SplitComponent.h" compile="0" resource="0"

@@ -61,6 +61,8 @@ OBJECTS := \
   $(OBJDIR)/pMixParamView_95a42e7.o \
   $(OBJDIR)/pMixParamTreeView_a13fce25.o \
   $(OBJDIR)/pMixGraphEditor_f95221f0.o \
+  $(OBJDIR)/pMixGraphEditorParts_4bc4cb1a.o \
+  $(OBJDIR)/pMixGraphEditorActions_e9275577.o \
   $(OBJDIR)/SplitComponent_4c4bd10c.o \
   $(OBJDIR)/FaustAudioProcessorParameter_b0d2ebbb.o \
   $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
@@ -152,6 +154,16 @@ $(OBJDIR)/pMixParamTreeView_a13fce25.o: ../../Source/pMixParamTreeView.cpp
 $(OBJDIR)/pMixGraphEditor_f95221f0.o: ../../Source/pMixGraphEditor.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixGraphEditor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixGraphEditorParts_4bc4cb1a.o: ../../Source/pMixGraphEditorParts.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixGraphEditorParts.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixGraphEditorActions_e9275577.o: ../../Source/pMixGraphEditorActions.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixGraphEditorActions.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/SplitComponent_4c4bd10c.o: ../../Source/SplitComponent.cpp

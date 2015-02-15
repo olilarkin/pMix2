@@ -21,6 +21,7 @@
 #include "pMixConsole.h"
 #include "pMixLogger.h"
 #include "pMixParamTreeView.h"
+#include "pMixParamView.h"
 
 class MainComponent  : public Component
 {
