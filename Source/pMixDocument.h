@@ -39,7 +39,8 @@ public:
   void createNodeFromXml (const XmlElement& xml);
   void createFaustNodeFromXml (XmlElement& xml, String& newSourceCode);
   void restoreFromXml (const XmlElement& xml);
-  
+  static XmlElement* createNodeXml (AudioProcessorGraph::Node* const node) noexcept;
+
   String getDocumentTitle();
   Result loadDocument (const File& file);
   Result saveDocument (const File& file);

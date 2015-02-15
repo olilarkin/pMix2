@@ -227,7 +227,7 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   ->setValue ("recentPMixDocumentFiles", recentFiles.toString());
 }
 
-static XmlElement* createNodeXml (AudioProcessorGraph::Node* const node) noexcept
+ XmlElement* PMixDocument::createNodeXml (AudioProcessorGraph::Node* const node) noexcept
 {
   AudioPluginInstance* plugin = dynamic_cast <AudioPluginInstance*> (node->getProcessor());
 

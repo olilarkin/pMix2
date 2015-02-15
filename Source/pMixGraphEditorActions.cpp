@@ -41,12 +41,10 @@ int CreateFilterAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-RemoveFilterAction::RemoveFilterAction (PMixAudioEngine& audioEngine, PluginDescription desc, uint32 nodeID, double x, double y) noexcept
+RemoveFilterAction::RemoveFilterAction (PMixAudioEngine& audioEngine, uint32 nodeID) noexcept
 : audioEngine(audioEngine)
-, x(x)
-, y(y)
-, desc(desc)
 , nodeID(nodeID)
+, nodeXML(*audioEngine.getDoc().createNodeXml(audioEngine.getGraph().getNodeForId(nodeID)))
 {
 }
 
@@ -64,7 +62,8 @@ bool RemoveFilterAction::perform()
 
 bool RemoveFilterAction::undo()
 {
-  audioEngine.getDoc().addFilter(&desc, x, y);
+  audioEngine.getDoc().createNodeFromXml(nodeXML);
+  audioEngine.getDoc().changed();
   
   return true;
 }
@@ -74,9 +73,9 @@ int RemoveFilterAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-MoveFilterAction::MoveFilterAction (PMixAudioEngine& audioEngine, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
+MoveFilterAction::MoveFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
 : audioEngine(audioEngine)
-, filterComponent(filterComponent)
+, graphEditor(graphEditor)
 , nodeID(nodeID)
 , startPos(startPos)
 , endPos(endPos)
@@ -86,14 +85,14 @@ MoveFilterAction::MoveFilterAction (PMixAudioEngine& audioEngine, FilterComponen
 bool MoveFilterAction::perform()
 {
   audioEngine.getDoc().setNodePosition (nodeID, endPos.x, endPos.y);
-  filterComponent->getGraphPanel()->updateComponents();
+  graphEditor.updateComponents();
   return true;
 }
 
 bool MoveFilterAction::undo()
 {
   audioEngine.getDoc().setNodePosition (nodeID, startPos.x, startPos.y);
-  filterComponent->getGraphPanel()->updateComponents();
+  graphEditor.updateComponents();
   return true;
 }
 

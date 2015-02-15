@@ -145,14 +145,8 @@ void FilterComponent::mouseDown (const MouseEvent& e)
         
         if (instance)
         {
-          PluginDescription desc;
-          instance->fillInPluginDescription(desc);
-          
-          double x, y;
-          audioEngine.getDoc().getNodePosition(filterID, x, y);
-          
           audioEngine.getDoc().beginTransaction();
-          audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, desc, filterID, x, y), TRANS("remove filter"));
+          audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, filterID), TRANS("remove filter"));
         }
       }
       return;
@@ -247,7 +241,7 @@ void FilterComponent::mouseUp (const MouseEvent& e)
     {
       moving = false;
       audioEngine.getDoc().beginTransaction();
-      audioEngine.getDoc().perform(new MoveFilterAction(audioEngine, this, filterID, startPos, endPos), "move filter");
+      audioEngine.getDoc().perform(new MoveFilterAction(audioEngine, *getGraphPanel(), filterID, startPos, endPos), "move filter");
     }
   }
 }

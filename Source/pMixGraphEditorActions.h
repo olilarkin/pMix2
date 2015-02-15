@@ -39,30 +39,29 @@ private:
 class RemoveFilterAction  : public UndoableAction
 {
 public:
-  RemoveFilterAction (PMixAudioEngine& audioEngine, PluginDescription desc, uint32 nodeID,  double x, double y) noexcept;
+  RemoveFilterAction (PMixAudioEngine& audioEngine, uint32 nodeID) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
   PMixAudioEngine& audioEngine;
-  double x, y;
-  PluginDescription desc;
   uint32 nodeID;
+  XmlElement nodeXML;
   JUCE_DECLARE_NON_COPYABLE (RemoveFilterAction)
 };
 
 class MoveFilterAction  : public UndoableAction
 {
 public:
-  MoveFilterAction (PMixAudioEngine& audioEngine, FilterComponent* filterComponent, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
+  MoveFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
   PMixAudioEngine& audioEngine;
-  FilterComponent* filterComponent;
+  GraphEditor& graphEditor;
   uint32 nodeID;
   Point<double> startPos;
   Point<double> endPos;
