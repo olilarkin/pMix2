@@ -30,7 +30,7 @@
 #endif
 
 #define LLVM_OPTIMIZATION 3
-#define DEFAULT_CODE "gain = nentry(\"gain\", 1., 0., 1., 0.01);\nprocess = _*(gain);"
+#define DEFAULT_CODE "declare name \"Faust Effect\";\n\ngain = hslider(\"gain\", 1., 0., 1., 0.01);\nprocess = _*(gain);"
 
 #define LOG Logger::getCurrentLogger()->writeToLog
 
@@ -42,9 +42,11 @@ public:
   FaustAudioProcessor();
   ~FaustAudioProcessor();
   
+// AudioPluginInstance
   void fillInPluginDescription (PluginDescription& description) const override;
   static void fillInitialInPluginDescription (PluginDescription& description);
 
+// AudioProcessor
   void prepareToPlay (double sampleRate, int samplesPerBlock) override;
   void releaseResources() override;
   void processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages) override;

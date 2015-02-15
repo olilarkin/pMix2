@@ -167,7 +167,6 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
 llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
 {
   llvm_dsp* dsp = 0;
-//  Max_Meta meta;
   string error;
   String logStr;
 
@@ -185,7 +184,6 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
     fDSPfactory = create_factory_from_bitcode();
     if (fDSPfactory)
     {
-      //metadataDSPFactory(fDSPfactory, &meta);
       dsp = createDSPInstance(fDSPfactory);
       logStr << "Compilation from bitcode succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
       goto end;
@@ -198,7 +196,6 @@ llvm_dsp* faustgen_factory::create_dsp_aux(FaustAudioProcessor* instance)
     fDSPfactory = create_factory_from_sourcecode(instance);
     if (fDSPfactory)
     {
-//      metadataDSPFactory(fDSPfactory, &meta);
       dsp = createDSPInstance(fDSPfactory);
       logStr << "Compilation from source code succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
       goto end;
