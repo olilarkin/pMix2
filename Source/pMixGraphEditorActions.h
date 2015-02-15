@@ -47,7 +47,7 @@ public:
 private:
   PMixAudioEngine& audioEngine;
   uint32 nodeID;
-  XmlElement nodeXML;
+  ScopedPointer<XmlElement> nodeXML;
   JUCE_DECLARE_NON_COPYABLE (RemoveFilterAction)
 };
 

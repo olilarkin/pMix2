@@ -44,8 +44,8 @@ int CreateFilterAction::getSizeInUnits()
 RemoveFilterAction::RemoveFilterAction (PMixAudioEngine& audioEngine, uint32 nodeID) noexcept
 : audioEngine(audioEngine)
 , nodeID(nodeID)
-, nodeXML(*audioEngine.getDoc().createNodeXml(audioEngine.getGraph().getNodeForId(nodeID)))
 {
+  nodeXML = audioEngine.getDoc().createNodeXml(audioEngine.getGraph().getNodeForId(nodeID));
 }
 
 bool RemoveFilterAction::perform()
@@ -62,7 +62,7 @@ bool RemoveFilterAction::perform()
 
 bool RemoveFilterAction::undo()
 {
-  audioEngine.getDoc().createNodeFromXml(nodeXML);
+  audioEngine.getDoc().createNodeFromXml(*nodeXML);
   audioEngine.getDoc().changed();
   
   return true;
