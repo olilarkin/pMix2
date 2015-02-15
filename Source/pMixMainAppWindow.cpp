@@ -85,7 +85,7 @@ MainAppWindow::MainAppWindow(PMixAudioEngine& audioEngine)
   setMenuBar (this);
 #endif
   
-  getCommandManager().setFirstCommandTarget (this);
+//  getCommandManager().setFirstCommandTarget (this);
   
   //deviceManager->addChangeListener (graphEditor);
 }

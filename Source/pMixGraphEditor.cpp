@@ -107,7 +107,8 @@ GraphEditor::GraphEditor (PMixAudioEngine& audioEngine)
   setWantsKeyboardFocus(true);
   
   getCommandManager().registerAllCommandsForTarget (this);
-  
+  getCommandManager().setFirstCommandTarget (this);
+
   setOpaque (true);
 }
 
