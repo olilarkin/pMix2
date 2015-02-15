@@ -100,9 +100,11 @@ AudioProcessorEditor* FaustAudioProcessor::createEditor()
 
 const String FaustAudioProcessor::getName() const
 {
-  if (fInterface["name"].toString() != String::empty)
-    return fInterface["name"].toString();
-  else
+//  if(fJSONInterface["name"])
+//  {
+//    return fJSONInterface["name"].toString();
+//  }
+//  else
     return "Faust Effect";
 }
 
@@ -200,10 +202,9 @@ void FaustAudioProcessor::create_dsp()
   fDSP = fDSPfactory->create_dsp_aux(this);
   jassert(fDSP);
   
-  // Initialize User Interface (here connnection with controls)
-  fInterface = JSON::parse(fDSPfactory->get_json());
-  
-  createParameters();
+  // Initialize User Interface
+//  fJSONInterface = JSON::parse(fDSPfactory->get_json());
+  fDSP->buildUserInterface(this);
   
   // Initialize at the system's sampling rate
   if (getSampleRate() == 0)
@@ -263,23 +264,57 @@ void FaustAudioProcessor::hilight_off()
   //TODO:hilight_off
 }
 
-void FaustAudioProcessor::createParameters()
+void FaustAudioProcessor::openTabBox(const char* label)
 {
-  var ui = fInterface["ui"][0]; // skip top level "vgroup"
-  
-  addFaustParameter(ui);
+  //TODO:
 }
 
-void FaustAudioProcessor::addFaustParameter(var& element)
+void FaustAudioProcessor::openHorizontalBox(const char* label)
 {
-  if (element["type"] == "vgroup" || element["type"] == "hgroup")
-  {
-    for (int idx = 0; idx < element["items"].size(); idx ++)
-    {
-      var subElement = element["items"][idx];
-      addFaustParameter(subElement);
-    }
-  }
-  else
-    addParameter(new FaustAudioProcessorParameter(element));
+  //TODO:
+}
+
+void FaustAudioProcessor::openVerticalBox(const char* label)
+{
+  //TODO:
+}
+
+void FaustAudioProcessor::closeBox()
+{
+  //TODO:
+}
+
+void FaustAudioProcessor::addButton(const char* label, FAUSTFLOAT* zone)
+{
+  //TODO:
+}
+
+void FaustAudioProcessor::addCheckButton(const char* label, FAUSTFLOAT* zone)
+{
+  //TODO:
+}
+
+void FaustAudioProcessor::addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
+{
+  addParameter(new FaustAudioProcessorParameter(String(label), FaustAudioProcessorParameter::kTypeFloat, init, min, max, step, "", zone));
+}
+
+void FaustAudioProcessor::addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
+{
+  addParameter(new FaustAudioProcessorParameter(String(label), FaustAudioProcessorParameter::kTypeFloat, init, min, max, step, "", zone));
+}
+
+void FaustAudioProcessor::addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
+{
+  addParameter(new FaustAudioProcessorParameter(String(label), FaustAudioProcessorParameter::kTypeFloat, init, min, max, step, "", zone));
+}
+
+void FaustAudioProcessor::addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max)
+{
+  //TODO:
+}
+
+void FaustAudioProcessor::addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max)
+{
+  //TODO:
 }

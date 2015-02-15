@@ -35,8 +35,10 @@
 #define LOG Logger::getCurrentLogger()->writeToLog
 
 #include "FaustGenFactory.h"
+#include "faust/gui/UI.h"
 
 class FaustAudioProcessor  : public AudioPluginInstance
+                           , public UI /* nothing to do with GUI */
 {
 public:
   FaustAudioProcessor();
@@ -76,6 +78,19 @@ public:
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
   
+// FAUST UI
+  void openTabBox(const char* label);
+  void openHorizontalBox(const char* label);
+  void openVerticalBox(const char* label);
+  void closeBox();
+  void addButton(const char* label, FAUSTFLOAT* zone);
+  void addCheckButton(const char* label, FAUSTFLOAT* zone);
+  void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step);
+  void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step);
+  void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step);
+  void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max);
+  void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max);
+  
 //Unique
   void create_dsp();
   void free_dsp();
@@ -88,13 +103,10 @@ public:
   void hilight_off();
   
 private:
-  void createParameters();
-  void addFaustParameter(var& element);
-  
   faustgen_factory* fDSPfactory;
   llvm_dsp* fDSP;
-  var fInterface;
-    
+//  var fJSONInterface;
+  
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioProcessor)
 };
 
