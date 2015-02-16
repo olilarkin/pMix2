@@ -103,9 +103,9 @@ public:
   void hilight_off();
   
 private:
+  var fJSONInterface;
   faustgen_factory* fDSPfactory;
   llvm_dsp* fDSP;
-//  var fJSONInterface;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioProcessor)
 };

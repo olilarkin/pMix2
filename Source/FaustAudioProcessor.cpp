@@ -100,11 +100,11 @@ AudioProcessorEditor* FaustAudioProcessor::createEditor()
 
 const String FaustAudioProcessor::getName() const
 {
-//  if(fJSONInterface["name"])
-//  {
-//    return fJSONInterface["name"].toString();
-//  }
-//  else
+  if(fJSONInterface["name"].isString())
+  {
+    return fJSONInterface["name"].toString();
+  }
+  else
     return "Faust Effect";
 }
 
@@ -203,8 +203,9 @@ void FaustAudioProcessor::create_dsp()
   jassert(fDSP);
   
   // Initialize User Interface
-//  fJSONInterface = JSON::parse(fDSPfactory->get_json());
   fDSP->buildUserInterface(this);
+
+  Result res = JSON::parse(fDSPfactory->get_json(), fJSONInterface);
   
   // Initialize at the system's sampling rate
   if (getSampleRate() == 0)
