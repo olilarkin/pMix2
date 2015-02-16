@@ -9,9 +9,11 @@ GraphEditor::GraphEditor (PMixAudioEngine& audioEngine)
   selectedItems.addChangeListener(this);
   setWantsKeyboardFocus(true);
   
+#if PMIX_PLUGIN==0
   getCommandManager().registerAllCommandsForTarget (this);
   getCommandManager().setFirstCommandTarget (this);
-
+#endif
+  
   setOpaque (true);
 }
 
