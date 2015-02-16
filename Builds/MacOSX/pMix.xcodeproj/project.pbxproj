@@ -375,7 +375,6 @@
 		59E06A02C16A5FDD30CDD013 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_AudioFormatWriter.h"; path = "../../../../juce/modules/juce_audio_formats/format/juce_AudioFormatWriter.h"; sourceTree = "SOURCE_ROOT"; };
 		59F6C07FA918E559591A4C95 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ConnectedChildProcess.h"; path = "../../../../juce/modules/juce_events/interprocess/juce_ConnectedChildProcess.h"; sourceTree = "SOURCE_ROOT"; };
 		5A28DEA028673EA47A574130 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_android_OpenSL.cpp"; path = "../../../../juce/modules/juce_audio_devices/native/juce_android_OpenSL.cpp"; sourceTree = "SOURCE_ROOT"; };
-		5A8DC055CBEA692CE15528EC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixCommandManager.h; path = ../../Source/pMixCommandManager.h; sourceTree = "SOURCE_ROOT"; };
 		5B81CAA845EB1866B6C9D714 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_RectanglePlacement.h"; path = "../../../../juce/modules/juce_graphics/placement/juce_RectanglePlacement.h"; sourceTree = "SOURCE_ROOT"; };
 		5BC784AA00641E9FD75BE48D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_VST3PluginFormat.cpp"; path = "../../../../juce/modules/juce_audio_processors/format_types/juce_VST3PluginFormat.cpp"; sourceTree = "SOURCE_ROOT"; };
 		5C010142AACF97BFDA3CA5CC = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_WavAudioFormat.cpp"; path = "../../../../juce/modules/juce_audio_formats/codecs/juce_WavAudioFormat.cpp"; sourceTree = "SOURCE_ROOT"; };
@@ -1044,7 +1043,6 @@
 					8A7DEE071FBF5A8C9059745F,
 					A69AE2C021AB8DF544E2ADC7,
 					B8A868E258ADCCE8820DACF6,
-					5A8DC055CBEA692CE15528EC,
 					5416B84E32E0C294BC04E028,
 					E4D917F2FECF9B9E4F76F2F9,
 					4E886482265A21C81A30F79A,

@@ -87,8 +87,6 @@
       </GROUP>
       <FILE id="zVO2XV" name="pMixCommandIDs.h" compile="0" resource="0"
             file="Source/pMixCommandIDs.h"/>
-      <FILE id="wluBoV" name="pMixCommandManager.h" compile="0" resource="0"
-            file="Source/pMixCommandManager.h"/>
       <FILE id="iyOFme" name="pMixLookAndFeel.cpp" compile="1" resource="0"
             file="Source/pMixLookAndFeel.cpp"/>
       <FILE id="eFdXp7" name="pMixLookAndFeel.h" compile="0" resource="0"

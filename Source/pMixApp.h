@@ -14,10 +14,8 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixMainAppWindow.h"
-#include "pMixCommandManager.h"
 
 class pMixApp : public JUCEApplication
-              , public pMixCommandManagerHolder
 {
 public:
   pMixApp();
@@ -29,6 +27,7 @@ public:
   bool moreThanOneInstanceAllowed();
   
   AudioDeviceManager deviceManager;
+  ApplicationCommandManager commandManager;
 
 private:
   ScopedPointer<MainAppWindow> mainWindow;

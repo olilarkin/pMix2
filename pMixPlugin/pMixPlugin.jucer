@@ -108,8 +108,6 @@
             file="../Source/pMixAudioEngine.h"/>
       <FILE id="UGM1Ge" name="pMixCommandIDs.h" compile="0" resource="0"
             file="../Source/pMixCommandIDs.h"/>
-      <FILE id="KCkriH" name="pMixCommandManager.h" compile="0" resource="0"
-            file="../Source/pMixCommandManager.h"/>
       <FILE id="gl0oTz" name="pMixDocument.cpp" compile="1" resource="0"
             file="../Source/pMixDocument.cpp"/>
       <FILE id="cPShvs" name="pMixDocument.h" compile="0" resource="0" file="../Source/pMixDocument.h"/>
