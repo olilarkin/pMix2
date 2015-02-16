@@ -20,7 +20,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, WebBrowser& webBrowser, Con
 , selectedFaustAudioProcessor(nullptr)
 , selectedNodeID(0)
 {
-  addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &cppTokeniser));
+  addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &tokeniser));
   addAndMakeVisible (&compileButton);
   addAndMakeVisible (&svgButton);
 

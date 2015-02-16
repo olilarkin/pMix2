@@ -16,6 +16,7 @@
 #include "pMixConsole.h"
 #include "pMixGraphEditor.h"
 #include "FaustAudioProcessor.h"
+#include "FaustCodeTokenizer.h"
 
 class CodeEditor : public Component
                  , public ChangeListener
@@ -32,7 +33,7 @@ public:
   void buttonClicked (Button* button);
   
 private:
-  CPlusPlusCodeTokeniser cppTokeniser;
+  FaustTokeniser tokeniser;
   CodeDocument codeDocument;
   ScopedPointer<CodeEditorComponent> editor;
   PMixAudioEngine& audioEngine;

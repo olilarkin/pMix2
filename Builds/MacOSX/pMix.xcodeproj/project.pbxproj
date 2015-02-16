@@ -35,6 +35,7 @@
 		A5E502D4F0D25DEC40FE4E15 = {isa = PBXBuildFile; fileRef = 256243FE0FF7DF3BC52B0726; };
 		29303319181FBB40D022348A = {isa = PBXBuildFile; fileRef = 05E5A67287062071A6289295; };
 		DAD620B67A686C91CE63F276 = {isa = PBXBuildFile; fileRef = 8C31C451460AAF06B024E996; };
+		0625A7D9336786EB69F1B4BE = {isa = PBXBuildFile; fileRef = D6BE5F9BF7AC17B9CB09E39A; };
 		898A754AD57370B2F5798AA3 = {isa = PBXBuildFile; fileRef = 843878823C8674FBF966AA5F; };
 		5D5DFFEA65D91243E800F99C = {isa = PBXBuildFile; fileRef = 97C3FEF278D0855DA143A587; };
 		E85BD8ABA97BCED67C6F15C4 = {isa = PBXBuildFile; fileRef = 4ABB9C8077BEF6D2EB5FACE8; };
@@ -638,6 +639,7 @@
 		A37779E04E799A229780AA97 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_ChannelRemappingAudioSource.cpp"; path = "../../../../juce/modules/juce_audio_basics/sources/juce_ChannelRemappingAudioSource.cpp"; sourceTree = "SOURCE_ROOT"; };
 		A3BA8FA1F97FF3A3EBFEA595 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixCodeEditor.h; path = ../../Source/pMixCodeEditor.h; sourceTree = "SOURCE_ROOT"; };
 		A3E32215172C4C868A9E2A8C = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ScopedReadLock.h"; path = "../../../../juce/modules/juce_core/threads/juce_ScopedReadLock.h"; sourceTree = "SOURCE_ROOT"; };
+		A46587B192A3D08FA6C8885C = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FaustCodeTokenizer.h; path = ../../Source/FaustCodeTokenizer.h; sourceTree = "SOURCE_ROOT"; };
 		A474C05861E9203CD9326F37 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_events.h"; path = "../../../../juce/modules/juce_events/juce_events.h"; sourceTree = "SOURCE_ROOT"; };
 		A4CDE321F71EC6B294810ED8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ConcertinaPanel.h"; path = "../../../../juce/modules/juce_gui_basics/layout/juce_ConcertinaPanel.h"; sourceTree = "SOURCE_ROOT"; };
 		A4F9D6EC69F4F96AE8305D73 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_FilenameComponent.cpp"; path = "../../../../juce/modules/juce_gui_basics/filebrowser/juce_FilenameComponent.cpp"; sourceTree = "SOURCE_ROOT"; };
@@ -831,6 +833,7 @@
 		D47C1D28013F8C8C9E2DD2CC = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_win32_AudioCDBurner.cpp"; path = "../../../../juce/modules/juce_audio_devices/native/juce_win32_AudioCDBurner.cpp"; sourceTree = "SOURCE_ROOT"; };
 		D549D619F2A3D35775B95B6B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_LowLevelGraphicsPostScriptRenderer.cpp"; path = "../../../../juce/modules/juce_graphics/contexts/juce_LowLevelGraphicsPostScriptRenderer.cpp"; sourceTree = "SOURCE_ROOT"; };
 		D629E80520EAF3D8B92621E5 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_module_info"; path = "../../../../juce/modules/juce_cryptography/juce_module_info"; sourceTree = "SOURCE_ROOT"; };
+		D6BE5F9BF7AC17B9CB09E39A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FaustCodeTokenizer.cpp; path = ../../Source/FaustCodeTokenizer.cpp; sourceTree = "SOURCE_ROOT"; };
 		D6D0BFC62AE57A5078C1285D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_Random.cpp"; path = "../../../../juce/modules/juce_core/maths/juce_Random.cpp"; sourceTree = "SOURCE_ROOT"; };
 		D6EF8F4FBB2135BC87332199 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_SystemTrayIconComponent.h"; path = "../../../../juce/modules/juce_gui_extra/misc/juce_SystemTrayIconComponent.h"; sourceTree = "SOURCE_ROOT"; };
 		D6F932EE58C5464ED9ACE957 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_Application.cpp"; path = "../../../../juce/modules/juce_gui_basics/application/juce_Application.cpp"; sourceTree = "SOURCE_ROOT"; };
@@ -1023,6 +1026,8 @@
 					8C31C451460AAF06B024E996,
 					C1E14891B5A1D28170C55C68, ); name = Panels; sourceTree = "<group>"; };
 		8A7DEE071FBF5A8C9059745F = {isa = PBXGroup; children = (
+					D6BE5F9BF7AC17B9CB09E39A,
+					A46587B192A3D08FA6C8885C,
 					843878823C8674FBF966AA5F,
 					AC7ECB6D887FF0ABA1BD062B,
 					97C3FEF278D0855DA143A587,
@@ -2245,6 +2250,7 @@
 					A5E502D4F0D25DEC40FE4E15,
 					29303319181FBB40D022348A,
 					DAD620B67A686C91CE63F276,
+					0625A7D9336786EB69F1B4BE,
 					898A754AD57370B2F5798AA3,
 					5D5DFFEA65D91243E800F99C,
 					E85BD8ABA97BCED67C6F15C4,

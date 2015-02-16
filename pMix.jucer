@@ -60,6 +60,10 @@
               file="Source/SplitComponent.h"/>
       </GROUP>
       <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
+        <FILE id="mdRVIA" name="FaustCodeTokenizer.cpp" compile="1" resource="0"
+              file="Source/FaustCodeTokenizer.cpp"/>
+        <FILE id="oFnEPc" name="FaustCodeTokenizer.h" compile="0" resource="0"
+              file="Source/FaustCodeTokenizer.h"/>
         <FILE id="DwMReX" name="FaustAudioProcessorParameter.cpp" compile="1"
               resource="0" file="Source/FaustAudioProcessorParameter.cpp"/>
         <FILE id="WsFs9f" name="FaustAudioProcessorParameter.h" compile="0"
