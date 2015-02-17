@@ -14,22 +14,22 @@ struct FaustTokeniserFunctions
   static bool isPrimitive (String::CharPointerType token, const int tokenLength) noexcept
   {
     static const char* const primitives3Char[] =
-    { "mem", "int", "cos", "sin", "tan", "exp", "log", "pow", "abs", "min", "max", nullptr };
+    { "mem", "int", "cos", "sin", "tan", "exp", "log", "pow", "abs", "min", "max", "seq", "par", "sum", nullptr };
     
     static const char* const primitives4Char[] =
-    { "acos", "asin", "atan", "fmod", "ceil", "rint", "sqrt", nullptr };
+    { "acos", "asin", "atan", "fmod", "ceil", "rint", "sqrt", "with", "case", "prod", nullptr };
     
     static const char* const primitives5Char[] =
     {  "float", "log10", "floor", "atan2", nullptr };
     
     static const char* const primitives6Char[] =
-    { "prefix", "button", "nentry", "vgroup", "hgroup", "tgroup", "attach", nullptr};
+    { "prefix", "button", "nentry", "vgroup", "hgroup", "tgroup", "attach", "import", nullptr};
     
     static const char* const primitives7Char[] =
-    { "rdtable", "rwtable", "select2", "select3", "vslider", "hslider", nullptr};
+    { "rdtable", "rwtable", "select2", "select3", "vslider", "hslider", "process", "library", "declare", nullptr};
     
     static const char* const primitivesOther[] =
-    { "remainder", "checkbox", "vbargraph", "hbargraph", "ffunction", "fconstant", "fvariable", nullptr };
+    { "remainder", "checkbox", "vbargraph", "hbargraph", "ffunction", "fconstant", "fvariable", "component", "environment", nullptr };
     
     const char* const* k;
     
@@ -56,46 +56,46 @@ struct FaustTokeniserFunctions
     return false;
   }
   
-  static bool isOperator (String::CharPointerType token, const int tokenLength) noexcept
-  {
-    static const char* const operator3Char[] =
-    { "seq", "par", "sum", nullptr };
-    
-    static const char* const operator4Char[] =
-    { "with", "case", "prod", nullptr };
-    
-    static const char* const operator6Char[] =
-    { "import", nullptr };
-    
-    static const char* const operator7Char[] =
-    { "process", "library", "declare", nullptr };
-    
-    static const char* const operatorOther[] =
-    { "component", "environment", nullptr };
-    
-    const char* const* k;
-    
-    switch (tokenLength)
-    {
-      case 3:   k = operator3Char; break;
-      case 4:   k = operator4Char; break;
-      case 6:   k = operator6Char; break;
-      case 7:   k = operator7Char; break;
-
-      default:
-        if (tokenLength < 3 || tokenLength > 11)
-          return false;
-        
-        k = operatorOther;
-        break;
-    }
-    
-    for (int i = 0; k[i] != 0; ++i)
-      if (token.compare (CharPointer_ASCII (k[i])) == 0)
-        return true;
-    
-    return false;
-  }
+//  static bool isOperator (String::CharPointerType token, const int tokenLength) noexcept
+//  {
+//    static const char* const operator3Char[] =
+//    { "seq", "par", "sum", nullptr };
+//    
+//    static const char* const operator4Char[] =
+//    { "with", "case", "prod", nullptr };
+//    
+//    static const char* const operator6Char[] =
+//    { "import", nullptr };
+//    
+//    static const char* const operator7Char[] =
+//    { "process", "library", "declare", nullptr };
+//    
+//    static const char* const operatorOther[] =
+//    { "component", "environment", nullptr };
+//    
+//    const char* const* k;
+//    
+//    switch (tokenLength)
+//    {
+//      case 3:   k = operator3Char; break;
+//      case 4:   k = operator4Char; break;
+//      case 6:   k = operator6Char; break;
+//      case 7:   k = operator7Char; break;
+//
+//      default:
+//        if (tokenLength < 3 || tokenLength > 11)
+//          return false;
+//        
+//        k = operatorOther;
+//        break;
+//    }
+//    
+//    for (int i = 0; k[i] != 0; ++i)
+//      if (token.compare (CharPointer_ASCII (k[i])) == 0)
+//        return true;
+//    
+//    return false;
+//  }
   
   template <typename Iterator>
   static int parseIdentifier (Iterator& source) noexcept
@@ -121,8 +121,8 @@ struct FaustTokeniserFunctions
       if (isPrimitive (String::CharPointerType (possibleIdentifier), tokenLength))
         return FaustTokeniser::tokenType_primitive;
       
-      if (isOperator(String::CharPointerType (possibleIdentifier), tokenLength))
-        return FaustTokeniser::tokenType_operator;
+//      if (isOperator(String::CharPointerType (possibleIdentifier), tokenLength))
+//        return FaustTokeniser::tokenType_operator;
     }
     
     return FaustTokeniser::tokenType_identifier;
@@ -256,16 +256,16 @@ CodeEditorComponent::ColourScheme FaustTokeniser::getDefaultColourScheme()
 {
   static const CodeEditorComponent::ColourScheme::TokenType types[] =
   {
-    { "Error",          Colour (0xffcc0000) },
+    { "Error",          Colour (0xff000000) },
     { "Comment",        Colour (0xff007505) },
-    { "Primitive",      Colour (0xff750005) },
-    { "Operator",       Colour (0xff000575) },
+    { "Primitive",      Colour (0xffCC33CC) },
+    { "Operator",       Colour (0xff000000) },
     { "Identifier",     Colour (0xff000000) },
-    { "Integer",        Colour (0xff0000FF) },
-    { "Float",          Colour (0xff0000FF) },
-    { "String",         Colour (0xff990099) },
-    { "Bracket",        Colour (0xff000055) },
-    { "Punctuation",    Colour (0xff004400) }
+    { "Integer",        Colour (0xff0000CC) },
+    { "Float",          Colour (0xff0000CC) },
+    { "String",         Colour (0xffCC0000) },
+    { "Bracket",        Colour (0xff000000) },
+    { "Punctuation",    Colour (0xff000000) }
   };
   
   CodeEditorComponent::ColourScheme cs;
