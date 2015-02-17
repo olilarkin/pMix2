@@ -86,15 +86,15 @@ GraphEditor* PinComponent::getGraphPanel() const noexcept
 #pragma mark FilterComponent
 
 FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 filterID_)
-: audioEngine (audioEngine),
-filterID (filterID_),
-numInputs (0),
-numOutputs (0),
-pinSize (16),
-font (13.0f, Font::bold),
-numIns (0),
-numOuts (0),
-moving(false)
+: audioEngine (audioEngine)
+, filterID (filterID_)
+, numInputs (0)
+, numOutputs (0)
+, pinSize (16)
+, font (13.0f, Font::bold)
+, numIns (0)
+, numOuts (0)
+, moving(false)
 {
   //shadow.setShadowProperties (DropShadow (Colours::black.withAlpha (0.5f), 3, Point<int> (0, 1)));
   //setComponentEffect (&shadow);

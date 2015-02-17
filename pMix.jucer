@@ -54,10 +54,6 @@
               file="Source/pMixGraphEditorActions.cpp"/>
         <FILE id="SLupqP" name="pMixGraphEditorActions.h" compile="0" resource="0"
               file="Source/pMixGraphEditorActions.h"/>
-        <FILE id="LTq3RV" name="SplitComponent.cpp" compile="1" resource="0"
-              file="Source/SplitComponent.cpp"/>
-        <FILE id="VL0byW" name="SplitComponent.h" compile="0" resource="0"
-              file="Source/SplitComponent.h"/>
       </GROUP>
       <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
         <FILE id="mdRVIA" name="FaustCodeTokenizer.cpp" compile="1" resource="0"

@@ -63,7 +63,6 @@ OBJECTS := \
   $(OBJDIR)/pMixGraphEditor_f95221f0.o \
   $(OBJDIR)/pMixGraphEditorParts_4bc4cb1a.o \
   $(OBJDIR)/pMixGraphEditorActions_e9275577.o \
-  $(OBJDIR)/SplitComponent_4c4bd10c.o \
   $(OBJDIR)/FaustCodeTokenizer_5b0c0a78.o \
   $(OBJDIR)/FaustAudioProcessorParameter_b0d2ebbb.o \
   $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
@@ -165,11 +164,6 @@ $(OBJDIR)/pMixGraphEditorParts_4bc4cb1a.o: ../../Source/pMixGraphEditorParts.cpp
 $(OBJDIR)/pMixGraphEditorActions_e9275577.o: ../../Source/pMixGraphEditorActions.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixGraphEditorActions.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/SplitComponent_4c4bd10c.o: ../../Source/SplitComponent.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling SplitComponent.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/FaustCodeTokenizer_5b0c0a78.o: ../../Source/FaustCodeTokenizer.cpp

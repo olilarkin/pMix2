@@ -47,10 +47,6 @@
               file="../Source/pMixWebBrowser.cpp"/>
         <FILE id="cTRD38" name="pMixWebBrowser.h" compile="0" resource="0"
               file="../Source/pMixWebBrowser.h"/>
-        <FILE id="h85RGw" name="SplitComponent.cpp" compile="1" resource="0"
-              file="../Source/SplitComponent.cpp"/>
-        <FILE id="Fxj5oo" name="SplitComponent.h" compile="0" resource="0"
-              file="../Source/SplitComponent.h"/>
         <FILE id="rTh7Ts" name="pMixCodeEditor.cpp" compile="1" resource="0"
               file="../Source/pMixCodeEditor.cpp"/>
         <FILE id="y3b3r7" name="pMixCodeEditor.h" compile="0" resource="0"

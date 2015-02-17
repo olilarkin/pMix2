@@ -28,7 +28,6 @@
 		000F2320358489147E1D491A = {isa = PBXBuildFile; fileRef = 9B93CAC14CD78F220F595206; };
 		412EEE13D1015168BEE0A911 = {isa = PBXBuildFile; fileRef = 016162B19491360D422BC827; };
 		6F102CFC2D4870A2136BC223 = {isa = PBXBuildFile; fileRef = 1D248AA5F2F9824B78CCB569; };
-		31C7652B5B4F969D758031C7 = {isa = PBXBuildFile; fileRef = 1D7F543D1FDED5039B48601E; };
 		1831E3AA6AE2B42F072EF110 = {isa = PBXBuildFile; fileRef = 342EC22DAC449A703BD806BB; };
 		EB490330E6AE5C157BC947CA = {isa = PBXBuildFile; fileRef = 6E0A812477F81510BFDFAB81; };
 		BA7601F6DE35612E0A1E9109 = {isa = PBXBuildFile; fileRef = 687FC96AE85CE1EB11BE3027; };
@@ -181,7 +180,6 @@
 		1D248AA5F2F9824B78CCB569 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixWebBrowser.cpp; path = ../../../Source/pMixWebBrowser.cpp; sourceTree = "SOURCE_ROOT"; };
 		1D42D729A4F54D576C4C3DBE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_ChoicePropertyComponent.cpp"; path = "../../../../../juce/modules/juce_gui_basics/properties/juce_ChoicePropertyComponent.cpp"; sourceTree = "SOURCE_ROOT"; };
 		1D68C1A9C509297BB225E129 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_Path.cpp"; path = "../../../../../juce/modules/juce_graphics/geometry/juce_Path.cpp"; sourceTree = "SOURCE_ROOT"; };
-		1D7F543D1FDED5039B48601E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SplitComponent.cpp; path = ../../../Source/SplitComponent.cpp; sourceTree = "SOURCE_ROOT"; };
 		1DDFE5AAE9AAFA24ECE36A06 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_ApplicationCommandTarget.cpp"; path = "../../../../../juce/modules/juce_gui_basics/commands/juce_ApplicationCommandTarget.cpp"; sourceTree = "SOURCE_ROOT"; };
 		1E0568C2D385F7CEBC0E099A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_StretchableLayoutManager.cpp"; path = "../../../../../juce/modules/juce_gui_basics/layout/juce_StretchableLayoutManager.cpp"; sourceTree = "SOURCE_ROOT"; };
 		1E2AE1025FFF36E54090DE81 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_VSTMidiEventList.h"; path = "../../../../../juce/modules/juce_audio_processors/format_types/juce_VSTMidiEventList.h"; sourceTree = "SOURCE_ROOT"; };
@@ -615,7 +613,6 @@
 		90A26600D0488A467E4033D6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_OpenGL_android.h"; path = "../../../../../juce/modules/juce_opengl/native/juce_OpenGL_android.h"; sourceTree = "SOURCE_ROOT"; };
 		90D9B55ECF21DD1742F183F0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_Uuid.cpp"; path = "../../../../../juce/modules/juce_core/misc/juce_Uuid.cpp"; sourceTree = "SOURCE_ROOT"; };
 		90DC525E08FAEC086AB65CDC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ChannelRemappingAudioSource.h"; path = "../../../../../juce/modules/juce_audio_basics/sources/juce_ChannelRemappingAudioSource.h"; sourceTree = "SOURCE_ROOT"; };
-		913FC3572CCB752C37595477 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SplitComponent.h; path = ../../../Source/SplitComponent.h; sourceTree = "SOURCE_ROOT"; };
 		9158A3644584FFBA3B07EFC8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_win32_SystemTrayIcon.cpp"; path = "../../../../../juce/modules/juce_gui_extra/native/juce_win32_SystemTrayIcon.cpp"; sourceTree = "SOURCE_ROOT"; };
 		917F1D9458B93AD6FCA5881E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ByteOrder.h"; path = "../../../../../juce/modules/juce_core/memory/juce_ByteOrder.h"; sourceTree = "SOURCE_ROOT"; };
 		91975027D1F69E58FFDEF4FD = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_Synthesiser.cpp"; path = "../../../../../juce/modules/juce_audio_basics/synthesisers/juce_Synthesiser.cpp"; sourceTree = "SOURCE_ROOT"; };
@@ -1051,8 +1048,6 @@
 					8964B2276F5E37E3A551F947,
 					1D248AA5F2F9824B78CCB569,
 					99089855AAD703D2FB8D481C,
-					1D7F543D1FDED5039B48601E,
-					913FC3572CCB752C37595477,
 					342EC22DAC449A703BD806BB,
 					A51D1245DAA349752A348C72,
 					6E0A812477F81510BFDFAB81,
@@ -2338,7 +2333,6 @@
 					000F2320358489147E1D491A,
 					412EEE13D1015168BEE0A911,
 					6F102CFC2D4870A2136BC223,
-					31C7652B5B4F969D758031C7,
 					1831E3AA6AE2B42F072EF110,
 					EB490330E6AE5C157BC947CA,
 					BA7601F6DE35612E0A1E9109,

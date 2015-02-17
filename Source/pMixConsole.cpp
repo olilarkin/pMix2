@@ -70,8 +70,8 @@ void Console::changeListenerCallback (ChangeBroadcaster* source)
 
 void Console::clear()
 {
-  messageList.clear();
-//  messageListBox.updateContent();
-//  messageListBox.scrollToEnsureRowIsOnscreen (messageList.size() - 1);
-//  messageListBox.repaint();
+//  messageList.clear();
+  messageListBox.updateContent();
+  messageListBox.scrollToEnsureRowIsOnscreen (messageList.size() - 1);
+  messageListBox.repaint();
 }

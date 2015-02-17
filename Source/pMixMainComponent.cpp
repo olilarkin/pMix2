@@ -14,31 +14,26 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
 {
   LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
 
-  verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35); // width of the ... must be between 20% and 80%, preferably 50%
-  verticalLayout.setItemLayout (1, 8, 8, 8);           // the vertical divider drag-bar thing is always 8 pixels wide
-  verticalLayout.setItemLayout (2, 150, -1.0, -0.65);  // the components on the right must be at least 150 pixels wide, preferably 50% of the total width
-  verticalDividerBar = new StretchableLayoutResizerBar (&verticalLayout, 1, true);
-  addAndMakeVisible (verticalDividerBar);
+  horizontalLayout.setItemLayout (0, -0.2, -0.8, -0.35);
+  horizontalLayout.setItemLayout (1, 8, 8, 8);
+  horizontalLayout.setItemLayout (2, 150, -1.0, -0.65);
   
-  Logger::setCurrentLogger(&logger);
+  horizontalDividerBar = new StretchableLayoutResizerBar (&horizontalLayout, 1, true);
+  addAndMakeVisible (horizontalDividerBar);
+  
+  //Logger::setCurrentLogger(&logger);
 
   addAndMakeVisible (graphEditor = new GraphEditor(audioEngine));
-  addAndMakeVisible (paramTreeView = new ParamTreeView(audioEngine));
+  //addAndMakeVisible (paramTreeView = new ParamTreeView(audioEngine));
+  //addAndMakeVisible (paramView = new ParamView(audioEngine));
 
   interpolationSpace = new InterpolationSpaceComponent(audioEngine);
   
-  console = new Console();
-  logger.addChangeListener(console);
-  fileBrowser = new FileBrowser();
-  webBrowser = new WebBrowser(audioEngine);
-  paramView = new ParamView(audioEngine);
-  codeEditor = new CodeEditor(audioEngine, *webBrowser, *console, *graphEditor);
+//  logger.addChangeListener(console);
+  addAndMakeVisible( fileBrowser = new FileBrowser());
+  addAndMakeVisible( codeEditor = new CodeEditor(audioEngine, *graphEditor) );
   graphEditor->addChangeListener(codeEditor);
-  graphEditor->addChangeListener(webBrowser);
   
-  addAndMakeVisible(hsplitComponent = new SplitComponent(*webBrowser, *console, true));
-  addAndMakeVisible(vsplitComponent = new SplitComponent(*codeEditor, *hsplitComponent, false));
-
   graphEditor->updateComponents();
 }
 
@@ -47,30 +42,16 @@ MainComponent::~MainComponent()
   LookAndFeel::setDefaultLookAndFeel (nullptr);
 
   //graphEditor->removeAllChangeListeners();
-  Logger::setCurrentLogger (nullptr);
+  //Logger::setCurrentLogger (nullptr);
 
   removeAllChildren();
 }
 
 void MainComponent::resized()
 {
-  if (!vsplitComponent->GetSplitBarPosition())
-    vsplitComponent->SetSplitBarPosition(getHeight() / 2.);
-
+  Component* hcomps[] = { graphEditor, horizontalDividerBar, codeEditor  };
   
-  Component* vcomps[] = { graphEditor, verticalDividerBar, vsplitComponent };
-  
-  verticalLayout.layOutComponents (vcomps, 3,
-                                   0, 0, getWidth(), getHeight(),
-                                   false,     // lay out side-by-side
-                                   true);     // resize the components' heights as well as widths
-  
-  
-  if (!hsplitComponent->GetSplitBarPosition())
-    hsplitComponent->SetSplitBarPosition(hsplitComponent->getWidth() / 2.);
-  
-//  graphEditor->setBounds(getBounds());
-//  layoutEditor->setTargetComponent(graphEditor);
+  horizontalLayout.layOutComponents (hcomps, 3, 0, 0, getWidth(), getHeight(), false, true);
 }
 
 void MainComponent::createNewPlugin (const PluginDescription* desc, int x, int y)

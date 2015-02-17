@@ -23,7 +23,7 @@ class CodeEditor : public Component
                  , public Button::Listener
 {
 public:
-  CodeEditor(PMixAudioEngine& audioEngine, WebBrowser& webBrowser, Console& console, GraphEditor& graphEditor);
+  CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
   
   void paint (Graphics& g) override;
   
@@ -36,11 +36,15 @@ private:
   FaustTokeniser tokeniser;
   CodeDocument codeDocument;
   ScopedPointer<CodeEditorComponent> editor;
+  ScopedPointer<WebBrowser> webBrowser;
+  ScopedPointer<Console> console;
+
   PMixAudioEngine& audioEngine;
-  WebBrowser& webBrowser;
-  Console& console;
   GraphEditor& graphEditor;
-  
+
+  StretchableLayoutManager verticalLayout;
+  ScopedPointer<StretchableLayoutResizerBar> dividerBar1, dividerBar2;
+
   TextButton compileButton;
   TextButton svgButton;
   FaustAudioProcessor* selectedFaustAudioProcessor;

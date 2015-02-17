@@ -14,9 +14,7 @@
 #include "pMixInterpolationSpace.h"
 #include "pMixGraphEditor.h"
 #include "pMixCodeEditor.h"
-#include "pMixWebBrowser.h"
 #include "pMixLookAndFeel.h"
-#include "SplitComponent.h"
 #include "pMixFileBrowser.h"
 #include "pMixConsole.h"
 #include "pMixLogger.h"
@@ -36,20 +34,15 @@ public:
 
 private:
   pMixLookAndFeel lookAndFeel;
-  PMixAudioEngine& audioEngine;  
+  PMixAudioEngine& audioEngine;
   
-  ScopedPointer<SplitComponent> vsplitComponent;
-  ScopedPointer<SplitComponent> hsplitComponent;
-
-  ScopedPointer<Console> console;
   ScopedPointer<CodeEditor> codeEditor;
   ScopedPointer<GraphEditor> graphEditor;
   ScopedPointer<FileBrowser> fileBrowser;
-  ScopedPointer<WebBrowser> webBrowser;
   ScopedPointer<InterpolationSpaceComponent> interpolationSpace;
   ScopedPointer<ParamView> paramView;
-  StretchableLayoutManager verticalLayout;
-  ScopedPointer<StretchableLayoutResizerBar> verticalDividerBar;
+  StretchableLayoutManager horizontalLayout;
+  ScopedPointer<StretchableLayoutResizerBar> horizontalDividerBar;
   ScopedPointer<ParamTreeView> paramTreeView;
   
   PMixLogger logger;
