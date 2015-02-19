@@ -16,6 +16,7 @@
 #include <set>
 #include <vector>
 #include <map>
+#include <string.h>
 
 #include "faust/gui/JSONUI.h"
 #include "faust/llvm-dsp.h"
