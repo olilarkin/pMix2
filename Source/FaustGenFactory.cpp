@@ -147,15 +147,19 @@ llvm_dsp_factory* faustgen_factory::create_factory_from_sourcecode(FaustAudioPro
     LOG("Generate SVG error : " + error);
   }
   
-  // set "width" and "height" of svg to 100% so they fill webbrowser
+  // set "width" and "height" of svg to 100% so they fill web browser, TODO: improve this
   String path;
   path << "/" << fDrawPath << "faustgen-" << fFaustNumber << "-svg/process.svg";
   File svgFile(path);
-  XmlDocument svgXML(svgFile);
-  ScopedPointer<XmlElement> mainElement (svgXML.getDocumentElement());
-  mainElement->setAttribute("width", "100%");
-  mainElement->setAttribute("height", "100%");
-  mainElement->writeToFile(svgFile, String::empty);
+  
+  if (svgFile.exists())
+  {
+    XmlDocument svgXML(svgFile);
+    ScopedPointer<XmlElement> mainElement (svgXML.getDocumentElement());
+    mainElement->setAttribute("width", "100%");
+    mainElement->setAttribute("height", "100%");
+    mainElement->writeToFile(svgFile, String::empty);
+  }
   
   llvm_dsp_factory* factory = createDSPFactoryFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
   
