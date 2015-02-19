@@ -24,18 +24,19 @@
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
+AudioDeviceManager& getDeviceManager();
 //[/MiscUserDefs]
 
 //==============================================================================
-pMixPrefsComponent::pMixPrefsComponent ()
+PMixPrefsComponent::PMixPrefsComponent ()
 {
     addAndMakeVisible (tabbedComponent = new TabbedComponent (TabbedButtonBar::TabsAtTop));
     tabbedComponent->setTabBarDepth (23);
-    tabbedComponent->addTab (TRANS("General"), Colours::lightgrey, 0, false);
-    tabbedComponent->addTab (TRANS("Controllers"), Colours::lightgrey, 0, false);
-    tabbedComponent->addTab (TRANS("Audio"), Colours::lightgrey, 0, false);
+    tabbedComponent->addTab (TRANS("General"), Colours::lightgrey, new PMixPrefsGeneral(), true);
+    tabbedComponent->addTab (TRANS("Controllers"), Colours::lightgrey, new PMixPrefsControllers(), true);
+    tabbedComponent->addTab (TRANS("Audio"), Colours::lightgrey, new PMixPrefsAudio (getDeviceManager()), true);
     tabbedComponent->addTab (TRANS("Plug-Ins"), Colours::lightgrey, 0, false);
-    tabbedComponent->addTab (TRANS("Colours"), Colours::lightgrey, 0, false);
+    tabbedComponent->addTab (TRANS("Colours"), Colours::lightgrey, new PMixPrefsColours(), true);
     tabbedComponent->setCurrentTabIndex (0);
 
 
@@ -49,7 +50,7 @@ pMixPrefsComponent::pMixPrefsComponent ()
     //[/Constructor]
 }
 
-pMixPrefsComponent::~pMixPrefsComponent()
+PMixPrefsComponent::~PMixPrefsComponent()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
@@ -62,7 +63,7 @@ pMixPrefsComponent::~pMixPrefsComponent()
 }
 
 //==============================================================================
-void pMixPrefsComponent::paint (Graphics& g)
+void PMixPrefsComponent::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -73,7 +74,7 @@ void pMixPrefsComponent::paint (Graphics& g)
     //[/UserPaint]
 }
 
-void pMixPrefsComponent::resized()
+void PMixPrefsComponent::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
@@ -98,7 +99,7 @@ void pMixPrefsComponent::resized()
 
 BEGIN_JUCER_METADATA
 
-<JUCER_COMPONENT documentType="Component" className="pMixPrefsComponent" componentName=""
+<JUCER_COMPONENT documentType="Component" className="PMixPrefsComponent" componentName=""
                  parentClasses="public Component" constructorParams="" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
@@ -106,15 +107,15 @@ BEGIN_JUCER_METADATA
   <TABBEDCOMPONENT name="PrefsTabs" id="851c63a85ce6d934" memberName="tabbedComponent"
                    virtualName="" explicitFocusOrder="0" pos="8 8 16M 16M" orientation="top"
                    tabBarDepth="23" initialTab="0">
-    <TAB name="General" colour="ffd3d3d3" useJucerComp="0" contentClassName=""
+    <TAB name="General" colour="ffd3d3d3" useJucerComp="0" contentClassName="PMixPrefsGeneral"
          constructorParams="" jucerComponentFile=""/>
-    <TAB name="Controllers" colour="ffd3d3d3" useJucerComp="0" contentClassName=""
+    <TAB name="Controllers" colour="ffd3d3d3" useJucerComp="0" contentClassName="PMixPrefsControllers"
          constructorParams="" jucerComponentFile=""/>
-    <TAB name="Audio" colour="ffd3d3d3" useJucerComp="0" contentClassName=""
-         constructorParams="" jucerComponentFile=""/>
+    <TAB name="Audio" colour="ffd3d3d3" useJucerComp="0" contentClassName="PMixPrefsAudio"
+         constructorParams="getDeviceManager()" jucerComponentFile=""/>
     <TAB name="Plug-Ins" colour="ffd3d3d3" useJucerComp="0" contentClassName=""
          constructorParams="" jucerComponentFile=""/>
-    <TAB name="Colours" colour="ffd3d3d3" useJucerComp="0" contentClassName=""
+    <TAB name="Colours" colour="ffd3d3d3" useJucerComp="0" contentClassName="PMixPrefsColours"
          constructorParams="" jucerComponentFile=""/>
   </TABBEDCOMPONENT>
 </JUCER_COMPONENT>

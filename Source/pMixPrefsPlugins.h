@@ -17,8 +17,8 @@
   ==============================================================================
 */
 
-#ifndef __JUCE_HEADER_35C791241BD1D56A__
-#define __JUCE_HEADER_35C791241BD1D56A__
+#ifndef __JUCE_HEADER_602C403610FDCA80__
+#define __JUCE_HEADER_602C403610FDCA80__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
@@ -34,12 +34,12 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class PMixPrefsControllers  : public Component
+class pMixPrefsPlugins  : public Component
 {
 public:
     //==============================================================================
-    PMixPrefsControllers ();
-    ~PMixPrefsControllers();
+    pMixPrefsPlugins ();
+    ~pMixPrefsPlugins();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
@@ -58,10 +58,10 @@ private:
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixPrefsControllers)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (pMixPrefsPlugins)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_35C791241BD1D56A__
+#endif   // __JUCE_HEADER_602C403610FDCA80__

@@ -27,7 +27,7 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-pMixPrefsColours::pMixPrefsColours ()
+PMixPrefsColours::PMixPrefsColours ()
 {
 
     //[UserPreSize]
@@ -40,7 +40,7 @@ pMixPrefsColours::pMixPrefsColours ()
     //[/Constructor]
 }
 
-pMixPrefsColours::~pMixPrefsColours()
+PMixPrefsColours::~PMixPrefsColours()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
@@ -52,7 +52,7 @@ pMixPrefsColours::~pMixPrefsColours()
 }
 
 //==============================================================================
-void pMixPrefsColours::paint (Graphics& g)
+void PMixPrefsColours::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -63,7 +63,7 @@ void pMixPrefsColours::paint (Graphics& g)
     //[/UserPaint]
 }
 
-void pMixPrefsColours::resized()
+void PMixPrefsColours::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
@@ -87,7 +87,7 @@ void pMixPrefsColours::resized()
 
 BEGIN_JUCER_METADATA
 
-<JUCER_COMPONENT documentType="Component" className="pMixPrefsColours" componentName=""
+<JUCER_COMPONENT documentType="Component" className="PMixPrefsColours" componentName=""
                  parentClasses="public Component" constructorParams="" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">

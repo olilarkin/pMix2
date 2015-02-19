@@ -20,14 +20,15 @@
 //[Headers] You can add your own extra header files here...
 //[/Headers]
 
-#include "pMixPrefsControllers.h"
+#include "pMixPrefsAudio.h"
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 //[/MiscUserDefs]
 
 //==============================================================================
-PMixPrefsControllers::PMixPrefsControllers ()
+PMixPrefsAudio::PMixPrefsAudio (AudioDeviceManager& deviceManager)
+    : AudioDeviceSelectorComponent(deviceManager, 0, 256, 0, 256, true, true, true, false)
 {
 
     //[UserPreSize]
@@ -40,7 +41,7 @@ PMixPrefsControllers::PMixPrefsControllers ()
     //[/Constructor]
 }
 
-PMixPrefsControllers::~PMixPrefsControllers()
+PMixPrefsAudio::~PMixPrefsAudio()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
@@ -52,30 +53,26 @@ PMixPrefsControllers::~PMixPrefsControllers()
 }
 
 //==============================================================================
-void PMixPrefsControllers::paint (Graphics& g)
+void PMixPrefsAudio::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
     g.fillAll (Colours::white);
 
-    g.setColour (Colours::black);
-    g.setFont (Font (15.00f, Font::plain));
-    g.drawText (TRANS("Test"),
-                148, 4, 200, 30,
-                Justification::centred, true);
-
     //[UserPaint] Add your own custom painting code here..
+  AudioDeviceSelectorComponent::paint(g);
     //[/UserPaint]
 }
 
-void PMixPrefsControllers::resized()
+void PMixPrefsAudio::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
     //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
+    AudioDeviceSelectorComponent::resized();
+    //[/UserResized
 }
 
 
@@ -93,14 +90,12 @@ void PMixPrefsControllers::resized()
 
 BEGIN_JUCER_METADATA
 
-<JUCER_COMPONENT documentType="Component" className="PMixPrefsControllers" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
+<JUCER_COMPONENT documentType="Component" className="PMixPrefsAudio" componentName=""
+                 parentClasses="public AudioDeviceSelectorComponent" constructorParams="AudioDeviceManager&amp; deviceManager"
+                 variableInitialisers="AudioDeviceSelectorComponent(deviceManager, 0, 256, 0, 256, true, true, true, false)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
-  <BACKGROUND backgroundColour="ffffffff">
-    <TEXT pos="148 4 200 30" fill="solid: ff000000" hasStroke="0" text="Test"
-          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
-  </BACKGROUND>
+  <BACKGROUND backgroundColour="ffffffff"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

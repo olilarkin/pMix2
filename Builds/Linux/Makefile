@@ -51,6 +51,10 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/pMixPrefsGeneral_1c47026d.o \
+  $(OBJDIR)/pMixPrefsPlugins_1e6e5525.o \
+  $(OBJDIR)/pMixPrefsAudio_a26ee25b.o \
+  $(OBJDIR)/pMixPrefsColours_f5ed3e2c.o \
   $(OBJDIR)/pMixPrefsControllers_939ed25c.o \
   $(OBJDIR)/pMixPrefsComponent_29159002.o \
   $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
@@ -105,6 +109,26 @@ clean:
 strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/pMixPrefsGeneral_1c47026d.o: ../../Source/pMixPrefsGeneral.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixPrefsGeneral.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixPrefsPlugins_1e6e5525.o: ../../Source/pMixPrefsPlugins.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixPrefsPlugins.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixPrefsAudio_a26ee25b.o: ../../Source/pMixPrefsAudio.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixPrefsAudio.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixPrefsColours_f5ed3e2c.o: ../../Source/pMixPrefsColours.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixPrefsColours.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixPrefsControllers_939ed25c.o: ../../Source/pMixPrefsControllers.cpp
 	-@mkdir -p $(OBJDIR)

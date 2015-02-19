@@ -463,16 +463,12 @@ void MainAppWindow::filesDropped (const StringArray& files, int x, int y)
 
 void MainAppWindow::showPreferences()
 {
-  AudioDeviceSelectorComponent audioSettingsComp (getDeviceManager(),
-                                                  0, 256,
-                                                  0, 256,
-                                                  true, true, true, false);
-
-  audioSettingsComp.setSize (500, 450);
-
+  PMixPrefsComponent prefsComponent;
+  prefsComponent.setSize(500, 450);
+  
   DialogWindow::LaunchOptions o;
-  o.content.setNonOwned (&audioSettingsComp);
-  o.dialogTitle                   = "Audio Settings";
+  o.content.setNonOwned (&prefsComponent);
+  o.dialogTitle                   = "Preferences";
   o.componentToCentreAround       = getMainComponent();
   o.dialogBackgroundColour        = Colours::grey;
   o.escapeKeyTriggersCloseButton  = true;
@@ -481,12 +477,12 @@ void MainAppWindow::showPreferences()
 
   o.runModal();
 
-  ScopedPointer<XmlElement> audioState (getDeviceManager().createStateXml());
-
-  audioEngine.getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
-  audioEngine.getAppProperties().getUserSettings()->saveIfNeeded();
-
-  audioEngine.getDoc().removeIllegalConnections();
+//  ScopedPointer<XmlElement> audioState (getDeviceManager().createStateXml());
+//
+//  audioEngine.getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
+//  audioEngine.getAppProperties().getUserSettings()->saveIfNeeded();
+//
+//  audioEngine.getDoc().removeIllegalConnections();
 }
 
 MainComponent* MainAppWindow::getMainComponent() const

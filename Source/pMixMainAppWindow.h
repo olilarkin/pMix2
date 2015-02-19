@@ -14,6 +14,7 @@
 
 #include "pMixAudioEngine.h"
 #include "pMixMainComponent.h"
+#include "pMixPrefsComponent.h"
 #include "pMixCommandIDs.h"
 
 ApplicationCommandManager& getCommandManager();
@@ -56,9 +57,6 @@ public:
   void showPreferences();
 private:
   PMixAudioEngine& audioEngine;
-  
-  class PreferencesWindow;
-  ScopedPointer <PreferencesWindow> preferencesWindow;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainAppWindow)
 };
