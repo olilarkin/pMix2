@@ -100,7 +100,7 @@ AudioProcessorEditor* FaustAudioProcessor::createEditor()
 
 const String FaustAudioProcessor::getName() const
 {
-  if(fJSONInterface["name"].isString())
+  if(fJSONInterface["name"].toString().length())
   {
     return fJSONInterface["name"].toString();
   }
