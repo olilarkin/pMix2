@@ -22,10 +22,11 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
-#include "PMixPrefsControllers.h"
-#include "PMixPrefsAudio.h"
-#include "PMixPrefsColours.h"
-#include "PMixPrefsGeneral.h"
+#include "pMixPrefsControllers.h"
+#include "pMixPrefsAudio.h"
+#include "pMixPrefsColours.h"
+#include "pMixPrefsGeneral.h"
+#include "pMixPrefsPlugins.h"
 //[/Headers]
 
 
@@ -42,7 +43,7 @@ class PMixPrefsComponent  : public Component
 {
 public:
     //==============================================================================
-    PMixPrefsComponent ();
+    PMixPrefsComponent (PMixAudioEngine& audioEngine);
     ~PMixPrefsComponent();
 
     //==============================================================================

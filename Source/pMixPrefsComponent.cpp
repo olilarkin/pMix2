@@ -28,14 +28,14 @@ AudioDeviceManager& getDeviceManager();
 //[/MiscUserDefs]
 
 //==============================================================================
-PMixPrefsComponent::PMixPrefsComponent ()
+PMixPrefsComponent::PMixPrefsComponent (PMixAudioEngine& audioEngine)
 {
     addAndMakeVisible (tabbedComponent = new TabbedComponent (TabbedButtonBar::TabsAtTop));
     tabbedComponent->setTabBarDepth (23);
     tabbedComponent->addTab (TRANS("General"), Colours::lightgrey, new PMixPrefsGeneral(), true);
     tabbedComponent->addTab (TRANS("Controllers"), Colours::lightgrey, new PMixPrefsControllers(), true);
     tabbedComponent->addTab (TRANS("Audio"), Colours::lightgrey, new PMixPrefsAudio (getDeviceManager()), true);
-    tabbedComponent->addTab (TRANS("Plug-Ins"), Colours::lightgrey, 0, false);
+    tabbedComponent->addTab (TRANS("Plug-Ins"), Colours::lightgrey, new PMixPrefsPlugins (audioEngine), true);
     tabbedComponent->addTab (TRANS("Colours"), Colours::lightgrey, new PMixPrefsColours(), true);
     tabbedComponent->setCurrentTabIndex (0);
 
@@ -43,7 +43,7 @@ PMixPrefsComponent::PMixPrefsComponent ()
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (600, 400);
+    setSize (800, 600);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -100,9 +100,9 @@ void PMixPrefsComponent::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="PMixPrefsComponent" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="600" initialHeight="400">
+                 parentClasses="public Component" constructorParams="PMixAudioEngine&amp; audioEngine"
+                 variableInitialisers="" snapPixels="8" snapActive="1" snapShown="1"
+                 overlayOpacity="0.330" fixedSize="0" initialWidth="800" initialHeight="600">
   <BACKGROUND backgroundColour="ffffffff"/>
   <TABBEDCOMPONENT name="PrefsTabs" id="851c63a85ce6d934" memberName="tabbedComponent"
                    virtualName="" explicitFocusOrder="0" pos="8 8 16M 16M" orientation="top"
@@ -113,8 +113,8 @@ BEGIN_JUCER_METADATA
          constructorParams="" jucerComponentFile=""/>
     <TAB name="Audio" colour="ffd3d3d3" useJucerComp="0" contentClassName="PMixPrefsAudio"
          constructorParams="getDeviceManager()" jucerComponentFile=""/>
-    <TAB name="Plug-Ins" colour="ffd3d3d3" useJucerComp="0" contentClassName=""
-         constructorParams="" jucerComponentFile=""/>
+    <TAB name="Plug-Ins" colour="ffd3d3d3" useJucerComp="0" contentClassName="PMixPrefsPlugins"
+         constructorParams="audioEngine" jucerComponentFile=""/>
     <TAB name="Colours" colour="ffd3d3d3" useJucerComp="0" contentClassName="PMixPrefsColours"
          constructorParams="" jucerComponentFile=""/>
   </TABBEDCOMPONENT>

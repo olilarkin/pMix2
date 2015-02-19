@@ -9,48 +9,6 @@ static double snapToIntegerZoom (double zoom)
   return 1.0 / (int) (1.0 / zoom + 0.5);
 }
 
-//class MainAppWindow::PluginListWindow  : public DocumentWindow
-//{
-//public:
-//  PluginListWindow (MainAppWindow& owner_, AudioPluginFormatManager& formatManager)
-//    : DocumentWindow ("Available Plugins", Colours::white,
-//                      DocumentWindow::minimiseButton | DocumentWindow::closeButton),
-//    owner (owner_)
-//  {
-//    const File deadMansPedalFile (audioEngine.getAppProperties().getUserSettings()
-//                                  ->getFile().getSiblingFile ("RecentlyCrashedPluginsList"));
-//
-////    setContentOwned (new PluginListComponent (formatManager,
-////                     owner.knownPluginList,
-////                     deadMansPedalFile,
-////                     audioEngine.getAppProperties().getUserSettings()), true);
-//
-//    setResizable (true, false);
-//    setResizeLimits (300, 400, 800, 1500);
-//    setTopLeftPosition (60, 60);
-//
-//    restoreWindowStateFromString (audioEngine.getAppProperties().getUserSettings()->getValue ("listWindowPos"));
-//    setVisible (true);
-//  }
-//
-//  ~PluginListWindow()
-//  {
-//    audioEngine.getAppProperties().getUserSettings()->setValue ("listWindowPos", getWindowStateAsString());
-//
-//    clearContentComponent();
-//  }
-//
-//  void closeButtonPressed()
-//  {
-//    owner.pluginListWindow = nullptr;
-//  }
-//
-//private:
-//  MainAppWindow& owner;
-//
-//  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginListWindow)
-//};
-
 MainAppWindow::MainAppWindow(PMixAudioEngine& audioEngine)
   : DocumentWindow (JUCEApplication::getInstance()->getApplicationName(), Colours::lightgrey, DocumentWindow::allButtons)
   , audioEngine(audioEngine)
@@ -463,8 +421,7 @@ void MainAppWindow::filesDropped (const StringArray& files, int x, int y)
 
 void MainAppWindow::showPreferences()
 {
-  PMixPrefsComponent prefsComponent;
-  prefsComponent.setSize(500, 450);
+  PMixPrefsComponent prefsComponent(audioEngine);
   
   DialogWindow::LaunchOptions o;
   o.content.setNonOwned (&prefsComponent);
@@ -473,7 +430,7 @@ void MainAppWindow::showPreferences()
   o.dialogBackgroundColour        = Colours::grey;
   o.escapeKeyTriggersCloseButton  = true;
   o.useNativeTitleBar             = true;
-  o.resizable                     = false;
+  o.resizable                     = true;
 
   o.runModal();
 

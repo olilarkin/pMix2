@@ -17,11 +17,12 @@
   ==============================================================================
 */
 
-#ifndef __JUCE_HEADER_602C403610FDCA80__
-#define __JUCE_HEADER_602C403610FDCA80__
+#ifndef __JUCE_HEADER_F7DCD6DE88C48DE0__
+#define __JUCE_HEADER_F7DCD6DE88C48DE0__
 
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
+#include "pMixAudioEngine.h"
 //[/Headers]
 
 
@@ -34,12 +35,12 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class pMixPrefsPlugins  : public Component
+class PMixPrefsPlugins  : public Component
 {
 public:
     //==============================================================================
-    pMixPrefsPlugins ();
-    ~pMixPrefsPlugins();
+    PMixPrefsPlugins (PMixAudioEngine& audioEngine);
+    ~PMixPrefsPlugins();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
@@ -52,16 +53,18 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+  PMixAudioEngine& audioEngine;
+  ScopedPointer<PluginListComponent> pluginListComponent;
     //[/UserVariables]
 
     //==============================================================================
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (pMixPrefsPlugins)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixPrefsPlugins)
 };
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_602C403610FDCA80__
+#endif   // __JUCE_HEADER_F7DCD6DE88C48DE0__

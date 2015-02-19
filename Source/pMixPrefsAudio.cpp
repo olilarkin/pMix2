@@ -71,8 +71,7 @@ void PMixPrefsAudio::resized()
     //[/UserPreResize]
 
     //[UserResized] Add your own custom resize handling here..
-    AudioDeviceSelectorComponent::resized();
-    //[/UserResized
+    //[/UserResized]
 }
 
 

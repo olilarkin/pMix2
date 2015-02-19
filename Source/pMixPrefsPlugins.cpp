@@ -27,16 +27,13 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-pMixPrefsPlugins::pMixPrefsPlugins ()
+PMixPrefsPlugins::PMixPrefsPlugins (PMixAudioEngine& audioEngine)
+    : audioEngine(audioEngine)
 {
 
     //[UserPreSize]
-//  const File deadMansPedalFile (audioEngine.getAppProperties().getUserSettings()->getFile().getSiblingFile ("RecentlyCrashedPluginsList"));
-//
-////    setContentOwned (new PluginListComponent (formatManager,
-////                     owner.knownPluginList,
-////                     deadMansPedalFile,
-////                     audioEngine.getAppProperties().getUserSettings()), true);
+  const File deadMansPedalFile (audioEngine.getAppProperties().getUserSettings()->getFile().getSiblingFile ("RecentlyCrashedPluginsList"));
+  addAndMakeVisible( pluginListComponent = new PluginListComponent (audioEngine.getFormatManager(), audioEngine.getKnownPluginList(), deadMansPedalFile, audioEngine.getAppProperties().getUserSettings()), true);
     //[/UserPreSize]
 
     setSize (600, 400);
@@ -46,7 +43,7 @@ pMixPrefsPlugins::pMixPrefsPlugins ()
     //[/Constructor]
 }
 
-pMixPrefsPlugins::~pMixPrefsPlugins()
+PMixPrefsPlugins::~PMixPrefsPlugins()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
@@ -58,7 +55,7 @@ pMixPrefsPlugins::~pMixPrefsPlugins()
 }
 
 //==============================================================================
-void pMixPrefsPlugins::paint (Graphics& g)
+void PMixPrefsPlugins::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -69,12 +66,13 @@ void pMixPrefsPlugins::paint (Graphics& g)
     //[/UserPaint]
 }
 
-void pMixPrefsPlugins::resized()
+void PMixPrefsPlugins::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
     //[UserResized] Add your own custom resize handling here..
+  pluginListComponent->setBounds (getLocalBounds().reduced (4));
     //[/UserResized]
 }
 
@@ -93,10 +91,11 @@ void pMixPrefsPlugins::resized()
 
 BEGIN_JUCER_METADATA
 
-<JUCER_COMPONENT documentType="Component" className="pMixPrefsPlugins" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="600" initialHeight="400">
+<JUCER_COMPONENT documentType="Component" className="PMixPrefsPlugins" componentName=""
+                 parentClasses="public Component" constructorParams="PMixAudioEngine&amp; audioEngine"
+                 variableInitialisers="audioEngine(audioEngine)" snapPixels="8"
+                 snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="0"
+                 initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ffffffff"/>
 </JUCER_COMPONENT>
 
