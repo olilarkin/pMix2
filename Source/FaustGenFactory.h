@@ -52,15 +52,13 @@ private:
   
   vector<String> fCompileOptions; // Faust compiler options
 
-  void add_library_path(const String& library_path);
   void add_compile_option(const String& key, const String& value);
   void add_compile_option(const String& value);
   
 public:
   CriticalSection fDSPMutex;    // mutex to protect RT audio thread when recompiling DSP
 
-  faustgen_factory(const String& name);
-  
+  faustgen_factory(const String& name, const String& path);
   ~faustgen_factory();
   
   llvm_dsp_factory* create_factory_from_bitcode();
@@ -77,6 +75,8 @@ public:
   
   int get_number() { return fFaustNumber; }
   String get_name() { return fName; }
+  
+  void add_library_path(const String& library_path);
   
 //  void read(File path);
 //  void write(File path);

@@ -14,13 +14,6 @@ FaustAudioProcessor::FaustAudioProcessor()
 : fDSPfactory(nullptr)
 , fDSP(nullptr)
 {
-  // Empty (= no name) FaustAudioProcessor will be internally separated as groups with different names
-  if (!fDSPfactory)
-  {
-    String effect_name;
-    effect_name << "faustgen_factory-" << faustgen_factory::gFaustCounter;
-    allocate_factory(effect_name.toStdString());
-  }
 }
 
 FaustAudioProcessor::~FaustAudioProcessor()
@@ -222,7 +215,7 @@ void FaustAudioProcessor::free_dsp()
   fDSP = 0;
 }
 
-bool FaustAudioProcessor::allocate_factory(const string& effect_name)
+bool FaustAudioProcessor::allocate_factory(const string& effect_name, const String& path)
 {
   bool res = false;
   
@@ -232,7 +225,7 @@ bool FaustAudioProcessor::allocate_factory(const string& effect_name)
   }
   else
   {
-    fDSPfactory = new faustgen_factory(effect_name);
+    fDSPfactory = new faustgen_factory(effect_name, path);
     faustgen_factory::gFactoryMap[effect_name] = fDSPfactory;
     res = true;
   }
@@ -287,12 +280,12 @@ void FaustAudioProcessor::closeBox()
 
 void FaustAudioProcessor::addButton(const char* label, FAUSTFLOAT* zone)
 {
-  //TODO:
+  addParameter(new FaustAudioProcessorParameter(String(label), FaustAudioProcessorParameter::kTypeBool, 0, 0, 1, 1, "", zone));
 }
 
 void FaustAudioProcessor::addCheckButton(const char* label, FAUSTFLOAT* zone)
 {
-  //TODO:
+  addParameter(new FaustAudioProcessorParameter(String(label), FaustAudioProcessorParameter::kTypeBool, 0, 0, 1, 1, "", zone));
 }
 
 void FaustAudioProcessor::addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step)
@@ -318,4 +311,17 @@ void FaustAudioProcessor::addHorizontalBargraph(const char* label, FAUSTFLOAT* z
 void FaustAudioProcessor::addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max)
 {
   //TODO:
+}
+
+void FaustAudioProcessor::initialize(const String &path)
+{
+  // Empty (= no name) FaustAudioProcessor will be internally separated as groups with different names
+  if (!fDSPfactory)
+  {
+    String effect_name;
+    effect_name << "faustgen_factory-" << faustgen_factory::gFaustCounter;
+    allocate_factory(effect_name.toStdString(), path);
+  }
+  
+  fDSPfactory->add_library_path(path);
 }

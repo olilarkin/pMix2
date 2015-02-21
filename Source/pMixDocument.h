@@ -68,6 +68,8 @@ public:
 
   void initialize();
   
+  String getLibraryPath();
+  
 private:
   UndoManager undoManager;
   PMixAudioEngine& audioEngine;

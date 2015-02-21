@@ -25,7 +25,7 @@ static string getTarget()
 static string getTarget() { return ""; }
 #endif
 
-faustgen_factory::faustgen_factory(const String& name)
+faustgen_factory::faustgen_factory(const String& name, const String& path)
 {
   fUpdateInstance = 0;
   fName = name;
@@ -34,53 +34,13 @@ faustgen_factory::faustgen_factory(const String& name)
   gFaustCounter++;
   fFaustNumber = gFaustCounter;
   
-#if JUCE_MAC
-  
-#if PMIX_PLUGIN
-  CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMixPlugin"));
-#else
-  // OSX only : access to the pMix bundle
-  CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMix"));
-#endif
-  CFURLRef faustgen_ref = CFBundleCopyBundleURL(faustgen_bundle);
-  UInt8 bundle_path[512];
-  Boolean res = CFURLGetFileSystemRepresentation(faustgen_ref, true, bundle_path, 512);
-  jassert(res);
-  
   // Built the complete resource path
-  fLibraryPath.push_back(string((const char*)bundle_path) + string(FAUST_LIBRARY_PATH));
+  fLibraryPath.push_back(path.toStdString());
   
+#if JUCE_MAC
   // Draw path in temporary folder
   fDrawPath = string(FAUST_DRAW_PATH);
 #endif
-//
-//#ifdef WIN32
-//  HMODULE handle = LoadLibrary("faustgen~.mxe");
-//  if (handle) {
-//    // Get faustgen~.mxe path
-//    char name[512];
-//    GetModuleFileName(handle, name, 512);
-//    string str_name = string(name);
-//    str_name = str_name.substr(0, str_name.find_last_of("\\"));
-//    // Built the complete resource path
-//    fLibraryPath.push_back(string(str_name) + string(FAUST_LIBRARY_PATH));
-//    // Draw path in temporary folder
-//    TCHAR lpTempPathBuffer[MAX_PATH];
-//    // Gets the temp path env string (no guarantee it's a valid path).
-//    DWORD dwRetVal = GetTempPath(MAX_PATH, lpTempPathBuffer);
-//    if (dwRetVal > MAX_PATH || (dwRetVal == 0)) {
-//      LOG("GetTempPath failed...");
-//      // Try our value instead...
-//      fDrawPath = string(str_name) + string(FAUST_DRAW_PATH);
-//    } else {
-//      fDrawPath = string(lpTempPathBuffer);
-//    }
-//    FreeLibrary(handle);
-//  } else {
-//    LOG("Error : cannot locate faustgen~.mxe...");
-//    fDrawPath = "";
-//  }
-//#endif
 }
 
 faustgen_factory::~faustgen_factory()

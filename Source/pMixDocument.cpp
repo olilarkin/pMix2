@@ -51,9 +51,16 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
   {
     String errorMessage;
 
-    if (AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (*desc, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage))
+    AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (*desc, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
+    
+    if (instance != nullptr)
       node = audioEngine.getGraph().addNode (instance);
 
+    FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(instance);
+    
+    if (faustProc)
+      faustProc->initialize(getLibraryPath());
+    
     if (node != nullptr)
     {
       node->properties.set ("x", x);
@@ -312,6 +319,7 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, String& newSourceCod
   AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
   
   FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(instance);
+  faustProc->initialize(getLibraryPath());
   faustProc->getFactory()->update_sourcecode(newSourceCode, faustProc);
   
   // TODO: this is a bit wrong!
@@ -457,4 +465,26 @@ void PMixDocument::initialize()
   
   setChangedFlag (false);
 }
+
+String PMixDocument::getLibraryPath()
+{
+  String fullLibraryPath;
+
+#if JUCE_MAC
+#if PMIX_PLUGIN
+  CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMixPlugin"));
+#else
+  // OSX only : access to the pMix bundle
+  CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMix"));
+#endif
+  CFURLRef faustgen_ref = CFBundleCopyBundleURL(faustgen_bundle);
+  UInt8 bundle_path[512];
+  Boolean res = CFURLGetFileSystemRepresentation(faustgen_ref, true, bundle_path, 512);
+  jassert(res);
+  fullLibraryPath << (const char*)bundle_path << FAUST_LIBRARY_PATH;
+#endif //JUCE_MAC
+  
+  return fullLibraryPath;
+}
+
 

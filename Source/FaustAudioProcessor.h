@@ -94,13 +94,16 @@ public:
 //Unique
   void create_dsp();
   void free_dsp();
-  bool allocate_factory(const string& effect_name);
+  bool allocate_factory(const string& effect_name, const String& path);
   void update_sourcecode();
   String get_sourcecode();
   faustgen_factory* getFactory() { return fDSPfactory; }
   llvm_dsp* getDSP() { return fDSP; }
   void hilight_on(const String& error);
   void hilight_off();
+  
+  //MUST CALL AFTER CREATION
+  void initialize(const String &path);
   
 private:
   var fJSONInterface;
