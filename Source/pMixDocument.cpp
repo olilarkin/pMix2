@@ -279,6 +279,12 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   String errorMessage;
 
   AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
+  
+  if (pd.name == "Faust Effect")
+  {
+    FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(instance);
+    faustProc->initialize(getLibraryPath());
+  }
 
   if (instance == nullptr)
   {
@@ -304,7 +310,7 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
 }
 
-void PMixDocument::createFaustNodeFromXml (XmlElement& xml, String& newSourceCode)
+void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSourceCode)
 {
   PluginDescription pd;
   
@@ -320,7 +326,9 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, String& newSourceCod
   
   FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(instance);
   faustProc->initialize(getLibraryPath());
-  faustProc->getFactory()->update_sourcecode(newSourceCode, faustProc);
+  
+  if (newSourceCode.length())
+    faustProc->getFactory()->update_sourcecode(newSourceCode, faustProc);
   
   // TODO: this is a bit wrong!
   faustProc->prepareToPlay(44100., 8192);

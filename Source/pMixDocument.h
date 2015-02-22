@@ -37,7 +37,7 @@ public:
   void clear();
   XmlElement* createXml() const;
   void createNodeFromXml (const XmlElement& xml);
-  void createFaustNodeFromXml (XmlElement& xml, String& newSourceCode);
+  void createFaustNodeFromXml (XmlElement& xml, const String& newSourceCode);
   void restoreFromXml (const XmlElement& xml);
   static XmlElement* createNodeXml (AudioProcessorGraph::Node* const node) noexcept;
 
