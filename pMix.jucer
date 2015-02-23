@@ -7,6 +7,26 @@
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
     <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
       <GROUP id="{CAF3F9DD-46F9-316E-823D-FDCCC4B33FF3}" name="Panels">
+        <GROUP id="{4367FB8D-95C9-2548-7796-CB25871799D4}" name="InterpolationSpace">
+          <FILE id="SvrItn" name="pMixInterpolationSpace.cpp" compile="1" resource="0"
+                file="Source/pMixInterpolationSpace.cpp"/>
+          <FILE id="WJawZW" name="pMixInterpolationSpace.h" compile="0" resource="0"
+                file="Source/pMixInterpolationSpace.h"/>
+        </GROUP>
+        <GROUP id="{AF160CE6-C38A-C3A5-A3FF-867E98599A3E}" name="GraphEditor">
+          <FILE id="ttLwnT" name="pMixGraphEditor.cpp" compile="1" resource="0"
+                file="Source/pMixGraphEditor.cpp"/>
+          <FILE id="RIOJxZ" name="pMixGraphEditor.h" compile="0" resource="0"
+                file="Source/pMixGraphEditor.h"/>
+          <FILE id="WPt7ep" name="pMixGraphEditorParts.cpp" compile="1" resource="0"
+                file="Source/pMixGraphEditorParts.cpp"/>
+          <FILE id="qdpUgX" name="pMixGraphEditorParts.h" compile="0" resource="0"
+                file="Source/pMixGraphEditorParts.h"/>
+          <FILE id="LThEWc" name="pMixGraphEditorActions.cpp" compile="1" resource="0"
+                file="Source/pMixGraphEditorActions.cpp"/>
+          <FILE id="SLupqP" name="pMixGraphEditorActions.h" compile="0" resource="0"
+                file="Source/pMixGraphEditorActions.h"/>
+        </GROUP>
         <GROUP id="{20315D0D-BC0E-C90C-E078-C1352DBCEEED}" name="Preferences">
           <FILE id="iXM2Hy" name="pMixPrefsGeneral.cpp" compile="1" resource="0"
                 file="Source/pMixPrefsGeneral.cpp"/>
@@ -33,10 +53,6 @@
           <FILE id="nzzW3r" name="pMixPrefsComponent.h" compile="0" resource="0"
                 file="Source/pMixPrefsComponent.h"/>
         </GROUP>
-        <FILE id="SvrItn" name="pMixInterpolationSpace.cpp" compile="1" resource="0"
-              file="Source/pMixInterpolationSpace.cpp"/>
-        <FILE id="WJawZW" name="pMixInterpolationSpace.h" compile="0" resource="0"
-              file="Source/pMixInterpolationSpace.h"/>
         <FILE id="PSI7MM" name="pMixCodeEditor.cpp" compile="1" resource="0"
               file="Source/pMixCodeEditor.cpp"/>
         <FILE id="wnQxO5" name="pMixCodeEditor.h" compile="0" resource="0"
@@ -58,20 +74,12 @@
               file="Source/pMixParamTreeView.h"/>
         <FILE id="NRahlO" name="pMixParamTreeView.cpp" compile="1" resource="0"
               file="Source/pMixParamTreeView.cpp"/>
-        <FILE id="ttLwnT" name="pMixGraphEditor.cpp" compile="1" resource="0"
-              file="Source/pMixGraphEditor.cpp"/>
-        <FILE id="RIOJxZ" name="pMixGraphEditor.h" compile="0" resource="0"
-              file="Source/pMixGraphEditor.h"/>
-        <FILE id="WPt7ep" name="pMixGraphEditorParts.cpp" compile="1" resource="0"
-              file="Source/pMixGraphEditorParts.cpp"/>
-        <FILE id="qdpUgX" name="pMixGraphEditorParts.h" compile="0" resource="0"
-              file="Source/pMixGraphEditorParts.h"/>
-        <FILE id="LThEWc" name="pMixGraphEditorActions.cpp" compile="1" resource="0"
-              file="Source/pMixGraphEditorActions.cpp"/>
-        <FILE id="SLupqP" name="pMixGraphEditorActions.h" compile="0" resource="0"
-              file="Source/pMixGraphEditorActions.h"/>
       </GROUP>
       <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
+        <FILE id="f94ZEf" name="FaustFileFilter.h" compile="0" resource="0"
+              file="Source/FaustFileFilter.h"/>
+        <FILE id="YSPk5s" name="FaustDSPWatcher.h" compile="0" resource="0"
+              file="Source/FaustDSPWatcher.h"/>
         <FILE id="mdRVIA" name="FaustCodeTokenizer.cpp" compile="1" resource="0"
               file="Source/FaustCodeTokenizer.cpp"/>
         <FILE id="oFnEPc" name="FaustCodeTokenizer.h" compile="0" resource="0"
