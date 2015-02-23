@@ -102,7 +102,7 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
                                    ->getValue ("recentPMixDocumentFiles"));
 
     PopupMenu recentFilesMenu;
-    recentFiles.createPopupMenuItems (recentFilesMenu, 100, true, true);
+    recentFiles.createPopupMenuItems (recentFilesMenu, CommandIDs::recentFilesMenu, true, true);
     menu.addSubMenu ("Open recent file", recentFilesMenu);
 
     menu.addCommandItem (&getCommandManager(), CommandIDs::save);
@@ -149,36 +149,19 @@ void MainAppWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
 {
   MainComponent* const mainComponent = getMainComponent();
 
-  if (menuItemID == 250)
+  if (menuItemID == CommandIDs::clear)
   {
     if (mainComponent != nullptr)
       audioEngine.getDoc().clear();
   }
-  else if (menuItemID >= 100 && menuItemID < 200)
+  else if (menuItemID >= CommandIDs::recentFilesMenu && menuItemID < (CommandIDs::recentFilesMenu + 100))
   {
     RecentlyOpenedFilesList recentFiles;
-    recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()
-                                   ->getValue ("recentPMixDocumentFiles"));
+    recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()->getValue ("recentPMixDocumentFiles"));
 
     if (mainComponent != nullptr && audioEngine.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
-      audioEngine.getDoc().loadFrom (recentFiles.getFile (menuItemID - 100), true);
+      audioEngine.getDoc().loadFrom (recentFiles.getFile (menuItemID - CommandIDs::recentFilesMenu), true);
   }
-//  else if (menuItemID >= 200 && menuItemID < 210)
-//  {
-//    if (menuItemID == 200)          audioEngine.setPluginSortMethod(KnownPluginList::defaultOrder);
-//    else if (menuItemID == 201)     audioEngine.setPluginSortMethod(KnownPluginList::sortAlphabetically);
-//    else if (menuItemID == 202)     audioEngine.setPluginSortMethod(KnownPluginList::sortByCategory);
-//    else if (menuItemID == 203)     audioEngine.setPluginSortMethod(KnownPluginList::sortByManufacturer);
-//    else if (menuItemID == 204)     audioEngine.setPluginSortMethod(KnownPluginList::sortByFileSystemLocation);
-//
-//    menuItemsChanged();
-//  }
-//  else
-//  {
-//    createPlugin (getChosenType (menuItemID),
-//                  proportionOfWidth  (0.3f + Random::getSystemRandom().nextFloat() * 0.6f),
-//                  proportionOfHeight (0.3f + Random::getSystemRandom().nextFloat() * 0.6f));
-//  }
 }
 
 ApplicationCommandTarget* MainAppWindow::getNextCommandTarget()
@@ -247,6 +230,8 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       
     case CommandIDs::showPrefs:
       result.setInfo ("Preferences...", String::empty, category, 0);
+      result.defaultKeypresses.add (KeyPress (',', ModifierKeys::commandModifier, 0));
+
       break;
       
     case CommandIDs::undo:
@@ -370,26 +355,6 @@ void MainAppWindow::fileDragExit (const StringArray&)
 
 void MainAppWindow::filesDropped (const StringArray& files, int x, int y)
 {
-  MainComponent* const mainComponent = getMainComponent();
-
-  if (mainComponent != nullptr)
-  {
-//    if (files.size() == 1 && File (files[0]).hasFileExtension (filenameSuffix))
-//    {
-//      if (audioEngine.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
-//        audioEngine.getDoc().loadFrom (File (files[0]), true);
-//    }
-//    else
-//    {
-//      OwnedArray <PluginDescription> typesFound;
-//      audioEngine.getKnownPluginList().scanAndAddDragAndDroppedFiles (formatManager, files, typesFound);
-//
-//      Point<int> pos (mainComponent->getLocalPoint (this, Point<int> (x, y)));
-//
-//      for (int i = 0; i < jmin (5, typesFound.size()); ++i)
-//        createPlugin (typesFound.getUnchecked(i), pos.getX(), pos.getY());
-//    }
-  }
 }
 
 void MainAppWindow::showPreferences()

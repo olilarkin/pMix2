@@ -13,6 +13,9 @@
 
 namespace CommandIDs
 {
+  static const int recentFilesMenu        = 0x200000;
+  //                                    ... 0x200064 reserved
+  static const int clear                  = 0x2FFFFF;
   static const int showParameters         = 0x300000;
   static const int open                   = 0x300001;
   static const int save                   = 0x300002;
@@ -46,6 +49,7 @@ namespace CommandIDs
   static const int floatISpace            = 0x300016;
   static const int floatCodeEditor        = 0x300017;
   static const int floatParameters        = 0x300018;
+  
 }
 
 
