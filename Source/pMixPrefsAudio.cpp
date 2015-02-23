@@ -28,7 +28,7 @@
 
 //==============================================================================
 PMixPrefsAudio::PMixPrefsAudio (AudioDeviceManager& deviceManager)
-    : AudioDeviceSelectorComponent(deviceManager, 0, 256, 0, 256, true, true, true, false)
+    : AudioDeviceSelectorComponent(deviceManager, 0, 32, 0, 32, true, true, true, false)
 {
 
     //[UserPreSize]
@@ -61,7 +61,7 @@ void PMixPrefsAudio::paint (Graphics& g)
     g.fillAll (Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
-  AudioDeviceSelectorComponent::paint(g);
+    AudioDeviceSelectorComponent::paint(g);
     //[/UserPaint]
 }
 
@@ -71,6 +71,7 @@ void PMixPrefsAudio::resized()
     //[/UserPreResize]
 
     //[UserResized] Add your own custom resize handling here..
+    AudioDeviceSelectorComponent::resized();
     //[/UserResized]
 }
 
