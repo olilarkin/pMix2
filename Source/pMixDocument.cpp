@@ -177,8 +177,6 @@ void PMixDocument::removeConnection (uint32 sourceFilterUID, int sourceFilterCha
 
 void PMixDocument::clear()
 {
-  //PluginWindow::closeAllCurrentlyOpenWindows();
-
   audioEngine.getGraph().clear();
   changed();
 }
