@@ -34,6 +34,18 @@ PMixPrefsPlugins::PMixPrefsPlugins (PMixAudioEngine& audioEngine)
     //[UserPreSize]
   const File deadMansPedalFile (audioEngine.getAppProperties().getUserSettings()->getFile().getSiblingFile ("RecentlyCrashedPluginsList"));
   addAndMakeVisible( pluginListComponent = new PluginListComponent (audioEngine.getFormatManager(), audioEngine.getKnownPluginList(), deadMansPedalFile, audioEngine.getAppProperties().getUserSettings()), true);
+  
+  
+  //    KnownPluginList::SortMethod pluginSortMethod = audioEngine.getSortMethod();
+  //
+  //    PopupMenu sortTypeMenu;
+  //    sortTypeMenu.addItem (200, "List plugins in default order",      true, pluginSortMethod == KnownPluginList::defaultOrder);
+  //    sortTypeMenu.addItem (201, "List plugins in alphabetical order", true, pluginSortMethod == KnownPluginList::sortAlphabetically);
+  //    sortTypeMenu.addItem (202, "List plugins by category",           true, pluginSortMethod == KnownPluginList::sortByCategory);
+  //    sortTypeMenu.addItem (203, "List plugins by manufacturer",       true, pluginSortMethod == KnownPluginList::sortByManufacturer);
+  //    sortTypeMenu.addItem (204, "List plugins based on the directory structure", true, pluginSortMethod == KnownPluginList::sortByFileSystemLocation);
+  //    menu.addSubMenu ("Plugin menu type", sortTypeMenu);
+  
     //[/UserPreSize]
 
     setSize (600, 400);
