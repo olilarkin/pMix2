@@ -26,7 +26,7 @@ class FaustAudioProcessor;
 
 using namespace std;
 
-class faustgen_factory
+class FaustgenFactory
 {
   typedef vector<String>::const_iterator StringVectorIt;
   
@@ -52,50 +52,50 @@ private:
   
   vector<String> fCompileOptions; // Faust compiler options
 
-  void add_compile_option(const String& key, const String& value);
-  void add_compile_option(const String& value);
+  void addCompileOption(const String& key, const String& value);
+  void addCompileOption(const String& value);
   
 public:
   CriticalSection fDSPMutex;    // mutex to protect RT audio thread when recompiling DSP
 
-  faustgen_factory(const String& name, const String& path);
-  ~faustgen_factory();
+  FaustgenFactory(const String& name, const String& path);
+  ~FaustgenFactory();
   
-  llvm_dsp_factory* create_factory_from_bitcode();
-  llvm_dsp_factory* create_factory_from_sourcecode(FaustAudioProcessor* instance);
-  llvm_dsp* create_dsp_aux(FaustAudioProcessor* instance);
+  llvm_dsp_factory* createFactoryFromBitcode();
+  llvm_dsp_factory* createFactoryFromSourceCode(FaustAudioProcessor* instance);
+  llvm_dsp* createDSPAux(FaustAudioProcessor* instance);
   
-  void free_dsp_factory();
+  void freeDSPFactory();
   
-  void default_compile_options();
-  void print_compile_options();
+  void defaultCompileOptions();
+  void printCompileOptions();
   
   void getStateInformation (XmlElement& xml);
   void setStateInformation (XmlElement& xml);
   
-  int get_number() { return fFaustNumber; }
-  String get_name() { return fName; }
+  int getNumber() { return fFaustNumber; }
+  String getName() { return fName; }
   
-  void add_library_path(const String& library_path);
+  void addLibraryPath(const String& libraryPath);
   
 //  void read(File path);
 //  void write(File path);
   
-  String get_sourcecode() { return fSourceCode; }
+  String getSourcecode() { return fSourceCode; }
 
-  String get_json() { return fJSON; }
+  String getJSON() { return fJSON; }
   
-  void update_sourcecode(String source_code, FaustAudioProcessor* instance);
+  void updateSourceCode(String sourceCode, FaustAudioProcessor* instance);
     
   // Compile DSP with -svg option and display the SVG files
-  bool try_open_svg();
-  void open_svg();
-  void remove_svg();
-  void display_svg();
-  String get_svg_path();
+  bool tryOpenSVG();
+  void openSVG();
+  void removeSVG();
+  void displaySVG();
+  String getSVGPath();
   
-  void add_instance(FaustAudioProcessor* dsp) { fInstances.insert(dsp); }
-  void remove_instance(FaustAudioProcessor* dsp)
+  void addInstance(FaustAudioProcessor* dsp) { fInstances.insert(dsp); }
+  void removeInstance(FaustAudioProcessor* dsp)
   {
     fInstances.erase(dsp);
     
@@ -109,7 +109,7 @@ public:
 
   static int gFaustCounter;       // global variable to count the number of faustgen objects inside the patcher
   
-  static map<String, faustgen_factory*> gFactoryMap;
+  static map<String, FaustgenFactory*> gFactoryMap;
 };
 
 

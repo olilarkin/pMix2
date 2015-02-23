@@ -77,7 +77,7 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
         if (faustProc)
         {
           selectedFaustAudioProcessor = faustProc;
-          editor->loadContent(faustProc->get_sourcecode());
+          editor->loadContent(faustProc->getSourcecode());
           return;
         }
       }
@@ -101,7 +101,7 @@ void CodeEditor::buttonClicked (Button* button)
     }
     else if (button == &svgButton)
     {
-      selectedFaustAudioProcessor->getFactory()->display_svg();
+      selectedFaustAudioProcessor->getFactory()->displaySVG();
     }
   }
 }

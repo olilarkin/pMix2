@@ -326,7 +326,7 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSou
   faustProc->initialize(getLibraryPath());
   
   if (newSourceCode.length())
-    faustProc->getFactory()->update_sourcecode(newSourceCode, faustProc);
+    faustProc->getFactory()->updateSourceCode(newSourceCode, faustProc);
   
   // TODO: this is a bit wrong!
   faustProc->prepareToPlay(44100., 8192);

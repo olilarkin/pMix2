@@ -18,9 +18,9 @@ FaustAudioProcessor::FaustAudioProcessor()
 
 FaustAudioProcessor::~FaustAudioProcessor()
 {
-  free_dsp();
+  freeDSP();
   
-  fDSPfactory->remove_instance(this);
+  fDSPfactory->removeInstance(this);
 }
 
 void FaustAudioProcessor::fillInPluginDescription (PluginDescription& description) const
@@ -59,7 +59,7 @@ void FaustAudioProcessor::fillInitialInPluginDescription (PluginDescription& des
 void FaustAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
   if (!fDSP)
-    create_dsp();
+    createDSP();
   
   fDSP->init(sampleRate);
   setPlayConfigDetails(fDSP->getNumInputs(),  fDSP->getNumOutputs(), sampleRate, samplesPerBlock);
@@ -185,20 +185,20 @@ void FaustAudioProcessor::setStateInformation (const void* data, int sizeInBytes
   }
   
   if (!fDSP)
-    create_dsp();
+    createDSP();
 }
 
-void FaustAudioProcessor::create_dsp()
+void FaustAudioProcessor::createDSP()
 {
   const ScopedLock lock(fDSPfactory->fDSPMutex);
 
-  fDSP = fDSPfactory->create_dsp_aux(this);
+  fDSP = fDSPfactory->createDSPAux(this);
   jassert(fDSP);
   
   // Initialize User Interface
   fDSP->buildUserInterface(this);
 
-  Result res = JSON::parse(fDSPfactory->get_json(), fJSONInterface);
+  Result res = JSON::parse(fDSPfactory->getJSON(), fJSONInterface);
   
   // Initialize at the system's sampling rate
   if (getSampleRate() == 0)
@@ -209,53 +209,53 @@ void FaustAudioProcessor::create_dsp()
   updateHostDisplay();
 }
 
-void FaustAudioProcessor::free_dsp()
+void FaustAudioProcessor::freeDSP()
 {
   deleteDSPInstance(fDSP);
   fDSP = 0;
 }
 
-bool FaustAudioProcessor::allocate_factory(const string& effect_name, const String& path)
+bool FaustAudioProcessor::allocateFactory(const string& effect_name, const String& path)
 {
   bool res = false;
   
-  if (faustgen_factory::gFactoryMap.find(effect_name) != faustgen_factory::gFactoryMap.end())
+  if (FaustgenFactory::gFactoryMap.find(effect_name) != FaustgenFactory::gFactoryMap.end())
   {
-    fDSPfactory = faustgen_factory::gFactoryMap[effect_name];
+    fDSPfactory = FaustgenFactory::gFactoryMap[effect_name];
   }
   else
   {
-    fDSPfactory = new faustgen_factory(effect_name, path);
-    faustgen_factory::gFactoryMap[effect_name] = fDSPfactory;
+    fDSPfactory = new FaustgenFactory(effect_name, path);
+    FaustgenFactory::gFactoryMap[effect_name] = fDSPfactory;
     res = true;
   }
   
-  fDSPfactory->add_instance(this);
+  fDSPfactory->addInstance(this);
   return res;
 }
 
-void FaustAudioProcessor::update_sourcecode()
+void FaustAudioProcessor::updateSourcecode()
 {
   // Create a new DSP instance
-  create_dsp();
+  createDSP();
 
   // state is modified...
   //set_dirty();
 }
 
-String FaustAudioProcessor::get_sourcecode()
+String FaustAudioProcessor::getSourcecode()
 {
-  return fDSPfactory->get_sourcecode();
+  return fDSPfactory->getSourcecode();
 }
 
-void FaustAudioProcessor::hilight_on(const String& error)
+void FaustAudioProcessor::highlightON(const String& error)
 {
-  //TODO:hilight_on
+  //TODO:highlightON
 }
 
-void FaustAudioProcessor::hilight_off()
+void FaustAudioProcessor::highlightOFF()
 {
-  //TODO:hilight_off
+  //TODO:highlightOFF
 }
 
 void FaustAudioProcessor::openTabBox(const char* label)
@@ -319,9 +319,9 @@ void FaustAudioProcessor::initialize(const String &path)
   if (!fDSPfactory)
   {
     String effect_name;
-    effect_name << "faustgen_factory-" << faustgen_factory::gFaustCounter;
-    allocate_factory(effect_name.toStdString(), path);
+    effect_name << "FaustgenFactory-" << FaustgenFactory::gFaustCounter;
+    allocateFactory(effect_name.toStdString(), path);
   }
   
-  fDSPfactory->add_library_path(path);
+  fDSPfactory->addLibraryPath(path);
 }
