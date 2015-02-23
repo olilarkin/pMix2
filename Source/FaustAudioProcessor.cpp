@@ -215,11 +215,11 @@ void FaustAudioProcessor::freeDSP()
   fDSP = 0;
 }
 
-bool FaustAudioProcessor::allocateFactory(const string& effect_name, const String& path)
+bool FaustAudioProcessor::allocateFactory(const String& effect_name, const String& path)
 {
   bool res = false;
   
-  if (FaustgenFactory::gFactoryMap.find(effect_name) != FaustgenFactory::gFactoryMap.end())
+  if (FaustgenFactory::gFactoryMap.find(effect_name.toStdString()) != FaustgenFactory::gFactoryMap.end())
   {
     fDSPfactory = FaustgenFactory::gFactoryMap[effect_name];
   }

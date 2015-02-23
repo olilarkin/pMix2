@@ -24,24 +24,22 @@
 
 class FaustAudioProcessor;
 
-using namespace std;
-
 class FaustgenFactory
 {
-  typedef vector<String>::const_iterator StringVectorIt;
+  typedef std::vector<String>::const_iterator StringVectorIt;
   
 private:
   
-  set<FaustAudioProcessor*> fInstances;      // set of all DSP
+  std::set<FaustAudioProcessor*> fInstances;      // set of all DSP
   llvm_dsp_factory* fDSPfactory;  // pointer to the LLVM Faust factory
 
   String fSourceCode;
   String fBitCode;
   
-  vector<String> fLibraryPath;    // path towards the Faust libraries
+  std::vector<String> fLibraryPath;    // path towards the Faust libraries
   String fDrawPath;               // path where to put SVG files
   
-  vector<String> fOptions;        // options set in the 'compileoptions' message
+  std::vector<String> fOptions;        // options set in the 'compileoptions' message
   
   int fFaustNumber;               // faustgen object's number inside the patcher
   
@@ -50,7 +48,7 @@ private:
   String fName;                   // name of the DSP group
   String fJSON;              // JSON
   
-  vector<String> fCompileOptions; // Faust compiler options
+  std::vector<String> fCompileOptions; // Faust compiler options
 
   void addCompileOption(const String& key, const String& value);
   void addCompileOption(const String& value);
@@ -109,7 +107,7 @@ public:
 
   static int gFaustCounter;       // global variable to count the number of faustgen objects inside the patcher
   
-  static map<String, FaustgenFactory*> gFactoryMap;
+  static std::map<String, FaustgenFactory*> gFactoryMap;
 };
 
 

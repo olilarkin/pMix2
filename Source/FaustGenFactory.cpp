@@ -12,10 +12,10 @@
 #include <stdio.h>
 
 int FaustgenFactory::gFaustCounter = 0;
-map<String, FaustgenFactory*> FaustgenFactory::gFactoryMap;
+std::map<String, FaustgenFactory*> FaustgenFactory::gFactoryMap;
 
 #if JUCE_MAC
-static string getTarget()
+static std::string getTarget()
 {
   int tmp;
   return (sizeof(&tmp) == 8) ? "" : "i386-apple-darwin10.6.0";
@@ -39,7 +39,7 @@ FaustgenFactory::FaustgenFactory(const String& name, const String& path)
   
 #if JUCE_MAC
   // Draw path in temporary folder
-  fDrawPath = string(FAUST_DRAW_PATH);
+  fDrawPath = std::string(FAUST_DRAW_PATH);
 #endif
 }
 
@@ -54,7 +54,7 @@ void FaustgenFactory::freeDSPFactory()
   const ScopedLock lock(fDSPMutex);
 
   // Free all instances
-  set<FaustAudioProcessor*>::const_iterator it;
+  std::set<FaustAudioProcessor*>::const_iterator it;
   for (it = fInstances.begin(); it != fInstances.end(); it++) {
     (*it)->freeDSP();
   }
@@ -90,7 +90,7 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioProcess
   //printCompileOptions();
   
   // Prepare compile options
-  string error;
+  std::string error;
  	const char* argv[64];
   
   jassert(fCompileOptions.size() < 64);
@@ -142,7 +142,7 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioProcess
 llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioProcessor* instance)
 {
   llvm_dsp* dsp = 0;
-  string error;
+  std::string error;
   String logStr;
 
   // Factory already allocated
@@ -291,7 +291,7 @@ void FaustgenFactory::getStateInformation (XmlElement& xml)
   
   if (fDSPfactory)
   {
-    string bitcode = writeDSPFactoryToBitcode(fDSPfactory);
+    std::string bitcode = writeDSPFactoryToBitcode(fDSPfactory);
     xml.setAttribute ("bitcode", bitcode);
   }
 }
@@ -402,7 +402,7 @@ void FaustgenFactory::updateSourceCode(String sourceCode, FaustAudioProcessor* i
   {
     
     // Update all instances
-    set<FaustAudioProcessor*>::const_iterator it;
+    std::set<FaustAudioProcessor*>::const_iterator it;
     for (it = fInstances.begin(); it != fInstances.end(); it++)
     {
       (*it)->highlightOFF();

@@ -94,7 +94,7 @@ public:
 //Unique
   void createDSP();
   void freeDSP();
-  bool allocateFactory(const string& effectName, const String& path);
+  bool allocateFactory(const String& effectName, const String& path);
   void updateSourcecode();
   String getSourcecode();
   FaustgenFactory* getFactory() { return fDSPfactory; }
