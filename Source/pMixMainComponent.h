@@ -27,7 +27,6 @@ public:
   MainComponent (PMixAudioEngine& audioEngine);
   ~MainComponent();
   
-  void createNewPlugin (const PluginDescription* desc, int x, int y);
   void resized();
   void setZoom (double scale);
   double getZoom() const;
