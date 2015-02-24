@@ -293,7 +293,7 @@ void FaustgenFactory::getStateInformation (XmlElement& xml)
   if (fDSPfactory)
   {
     std::string bitcode = writeDSPFactoryToBitcode(fDSPfactory);
-    xml.setAttribute ("bitcode", bitcode);
+    xml.setAttribute ("bitcode", String(bitcode));
   }
 }
 
