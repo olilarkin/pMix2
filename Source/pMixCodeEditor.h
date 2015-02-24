@@ -32,12 +32,13 @@ public:
   void changeListenerCallback (ChangeBroadcaster* source);
   void buttonClicked (Button* button);
   
+  ScopedPointer<Console> console;
+
 private:
   FaustTokeniser tokeniser;
   CodeDocument codeDocument;
   ScopedPointer<CodeEditorComponent> editor;
   ScopedPointer<WebBrowser> webBrowser;
-  ScopedPointer<Console> console;
 
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;

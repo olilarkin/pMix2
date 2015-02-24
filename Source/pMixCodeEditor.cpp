@@ -18,9 +18,9 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 , selectedFaustAudioProcessor(nullptr)
 , selectedNodeID(0)
 {
-  verticalLayout.setItemLayout (0, -0.2, -0.8, -0.35);
+  verticalLayout.setItemLayout (0, 100, -0.8, -0.35);
   verticalLayout.setItemLayout (1, 8, 8, 8);
-  verticalLayout.setItemLayout (2, 150, -1.0, -0.65);
+  verticalLayout.setItemLayout (2, 50, -1.0, 100);
   verticalLayout.setItemLayout (3, 8, 8, 8);
   verticalLayout.setItemLayout (4, 150, -1.0, -0.65);
   
@@ -53,7 +53,7 @@ void CodeEditor::resized()
   svgButton.setBounds(108, 8, 100, 20 );
 //  editor->setBounds (r.withTrimmedTop (40));
   
-  Component* vcomps[] = { editor, dividerBar1, webBrowser, dividerBar2, console };
+  Component* vcomps[] = { editor, dividerBar1, console , dividerBar2, webBrowser };
   
   verticalLayout.layOutComponents (vcomps, 5,
                                    0, 40, getWidth(), getHeight() - 40,
