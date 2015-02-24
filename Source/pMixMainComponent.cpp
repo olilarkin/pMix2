@@ -27,9 +27,8 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   //addAndMakeVisible (paramTreeView = new ParamTreeView(audioEngine));
   //addAndMakeVisible (paramView = new ParamView(audioEngine));
 
-  interpolationSpace = new InterpolationSpaceComponent(audioEngine);
-  
-//  logger.addChangeListener(console);
+  addAndMakeVisible(interpolationSpace = new InterpolationSpaceComponent(audioEngine));
+
   addAndMakeVisible( fileBrowser = new FileBrowser());
   addAndMakeVisible( codeEditor = new CodeEditor(audioEngine, *graphEditor) );
   graphEditor->addChangeListener(codeEditor);
@@ -51,12 +50,7 @@ void MainComponent::resized()
 {
   Component* hcomps[] = { graphEditor, horizontalDividerBar, codeEditor  };
   
-  horizontalLayout.layOutComponents (hcomps, 3, 0, 0, getWidth(), getHeight(), false, true);
-}
-
-void MainComponent::createNewPlugin (const PluginDescription* desc, int x, int y)
-{
-  graphEditor->createNewFilter (desc, x, y);
+  horizontalLayout.layOutComponents (hcomps, 3, 0, 0, getWidth(), getHeight()-20, false, true);
 }
 
 void MainComponent::setZoom (double scale)
