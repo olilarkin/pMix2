@@ -10,8 +10,12 @@
 #include "pMixAudioEngine.h"
 #include "pMixCommandIDs.h"
 
+FaustDSPFileFilter PMixAudioEngine::DSPFileFilter;
+
 PMixAudioEngine::PMixAudioEngine()
-: doc(*this)
+: thread("DSP folder watcher")
+, faustDSPfiles(&DSPFileFilter, thread)
+, doc(*this)
 {
   // initialise our settings file..
   
@@ -34,8 +38,11 @@ PMixAudioEngine::PMixAudioEngine()
   if (savedPluginList != nullptr)
     knownPluginList.recreateFromXml (*savedPluginList);
   
-  pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()
-  ->getIntValue ("pluginSortMethod", KnownPluginList::sortByManufacturer);
+  pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()->getIntValue ("pluginSortMethod", KnownPluginList::sortByManufacturer);
+  
+  
+  faustDSPfiles.setDirectory (File("/Users/oli/Dev/MyOWL/OwlWare/Libraries/OwlPatches/OliLarkin"), true, true);
+  thread.startThread (3);
   
   knownPluginList.addChangeListener (this);  
 }
@@ -85,6 +92,12 @@ void PMixAudioEngine::createDeviceMenu (PopupMenu& m) const
   PopupMenu faustMenu;
   faustMenu.addItem(CommandIDs::newFaustEffect, "Effect");
   faustMenu.addItem(CommandIDs::newFaustEffect, "Synth");
+  faustMenu.addSeparator();
+  
+  int index = CommandIDs::faustDSPFilesMenu;
+
+  for (int i=0; i<faustDSPfiles.getNumFiles(); i++)
+    faustMenu.addItem(index++, faustDSPfiles.getFile(i).getFileNameWithoutExtension());
 
   m.addSubMenu("Faust", faustMenu);
   
@@ -104,6 +117,10 @@ const PluginDescription* PMixAudioEngine::getChosenType (const int menuID) const
     case CommandIDs::newMIDIOutput: return internalTypes[3];
     case CommandIDs::newFaustEffect: return internalTypes[4];
     default:
-      return knownPluginList.getType (knownPluginList.getIndexChosenByMenu (menuID));
+    {
+      if (menuID >= CommandIDs::faustDSPFilesMenu && menuID < CommandIDs::faustDSPFilesMenu + faustDSPfiles.getNumFiles()) return internalTypes[4];
+      else
+        return knownPluginList.getType (knownPluginList.getIndexChosenByMenu (menuID));
+    }
   }
 }

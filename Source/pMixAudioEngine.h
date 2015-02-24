@@ -14,6 +14,7 @@
 
 #include "pMixDocument.h"
 #include "pMixInternalFilters.h"
+#include "FaustFileFilter.h"
 
 ApplicationCommandManager& getCommandManager();
 
@@ -41,10 +42,14 @@ public:
   void changeListenerCallback (ChangeBroadcaster* broadcaster);
 
 private:
+  static FaustDSPFileFilter DSPFileFilter;
+  TimeSliceThread thread;
+  DirectoryContentsList faustDSPfiles;
+  
   OwnedArray <PluginDescription> internalTypes;
   KnownPluginList knownPluginList;
   KnownPluginList::SortMethod pluginSortMethod;
-  
+
   AudioProcessorGraph graph;
   AudioPluginFormatManager formatManager;
   

@@ -13,6 +13,9 @@
 
 namespace CommandIDs
 {
+  static const int faustDSPFilesMenu      = 0x100000;
+  //                                    ... 0x100064 reserved
+
   static const int recentFilesMenu        = 0x200000;
   //                                    ... 0x200064 reserved
   static const int clear                  = 0x2FFFFF;
