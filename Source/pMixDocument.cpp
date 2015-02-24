@@ -400,9 +400,9 @@ void PMixDocument::restoreFromXml (const XmlElement& xml)
   forEachXmlChildElementWithTagName (xml, e, "CONNECTION")
   {
     addConnection ((uint32) e->getIntAttribute ("srcFilter"),
-                   e->getIntAttribute ("srcChannel"),
+                            e->getIntAttribute ("srcChannel"),
                    (uint32) e->getIntAttribute ("dstFilter"),
-                   e->getIntAttribute ("dstChannel"));
+                            e->getIntAttribute ("dstChannel"));
   }
 
   audioEngine.getGraph().removeIllegalConnections();
