@@ -29,7 +29,7 @@
 #endif
 
 #define LLVM_OPTIMIZATION 3
-#define DEFAULT_CODE "declare name \"Faust Effect\";\n\ngain = hslider(\"gain\", 1., 0., 1., 0.01);\nprocess = _*(gain);"
+#define DEFAULT_CODE "declare name \"Faust Effect\";\n\ngain = hslider(\"gain\", 1., 0., 1., 0.);\nprocess = _*(gain);"
 
 #define LOG Logger::getCurrentLogger()->writeToLog
 
