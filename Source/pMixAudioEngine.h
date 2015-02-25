@@ -15,6 +15,7 @@
 #include "pMixDocument.h"
 #include "pMixInternalFilters.h"
 #include "FaustFileFilter.h"
+#include "FaustPluginFormat.h"
 
 ApplicationCommandManager& getCommandManager();
 
@@ -27,6 +28,8 @@ public:
   AudioProcessorGraph& getGraph() noexcept { return graph; }
   //AudioProcessorPlayer& getGraphPlayer() noexcept { return graphPlayer; }
   AudioPluginFormatManager& getFormatManager() noexcept { return formatManager; }
+  FaustPluginFormat& getFaustFormat() noexcept { return faustDSPFormat; }
+
   KnownPluginList& getKnownPluginList() { return knownPluginList; }
   KnownPluginList::SortMethod getSortMethod() noexcept { return pluginSortMethod; }
   PMixDocument &getDoc() noexcept { return doc; }
@@ -42,21 +45,19 @@ public:
   void changeListenerCallback (ChangeBroadcaster* broadcaster);
 
 private:
-  static FaustDSPFileFilter DSPFileFilter;
-  TimeSliceThread thread;
-  DirectoryContentsList faustDSPfiles;
-  
-  OwnedArray <PluginDescription> internalTypes;
-  KnownPluginList knownPluginList;
-  KnownPluginList::SortMethod pluginSortMethod;
+  PMixDocument doc;
 
+  OwnedArray <PluginDescription> internalTypes;
   AudioProcessorGraph graph;
   AudioPluginFormatManager formatManager;
+  KnownPluginList knownPluginList;
+  KnownPluginList::SortMethod pluginSortMethod;
   
+  KnownPluginList knownFaustDSPList;
+  FaustPluginFormat faustDSPFormat;
+
   ScopedPointer<ApplicationProperties> appProperties;
 
-  PMixDocument doc;
-  
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixAudioEngine)
 };
 

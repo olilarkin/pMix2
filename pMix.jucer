@@ -76,6 +76,8 @@
               file="Source/pMixParamTreeView.cpp"/>
       </GROUP>
       <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
+        <FILE id="JLQaQv" name="FaustPluginFormat.h" compile="0" resource="0"
+              file="Source/FaustPluginFormat.h"/>
         <FILE id="f94ZEf" name="FaustFileFilter.h" compile="0" resource="0"
               file="Source/FaustFileFilter.h"/>
         <FILE id="YSPk5s" name="FaustDSPWatcher.h" compile="0" resource="0"
@@ -206,6 +208,6 @@
     <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_PLUGINHOST_VST="enabled" JUCE_PLUGINHOST_VST3="enabled"
-               JUCE_PLUGINHOST_AU="enabled"/>
+  <JUCEOPTIONS JUCE_PLUGINHOST_VST="disabled" JUCE_PLUGINHOST_VST3="disabled"
+               JUCE_PLUGINHOST_AU="disabled"/>
 </JUCERPROJECT>

@@ -10,12 +10,11 @@
 #include "pMixAudioEngine.h"
 #include "pMixCommandIDs.h"
 
-FaustDSPFileFilter PMixAudioEngine::DSPFileFilter;
+//FaustDSPFileFilter PMixAudioEngine::DSPFileFilter;
 
 PMixAudioEngine::PMixAudioEngine()
-: thread("DSP folder watcher")
-, faustDSPfiles(&DSPFileFilter, thread)
-, doc(*this)
+: doc(*this)
+, faustDSPFormat(doc.getLibraryPath())
 {
   // initialise our settings file..
   
@@ -29,7 +28,6 @@ PMixAudioEngine::PMixAudioEngine()
   
   formatManager.addDefaultFormats();
   formatManager.addFormat (new InternalPluginFormat());
-  
   InternalPluginFormat internalFormat;
   internalFormat.getAllTypes (internalTypes);
   
@@ -37,13 +35,17 @@ PMixAudioEngine::PMixAudioEngine()
   
   if (savedPluginList != nullptr)
     knownPluginList.recreateFromXml (*savedPluginList);
+    
+  ScopedPointer<PluginDirectoryScanner> scanner = new PluginDirectoryScanner(knownFaustDSPList, faustDSPFormat, faustDSPFormat.getDefaultLocationsToSearch(), true, File::nonexistent);
   
-  pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()->getIntValue ("pluginSortMethod", KnownPluginList::sortByManufacturer);
+  String pluginBeingScanned;
+
+  while (scanner->scanNextFile(true, pluginBeingScanned)) {
+    LOG(pluginBeingScanned);
+  }
   
-  
-  faustDSPfiles.setDirectory (File("/Users/oli/Dev/MyOWL/OwlWare/Libraries/OwlPatches/OliLarkin"), true, true);
-  thread.startThread (3);
-  
+  pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()->getIntValue ("pluginSortMethod", KnownPluginList::sortByFormat);
+
   knownPluginList.addChangeListener (this);  
 }
 
@@ -94,11 +96,8 @@ void PMixAudioEngine::createDeviceMenu (PopupMenu& m) const
   faustMenu.addItem(CommandIDs::newFaustEffect, "Synth");
   faustMenu.addSeparator();
   
-  int index = CommandIDs::faustDSPFilesMenu;
-
-  for (int i=0; i<faustDSPfiles.getNumFiles(); i++)
-    faustMenu.addItem(index++, faustDSPfiles.getFile(i).getFileNameWithoutExtension());
-
+  knownFaustDSPList.addToMenu(faustMenu, KnownPluginList::sortAlphabetically);
+  
   m.addSubMenu("Faust", faustMenu);
   
   PopupMenu pluginsMenu;
@@ -118,9 +117,12 @@ const PluginDescription* PMixAudioEngine::getChosenType (const int menuID) const
     case CommandIDs::newFaustEffect: return internalTypes[4];
     default:
     {
-      if (menuID >= CommandIDs::faustDSPFilesMenu && menuID < CommandIDs::faustDSPFilesMenu + faustDSPfiles.getNumFiles()) return internalTypes[4];
-      else
-        return knownPluginList.getType (knownPluginList.getIndexChosenByMenu (menuID));
+      int result = knownFaustDSPList.getIndexChosenByMenu(menuID);
+      
+      if (result > -1)
+        return knownFaustDSPList.getType(result);
+    
+      return knownPluginList.getType (knownPluginList.getIndexChosenByMenu (menuID));
     }
   }
 }

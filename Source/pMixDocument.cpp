@@ -50,8 +50,16 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
   if (desc != nullptr)
   {
     String errorMessage;
-
-    AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (*desc, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
+    
+    AudioPluginInstance* instance;
+    
+    if (desc->pluginFormatName == "FAUST") {
+      instance = audioEngine.getFaustFormat().createInstanceFromDescription(*desc, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize());
+    }
+    else
+    {
+      instance = audioEngine.getFormatManager().createPluginInstance (*desc, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
+    }
     
     if (instance != nullptr)
       node = audioEngine.getGraph().addNode (instance);
