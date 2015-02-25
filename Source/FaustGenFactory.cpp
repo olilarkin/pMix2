@@ -40,7 +40,7 @@ FaustgenFactory::FaustgenFactory(const String& name, const File& path)
   
 #if JUCE_MAC
   // Draw path in temporary folder
-  fDrawPath = std::string(FAUST_DRAW_PATH);
+  fDrawPath = FAUST_DRAW_PATH;
 #endif
 }
 
@@ -92,18 +92,18 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioProcess
   
   // Prepare compile options
   std::string error;
- 	const char* argv[64];
+ 	const char* argv[32];
+  memset(argv, 0, 32 * sizeof(char*));
   
-  jassert(fCompileOptions.size() < 64);
-  StringVectorIt it;
-  int i = 0;
-  for (it = fCompileOptions.begin(); it != fCompileOptions.end(); it++)
+  jassert(fCompileOptions.size() < 32);
+  
+  for (int opt = 0; opt < fCompileOptions.size(); opt++)
   {
-    argv[i++] = (char*)(*it).toRawUTF8();
+    argv[opt] = (char*) fCompileOptions.getReference(opt).toRawUTF8();
   }
   
   // Generate SVG file
-  if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString() , fCompileOptions.size(), argv, error))
+  if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
   {
     //TODO: if there is an error here STOP
     LOG("Generate SVG error : " + error);
@@ -204,18 +204,18 @@ void FaustgenFactory::addLibraryPath(const File& libraryPath)
 
 void FaustgenFactory::addCompileOption(const String& key, const String& value)
 {
-  if ((value != String::empty) && find(fCompileOptions.begin(), fCompileOptions.end(), value) == fCompileOptions.end())
+  if ((value != String::empty) && !fCompileOptions.contains(value))
   {
-    fCompileOptions.push_back(key);
-    fCompileOptions.push_back(value);
+    fCompileOptions.add(key);
+    fCompileOptions.add(value);
   }
 }
 
 void FaustgenFactory::addCompileOption(const String& value)
 {
-  if ((value != String::empty) && find(fCompileOptions.begin(), fCompileOptions.end(), value) == fCompileOptions.end())
+  if ((value != String::empty))
   {
-    fCompileOptions.push_back(value);
+    fCompileOptions.addIfNotAlreadyThere(value);
   }
 }
 
@@ -224,10 +224,9 @@ void FaustgenFactory::printCompileOptions()
   if (fCompileOptions.size() > 0)
   {
     LOG("-----------------------------");
-    StringVectorIt it;
-    for (it = fCompileOptions.begin(); it != fCompileOptions.end(); it++)
+    for (int opt = 0; opt < fCompileOptions.size(); opt++)
     {
-      LOG("Compile option =" + *it);
+      LOG("Compile option =" + fCompileOptions.getReference(opt));
     }
     LOG("-----------------------------");
   }
@@ -257,11 +256,9 @@ void FaustgenFactory::defaultCompileOptions()
   addCompileOption("-O", fDrawPath);
   addCompileOption("-o", "tmp1.cpp");
   
-  StringVectorIt it;
-  // All options set in the 'compileoptions' message
-  for (it = fOptions.begin(); it != fOptions.end(); it++)
+  for (int opt = 0; opt < fExtraOptions.size(); opt++)
   {
-    addCompileOption(*it);
+    addCompileOption(fExtraOptions.getReference(opt));
   }
   
   // Vector mode by default
@@ -269,13 +266,6 @@ void FaustgenFactory::defaultCompileOptions()
    addCompileOption("-vec");
    addCompileOption("-lv");
    addCompileOption("1");
-   */
-  /*
-   Seems not necessary...
-   fCompileOptions.push_back("-vs");
-   stringstream num;
-   num << sys_getblksize();
-   addCompileOption(num.str());
    */
 }
 

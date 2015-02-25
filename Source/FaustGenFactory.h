@@ -26,9 +26,7 @@
 class FaustAudioProcessor;
 
 class FaustgenFactory
-{
-  typedef std::vector<String>::const_iterator StringVectorIt;
-  
+{  
 private:
   
   std::set<FaustAudioProcessor*> fInstances;      // set of all DSP
@@ -40,7 +38,7 @@ private:
   FileSearchPath fLibraryPath;    // paths to search for the Faust libraries
   String fDrawPath;               // path where to put SVG files
   
-  std::vector<String> fOptions;        // options set in the 'compileoptions' message
+  StringArray fExtraOptions;
   
   int fFaustNumber;               // faustgen object's number inside the patcher
   
@@ -49,7 +47,7 @@ private:
   String fName;                   // name of the DSP group
   String fJSON;              // JSON
   
-  std::vector<String> fCompileOptions; // Faust compiler options
+  StringArray fCompileOptions; // Faust compiler options
 
   void addCompileOption(const String& key, const String& value);
   void addCompileOption(const String& value);
@@ -76,9 +74,6 @@ public:
   String getName() { return fName; }
   
   void addLibraryPath(const File& libraryPath);
-  
-//  void read(File path);
-//  void write(File path);
   
   String getSourcecode() { return fSourceCode; }
 
