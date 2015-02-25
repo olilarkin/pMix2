@@ -135,7 +135,7 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioProcess
     {
       instance->highlightON(error);
     }
-    LOG("Invalid Faust code or compile options : %s" + error);
+    LOG("Invalid Faust code or compile options:" + error);
     return 0;
   }
 }
@@ -254,7 +254,7 @@ void FaustgenFactory::defaultCompileOptions()
   
   // Draw path
   addCompileOption("-O", fDrawPath);
-  addCompileOption("-o", "tmp1.cpp");
+  //addCompileOption("-o", "tmp1.cpp");
   
   for (int opt = 0; opt < fExtraOptions.size(); opt++)
   {
