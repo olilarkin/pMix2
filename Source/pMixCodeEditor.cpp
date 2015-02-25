@@ -18,11 +18,11 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 , selectedFaustAudioProcessor(nullptr)
 , selectedNodeID(0)
 {
-  verticalLayout.setItemLayout (0, 100, -0.8, -0.35);
+  verticalLayout.setItemLayout (0, 100, -1., -0.35);
   verticalLayout.setItemLayout (1, 8, 8, 8);
-  verticalLayout.setItemLayout (2, 50, -1.0, 100);
+  verticalLayout.setItemLayout (2, 2, -1.0, 100);
   verticalLayout.setItemLayout (3, 8, 8, 8);
-  verticalLayout.setItemLayout (4, 150, -1.0, -0.65);
+  verticalLayout.setItemLayout (4, 2, -1.0, -0.65);
   
   addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &tokeniser));
   addAndMakeVisible(dividerBar1 = new StretchableLayoutResizerBar (&verticalLayout, 1, false));
