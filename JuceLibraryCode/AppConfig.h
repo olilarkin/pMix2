@@ -106,11 +106,11 @@
 #endif
 
 #ifndef    JUCE_PLUGINHOST_VST3
- #define   JUCE_PLUGINHOST_VST3 1
+ #define   JUCE_PLUGINHOST_VST3 0
 #endif
 
 #ifndef    JUCE_PLUGINHOST_AU
- #define   JUCE_PLUGINHOST_AU 1
+ #define   JUCE_PLUGINHOST_AU 0
 #endif
 
 //==============================================================================

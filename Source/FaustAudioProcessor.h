@@ -93,7 +93,7 @@ public:
 //Unique
   void createDSP();
   void freeDSP();
-  bool allocateFactory(const String& effectName, const String& path);
+  bool allocateFactory(const String& effectName, const File& path);
   void updateSourcecode();
   String getSourcecode();
   FaustgenFactory* getFactory() { return fDSPfactory; }
@@ -101,13 +101,19 @@ public:
   void highlightON(const String& error);
   void highlightOFF();
   
+  const String getAuthor() const;
+  const String getDescription() const;
+  
+  const bool getHighlight() { return highlight; }
+
   //MUST CALL AFTER CREATION
-  void initialize(const String &path);
+  void initialize(const File &path);
   
 private:
   var fJSONInterface;
   FaustgenFactory* fDSPfactory;
   llvm_dsp* fDSP;
+  bool highlight;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioProcessor)
 };

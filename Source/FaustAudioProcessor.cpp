@@ -14,6 +14,7 @@
 FaustAudioProcessor::FaustAudioProcessor()
 : fDSPfactory(nullptr)
 , fDSP(nullptr)
+, highlight(false)
 {
 }
 
@@ -26,14 +27,14 @@ FaustAudioProcessor::~FaustAudioProcessor()
 
 void FaustAudioProcessor::fillInPluginDescription (PluginDescription& description) const
 {
-  description.name = "Faust Effect";
-  description.descriptiveName = "JIT compiled Faust Effect";
-  description.pluginFormatName = "Faust JIT compiled";
-  description.category = "na";
-  description.manufacturerName = "bleh";
-  description.version = "0.0.1";
-  description.fileOrIdentifier = "";
-  description.lastFileModTime = Time(0);
+  description.name = File(description.fileOrIdentifier).getFileName();
+  description.descriptiveName = getDescription();
+  description.pluginFormatName = "FAUST";
+  description.category = "";
+  description.manufacturerName = getAuthor();
+  description.version = "";
+  //description.fileOrIdentifier = "";
+  //description.lastFileModTime = Time(0);
   description.isInstrument = false;
   description.hasSharedContainer = false;
   description.numInputChannels = fDSP->getNumInputs();
@@ -46,9 +47,9 @@ void FaustAudioProcessor::fillInitialInPluginDescription (PluginDescription& des
   description.name = "Faust Effect";
   description.descriptiveName = "JIT compiled Faust Effect";
   description.pluginFormatName = "Faust JIT compiled";
-  description.category = "na";
-  description.manufacturerName = "bleh";
-  description.version = "0.0.1";
+  description.category = "";
+  description.manufacturerName = "";
+  description.version = "";
   description.fileOrIdentifier = "";
   description.lastFileModTime = Time(0);
   description.isInstrument = false;
@@ -216,7 +217,7 @@ void FaustAudioProcessor::freeDSP()
   fDSP = 0;
 }
 
-bool FaustAudioProcessor::allocateFactory(const String& effect_name, const String& path)
+bool FaustAudioProcessor::allocateFactory(const String& effect_name, const File& path)
 {
   bool res = false;
   
@@ -251,12 +252,12 @@ String FaustAudioProcessor::getSourcecode()
 
 void FaustAudioProcessor::highlightON(const String& error)
 {
-  //TODO:highlightON
+  highlight = true;
 }
 
 void FaustAudioProcessor::highlightOFF()
 {
-  //TODO:highlightOFF
+  highlight = false;
 }
 
 void FaustAudioProcessor::openTabBox(const char* label)
@@ -314,7 +315,7 @@ void FaustAudioProcessor::addVerticalBargraph(const char* label, FAUSTFLOAT* zon
   //TODO:
 }
 
-void FaustAudioProcessor::initialize(const String &path)
+void FaustAudioProcessor::initialize(const File &path)
 {
   // Empty (= no name) FaustAudioProcessor will be internally separated as groups with different names
   if (!fDSPfactory)
@@ -325,4 +326,24 @@ void FaustAudioProcessor::initialize(const String &path)
   }
   
   fDSPfactory->addLibraryPath(path);
+}
+
+const String FaustAudioProcessor::getAuthor() const
+{
+  if(fJSONInterface["author"].toString().length())
+  {
+    return fJSONInterface["author"].toString();
+  }
+  else
+    return "Author Not Defined";
+}
+
+const String FaustAudioProcessor::getDescription() const
+{
+  if(fJSONInterface["description"].toString().length())
+  {
+    return fJSONInterface["description"].toString();
+  }
+  else
+    return "Description Not Defined";
 }

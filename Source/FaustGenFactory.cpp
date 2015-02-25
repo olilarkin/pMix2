@@ -26,7 +26,7 @@ static std::string getTarget()
 static string getTarget() { return ""; }
 #endif
 
-FaustgenFactory::FaustgenFactory(const String& name, const String& path)
+FaustgenFactory::FaustgenFactory(const String& name, const File& path)
 {
   fUpdateInstance = 0;
   fName = name;
@@ -36,7 +36,7 @@ FaustgenFactory::FaustgenFactory(const String& name, const String& path)
   fFaustNumber = gFaustCounter;
   
   // Built the complete resource path
-  fLibraryPath.push_back(path.toStdString());
+  fLibraryPath.add(path);
   
 #if JUCE_MAC
   // Draw path in temporary folder
@@ -197,12 +197,9 @@ end:
   return dsp;
 }
 
-void FaustgenFactory::addLibraryPath(const String& libraryPath)
+void FaustgenFactory::addLibraryPath(const File& libraryPath)
 {
-  if ((libraryPath != String::empty) && find(fLibraryPath.begin(), fLibraryPath.end(), libraryPath) == fLibraryPath.end())
-  {
-    fLibraryPath.push_back(libraryPath);
-  }
+  fLibraryPath.addIfNotAlreadyThere(libraryPath);
 }
 
 void FaustgenFactory::addCompileOption(const String& key, const String& value)
@@ -251,15 +248,16 @@ void FaustgenFactory::defaultCompileOptions()
   addCompileOption("-svg");
   
   // All library paths
-  StringVectorIt it;
-  for (it = fLibraryPath.begin(); it != fLibraryPath.end(); it++)
+  for (int path=0;path<fLibraryPath.getNumPaths();path++)
   {
-    addCompileOption("-I", *it);
+    addCompileOption("-I", fLibraryPath[path].getFullPathName());
   }
   
   // Draw path
   addCompileOption("-O", fDrawPath);
+  addCompileOption("-o", "tmp1.cpp");
   
+  StringVectorIt it;
   // All options set in the 'compileoptions' message
   for (it = fOptions.begin(); it != fOptions.end(); it++)
   {

@@ -37,7 +37,7 @@ private:
   String fSourceCode;
   String fBitCode;
   
-  std::vector<String> fLibraryPath;    // path towards the Faust libraries
+  FileSearchPath fLibraryPath;    // paths to search for the Faust libraries
   String fDrawPath;               // path where to put SVG files
   
   std::vector<String> fOptions;        // options set in the 'compileoptions' message
@@ -57,7 +57,7 @@ private:
 public:
   CriticalSection fDSPMutex;    // mutex to protect RT audio thread when recompiling DSP
 
-  FaustgenFactory(const String& name, const String& path);
+  FaustgenFactory(const String& name, const File& path);
   ~FaustgenFactory();
   
   llvm_dsp_factory* createFactoryFromBitcode();
@@ -75,7 +75,7 @@ public:
   int getNumber() { return fFaustNumber; }
   String getName() { return fName; }
   
-  void addLibraryPath(const String& libraryPath);
+  void addLibraryPath(const File& libraryPath);
   
 //  void read(File path);
 //  void write(File path);
