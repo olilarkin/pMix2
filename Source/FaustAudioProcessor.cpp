@@ -27,7 +27,11 @@ FaustAudioProcessor::~FaustAudioProcessor()
 
 void FaustAudioProcessor::fillInPluginDescription (PluginDescription& description) const
 {
-  description.name = File(description.fileOrIdentifier).getFileName();
+  if (description.fileOrIdentifier.length())
+    description.name = File(description.fileOrIdentifier).getFileName();
+  else
+    description.name = "Faust Effect";
+
   description.descriptiveName = getDescription();
   description.pluginFormatName = "FAUST";
   description.category = "";
