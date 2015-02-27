@@ -107,8 +107,11 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
 
     menu.addCommandItem (&getCommandManager(), CommandIDs::save);
     menu.addCommandItem (&getCommandManager(), CommandIDs::saveAs);
-    //menu.addSeparator();
-    //menu.addCommandItem (&getCommandManager(), StandardApplicationCommandIDs::quit);
+    menu.addSeparator();
+    
+#ifndef JUCE_MAC
+    menu.addCommandItem (&getCommandManager(), CommandIDs::quit);
+#endif
   }
   else if (topLevelMenuIndex == MenuIDs::editMenu)
   {
@@ -179,7 +182,8 @@ ApplicationCommandTarget* MainAppWindow::getNextCommandTarget()
 void MainAppWindow::getAllCommands (Array <CommandID>& commands)
 {
   // this returns the set of all commands that this target can perform..
-  const CommandID ids[] = { 
+  const CommandID ids[] = {
+    CommandIDs::quit ,
     CommandIDs::open ,
     CommandIDs::save ,
     CommandIDs::saveAs ,
