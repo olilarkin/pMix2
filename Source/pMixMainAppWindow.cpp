@@ -183,7 +183,9 @@ void MainAppWindow::getAllCommands (Array <CommandID>& commands)
 {
   // this returns the set of all commands that this target can perform..
   const CommandID ids[] = {
+#ifndef JUCE_MAC
     CommandIDs::quit ,
+#endif
     CommandIDs::open ,
     CommandIDs::save ,
     CommandIDs::saveAs ,
@@ -220,6 +222,13 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
 
   switch (commandID)
   {
+#ifndef JUCE_MAC
+    case CommandIDs::quit:
+      result.setInfo ("Quit", "Quit pMix", category, 0);
+      result.defaultKeypresses.add (KeyPress ('q', ModifierKeys::commandModifier, 0));
+      break;
+#endif
+      
     case CommandIDs::open:
       result.setInfo ("Open...", "Opens a pMix patch", category, 0);
       result.defaultKeypresses.add (KeyPress ('o', ModifierKeys::commandModifier, 0));
