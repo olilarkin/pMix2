@@ -22,8 +22,7 @@ static std::string getTarget()
   return (sizeof(&tmp) == 8) ? "" : "i386-apple-darwin10.6.0";
 }
 #else
-//#elif JUCE_WIN32
-static string getTarget() { return ""; }
+static std::string getTarget() { return ""; }
 #endif
 
 FaustgenFactory::FaustgenFactory(const String& name, const File& path)
