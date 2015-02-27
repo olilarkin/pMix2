@@ -10,6 +10,13 @@
 #ifndef COMMANDIDS_H_INCLUDED
 #define COMMANDIDS_H_INCLUDED
 
+namespace MenuIDs
+{
+  static const int fileMenu      = 0x000000;
+  static const int editMenu      = 0x000001;
+  static const int viewMenu      = 0x000002;
+  static const int optionsMenu   = 0x000003;
+}
 
 namespace CommandIDs
 {

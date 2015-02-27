@@ -30,14 +30,15 @@ MainAppWindow::MainAppWindow(PMixAudioEngine& audioEngine)
   Process::setPriority (Process::HighPriority);
   
   getCommandManager().registerAllCommandsForTarget (this);
-
+  
+#if JUCE_MAC
+  
   PopupMenu pop;
   pop.addCommandItem (&getCommandManager(), CommandIDs::aboutBox);
   pop.addSeparator();
   pop.addCommandItem (&getCommandManager(), CommandIDs::showPrefs);
   pop.addSeparator();
   
-#if JUCE_MAC
   setMacMainMenu (this, &pop);
 #else
   setMenuBar (this);
@@ -83,7 +84,7 @@ bool MainAppWindow::tryToQuitApplication()
 
 StringArray MainAppWindow::getMenuBarNames()
 {
-  const char* const names[] = { "File", "Edit", "View", nullptr };
+  const char* const names[] = { "File", "Edit", "View", "Options", nullptr };
 
   return StringArray (names);
 }
@@ -92,9 +93,8 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
 {
   PopupMenu menu;
 
-  if (topLevelMenuIndex == 0)
+  if (topLevelMenuIndex == MenuIDs::fileMenu)
   {
-    // "File" menu
     menu.addCommandItem (&getCommandManager(), CommandIDs::open);
 
     RecentlyOpenedFilesList recentFiles;
@@ -110,7 +110,7 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     //menu.addSeparator();
     //menu.addCommandItem (&getCommandManager(), StandardApplicationCommandIDs::quit);
   }
-  else if (topLevelMenuIndex == 1)
+  else if (topLevelMenuIndex == MenuIDs::editMenu)
   {
     menu.addCommandItem (&getCommandManager(), CommandIDs::copy);
     menu.addCommandItem (&getCommandManager(), CommandIDs::paste);
@@ -119,7 +119,7 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     menu.addCommandItem (&getCommandManager(), CommandIDs::undo);
     menu.addCommandItem (&getCommandManager(), CommandIDs::redo);
   }
-  else if (topLevelMenuIndex == 2)
+  else if (topLevelMenuIndex == MenuIDs::viewMenu)
   {
     // "View" menu
     PopupMenu showMenu;
@@ -140,6 +140,13 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     menu.addCommandItem (&getCommandManager(), CommandIDs::zoomIn);
     menu.addCommandItem (&getCommandManager(), CommandIDs::zoomOut);
     menu.addCommandItem (&getCommandManager(), CommandIDs::zoomNormal);
+  }
+  else if (topLevelMenuIndex == MenuIDs::optionsMenu)
+  {
+#ifndef JUCE_MAC
+    menu.addCommandItem (&getCommandManager(), CommandIDs::showPrefs);
+    menu.addCommandItem (&getCommandManager(), CommandIDs::aboutBox);
+#endif
   }
 
   return menu;
