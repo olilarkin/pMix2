@@ -350,14 +350,14 @@ void FilterComponent::update()
     deleteAllChildren();
     
     addAndMakeVisible(filterName = new Label(name, name));
-  filterName->setInterceptsMouseClicks(false, false);
+    filterName->setInterceptsMouseClicks(false, false);
   
   
     if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
     {
       addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (f->getProcessor()));
       w = jmax (w, editor->getWidth() + 20 );
-      h += editor->getHeight() + 10;
+      h += editor->getContentHeight() + 10;
     }
     
     setSize (w, h);
@@ -398,7 +398,7 @@ lastInputY (0),
 lastOutputX (0),
 lastOutputY (0)
 {
-  setAlwaysOnTop (true);
+  //setAlwaysOnTop (true);
 }
 
 void ConnectorComponent::setInput (const uint32 sourceFilterID_, const int sourceFilterChannel_)
@@ -565,9 +565,10 @@ void ConnectorComponent::resized()
   
   linePath.clear();
   linePath.startNewSubPath (x1, y1);
-  linePath.cubicTo (x1, y1 + (y2 - y1) * 0.33f,
-                    x2, y1 + (y2 - y1) * 0.66f,
-                    x2, y2);
+  linePath.lineTo(x2, y2);
+  //linePath.cubicTo (x1, y1 + (y2 - y1) * 0.33f,
+  //                  x2, y1 + (y2 - y1) * 0.66f,
+  //                  x2, y2);
   
   PathStrokeType wideStroke (8.0f);
   wideStroke.createStrokedPath (hitPath, linePath);

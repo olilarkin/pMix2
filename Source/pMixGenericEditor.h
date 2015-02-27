@@ -21,6 +21,8 @@ public:
   void paint (Graphics&) override;
   void resized() override;
   
+  int getContentHeight() { return panel.getTotalContentHeight(); }
+  
 private:
   PropertyPanel panel;
   

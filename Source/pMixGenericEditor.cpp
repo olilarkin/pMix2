@@ -9,12 +9,12 @@
 
 #include "pMixGenericEditor.h"
 
-class ProcessorParameterPropertyComp   : public PropertyComponent,
+class PMixProcessorParameterPropertyComp   : public PropertyComponent,
 private AudioProcessorListener,
 private Timer
 {
 public:
-  ProcessorParameterPropertyComp (const String& name, AudioProcessor& p, int paramIndex)
+  PMixProcessorParameterPropertyComp (const String& name, AudioProcessor& p, int paramIndex)
   : PropertyComponent (name),
   owner (p),
   index (paramIndex),
@@ -22,11 +22,12 @@ public:
   slider (p, paramIndex)
   {
     startTimer (100);
+    setPreferredHeight(16);
     addAndMakeVisible (slider);
     owner.addListener (this);
   }
   
-  ~ProcessorParameterPropertyComp()
+  ~PMixProcessorParameterPropertyComp()
   {
     owner.removeListener (this);
   }
@@ -63,10 +64,10 @@ public:
   }
   
 private:
-  class ParamSlider  : public Slider
+  class PMixParamSlider  : public Slider
   {
   public:
-    ParamSlider (AudioProcessor& p, int paramIndex)  : owner (p), index (paramIndex)
+    PMixParamSlider (AudioProcessor& p, int paramIndex)  : owner (p), index (paramIndex)
     {
       const int steps = owner.getParameterNumSteps (index);
       
@@ -75,8 +76,9 @@ private:
       else
         setRange (0.0, 1.0);
       
-      setSliderStyle (Slider::LinearBar);
-      setTextBoxIsEditable (true);
+      setSliderStyle (Slider::LinearHorizontal);
+      setTextBoxStyle (Slider::NoTextBox, false, 0, 0);
+      //setTextBoxIsEditable (true);
       setScrollWheelEnabled (true);
     }
     
@@ -100,15 +102,15 @@ private:
     AudioProcessor& owner;
     const int index;
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParamSlider)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixParamSlider)
   };
   
   AudioProcessor& owner;
   const int index;
   bool volatile paramHasChanged;
-  ParamSlider slider;
+  PMixParamSlider slider;
   
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProcessorParameterPropertyComp)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixProcessorParameterPropertyComp)
 };
 
 PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (AudioProcessor* const p)
@@ -130,14 +132,14 @@ PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (AudioProcessor
     if (name.trim().isEmpty())
       name = "Unnamed";
     
-    ProcessorParameterPropertyComp* const pc = new ProcessorParameterPropertyComp (name, *p, i);
+    PMixProcessorParameterPropertyComp* const pc = new PMixProcessorParameterPropertyComp (name, *p, i);
     params.add (pc);
     totalHeight += pc->getPreferredHeight();
   }
   
   panel.addProperties (params);
   
-  setSize (400, jlimit (25, 400, totalHeight));
+  setSize (200, jlimit (25, 400, totalHeight));
 }
 
 PMixGenericAudioProcessorEditor::~PMixGenericAudioProcessorEditor()
