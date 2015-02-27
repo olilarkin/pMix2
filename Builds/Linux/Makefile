@@ -67,6 +67,7 @@ OBJECTS := \
   $(OBJDIR)/pMixConsole_f8903cec.o \
   $(OBJDIR)/pMixParamView_95a42e7.o \
   $(OBJDIR)/pMixParamTreeView_a13fce25.o \
+  $(OBJDIR)/pMixGenericEditor_f1457b39.o \
   $(OBJDIR)/FaustCodeTokenizer_5b0c0a78.o \
   $(OBJDIR)/FaustAudioProcessorParameter_b0d2ebbb.o \
   $(OBJDIR)/FaustAudioProcessor_fbc83018.o \
@@ -188,6 +189,11 @@ $(OBJDIR)/pMixParamView_95a42e7.o: ../../Source/pMixParamView.cpp
 $(OBJDIR)/pMixParamTreeView_a13fce25.o: ../../Source/pMixParamTreeView.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixParamTreeView.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixGenericEditor_f1457b39.o: ../../Source/pMixGenericEditor.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixGenericEditor.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/FaustCodeTokenizer_5b0c0a78.o: ../../Source/FaustCodeTokenizer.cpp

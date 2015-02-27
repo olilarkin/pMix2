@@ -95,10 +95,9 @@ FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 fil
 , numIns (0)
 , numOuts (0)
 , moving(false)
+, editor(nullptr)
+, filterName(nullptr)
 {
-  //shadow.setShadowProperties (DropShadow (Colours::black.withAlpha (0.5f), 3, Point<int> (0, 1)));
-  //setComponentEffect (&shadow);
-  
   setSize (100, 50);
 }
 
@@ -129,9 +128,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
       {
         m.addSeparator();
         m.addItem (3, "Show plugin UI");
-        //        m.addItem (4, "Show all programs");
         m.addItem (4, "Show all parameters");
-        //        m.addItem (5, "Test state save/load");
       }
     }
     
@@ -166,20 +163,11 @@ void FilterComponent::mouseDown (const MouseEvent& e)
         
         if (r > 0)
         {
-          //          if (r == 6)
-          //          {
-          //            MemoryBlock state;
-          //            processor->getStateInformation (state);
-          //            processor->setStateInformation (state.getData(), (int) state.getSize());
-          //          }
-          //          else
-          //          {
           PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal
           : PluginWindow::Generic;
           
           switch (r)
           {
-              //              case 4: type = PluginWindow::Programs; break;
             case 4: type = PluginWindow::Parameters; break;
               
             default: break;
@@ -187,7 +175,6 @@ void FilterComponent::mouseDown (const MouseEvent& e)
           
           if (PluginWindow* const w = PluginWindow::getWindowFor (f, type))
             w->toFront (true);
-          //          }
         }
       }
     }
@@ -268,8 +255,8 @@ void FilterComponent::paint (Graphics& g)
   //    g.fillRect (x, y, w, h);
   
   g.setColour (Colours::black);
-  g.setFont (font);
-  g.drawFittedText (getName(), getLocalBounds().reduced (4, 2), Justification::centred, 2);
+  //g.setFont (font);
+  //g.drawFittedText (getName(), getLocalBounds().reduced (4, 2), Justification::centred, 2);
   
   if (getGraphPanel()->getLassoSelection().isSelected(this))
     g.setColour (Colours::red);
@@ -293,6 +280,12 @@ void FilterComponent::resized()
                      pinSize, pinSize);
     }
   }
+  
+  if (filterName != nullptr)
+    filterName->setBounds(0, pinSize, getWidth(), 20);
+  
+  if (editor != nullptr)
+    editor->setBounds(10, pinSize + filterName->getHeight(), getWidth()-20, getHeight() - pinSize - filterName->getHeight());
 }
 
 void FilterComponent::getPinPos (const int index, const bool isInput, float& x, float& y)
@@ -320,7 +313,7 @@ void FilterComponent::update()
     delete this;
     return;
   }
-  
+
   numIns = f->getProcessor()->getNumInputChannels();
   if (f->getProcessor()->acceptsMidi())
     ++numIns;
@@ -331,7 +324,7 @@ void FilterComponent::update()
   
   int w = 80;
   int h = 50;
-  
+
   w = jmax (w, (jmax (numIns, numOuts) + 1) * 20);
   
   const int textWidth = font.getStringWidth (f->getProcessor()->getName());
@@ -339,16 +332,16 @@ void FilterComponent::update()
   if (textWidth > 300)
     h = 100;
   
-  setSize (w, h);
+  String name = f->getProcessor()->getName();
   
-  setName (f->getProcessor()->getName());
+  setName (name);
   
   {
     double x, y;
     audioEngine.getDoc().getNodePosition (filterID, x, y);
     setCentreRelative ((float) x, (float) y);
   }
-  
+
   if (numIns != numInputs || numOuts != numOutputs)
   {
     numInputs = numIns;
@@ -356,6 +349,19 @@ void FilterComponent::update()
     
     deleteAllChildren();
     
+    addAndMakeVisible(filterName = new Label(name, name));
+  filterName->setInterceptsMouseClicks(false, false);
+  
+  
+    if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
+    {
+      addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (f->getProcessor()));
+      w = jmax (w, editor->getWidth() + 20 );
+      h += editor->getHeight() + 10;
+    }
+    
+    setSize (w, h);
+
     int i;
     for (i = 0; i < f->getProcessor()->getNumInputChannels(); ++i)
       addAndMakeVisible (new PinComponent (audioEngine, filterID, i, true));

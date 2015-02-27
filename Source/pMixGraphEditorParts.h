@@ -11,7 +11,7 @@
 #define PMIXGRAPHEDITORPARTS_H_INCLUDED
 
 #include "pMixGraphEditor.h"
-
+#include "pMixGenericEditor.h"
 
 class GraphEditor;
 
@@ -68,7 +68,8 @@ private:
   bool moving;
   //DropShadowEffect shadow;
   friend class MoveFilterAction;
-  
+  PMixGenericAudioProcessorEditor* editor;
+  Label* filterName;
   GraphEditor* getGraphPanel() const noexcept;
   
   FilterComponent (const FilterComponent&);

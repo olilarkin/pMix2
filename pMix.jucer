@@ -74,6 +74,10 @@
               file="Source/pMixParamTreeView.h"/>
         <FILE id="NRahlO" name="pMixParamTreeView.cpp" compile="1" resource="0"
               file="Source/pMixParamTreeView.cpp"/>
+        <FILE id="pum3bZ" name="pMixGenericEditor.cpp" compile="1" resource="0"
+              file="Source/pMixGenericEditor.cpp"/>
+        <FILE id="wQ5qtB" name="pMixGenericEditor.h" compile="0" resource="0"
+              file="Source/pMixGenericEditor.h"/>
       </GROUP>
       <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
         <FILE id="JLQaQv" name="FaustPluginFormat.h" compile="0" resource="0"
