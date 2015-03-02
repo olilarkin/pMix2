@@ -96,7 +96,6 @@ void CodeEditor::buttonClicked (Button* button)
     {
       console->clear();
       String newSourceCode = codeDocument.getAllContent();
-      PluginWindow::closeCurrentlyOpenWindowsFor (selectedNodeID);
       graphEditor.updateFaustNode(selectedNodeID, newSourceCode);
     }
     else if (button == &svgButton)

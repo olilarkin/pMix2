@@ -106,6 +106,12 @@ FilterComponent::~FilterComponent()
   deleteAllChildren();
 }
 
+void FilterComponent::removeEditor()
+{
+  if (editor != nullptr)
+    delete editor;
+}
+
 void FilterComponent::mouseDown (const MouseEvent& e)
 {
   originalPos = localPointToGlobal (Point<int>());
@@ -139,9 +145,11 @@ void FilterComponent::mouseDown (const MouseEvent& e)
       if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
       {
         AudioPluginInstance* const instance = dynamic_cast<AudioPluginInstance*>(f->getProcessor());
-        
+      
         if (instance)
         {
+          removeEditor();
+          
           audioEngine.getDoc().beginTransaction();
           audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, filterID), TRANS("remove filter"));
         }

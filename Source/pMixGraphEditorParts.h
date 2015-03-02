@@ -54,6 +54,8 @@ public:
   void getPinPos (const int index, const bool isInput, float& x, float& y);
   void update();
   
+  void removeEditor();
+  
   PMixAudioEngine& audioEngine;
   const uint32 filterID;
   int numInputs, numOutputs;
