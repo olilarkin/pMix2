@@ -382,11 +382,13 @@ SelectedItemSet <Component*>& GraphEditor::getLassoSelection()
   return selectedItems;
 }
 
-void GraphEditor::updateFaustNode (const int nodeID, String& newSourceCode)
+void GraphEditor::updateFaustNode (uint32 nodeID, String& newSourceCode)
 {
   ScopedPointer<XmlElement> temp(audioEngine.getDoc().createXml());
   const XmlElement tempXml (*temp);
   
+  PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
+  getComponentForFilter(nodeID)->removeEditor();
   audioEngine.getDoc().removeFilter(nodeID);
   
   forEachXmlChildElementWithTagName (tempXml, e, "FILTER")
