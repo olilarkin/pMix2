@@ -110,6 +110,8 @@ void FilterComponent::removeEditor()
 {
   if (editor != nullptr)
     delete editor;
+  
+  editor = nullptr;
 }
 
 void FilterComponent::mouseDown (const MouseEvent& e)
