@@ -97,8 +97,8 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
 
     PopupMenu recentFilesMenu;
     recentFiles.createPopupMenuItems (recentFilesMenu, CommandIDs::recentFilesMenu, true, true);
-    menu.addSubMenu ("Open recent file", recentFilesMenu);
-
+    menu.addSubMenu ("Open Recent", recentFilesMenu);
+    menu.addSeparator();
     menu.addCommandItem (&getCommandManager(), CommandIDs::save);
     menu.addCommandItem (&getCommandManager(), CommandIDs::saveAs);
     menu.addSeparator();
