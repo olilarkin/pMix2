@@ -173,8 +173,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
         
         if (r > 0)
         {
-          PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal
-          : PluginWindow::Generic;
+          PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal : PluginWindow::Generic;
           
           switch (r)
           {
@@ -363,12 +362,12 @@ void FilterComponent::update()
     filterName->setInterceptsMouseClicks(false, false);
   
   
-    if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
-    {
-      addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (f->getProcessor()));
-      w = jmax (w, editor->getWidth() + 20 );
-      h += editor->getContentHeight() + 10;
-    }
+//    if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
+//    {
+//      addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (f->getProcessor()));
+//      w = jmax (w, editor->getWidth() + 20 );
+//      h += editor->getContentHeight() + 10;
+//    }
     
     setSize (w, h);
 
