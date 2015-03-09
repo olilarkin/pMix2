@@ -43,10 +43,6 @@ MainAppWindow::MainAppWindow(PMixAudioEngine& audioEngine)
 #else
   setMenuBar (this);
 #endif
-  
-//  getCommandManager().setFirstCommandTarget (this);
-  
-  //deviceManager->addChangeListener (graphEditor);
 }
 
 MainAppWindow::~MainAppWindow()
@@ -56,9 +52,6 @@ MainAppWindow::~MainAppWindow()
 #else
   setMenuBar (nullptr);
 #endif
-
-  //deviceManager->removeChangeListener (graphEditor);
-  
   audioEngine.getAppProperties().getUserSettings()->setValue ("mainWindowPos", getWindowStateAsString());
   clearContentComponent();
 }
