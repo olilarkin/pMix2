@@ -95,6 +95,7 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
 
   if (topLevelMenuIndex == MenuIDs::fileMenu)
   {
+    menu.addCommandItem (&getCommandManager(), CommandIDs::newdoc);
     menu.addCommandItem (&getCommandManager(), CommandIDs::open);
 
     RecentlyOpenedFilesList recentFiles;
@@ -155,16 +156,11 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
   return menu;
 }
 
-void MainAppWindow::menuItemSelected (int menuItemID, int /*topLevelMenuIndex*/)
+void MainAppWindow::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 {
   MainComponent* const mainComponent = getMainComponent();
 
-  if (menuItemID == CommandIDs::clear)
-  {
-    if (mainComponent != nullptr)
-      audioEngine.getDoc().clear();
-  }
-  else if (menuItemID >= CommandIDs::recentFilesMenu && menuItemID < (CommandIDs::recentFilesMenu + 100))
+  if (menuItemID >= CommandIDs::recentFilesMenu && menuItemID < (CommandIDs::recentFilesMenu + 100))
   {
     RecentlyOpenedFilesList recentFiles;
     recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()->getValue ("recentPMixDocumentFiles"));
@@ -184,17 +180,18 @@ void MainAppWindow::getAllCommands (Array <CommandID>& commands)
   // this returns the set of all commands that this target can perform..
   const CommandID ids[] = {
 #ifndef JUCE_MAC
-    CommandIDs::quit ,
+    CommandIDs::quit,
 #endif
-    CommandIDs::open ,
-    CommandIDs::save ,
-    CommandIDs::saveAs ,
+    CommandIDs::newdoc,
+    CommandIDs::open,
+    CommandIDs::save,
+    CommandIDs::saveAs,
     
-    CommandIDs::showPrefs ,
-    CommandIDs::aboutBox ,
+    CommandIDs::showPrefs,
+    CommandIDs::aboutBox,
 
-    CommandIDs::undo ,
-    CommandIDs::redo ,
+    CommandIDs::undo,
+    CommandIDs::redo,
     
 //    CommandIDs::newAudioInput          ,
 //    CommandIDs::newAudioOutput         ,
@@ -202,15 +199,15 @@ void MainAppWindow::getAllCommands (Array <CommandID>& commands)
 //    CommandIDs::newMIDIOutput          ,
 //    CommandIDs::newFaustEffect         ,
     
-    CommandIDs::showISpace             ,
-    CommandIDs::showGraphEditor        ,
-    CommandIDs::showCodeEditor         ,
-    CommandIDs::showParameters         ,
+    CommandIDs::showISpace,
+    CommandIDs::showGraphEditor,
+    CommandIDs::showCodeEditor,
+    CommandIDs::showParameters,
     
-    CommandIDs::floatGraphEditor       ,
-    CommandIDs::floatISpace            ,
-    CommandIDs::floatCodeEditor        ,
-    CommandIDs::floatParameters        ,
+    CommandIDs::floatGraphEditor,
+    CommandIDs::floatISpace,
+    CommandIDs::floatCodeEditor,
+    CommandIDs::floatParameters,
   };
 
   commands.addArray (ids, numElementsInArray (ids));
@@ -228,6 +225,10 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       result.defaultKeypresses.add (KeyPress ('q', ModifierKeys::commandModifier, 0));
       break;
 #endif
+    case CommandIDs::newdoc:
+      result.setInfo ("New", "Creat a new pMix patch", category, 0);
+      result.defaultKeypresses.add (KeyPress ('n', ModifierKeys::commandModifier, 0));
+      break;
       
     case CommandIDs::open:
       result.setInfo ("Open...", "Opens a pMix patch", category, 0);
@@ -316,10 +317,17 @@ bool MainAppWindow::perform (const InvocationInfo& info)
 
   switch (info.commandID)
   {
+    case CommandIDs::newdoc:
+      if (mainComponent != nullptr && audioEngine.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+      {
+        audioEngine.getDoc().clear();
+        audioEngine.getDoc().initialize();
+      }
+      break;
+      
     case CommandIDs::open:
       if (mainComponent != nullptr && audioEngine.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
         audioEngine.getDoc().loadFromUserSpecifiedFile (true);
-
       break;
 
     case CommandIDs::save:
