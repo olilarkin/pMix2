@@ -82,10 +82,6 @@
       <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
         <FILE id="JLQaQv" name="FaustPluginFormat.h" compile="0" resource="0"
               file="Source/FaustPluginFormat.h"/>
-        <FILE id="f94ZEf" name="FaustFileFilter.h" compile="0" resource="0"
-              file="Source/FaustFileFilter.h"/>
-        <FILE id="YSPk5s" name="FaustDSPWatcher.h" compile="0" resource="0"
-              file="Source/FaustDSPWatcher.h"/>
         <FILE id="mdRVIA" name="FaustCodeTokenizer.cpp" compile="1" resource="0"
               file="Source/FaustCodeTokenizer.cpp"/>
         <FILE id="oFnEPc" name="FaustCodeTokenizer.h" compile="0" resource="0"
