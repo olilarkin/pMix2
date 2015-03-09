@@ -5,6 +5,34 @@
     Based on Faustgen~ by GRAME
     Author:  Oliver Larkin
  
+ 
+    Faustgen~ license:
+    ***********************************************************************
+    FAUST Architecture File
+    Copyright (C) 2010-2015 GRAME, Centre National de Creation Musicale
+    ---------------------------------------------------------------------
+    This Architecture section is free software; you can redistribute it
+    and/or modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 3 of
+    the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+    EXCEPTION : As a special exception, you may create a larger work
+    that contains this FAUST architecture section and distribute
+    that work under terms of your choice, so long as this FAUST
+    architecture section is not modified.
+
+
+    ************************************************************************
+    ***********************************************************************
+
   ==============================================================================
 */
 
@@ -17,7 +45,6 @@
 
 //#define DEFAULT_SOURCE_CODE "import(\"math.lib\"); \nimport(\"maxmsp.lib\"); \nimport(\"music.lib\"); \nimport(\"oscillator.lib\"); \nimport(\"reduce.lib\"); \nimport(\"filter.lib\"); \nimport(\"effect.lib\"); \n \nprocess=_,_;"
 #define FAUSTGEN_VERSION "0.99b"
-#define FAUST_PDF_DOCUMENTATION "faust-quick-reference.pdf"
 
 #if JUCE_MAC
   //#include "bench-llvm.cpp"
