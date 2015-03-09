@@ -64,7 +64,7 @@
 #include "faust/gui/UI.h"
 
 class FaustAudioProcessor  : public AudioPluginInstance
-                           , public UI /* nothing to do with GUI */
+                           , public UI
 {
 public:
   FaustAudioProcessor();
@@ -117,7 +117,7 @@ public:
   void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max);
   void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max);
   
-//Unique
+// Unique
   void createDSP();
   void freeDSP();
   bool allocateFactory(const String& effectName, const File& path);
