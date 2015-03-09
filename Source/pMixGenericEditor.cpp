@@ -15,14 +15,15 @@ private Timer
 {
 public:
   PMixProcessorParameterPropertyComp (const String& name, AudioProcessor& p, int paramIndex)
-  : PropertyComponent (name),
-  owner (p),
-  index (paramIndex),
-  paramHasChanged (false),
-  slider (p, paramIndex)
+  : PropertyComponent (name)
+  , owner (p)
+  , index (paramIndex)
+  , paramHasChanged (false)
+  , slider (p, paramIndex)
   {
     startTimer (100);
     setPreferredHeight(16);
+    //slider.setPopupDisplayEnabled(true, 0);
     addAndMakeVisible (slider);
     owner.addListener (this);
   }
