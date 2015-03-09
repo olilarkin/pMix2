@@ -24,18 +24,30 @@
       </GROUP>
       <GROUP id="{B0FCDBA2-07CB-C4DA-CAE0-3BE24B0D7724}" name="Panels">
         <GROUP id="{5278BC53-5DFC-6983-17D5-D8B7AC48DA6A}" name="Preferences">
-          <FILE id="Kp8GV2" name="pMixPrefsColours.cpp" compile="1" resource="0"
+          <FILE id="V8B0kr" name="pMixPrefsAudio.cpp" compile="1" resource="0"
+                file="../Source/pMixPrefsAudio.cpp"/>
+          <FILE id="ddZ7Qv" name="pMixPrefsAudio.h" compile="0" resource="0"
+                file="../Source/pMixPrefsAudio.h"/>
+          <FILE id="AdgF1J" name="pMixPrefsColours.cpp" compile="1" resource="0"
                 file="../Source/pMixPrefsColours.cpp"/>
-          <FILE id="I7gIsX" name="pMixPrefsColours.h" compile="0" resource="0"
+          <FILE id="vRVaGY" name="pMixPrefsColours.h" compile="0" resource="0"
                 file="../Source/pMixPrefsColours.h"/>
-          <FILE id="Mrkkn8" name="pMixPrefsControllers.cpp" compile="1" resource="0"
-                file="../Source/pMixPrefsControllers.cpp"/>
-          <FILE id="rVyE2v" name="pMixPrefsControllers.h" compile="0" resource="0"
-                file="../Source/pMixPrefsControllers.h"/>
-          <FILE id="KyPeks" name="pMixPrefsComponent.cpp" compile="1" resource="0"
+          <FILE id="ln1m76" name="pMixPrefsComponent.cpp" compile="1" resource="0"
                 file="../Source/pMixPrefsComponent.cpp"/>
-          <FILE id="VQHPHd" name="pMixPrefsComponent.h" compile="0" resource="0"
+          <FILE id="xjarId" name="pMixPrefsComponent.h" compile="0" resource="0"
                 file="../Source/pMixPrefsComponent.h"/>
+          <FILE id="ooJEoW" name="pMixPrefsControllers.cpp" compile="1" resource="0"
+                file="../Source/pMixPrefsControllers.cpp"/>
+          <FILE id="imB7pz" name="pMixPrefsControllers.h" compile="0" resource="0"
+                file="../Source/pMixPrefsControllers.h"/>
+          <FILE id="wWIek0" name="pMixPrefsGeneral.cpp" compile="1" resource="0"
+                file="../Source/pMixPrefsGeneral.cpp"/>
+          <FILE id="AL2Oqn" name="pMixPrefsGeneral.h" compile="0" resource="0"
+                file="../Source/pMixPrefsGeneral.h"/>
+          <FILE id="MMEojR" name="pMixPrefsPlugins.cpp" compile="1" resource="0"
+                file="../Source/pMixPrefsPlugins.cpp"/>
+          <FILE id="wU3Lgn" name="pMixPrefsPlugins.h" compile="0" resource="0"
+                file="../Source/pMixPrefsPlugins.h"/>
         </GROUP>
         <FILE id="zRF3Ya" name="pMixConsole.cpp" compile="1" resource="0" file="../Source/pMixConsole.cpp"/>
         <FILE id="ezHv61" name="pMixConsole.h" compile="0" resource="0" file="../Source/pMixConsole.h"/>
