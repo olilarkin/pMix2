@@ -34,7 +34,9 @@ PMixPrefsComponent::PMixPrefsComponent (PMixAudioEngine& audioEngine)
     tabbedComponent->setTabBarDepth (23);
     tabbedComponent->addTab (TRANS("General"), Colours::lightgrey, new PMixPrefsGeneral(), true);
     tabbedComponent->addTab (TRANS("Controllers"), Colours::lightgrey, new PMixPrefsControllers(), true);
+#ifndef PMIX_PLUGIN
     tabbedComponent->addTab (TRANS("Audio"), Colours::lightgrey, new PMixPrefsAudio (getDeviceManager()), true);
+#endif
     tabbedComponent->addTab (TRANS("Plug-Ins"), Colours::lightgrey, new PMixPrefsPlugins (audioEngine), true);
     tabbedComponent->addTab (TRANS("Colours"), Colours::lightgrey, new PMixPrefsColours(), true);
     tabbedComponent->setCurrentTabIndex (0);
