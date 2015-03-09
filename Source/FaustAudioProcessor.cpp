@@ -268,14 +268,10 @@ bool FaustAudioProcessor::allocateFactory(const String& effect_name, const File&
   return res;
 }
 
-void FaustAudioProcessor::updateSourcecode()
-{
-  // Create a new DSP instance
-  createDSP();
-
-  // state is modified...
-  //set_dirty();
-}
+//void FaustAudioProcessor::updateSourcecode()
+//{
+//  createDSP();
+//}
 
 String FaustAudioProcessor::getSourcecode()
 {

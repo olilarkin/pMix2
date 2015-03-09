@@ -121,7 +121,7 @@ public:
   void createDSP();
   void freeDSP();
   bool allocateFactory(const String& effectName, const File& path);
-  void updateSourcecode();
+//  void updateSourcecode();
   String getSourcecode();
   FaustgenFactory* getFactory() { return fDSPfactory; }
   llvm_dsp* getDSP() { return fDSP; }

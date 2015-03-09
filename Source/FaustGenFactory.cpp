@@ -433,7 +433,7 @@ void FaustgenFactory::updateSourceCode(String sourceCode, FaustAudioProcessor* i
     fUpdateInstance = instance;
     for (it = fInstances.begin(); it != fInstances.end(); it++)
     {
-      (*it)->updateSourcecode();
+      (*it)->createDSP();
     }
     
   }
