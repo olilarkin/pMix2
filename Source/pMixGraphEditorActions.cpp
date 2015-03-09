@@ -51,6 +51,7 @@ RemoveFilterAction::RemoveFilterAction (PMixAudioEngine& audioEngine, uint32 nod
 bool RemoveFilterAction::perform()
 {
   PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
+  
   audioEngine.getDoc().removeFilter (nodeID);
   
   if (nodeID < 0xFFFFFFFF)
