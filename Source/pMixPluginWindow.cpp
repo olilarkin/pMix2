@@ -8,6 +8,7 @@
 */
 
 #include "pMixPluginWindow.h"
+#include "pMixGenericEditor.h"
 
 class PluginWindow;
 static Array <PluginWindow*> activePluginWindows;
@@ -73,7 +74,7 @@ PluginWindow* PluginWindow::getWindowFor (AudioProcessorGraph::Node* const node,
   if (ui == nullptr)
   {
     if (type == Generic || type == Parameters)
-      ui = new GenericAudioProcessorEditor (processor);
+      ui = new PMixGenericAudioProcessorEditor (processor);
 //    else if (type == Programs)
 //      ui = new ProgramAudioProcessorEditor (processor);
   }
