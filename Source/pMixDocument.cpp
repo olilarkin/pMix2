@@ -75,7 +75,7 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
       node->properties.set ("y", y);
       node->properties.set ("uiLastX", 0);
       node->properties.set ("uiLastY", 0);
-
+      
       Array<var> presets;
       node->properties.set("presets", presets);
       changed();
@@ -259,7 +259,8 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   e->setAttribute ("y", node->properties ["y"].toString());
   e->setAttribute ("uiLastX", node->properties ["uiLastX"].toString());
   e->setAttribute ("uiLastY", node->properties ["uiLastY"].toString());
-
+  //e->setAttribute("colour", node->properties ["colour"].to
+                  
   PluginDescription pd;
   plugin->fillInPluginDescription (pd);
 
@@ -527,4 +528,66 @@ String PMixDocument::getLibraryPath()
   return fullLibraryPath;
 }
 
+void PMixDocument::addPreset(const int nodeId, double x, double y)
+{
+  AudioProcessorGraph::Node::Ptr node = getNodeForId(nodeId);
+  AudioPluginInstance* plugin = dynamic_cast <AudioPluginInstance*> (node->getProcessor());
+
+  var* presetsArr = node->properties.getVarPointer("presets");
+  
+  Array<var> paramValues;
+  
+  for(int p=0; p<plugin->getNumParameters(); p++)
+  {
+    paramValues.add(plugin->getParameter(p));
+  }
+
+  String name;
+  name << "Preset " << presetsArr->getArray()->size() + 1;
+  DynamicObject* obj = new DynamicObject();
+  obj->setProperty("name", name);
+  obj->setProperty("x", x);
+  obj->setProperty("y", y);
+  obj->setProperty("r", 1.);
+  obj->setProperty("hidden", false);
+  obj->setProperty("state", paramValues);
+
+  var preset = var(obj);
+  
+  presetsArr->append(preset);
+  
+  changed();
+}
+
+void PMixDocument::removePreset(const int nodeId, const int presetIdx)
+{
+  
+}
+
+void PMixDocument::setPresetPosition (const int nodeId, const int presetIdx, double x, double y)
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (node != nullptr)
+  {
+    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+    DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+    obj->setProperty("x", jlimit (0.0, 1.0, x));
+    obj->setProperty("y", jlimit (0.0, 1.0, y));
+  }
+}
+
+void PMixDocument::getPresetPosition (const int nodeId, const int presetIdx, double& x, double& y) const
+{
+  x = y = 0;
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (node != nullptr)
+  {
+    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+    DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+    x = (double) obj->getProperty("x");
+    y = (double) obj->getProperty("y");
+  }
+}
 

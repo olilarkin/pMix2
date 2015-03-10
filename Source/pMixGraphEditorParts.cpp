@@ -133,9 +133,9 @@ void FilterComponent::mouseDown (const MouseEvent& e)
       
       if(!InternalPluginFormat::isInternalFormat(processor->getName()))
       {
+        m.addItem (3, "Add a pMix Preset");
         m.addSeparator();
-        m.addItem (3, "Show plugin UI");
-        m.addItem (4, "Show all parameters");
+        m.addItem (4, "Show plugin UI");
       }
     }
     
@@ -161,6 +161,11 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     {
       audioEngine.getDoc().disconnectFilter (filterID);
     }
+    else if (r == 3)
+    {
+      Random rand;
+      audioEngine.getDoc().addPreset(filterID, rand.nextFloat(), rand.nextFloat());
+    }
     else
     {
       if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
@@ -173,13 +178,6 @@ void FilterComponent::mouseDown (const MouseEvent& e)
         if (r > 0)
         {
           PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal : PluginWindow::Generic;
-          
-          switch (r)
-          {
-            case 4: type = PluginWindow::Parameters; break;
-              
-            default: break;
-          };
           
           if (PluginWindow* const w = PluginWindow::getWindowFor (f, type))
             w->toFront (true);

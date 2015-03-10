@@ -23,27 +23,31 @@ public:
   PMixDocument (PMixAudioEngine& audioEngine);
   ~PMixDocument();
   
+  void addPreset(const int nodeId, double x, double y);
+  void setPresetPosition(const int nodeId, const int presetIdx, double x, double y);
+  void getPresetPosition(const int nodeId, const int presetIdx, double& x, double& y) const;
+  void removePreset(const int nodeId, const int presetIdx);
+
   int getNumFilters() const noexcept;
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
   const AudioProcessorGraph::Node::Ptr getNodeForId (const uint32 uid) const noexcept;
+  
   uint32 addFilter (const PluginDescription* desc, double x, double y);
   void removeFilter (const uint32 filterUID);
   void disconnectFilter (const uint32 filterUID);
+  
   void removeIllegalConnections();
   void setNodePosition (const int nodeId, double x, double y);
   void getNodePosition (const int nodeId, double& x, double& y) const;
   int getNumConnections() const noexcept;
   const AudioProcessorGraph::Connection* getConnection (const int index) const noexcept;
-  const AudioProcessorGraph::Connection* getConnectionBetween (uint32 sourceFilterUID, int sourceFilterChannel,
-      uint32 destFilterUID, int destFilterChannel) const noexcept;
-  bool canConnect (uint32 sourceFilterUID, int sourceFilterChannel,
-                   uint32 destFilterUID, int destFilterChannel) const noexcept;
-  bool addConnection (uint32 sourceFilterUID, int sourceFilterChannel,
-                      uint32 destFilterUID, int destFilterChannel);
+  const AudioProcessorGraph::Connection* getConnectionBetween (uint32 sourceFilterUID, int sourceFilterChannel, uint32 destFilterUID, int destFilterChannel) const noexcept;
+  bool canConnect (uint32 sourceFilterUID, int sourceFilterChannel, uint32 destFilterUID, int destFilterChannel) const noexcept;
+  bool addConnection (uint32 sourceFilterUID, int sourceFilterChannel, uint32 destFilterUID, int destFilterChannel);
   void removeConnection (const int index);
-  void removeConnection (uint32 sourceFilterUID, int sourceFilterChannel,
-                         uint32 destFilterUID, int destFilterChannel);
+  void removeConnection (uint32 sourceFilterUID, int sourceFilterChannel, uint32 destFilterUID, int destFilterChannel);
   void clear();
+  
   XmlElement* createXml() const;
   void createNodeFromXml (const XmlElement& xml);
   void createFaustNodeFromXml (XmlElement& xml, const String& newSourceCode);

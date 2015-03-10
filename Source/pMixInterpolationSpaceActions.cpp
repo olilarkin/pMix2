@@ -8,8 +8,9 @@
 */
 
 #include "pMixInterpolationSpaceActions.h"
+#include "pMixInterpolationSpace.h"
 
-MovePresetAction::MovePresetAction (Component* interpolationSpace, const String& componentID, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept
+MovePresetAction::MovePresetAction (InterpolationSpaceComponent* interpolationSpace, const String& componentID, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept
 : interpolationSpace(interpolationSpace)
 , componentID(componentID)
 , startBounds(startBounds)
@@ -19,7 +20,13 @@ MovePresetAction::MovePresetAction (Component* interpolationSpace, const String&
 
 bool MovePresetAction::perform()
 {
-  interpolationSpace->findChildWithID(componentID)->setBounds(endBounds);
+  InterpolationSpacePreset* presetComp = dynamic_cast<InterpolationSpacePreset*>(interpolationSpace->findChildWithID(componentID));
+  presetComp->setBounds(endBounds);
+  
+  Point<double> normalizedPos;
+  normalizedPos.x = endBounds.getX() / (double) presetComp->getParentWidth();
+  normalizedPos.y = endBounds.getY() / (double) presetComp->getParentHeight();
+  presetComp->audioEngine.getDoc().setPresetPosition(presetComp->filterID, presetComp->presetIdx, normalizedPos.x, normalizedPos.y);
   return true;
 }
 
