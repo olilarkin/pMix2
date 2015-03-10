@@ -220,8 +220,7 @@ void FilterComponent::mouseUp (const MouseEvent& e)
     if (const AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
     {
       AudioProcessor* const processor = f->getProcessor();
-      String name = processor->getName();
-      if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
+      if(!InternalPluginFormat::isInternalFormat(processor->getName()))
       {
         if (PluginWindow* const w = PluginWindow::getWindowFor (f, PluginWindow::Generic/*Normal*/))
           w->toFront (true);
