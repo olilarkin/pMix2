@@ -21,7 +21,7 @@ public:
   
   static inline float toNormalizedValue(float nonNormalizedValue, float min, float max)
   {
-    return nonNormalizedValue - min / (max - min);
+    return (nonNormalizedValue - min) / (max - min);
   }
   
   static inline float fromNormalizedValue(float normalizedValue, float min, float max)
