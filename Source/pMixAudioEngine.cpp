@@ -10,8 +10,6 @@
 #include "pMixAudioEngine.h"
 #include "pMixCommandIDs.h"
 
-//FaustDSPFileFilter PMixAudioEngine::DSPFileFilter;
-
 PMixAudioEngine::PMixAudioEngine()
 : doc(*this)
 , faustDSPFormat(doc.getLibraryPath())
