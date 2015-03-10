@@ -35,7 +35,7 @@ private:
   PMixAudioEngine& audioEngine;
   Rectangle<int> startBounds;
   Rectangle<int> endBounds;
-  InterpolationSpaceLabel* label;
+  ScopedPointer<InterpolationSpaceLabel> label;
     
 public:
   InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel);
@@ -57,7 +57,8 @@ private:
   Random mRand;
   SelectedItemSet<Component*> selectedItems;
   LassoComponent<Component*> lassoComp;
-  
+  void updateComponents();
+
 public:
   InterpolationSpaceComponent (PMixAudioEngine& audioEngine);
   ~InterpolationSpaceComponent ();

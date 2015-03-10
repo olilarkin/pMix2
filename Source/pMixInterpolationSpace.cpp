@@ -4,6 +4,12 @@ InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
 : Label(String::empty, labelText)
 {
   setInterceptsMouseClicks(false, false);
+  setFont (Font (13.00f));
+  setJustificationType (Justification::centred);
+  setEditable (false, true, false);
+  setColour (Label::textColourId, Colours::white);
+  setColour (TextEditor::textColourId, Colours::white);
+  setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 }
 
 MovePresetAction::MovePresetAction (Component* interpolationSpace, const String& componentID, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept
@@ -35,17 +41,11 @@ InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine,
 : audioEngine(audioEngine)
 {
   addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));
-  label->setFont (Font (13.00f));
-  label->setJustificationType (Justification::centred);
-  label->setEditable (false, true, false);
-  label->setColour (Label::textColourId, Colours::white);
-  label->setColour (TextEditor::textColourId, Colours::white);
-  label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 }
 
 InterpolationSpacePreset::~InterpolationSpacePreset ()
 {
-  deleteAllChildren();
 }
 
 void InterpolationSpacePreset::resized ()
@@ -92,34 +92,19 @@ InterpolationSpaceComponent::InterpolationSpaceComponent (PMixAudioEngine& audio
 : audioEngine(audioEngine)
 , mRand(Time::currentTimeMillis())
 {
-  for(int i = 0; i<10; i++)
-  {
-    String lab = String("preset") + String(i);
-    InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, lab);
-    comp->setComponentID(lab);
-    addAndMakeVisible (comp);
-  }
-  
+  audioEngine.getDoc().addChangeListener (this);
   selectedItems.addChangeListener(this);
 }
 
 InterpolationSpaceComponent::~InterpolationSpaceComponent ()
 {
+  audioEngine.getDoc().removeChangeListener(this);
   selectedItems.removeChangeListener(this);
   deleteAllChildren();
 }
 
 void InterpolationSpaceComponent::resized ()
 {
-  for (int i = 0; i < getNumChildComponents(); ++i)
-  {
-    InterpolationSpacePreset* const comp = dynamic_cast <InterpolationSpacePreset*> (getChildComponent(i));
-    
-    float r = 50. + (50. * mRand.nextFloat());
-    float x = getWidth() * mRand.nextFloat();
-    float y = getHeight() * mRand.nextFloat();
-    comp->setBounds(x, y, r, r);
-  }
 }
 
 void InterpolationSpaceComponent::paint (Graphics& g)
@@ -163,8 +148,64 @@ SelectedItemSet <Component*>& InterpolationSpaceComponent::getLassoSelection()
   return selectedItems;
 }
 
-void InterpolationSpaceComponent::changeListenerCallback (ChangeBroadcaster*)
+void InterpolationSpaceComponent::changeListenerCallback (ChangeBroadcaster* source)
 {
+  if (source == &selectedItems)
+  {
+  }
+  else
+    updateComponents();
+  
   repaint();
+}
+
+void InterpolationSpaceComponent::updateComponents()
+{
+  deleteAllChildren();
+  
+  for (int i = audioEngine.getDoc().getNumFilters(); --i >= 0;)
+  {
+    const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
+    
+    if (f->properties.getVarPointer("presets") != nullptr)
+    {
+      Array<var>* presets = f->properties.getVarPointer("presets")->getArray();
+      
+      for (int p=0; p< presets->size(); p++)
+      {
+        DynamicObject* obj = presets->getReference(p).getDynamicObject();
+
+        String lab = obj->getProperty("name");
+        InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, lab);
+        comp->setComponentID(lab);
+        float r = 50. + (50. * (float) obj->getProperty("r"));
+        float x = getWidth() * (float) obj->getProperty("x");
+        float y = getHeight() * (float) obj->getProperty("y");
+        comp->setBounds(x, y, r, r);
+        addAndMakeVisible (comp);
+      }
+    }
+    
+//    if (getComponentForFilter (f->nodeId) == 0)
+//    {
+//      FilterComponent* const comp = new FilterComponent (audioEngine, f->nodeId);
+//      addAndMakeVisible (comp);
+//      comp->update();
+//    }
+  }
+  
+//  for (int i = audioEngine.getDoc().getNumConnections(); --i >= 0;)
+//  {
+//    const AudioProcessorGraph::Connection* const c = audioEngine.getDoc().getConnection (i);
+//    
+//    if (getComponentForConnection (*c) == 0)
+//    {
+//      ConnectorComponent* const comp = new ConnectorComponent (audioEngine);
+//      addAndMakeVisible (comp);
+//      
+//      comp->setInput (c->sourceNodeId, c->sourceChannelIndex);
+//      comp->setOutput (c->destNodeId, c->destChannelIndex);
+//    }
+//  }
 }
 
