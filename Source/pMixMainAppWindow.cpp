@@ -112,6 +112,7 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     menu.addCommandItem (&getCommandManager(), CommandIDs::copy);
     menu.addCommandItem (&getCommandManager(), CommandIDs::paste);
     menu.addCommandItem (&getCommandManager(), CommandIDs::del);
+    menu.addCommandItem (&getCommandManager(), CommandIDs::selectAll);
     menu.addSeparator();
     menu.addCommandItem (&getCommandManager(), CommandIDs::undo);
     menu.addCommandItem (&getCommandManager(), CommandIDs::redo);
@@ -183,6 +184,11 @@ void MainAppWindow::getAllCommands (Array <CommandID>& commands)
     CommandIDs::showPrefs,
     CommandIDs::aboutBox,
 
+//    CommandIDs::copy,
+//    CommandIDs::paste,
+//    CommandIDs::del,
+//    CommandIDs::selectAll,
+
     CommandIDs::undo,
     CommandIDs::redo,
     
@@ -245,8 +251,26 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
     case CommandIDs::showPrefs:
       result.setInfo ("Preferences...", String::empty, category, 0);
       result.defaultKeypresses.add (KeyPress (',', ModifierKeys::commandModifier, 0));
-
       break;
+      
+//    case CommandIDs::copy:
+//      result.setInfo ("Copy", "Copy to clipboard", category, 0);
+//      result.defaultKeypresses.add (KeyPress ('c', ModifierKeys::commandModifier, 0));
+//      break;
+//    case CommandIDs::paste:
+//      result.setInfo ("Paste", "Paste from clipboard", category, 0);
+//      result.defaultKeypresses.add (KeyPress ('v', ModifierKeys::commandModifier, 0));
+//      break;
+//      
+//    case CommandIDs::del:
+//      result.setInfo ("Delete", "Delete selected", category, 0);
+//      result.defaultKeypresses.add (KeyPress (KeyPress::backspaceKey, 0, 0));
+//      break;
+//      
+//    case CommandIDs::selectAll:
+//      result.setInfo ("Select All", "Select All", category, 0);
+//      result.defaultKeypresses.add (KeyPress ('a', ModifierKeys::commandModifier, 0));
+//      break;
       
     case CommandIDs::undo:
       result.setInfo ("Undo", "Undo the last action", category, 0);
@@ -340,6 +364,20 @@ bool MainAppWindow::perform (const InvocationInfo& info)
       // TODO
       break;
 
+//    case CommandIDs::copy:
+//      // TODO
+//      break;
+//    case CommandIDs::paste:
+//      // TODO
+//      break;
+//      
+//    case CommandIDs::del:
+//      // TODO
+//      break;
+//    case CommandIDs::selectAll:
+//      // TODO
+//      break;
+      
     case CommandIDs::undo:
       // TODO
       audioEngine.getDoc().getUndoManager().undo();

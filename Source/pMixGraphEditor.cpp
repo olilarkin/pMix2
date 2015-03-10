@@ -295,6 +295,7 @@ void GraphEditor::getAllCommands (Array <CommandID>& commands)
     CommandIDs::copy ,
     CommandIDs::paste ,
     CommandIDs::del ,
+    CommandIDs::selectAll ,
     CommandIDs::zoomIn ,
     CommandIDs::zoomOut ,
     CommandIDs::zoomNormal
@@ -319,8 +320,12 @@ void GraphEditor::getCommandInfo (const CommandID commandID, ApplicationCommandI
       break;
     case CommandIDs::del:
       result.setInfo ("Delete", "Deletes the selection", category, 0);
+      result.defaultKeypresses.add (KeyPress (KeyPress::backspaceKey, ModifierKeys::commandModifier, 0));
       break;
-      
+    case CommandIDs::selectAll:
+      result.setInfo ("Select All", "Select All", category, 0);
+      result.defaultKeypresses.add (KeyPress ('a', ModifierKeys::commandModifier, 0));
+      break;
     case CommandIDs::zoomIn:
       result.setInfo (TRANS("Zoom in"), TRANS("Zooms in on the current component."), category, 0);
       result.defaultKeypresses.add (KeyPress (']', ModifierKeys::commandModifier, 0));
@@ -349,6 +354,13 @@ bool GraphEditor::perform (const InvocationInfo& info)
       break;
       
     case CommandIDs::paste:
+      // TODO
+      break;
+      
+    case CommandIDs::del:
+      // TODO
+      break;
+    case CommandIDs::selectAll:
       // TODO
       break;
       
