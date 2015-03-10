@@ -199,6 +199,7 @@ void FaustAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
+//TODO: also need to store the state of the parameters
 void FaustAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
   XmlElement xml ("FAUSTGEN");
