@@ -506,16 +506,16 @@ String PMixDocument::getLibraryPath()
 
 #if JUCE_MAC
 #if PMIX_PLUGIN
-  CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMixPlugin"));
+  CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMixPlugin"));
 #else
   // OSX only : access to the pMix bundle
-  CFBundleRef faustgen_bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMix"));
+  CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("com.OliLarkin.pMix"));
 #endif
-  CFURLRef faustgen_ref = CFBundleCopyBundleURL(faustgen_bundle);
-  UInt8 bundle_path[512];
-  Boolean res = CFURLGetFileSystemRepresentation(faustgen_ref, true, bundle_path, 512);
+  CFURLRef ref = CFBundleCopyBundleURL(bundle);
+  UInt8 bundlePath[512];
+  Boolean res = CFURLGetFileSystemRepresentation(ref, true, bundlePath, 512);
   jassert(res);
-  fullLibraryPath << (const char*)bundle_path << FAUST_LIBRARY_PATH;
+  fullLibraryPath << (const char*) bundlePath << FAUST_LIBRARY_PATH;
 #endif //JUCE_MAC
   
   return fullLibraryPath;
