@@ -131,8 +131,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
       AudioProcessor* const processor = f->getProcessor();
       jassert (processor != nullptr);
       
-      String name = processor->getName();
-      if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
+      if(!InternalPluginFormat::isInternalFormat(processor->getName()))
       {
         m.addSeparator();
         m.addItem (3, "Show plugin UI");

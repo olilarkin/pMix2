@@ -70,3 +70,15 @@ void InternalPluginFormat::getAllTypes (OwnedArray <PluginDescription>& results)
   for (int i = 0; i < (int) endOfFilterTypes; ++i)
     results.add (new PluginDescription (*getDescriptionFor ((InternalFilterType) i)));
 }
+
+
+bool InternalPluginFormat::isInternalFormat(String name)
+{
+  if (name == "Audio Input") return true;
+  if (name == "Audio Output") return true;
+  if (name == "Midi Input") return true;
+  if (name == "Midi Output") return true;
+ // if (name == faustDesc.name) return true;
+  
+  return false;
+}

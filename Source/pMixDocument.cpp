@@ -272,10 +272,13 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   state->addTextElement (m.toBase64Encoding());
   e->addChildElement (state);
   
-  XmlElement* presets = new XmlElement ("PRESETS");
-  presets->addTextElement (JSON::toString(node->properties ["presets"], false));
-  e->addChildElement(presets);
-
+  if(!InternalPluginFormat::isInternalFormat(pd.name))
+  {
+    XmlElement* presets = new XmlElement ("PRESETS");
+    presets->addTextElement (JSON::toString(node->properties ["presets"], false));
+    e->addChildElement(presets);
+  }
+  
   return e;
 }
 
@@ -323,10 +326,13 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
   
-  if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
+  if(!InternalPluginFormat::isInternalFormat(pd.name))
   {
-    var vpresets = JSON::parse(presets->getAllSubText());
-    node->properties.set ("presets", vpresets);
+    if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
+    {
+      var vpresets = JSON::parse(presets->getAllSubText());
+      node->properties.set ("presets", vpresets);
+    }
   }
 }
 
