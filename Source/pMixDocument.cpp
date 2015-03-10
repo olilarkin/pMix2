@@ -75,6 +75,9 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
       node->properties.set ("y", y);
       node->properties.set ("uiLastX", 0);
       node->properties.set ("uiLastY", 0);
+
+      Array<var> presets;
+      node->properties.set("presets", presets);
       changed();
     }
     else
@@ -268,10 +271,15 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   node->getProcessor()->getStateInformation (m);
   state->addTextElement (m.toBase64Encoding());
   e->addChildElement (state);
+  
+  XmlElement* presets = new XmlElement ("PRESETS");
+  presets->addTextElement (JSON::toString(node->properties ["presets"], false));
+  e->addChildElement(presets);
 
   return e;
 }
 
+//TODO: why two createNodeFromXml methods
 void PMixDocument::createNodeFromXml (const XmlElement& xml)
 {
   PluginDescription pd;
@@ -314,6 +322,12 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   node->properties.set ("y", xml.getDoubleAttribute ("y"));
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
+  
+  if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
+  {
+    var vpresets = JSON::parse(presets->getAllSubText());
+    node->properties.set ("presets", vpresets);
+  }
 }
 
 void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSourceCode)
@@ -357,6 +371,12 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSou
   node->properties.set ("y", xml.getDoubleAttribute ("y"));
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
+  
+  if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
+  {
+    var vpresets = JSON::parse(presets->getAllSubText());
+    node->properties.set ("presets", vpresets);
+  }
 }
 
 
