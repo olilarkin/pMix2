@@ -334,22 +334,12 @@ void FilterComponent::update()
   int w = 80;
   int h = 50;
 
+  // Update width based on number of I/O
   w = jmax (w, (jmax (numIns, numOuts) + 1) * 20);
-  
-  const int textWidth = font.getStringWidth (f->getProcessor()->getName());
-  w = jmax (w, 16 + jmin (textWidth, 300));
-  if (textWidth > 300)
-    h = 100;
   
   String name = f->getProcessor()->getName();
   
   setName (name);
-  
-  {
-    double x, y;
-    audioEngine.getDoc().getNodePosition (filterID, x, y);
-    setCentreRelative ((float) x, (float) y);
-  }
 
   if (numIns != numInputs || numOuts != numOutputs)
   {
@@ -359,15 +349,16 @@ void FilterComponent::update()
     deleteAllChildren();
     
     addAndMakeVisible(filterName = new Label(name, name));
+    filterName->setJustificationType(Justification::centred);
     filterName->setInterceptsMouseClicks(false, false);
   
   
-//    if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
-//    {
-//      addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (f->getProcessor()));
-//      w = jmax (w, editor->getWidth() + 20 );
-//      h += editor->getContentHeight() + 10;
-//    }
+    if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
+    {
+      addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (f->getProcessor()));
+      w = jmax (w, editor->getWidth() + 20 );
+      h += editor->getContentHeight() + 10;
+    }
     
     setSize (w, h);
 
@@ -385,6 +376,12 @@ void FilterComponent::update()
       addAndMakeVisible (new PinComponent (audioEngine, filterID, PMixDocument::midiChannelNumber, false));
     
     resized();
+  }
+  
+  {
+    double x, y;
+    audioEngine.getDoc().getNodePosition (filterID, x, y);
+    setCentreRelative ((float) x, (float) y);
   }
 }
 
