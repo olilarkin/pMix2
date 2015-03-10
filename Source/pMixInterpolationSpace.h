@@ -17,13 +17,17 @@ class InterpolationSpacePreset : public Component
 private:
   ComponentDragger myDragger;
   ComponentBoundsConstrainer boundsConstrainer;
-  PMixAudioEngine& audioEngine;
   Rectangle<int> startBounds;
   Rectangle<int> endBounds;
   ScopedPointer<InterpolationSpaceLabel> label;
-    
+  
 public:
-  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel);
+  PMixAudioEngine& audioEngine;
+  const uint32 filterID;
+  const uint32 presetIdx;
+  
+public:
+  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx);
   ~InterpolationSpacePreset ();
   void resized ();
   void mouseDown (const MouseEvent& e);
@@ -39,7 +43,6 @@ class InterpolationSpaceComponent  : public Component
 private:
   //TooltipWindow tooltipWindow;
   PMixAudioEngine& audioEngine;
-  Random mRand;
   SelectedItemSet<Component*> selectedItems;
   LassoComponent<Component*> lassoComp;
   void updateComponents();

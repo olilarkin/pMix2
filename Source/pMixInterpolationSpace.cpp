@@ -12,11 +12,12 @@ InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
   setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 }
 
-InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel)
+InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx)
 : audioEngine(audioEngine)
+, filterID(filterID)
+, presetIdx(presetIdx)
 {
   addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));
-
 }
 
 InterpolationSpacePreset::~InterpolationSpacePreset ()
@@ -48,7 +49,7 @@ void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
   endBounds = getBounds();
   
   audioEngine.getDoc().beginTransaction();
-  audioEngine.getDoc().perform(new MovePresetAction(getParentComponent(), getComponentID(), startBounds, endBounds), "change preset bounds");
+  audioEngine.getDoc().perform(new MovePresetAction(dynamic_cast<InterpolationSpaceComponent*>(getParentComponent()), getComponentID(), startBounds, endBounds), "change preset bounds");
 }
 
 void InterpolationSpacePreset::paint (Graphics& g)
@@ -58,14 +59,10 @@ void InterpolationSpacePreset::paint (Graphics& g)
   else
     g.setColour(Colours::red);
   g.fillEllipse (0, 0, getWidth(), getHeight());
-
-  //g.setColour(Colours::white);
-  //g.drawFittedText(getComponentID(), 0, 0, getWidth(), getHeight(), Justification::centred, 1);
 }
 
 InterpolationSpaceComponent::InterpolationSpaceComponent (PMixAudioEngine& audioEngine)
 : audioEngine(audioEngine)
-, mRand(Time::currentTimeMillis())
 {
   audioEngine.getDoc().addChangeListener (this);
   selectedItems.addChangeListener(this);
@@ -150,9 +147,11 @@ void InterpolationSpaceComponent::updateComponents()
       {
         DynamicObject* obj = presets->getReference(p).getDynamicObject();
 
-        String lab = obj->getProperty("name");
-        InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, lab);
-        comp->setComponentID(lab);
+        String label = obj->getProperty("name");
+        InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeId, p);
+        String componentID;
+        componentID << "p." << (int) f->nodeId << "." << p;
+        comp->setComponentID(componentID);
         float r = 50. + (50. * (float) obj->getProperty("r"));
         float x = getWidth() * (float) obj->getProperty("x");
         float y = getHeight() * (float) obj->getProperty("y");
@@ -160,27 +159,7 @@ void InterpolationSpaceComponent::updateComponents()
         addAndMakeVisible (comp);
       }
     }
-    
-//    if (getComponentForFilter (f->nodeId) == 0)
-//    {
-//      FilterComponent* const comp = new FilterComponent (audioEngine, f->nodeId);
-//      addAndMakeVisible (comp);
-//      comp->update();
-//    }
+
   }
-  
-//  for (int i = audioEngine.getDoc().getNumConnections(); --i >= 0;)
-//  {
-//    const AudioProcessorGraph::Connection* const c = audioEngine.getDoc().getConnection (i);
-//    
-//    if (getComponentForConnection (*c) == 0)
-//    {
-//      ConnectorComponent* const comp = new ConnectorComponent (audioEngine);
-//      addAndMakeVisible (comp);
-//      
-//      comp->setInput (c->sourceNodeId, c->sourceChannelIndex);
-//      comp->setOutput (c->destNodeId, c->destChannelIndex);
-//    }
-//  }
 }
 
