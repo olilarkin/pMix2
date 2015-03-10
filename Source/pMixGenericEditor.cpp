@@ -94,7 +94,7 @@ private:
       }
     }
     
-    String getTextFromValue (double /*value*/) override
+    String getTextFromValue (double value) override
     {
       return owner.getParameterText (index) + " " + owner.getParameterLabel (index).trimEnd();
     }
