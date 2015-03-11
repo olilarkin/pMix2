@@ -15,8 +15,8 @@
 
 class GraphEditor;
 
-class PinComponent : public Component,
-public SettableTooltipClient
+class PinComponent : public Component
+                   , public SettableTooltipClient
 {
 public:
   PinComponent (PMixAudioEngine& audio, const uint32 filterID_, const int index_, const bool isInput_);
@@ -41,6 +41,7 @@ private:
 #pragma mark FilterComponent
 
 class FilterComponent : public Component
+                      , public ChangeListener
 {
 public:
   FilterComponent (PMixAudioEngine& audioEngine, const uint32 filterID_);
@@ -56,6 +57,9 @@ public:
   
   void removeEditor();
   
+  void changeListenerCallback (ChangeBroadcaster* source);
+  
+public:
   PMixAudioEngine& audioEngine;
   const uint32 filterID;
   int numInputs, numOutputs;

@@ -28,6 +28,9 @@ public:
   void getPresetPosition(const int nodeId, const int presetIdx, double& x, double& y) const;
   void removePreset(const int nodeId, const int presetIdx);
 
+  void setFilterColour(const int nodeId, const Colour colour);
+  Colour getFilterColour(const int nodeId) const;
+  
   int getNumFilters() const noexcept;
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
   const AudioProcessorGraph::Node::Ptr getNodeForId (const uint32 uid) const noexcept;

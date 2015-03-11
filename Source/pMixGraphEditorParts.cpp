@@ -134,8 +134,9 @@ void FilterComponent::mouseDown (const MouseEvent& e)
       if(!InternalPluginFormat::isInternalFormat(processor->getName()))
       {
         m.addItem (3, "Add a pMix Preset");
+        m.addItem (4, "Set pMix Colour");
         m.addSeparator();
-        m.addItem (4, "Show plugin UI");
+        m.addItem (5, "Show plugin UI");
       }
     }
     
@@ -165,6 +166,17 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     {
       Random rand;
       audioEngine.getDoc().addPreset(filterID, rand.nextFloat(), rand.nextFloat());
+    }
+    else if (r == 4)
+    {
+      ColourSelector* colourSelector = new ColourSelector(ColourSelector::showSliders|ColourSelector::showColourAtTop|ColourSelector::showColourspace);
+      colourSelector->setName ("background");
+      colourSelector->setCurrentColour (audioEngine.getDoc().getFilterColour(filterID));
+      colourSelector->addChangeListener (this);
+      colourSelector->setColour (ColourSelector::backgroundColourId, Colours::lightgrey);
+      colourSelector->setSize (300, 400);
+      
+      CallOutBox::launchAsynchronously (colourSelector, getScreenBounds(), nullptr);
     }
     else
     {
@@ -349,7 +361,7 @@ void FilterComponent::update()
     filterName->setInterceptsMouseClicks(false, false);
   
   
-    if(name != "Audio Input" && name != "Audio Output" && name != "Midi Input" && name != "Midi Output")
+    if(!InternalPluginFormat::isInternalFormat(name))
     {
       addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (f->getProcessor()));
       w = jmax (w, editor->getWidth() + 20 );
@@ -384,6 +396,14 @@ void FilterComponent::update()
 GraphEditor* FilterComponent::getGraphPanel() const noexcept
 {
   return findParentComponentOfClass<GraphEditor>();
+}
+
+void FilterComponent::changeListenerCallback (ChangeBroadcaster* source)
+{
+  if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
+  {    
+    audioEngine.getDoc().setFilterColour(filterID, cs->getCurrentColour());
+  }
 }
 
 #pragma mark -
