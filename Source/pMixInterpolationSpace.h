@@ -25,9 +25,9 @@ public:
   PMixAudioEngine& audioEngine;
   const uint32 filterID;
   const uint32 presetIdx;
-  
+  Colour colour;
 public:
-  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx);
+  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx, Colour colour);
   ~InterpolationSpacePreset ();
   void resized ();
   void mouseDown (const MouseEvent& e);
@@ -58,7 +58,7 @@ public:
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
   SelectedItemSet <Component*>& getLassoSelection();
   
-  void changeListenerCallback (ChangeBroadcaster*);
+  void changeListenerCallback (ChangeBroadcaster* source);
 };
 
 #endif //_INTERPOLATIONSPACE_H_ 

@@ -75,7 +75,7 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
       node->properties.set ("y", y);
       node->properties.set ("uiLastX", 0);
       node->properties.set ("uiLastY", 0);
-      
+      node->properties.set ("colour", Colours::red.toString());
       Array<var> presets;
       node->properties.set("presets", presets);
       changed();
@@ -259,7 +259,7 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   e->setAttribute ("y", node->properties ["y"].toString());
   e->setAttribute ("uiLastX", node->properties ["uiLastX"].toString());
   e->setAttribute ("uiLastY", node->properties ["uiLastY"].toString());
-  //e->setAttribute("colour", node->properties ["colour"].to
+  e->setAttribute("colour", node->properties ["colour"].toString());
                   
   PluginDescription pd;
   plugin->fillInPluginDescription (pd);
@@ -326,7 +326,8 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   node->properties.set ("y", xml.getDoubleAttribute ("y"));
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
-  
+  node->properties.set ("colour", xml.getStringAttribute ("colour"));
+
   if(!InternalPluginFormat::isInternalFormat(pd.name))
   {
     if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
@@ -378,7 +379,8 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSou
   node->properties.set ("y", xml.getDoubleAttribute ("y"));
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
-  
+  node->properties.set ("colour", xml.getStringAttribute ("colour"));
+
   if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
   {
     var vpresets = JSON::parse(presets->getAllSubText());
@@ -589,5 +591,30 @@ void PMixDocument::getPresetPosition (const int nodeId, const int presetIdx, dou
     x = (double) obj->getProperty("x");
     y = (double) obj->getProperty("y");
   }
+}
+
+void PMixDocument::setFilterColour(const int nodeId, const Colour colour)
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+
+  if (node != nullptr)
+  {
+    node->properties.set("colour", colour.toString());
+    changed();
+  }
+}
+
+Colour PMixDocument::getFilterColour(const int nodeId) const
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+
+  Colour clr;
+  
+  if (node != nullptr)
+  {
+    clr = Colour::fromString(node->properties ["colour"].toString());
+  }
+  
+  return clr;
 }
 

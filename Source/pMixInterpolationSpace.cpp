@@ -12,10 +12,11 @@ InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
   setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 }
 
-InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx)
+InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx, Colour colour)
 : audioEngine(audioEngine)
 , filterID(filterID)
 , presetIdx(presetIdx)
+, colour(colour)
 {
   addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));
 }
@@ -57,7 +58,8 @@ void InterpolationSpacePreset::paint (Graphics& g)
   if (dynamic_cast<InterpolationSpaceComponent*>(getParentComponent())->getLassoSelection().isSelected(this))
     g.setColour(Colours::black);
   else
-    g.setColour(Colours::red);
+    g.setColour(colour);
+  
   g.fillEllipse (0, 0, getWidth(), getHeight());
 }
 
@@ -148,7 +150,7 @@ void InterpolationSpaceComponent::updateComponents()
         DynamicObject* obj = presets->getReference(p).getDynamicObject();
 
         String label = obj->getProperty("name");
-        InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeId, p);
+        InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeId, p, audioEngine.getDoc().getFilterColour(f->nodeId)  );
         String componentID;
         componentID << "p." << (int) f->nodeId << "." << p;
         comp->setComponentID(componentID);
