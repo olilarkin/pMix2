@@ -75,9 +75,16 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
       node->properties.set ("y", y);
       node->properties.set ("uiLastX", 0);
       node->properties.set ("uiLastY", 0);
-      node->properties.set ("colour", Colours::red.toString());
-      Array<var> presets;
-      node->properties.set("presets", presets);
+      
+      if (!InternalPluginFormat::isInternalFormat(desc->name))
+      {
+        node->properties.set ("colour", defaultColours.getNextColour().toString());
+        Array<var> presets;
+        node->properties.set("presets", presets);
+        Array<var> params;
+        node->properties.set("params", params);
+      }
+
       changed();
     }
     else
@@ -259,11 +266,15 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   e->setAttribute ("y", node->properties ["y"].toString());
   e->setAttribute ("uiLastX", node->properties ["uiLastX"].toString());
   e->setAttribute ("uiLastY", node->properties ["uiLastY"].toString());
-  e->setAttribute("colour", node->properties ["colour"].toString());
-                  
+  
   PluginDescription pd;
   plugin->fillInPluginDescription (pd);
-
+  
+  if(!InternalPluginFormat::isInternalFormat(pd.name))
+  {
+    e->setAttribute("colour", node->properties ["colour"].toString());
+  }
+  
   e->addChildElement (pd.createXml());
 
   XmlElement* state = new XmlElement ("STATE");
@@ -275,6 +286,10 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   
   if(!InternalPluginFormat::isInternalFormat(pd.name))
   {
+    XmlElement* params = new XmlElement ("PARAMS");
+    params->addTextElement (JSON::toString(node->properties ["params"], false));
+    e->addChildElement(params);
+    
     XmlElement* presets = new XmlElement ("PRESETS");
     presets->addTextElement (JSON::toString(node->properties ["presets"], false));
     e->addChildElement(presets);
@@ -381,6 +396,12 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSou
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
   node->properties.set ("colour", xml.getStringAttribute ("colour"));
 
+  if (const XmlElement* const presets = xml.getChildByName ("PARAMS"))
+  {
+    var vpresets = JSON::parse(presets->getAllSubText());
+    node->properties.set ("params", vpresets);
+  }
+  
   if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
   {
     var vpresets = JSON::parse(presets->getAllSubText());
@@ -608,7 +629,7 @@ Colour PMixDocument::getFilterColour(const int nodeId) const
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
 
-  Colour clr;
+  Colour clr = Colours::red;
   
   if (node != nullptr)
   {

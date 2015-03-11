@@ -111,6 +111,8 @@
         <FILE id="NgTWTW" name="pMixApp.cpp" compile="1" resource="0" file="Source/pMixApp.cpp"/>
         <FILE id="QyuONq" name="pMixApp.h" compile="0" resource="0" file="Source/pMixApp.h"/>
       </GROUP>
+      <FILE id="hlYhw1" name="pMixDefaultColours.h" compile="0" resource="0"
+            file="Source/pMixDefaultColours.h"/>
       <FILE id="zVO2XV" name="pMixCommandIDs.h" compile="0" resource="0"
             file="Source/pMixCommandIDs.h"/>
       <FILE id="iyOFme" name="pMixLookAndFeel.cpp" compile="1" resource="0"

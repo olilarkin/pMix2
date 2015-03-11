@@ -2,6 +2,7 @@
 #define __PMixDocument_JUCEHEADER__
 
 #include "JuceHeader.h"
+#include "pMixDefaultColours.h"
 
 #if JUCE_MAC
 //#include "bench-llvm.cpp"
@@ -95,6 +96,7 @@ private:
   int snapGridPixels;
   bool snapActive, snapShown;
   float componentOverlayOpacity;
+  PMixDefaultColours defaultColours;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixDocument)
 };

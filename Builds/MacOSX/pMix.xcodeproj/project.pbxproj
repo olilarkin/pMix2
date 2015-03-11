@@ -275,6 +275,7 @@
 		3A46FAC787121B623EF66765 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_ThreadPool.h"; path = "../../../../juce/modules/juce_core/threads/juce_ThreadPool.h"; sourceTree = "SOURCE_ROOT"; };
 		3ADEC129EF88CB4B13E74EC5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_LookAndFeel_V3.h"; path = "../../../../juce/modules/juce_gui_basics/lookandfeel/juce_LookAndFeel_V3.h"; sourceTree = "SOURCE_ROOT"; };
 		3B6EFA6B10FE0789B410083A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixPrefsColours.cpp; path = ../../Source/pMixPrefsColours.cpp; sourceTree = "SOURCE_ROOT"; };
+		3B766648AAE8D20A0A50E6F8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixDefaultColours.h; path = ../../Source/pMixDefaultColours.h; sourceTree = "SOURCE_ROOT"; };
 		3BBA6549673738449830CB1D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_LookAndFeel_V3.cpp"; path = "../../../../juce/modules/juce_gui_basics/lookandfeel/juce_LookAndFeel_V3.cpp"; sourceTree = "SOURCE_ROOT"; };
 		3BEA5CCC6CA23FA0A566898F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_TopLevelWindow.cpp"; path = "../../../../juce/modules/juce_gui_basics/windows/juce_TopLevelWindow.cpp"; sourceTree = "SOURCE_ROOT"; };
 		3C8AED8AEE54EE8A4FB7488B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixPrefsComponent.cpp; path = ../../Source/pMixPrefsComponent.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -1071,6 +1072,7 @@
 					E04ACCC076B25011B1D4BE22,
 					8A7DEE071FBF5A8C9059745F,
 					A69AE2C021AB8DF544E2ADC7,
+					3B766648AAE8D20A0A50E6F8,
 					B8A868E258ADCCE8820DACF6,
 					5416B84E32E0C294BC04E028,
 					E4D917F2FECF9B9E4F76F2F9,
