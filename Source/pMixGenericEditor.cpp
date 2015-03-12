@@ -10,9 +10,11 @@
 #include "pMixGenericEditor.h"
 
 
-PMixParamSlider::PMixParamSlider (AudioProcessor& p, int paramIndex)
-: owner (p)
-, index (paramIndex)
+PMixParamSlider::PMixParamSlider (PMixAudioEngine &audioEngine, AudioProcessor& p, int paramIdx, uint32 filterID)
+: audioEngine(audioEngine)
+, owner (p)
+, index (paramIdx)
+, filterID(filterID)
 {
   const int steps = owner.getParameterNumSteps (index);
   
@@ -24,8 +26,8 @@ PMixParamSlider::PMixParamSlider (AudioProcessor& p, int paramIndex)
   setSliderStyle (Slider::LinearHorizontal);
   setTextBoxStyle (Slider::NoTextBox, false, 0, 0);
   //setTextBoxIsEditable (true);
-  setPopupMenuEnabled(true);
-  setScrollWheelEnabled (true);
+  //setPopupMenuEnabled(true);
+  setScrollWheelEnabled (false);
 }
 
 void PMixParamSlider::valueChanged()
@@ -44,12 +46,25 @@ String PMixParamSlider::getTextFromValue (double value)
   return owner.getParameterText (index) + " " + owner.getParameterLabel (index).trimEnd();
 }
 
-PMixProcessorParameterPropertyComp::PMixProcessorParameterPropertyComp (const String& name, AudioProcessor& p, int paramIndex)
+Colour PMixParamSlider::getSliderColour()
+{
+  Colour sliderColour;
+  if (audioEngine.getDoc().getParameterIsInterpolated(filterID, index))
+    sliderColour = audioEngine.getDoc().getFilterColour(filterID);
+  else
+    sliderColour = findColour (Slider::thumbColourId);
+  
+  return sliderColour;
+}
+
+PMixProcessorParameterPropertyComp::PMixProcessorParameterPropertyComp (PMixAudioEngine &audioEngine, const String& name, AudioProcessor& p, int paramIdx, uint32 filterID)
 : PropertyComponent (name)
+, audioEngine(audioEngine)
 , owner (p)
-, index (paramIndex)
+, index (paramIdx)
 , paramHasChanged (false)
-, slider (p, paramIndex)
+, slider (audioEngine, p, paramIdx, filterID)
+, filterID(filterID)
 {
   startTimer (100);
   setPreferredHeight(16);
@@ -73,7 +88,7 @@ void PMixProcessorParameterPropertyComp::refresh()
   slider.updateText();
 }
 
-void PMixProcessorParameterPropertyComp::audioProcessorParameterChanged (AudioProcessor*, int parameterIndex, float)
+void PMixProcessorParameterPropertyComp::audioProcessorParameterChanged (AudioProcessor* p, int parameterIndex, float newValue)
 {
   if (parameterIndex == index)
     paramHasChanged = true;
@@ -92,8 +107,37 @@ void PMixProcessorParameterPropertyComp::timerCallback()
   }
 }
 
-PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (AudioProcessor* const p)
+void PMixProcessorParameterPropertyComp::mouseDown (const MouseEvent& e)
+{
+  bool isInterpolated = audioEngine.getDoc().getParameterIsInterpolated(filterID, index);
+  
+  if (e.mods.isPopupMenu())
+  {
+    PopupMenu m;
+
+    if (isInterpolated)
+      m.addItem (1, "Don't Interpolate Parameter");
+    else
+      m.addItem (1, "Interpolate Parameter");
+    
+    const int r = m.show();
+    
+    if (r == 1)
+    {
+      audioEngine.getDoc().setParameterToInterpolate(filterID, index, !isInterpolated);
+      repaint();
+    }
+  }
+  else if(e.mods.isShiftDown())
+  {
+    audioEngine.getDoc().setParameterToInterpolate(filterID, index, !isInterpolated);
+    repaint();
+  }
+}
+
+PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (PMixAudioEngine &audioEngine, AudioProcessor* const p, uint32 filterID)
 : AudioProcessorEditor (p)
+, audioEngine(audioEngine)
 {
   jassert (p != nullptr);
   //setOpaque (true);
@@ -111,7 +155,7 @@ PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (AudioProcessor
     if (name.trim().isEmpty())
       name = "Unnamed";
     
-    PMixProcessorParameterPropertyComp* const pc = new PMixProcessorParameterPropertyComp (name, *p, i);
+    PMixProcessorParameterPropertyComp* const pc = new PMixProcessorParameterPropertyComp (audioEngine, name, *p, i, filterID);
     params.add (pc);
     totalHeight += pc->getPreferredHeight();
   }

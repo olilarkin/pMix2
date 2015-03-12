@@ -40,6 +40,9 @@ public:
   void removeFilter (const uint32 filterUID);
   void disconnectFilter (const uint32 filterUID);
   
+  bool getParameterIsInterpolated(const int nodeId, const int paramIdx);
+  void setParameterToInterpolate(const int nodeId, const int paramIdx, bool interpolate);
+
   void removeIllegalConnections();
   void setNodePosition (const int nodeId, double x, double y);
   void getNodePosition (const int nodeId, double& x, double& y) const;

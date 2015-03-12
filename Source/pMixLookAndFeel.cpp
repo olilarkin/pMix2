@@ -1,4 +1,36 @@
 #include "pMixLookAndFeel.h"
+#include "pMixGenericEditor.h"
+
+namespace LookAndFeelHelpers
+{
+  static Colour createBaseColour (Colour buttonColour,
+                                  bool hasKeyboardFocus,
+                                  bool isMouseOverButton,
+                                  bool isButtonDown) noexcept
+  {
+    const float sat = hasKeyboardFocus ? 1.3f : 0.9f;
+    const Colour baseColour (buttonColour.withMultipliedSaturation (sat));
+    
+    if (isButtonDown)      return baseColour.contrasting (0.2f);
+      if (isMouseOverButton) return baseColour.contrasting (0.1f);
+        
+        return baseColour;
+  }
+  
+  static TextLayout layoutTooltipText (const String& text, Colour colour) noexcept
+  {
+    const float tooltipFontSize = 13.0f;
+    const int maxToolTipWidth = 400;
+    
+    AttributedString s;
+    s.setJustification (Justification::centred);
+    s.append (text, Font (tooltipFontSize, Font::bold), colour);
+    
+    TextLayout tl;
+    tl.createLayoutWithBalancedLineLengths (s, (float) maxToolTipWidth);
+    return tl;
+  }
+}
 
 pMixLookAndFeel::pMixLookAndFeel() {};
 
@@ -58,42 +90,53 @@ void pMixLookAndFeel::drawLinearSliderBackground (Graphics& g, int x, int y, int
   //g.strokePath (indent, PathStrokeType (0.5f));
 }
 
-//void pMixLookAndFeel::drawLinearSliderThumb (Graphics& g, int x, int y, int width, int height,
-//                                            float sliderPos, float minSliderPos, float maxSliderPos,
-//                                            const Slider::SliderStyle style, Slider& slider)
-//{
-//  const float sliderRadius = (float) (getSliderThumbRadius (slider) - 2);
-//  
-////  Colour knobColour (LookAndFeelHelpers::createBaseColour (slider.findColour (Slider::thumbColourId),
-////                                                           slider.hasKeyboardFocus (false) && slider.isEnabled(),
-////                                                           slider.isMouseOverOrDragging() && slider.isEnabled(),
-////                                                           slider.isMouseButtonDown() && slider.isEnabled()));
-//  
-//  Colour knobColour = Colours::red;
-//  
-//  const float outlineThickness = slider.isEnabled() ? 0.8f : 0.3f;
-//  
-//  if (style == Slider::LinearHorizontal || style == Slider::LinearVertical)
-//  {
-//    float kx, ky;
-//    
-//    if (style == Slider::LinearVertical)
-//    {
-//      kx = x + width * 0.5f;
-//      ky = sliderPos;
-//    }
-//    else
-//    {
-//      kx = sliderPos;
-//      ky = y + height * 0.5f;
-//    }
-//    
-//    drawGlassSphere (g,
-//                     kx - sliderRadius,
-//                     ky - sliderRadius,
-//                     sliderRadius * 2.0f,
-//                     knobColour, outlineThickness);
-//  }
+void pMixLookAndFeel::drawLinearSliderThumb (Graphics& g, int x, int y, int width, int height,
+                                            float sliderPos, float minSliderPos, float maxSliderPos,
+                                            const Slider::SliderStyle style, Slider& slider)
+{
+  const float sliderRadius = (float) (getSliderThumbRadius (slider) - 2);
+  
+  PMixParamSlider * pmixslider = dynamic_cast<PMixParamSlider*>(&slider);
+  Colour knobColour;
+  
+  if (pmixslider)
+  {
+    knobColour = (LookAndFeelHelpers::createBaseColour (pmixslider->getSliderColour(),
+                                                        slider.hasKeyboardFocus (false) && slider.isEnabled(),
+                                                        slider.isMouseOverOrDragging() && slider.isEnabled(),
+                                                        slider.isMouseButtonDown() && slider.isEnabled()));  }
+  else
+  {
+    knobColour = (LookAndFeelHelpers::createBaseColour (slider.findColour (Slider::thumbColourId),
+                                                             slider.hasKeyboardFocus (false) && slider.isEnabled(),
+                                                             slider.isMouseOverOrDragging() && slider.isEnabled(),
+                                                             slider.isMouseButtonDown() && slider.isEnabled()));
+    
+  }
+  
+  const float outlineThickness = slider.isEnabled() ? 0.8f : 0.3f;
+  
+  if (style == Slider::LinearHorizontal || style == Slider::LinearVertical)
+  {
+    float kx, ky;
+    
+    if (style == Slider::LinearVertical)
+    {
+      kx = x + width * 0.5f;
+      ky = sliderPos;
+    }
+    else
+    {
+      kx = sliderPos;
+      ky = y + height * 0.5f;
+    }
+    
+    drawGlassSphere (g,
+                     kx - sliderRadius,
+                     ky - sliderRadius,
+                     sliderRadius * 2.0f,
+                     knobColour, outlineThickness);
+  }
 //  else
 //  {
 //    if (style == Slider::ThreeValueVertical)
@@ -135,7 +178,7 @@ void pMixLookAndFeel::drawLinearSliderBackground (Graphics& g, int x, int y, int
 //                        sliderRadius * 2.0f, knobColour, outlineThickness, 4);
 //    }
 //  }
-//}
+}
 
 void pMixLookAndFeel::drawLasso (Graphics& g, Component& lassoComp)
 {

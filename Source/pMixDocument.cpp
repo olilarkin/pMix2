@@ -645,3 +645,35 @@ Colour PMixDocument::getFilterColour(const int nodeId) const
   return clr;
 }
 
+void PMixDocument::setParameterToInterpolate(const int nodeId, const int paramIdx, bool interpolate)
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (node != nullptr)
+  {
+    Array<var>* params = node->properties.getVarPointer("params")->getArray();
+    
+    if (interpolate)
+    {
+      params->addIfNotAlreadyThere(paramIdx);
+    }
+    else
+    {
+      params->removeAllInstancesOf(paramIdx);
+    }
+  }
+}
+
+bool PMixDocument::getParameterIsInterpolated(const int nodeId, const int paramIdx)
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (node != nullptr)
+  {
+    Array<var>* params = node->properties.getVarPointer("params")->getArray();
+    
+    return params->contains(paramIdx);
+  }
+  
+  return false;
+}
