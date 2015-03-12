@@ -51,6 +51,8 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/pMixInterpolationSpaceLayout_cb9ddbe1.o \
+  $(OBJDIR)/pMixInterpolationSpaceCrosshairs_d34850c8.o \
   $(OBJDIR)/pMixInterpolationSpaceActions_92513270.o \
   $(OBJDIR)/pMixInterpolationSpace_b9dffb17.o \
   $(OBJDIR)/pMixGraphEditor_f95221f0.o \
@@ -111,6 +113,16 @@ clean:
 strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/pMixInterpolationSpaceLayout_cb9ddbe1.o: ../../Source/pMixInterpolationSpaceLayout.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixInterpolationSpaceLayout.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixInterpolationSpaceCrosshairs_d34850c8.o: ../../Source/pMixInterpolationSpaceCrosshairs.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixInterpolationSpaceCrosshairs.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixInterpolationSpaceActions_92513270.o: ../../Source/pMixInterpolationSpaceActions.cpp
 	-@mkdir -p $(OBJDIR)
