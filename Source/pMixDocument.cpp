@@ -73,8 +73,8 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
     {
       node->properties.set ("x", x);
       node->properties.set ("y", y);
-      node->properties.set ("uiLastX", 0);
-      node->properties.set ("uiLastY", 0);
+      node->properties.set ("uiLastX", Random::getSystemRandom().nextInt (500));
+      node->properties.set ("uiLastY", Random::getSystemRandom().nextInt (500));
       
       if (!InternalPluginFormat::isInternalFormat(desc->name))
       {
