@@ -345,6 +345,12 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
 
   if(!InternalPluginFormat::isInternalFormat(pd.name))
   {
+    if (const XmlElement* const params = xml.getChildByName ("PARAMS"))
+    {
+      var vparams = JSON::parse(params->getAllSubText());
+      node->properties.set ("params", vparams);
+    }
+    
     if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
     {
       var vpresets = JSON::parse(presets->getAllSubText());
@@ -396,10 +402,10 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSou
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
   node->properties.set ("colour", xml.getStringAttribute ("colour"));
 
-  if (const XmlElement* const presets = xml.getChildByName ("PARAMS"))
+  if (const XmlElement* const params = xml.getChildByName ("PARAMS"))
   {
-    var vpresets = JSON::parse(presets->getAllSubText());
-    node->properties.set ("params", vpresets);
+    var vparams = JSON::parse(params->getAllSubText());
+    node->properties.set ("params", vparams);
   }
   
   if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
