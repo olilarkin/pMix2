@@ -135,8 +135,10 @@ void FilterComponent::mouseDown (const MouseEvent& e)
       {
         m.addItem (3, "Add a pMix Preset");
         m.addItem (4, "Set pMix Colour");
+        m.addItem (5, "Interpolate all Parameters");
+        m.addItem (6, "Clear all Parameters");
         m.addSeparator();
-        m.addItem (5, "Show plugin UI");
+        m.addItem (7, "Show plugin UI");
       }
     }
     
@@ -177,6 +179,19 @@ void FilterComponent::mouseDown (const MouseEvent& e)
       colourSelector->setSize (300, 400);
       
       CallOutBox::launchAsynchronously (colourSelector, getScreenBounds(), nullptr);
+    }
+    else if (r == 5 || r == 6)
+    {
+      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
+
+      {
+        for (int p=0; p < f->getProcessor()->getNumParameters(); p++)
+        {
+          audioEngine.getDoc().setParameterToInterpolate(filterID, p, r==5);
+        }
+        
+        repaint();
+      }
     }
     else
     {
