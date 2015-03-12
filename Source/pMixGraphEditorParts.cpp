@@ -317,7 +317,7 @@ void FilterComponent::resized()
     filterName->setBounds(0, pinSize, getWidth(), 20);
   
   if (editor != nullptr)
-    editor->setBounds(10, pinSize + filterName->getHeight(), getWidth()-20, getHeight() - pinSize - filterName->getHeight());
+    editor->setBounds(10, pinSize + filterName->getHeight(), getWidth()-20, getHeight() - pinSize - pinSize - 10 - filterName->getHeight());
 }
 
 void FilterComponent::getPinPos (const int index, const bool isInput, float& x, float& y)
@@ -378,9 +378,14 @@ void FilterComponent::update()
   
     if(!InternalPluginFormat::isInternalFormat(name))
     {
-      addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (f->getProcessor()));
+      addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (audioEngine, f->getProcessor(), f->nodeId));
       w = jmax (w, editor->getWidth() + 20 );
-      h += editor->getContentHeight() + 10;
+      
+      if (editor->getContentHeight() > 300) {
+        editor->setSize(editor->getWidth(), 100);
+      }
+      
+      h += jmin (320, editor->getContentHeight() + 20);
     }
     
     setSize (w, h);
@@ -418,6 +423,7 @@ void FilterComponent::changeListenerCallback (ChangeBroadcaster* source)
   if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
   {    
     audioEngine.getDoc().setFilterColour(filterID, cs->getCurrentColour());
+    editor->repaint();
   }
 }
 
