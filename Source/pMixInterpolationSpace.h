@@ -36,9 +36,9 @@ public:
   void paint (Graphics& g);
 };
 
-class InterpolationSpaceComponent  : public Component
-                                   , public LassoSource<Component*>
-                                   , public ChangeListener
+class InterpolationSpace : public Component
+                         , public LassoSource<Component*>
+                         , public ChangeListener
 {
 private:
   //TooltipWindow tooltipWindow;
@@ -48,8 +48,8 @@ private:
   void updateComponents();
 
 public:
-  InterpolationSpaceComponent (PMixAudioEngine& audioEngine);
-  ~InterpolationSpaceComponent ();
+  InterpolationSpace (PMixAudioEngine& audioEngine);
+  ~InterpolationSpace ();
   void resized ();
   void paint (Graphics& g);
   void mouseDown (const MouseEvent& e);

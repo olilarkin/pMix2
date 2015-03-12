@@ -37,7 +37,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
   myDragger.startDraggingComponent (this, e);
   toFront (true);
   startBounds = getBounds();
-  dynamic_cast<InterpolationSpaceComponent*>(getParentComponent())->getLassoSelection().selectOnly(this);
+  dynamic_cast<InterpolationSpace*>(getParentComponent())->getLassoSelection().selectOnly(this);
 }
 
 void InterpolationSpacePreset::mouseDrag (const MouseEvent& e)
@@ -50,12 +50,12 @@ void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
   endBounds = getBounds();
   
   audioEngine.getDoc().beginTransaction();
-  audioEngine.getDoc().perform(new MovePresetAction(dynamic_cast<InterpolationSpaceComponent*>(getParentComponent()), getComponentID(), startBounds, endBounds), "change preset bounds");
+  audioEngine.getDoc().perform(new MovePresetAction(dynamic_cast<InterpolationSpace*>(getParentComponent()), getComponentID(), startBounds, endBounds), "change preset bounds");
 }
 
 void InterpolationSpacePreset::paint (Graphics& g)
 {
-  if (dynamic_cast<InterpolationSpaceComponent*>(getParentComponent())->getLassoSelection().isSelected(this))
+  if (dynamic_cast<InterpolationSpace*>(getParentComponent())->getLassoSelection().isSelected(this))
     g.setColour(Colours::black);
   else
     g.setColour(colour);
@@ -63,50 +63,50 @@ void InterpolationSpacePreset::paint (Graphics& g)
   g.fillEllipse (0, 0, getWidth(), getHeight());
 }
 
-InterpolationSpaceComponent::InterpolationSpaceComponent (PMixAudioEngine& audioEngine)
+InterpolationSpace::InterpolationSpace (PMixAudioEngine& audioEngine)
 : audioEngine(audioEngine)
 {
   audioEngine.getDoc().addChangeListener (this);
   selectedItems.addChangeListener(this);
 }
 
-InterpolationSpaceComponent::~InterpolationSpaceComponent ()
+InterpolationSpace::~InterpolationSpace ()
 {
   audioEngine.getDoc().removeChangeListener(this);
   selectedItems.removeChangeListener(this);
   deleteAllChildren();
 }
 
-void InterpolationSpaceComponent::resized ()
+void InterpolationSpace::resized ()
 {
 }
 
-void InterpolationSpaceComponent::paint (Graphics& g)
+void InterpolationSpace::paint (Graphics& g)
 {
   g.fillAll (Colours::white);
 }
 
-void InterpolationSpaceComponent::mouseDown (const MouseEvent& e)
+void InterpolationSpace::mouseDown (const MouseEvent& e)
 {
   selectedItems.deselectAll();
   addChildComponent (lassoComp);
   lassoComp.beginLasso (e, this);
 }
 
-void InterpolationSpaceComponent::mouseDrag (const MouseEvent& e)
+void InterpolationSpace::mouseDrag (const MouseEvent& e)
 {
   lassoComp.toFront (false);
   lassoComp.dragLasso (e);
 }
 
-void InterpolationSpaceComponent::mouseUp (const MouseEvent& e)
+void InterpolationSpace::mouseUp (const MouseEvent& e)
 {
   lassoComp.endLasso();
   removeChildComponent (&lassoComp);
 }
 
 //LassoSource
-void InterpolationSpaceComponent::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
+void InterpolationSpace::findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area)
 {  
   for (int i = 0; i < this->getNumChildComponents(); ++i)
   {
@@ -117,12 +117,12 @@ void InterpolationSpaceComponent::findLassoItemsInArea (Array <Component*>& resu
   }
 }
 
-SelectedItemSet <Component*>& InterpolationSpaceComponent::getLassoSelection()
+SelectedItemSet <Component*>& InterpolationSpace::getLassoSelection()
 {
   return selectedItems;
 }
 
-void InterpolationSpaceComponent::changeListenerCallback (ChangeBroadcaster* source)
+void InterpolationSpace::changeListenerCallback (ChangeBroadcaster* source)
 {
   if (source == &selectedItems)
   {
@@ -133,7 +133,7 @@ void InterpolationSpaceComponent::changeListenerCallback (ChangeBroadcaster* sou
   repaint();
 }
 
-void InterpolationSpaceComponent::updateComponents()
+void InterpolationSpace::updateComponents()
 {
   deleteAllChildren();
   

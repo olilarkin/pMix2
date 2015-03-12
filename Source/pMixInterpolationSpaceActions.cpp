@@ -10,7 +10,7 @@
 #include "pMixInterpolationSpaceActions.h"
 #include "pMixInterpolationSpace.h"
 
-MovePresetAction::MovePresetAction (InterpolationSpaceComponent* interpolationSpace, const String& componentID, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept
+MovePresetAction::MovePresetAction (InterpolationSpace* interpolationSpace, const String& componentID, Rectangle<int> startBounds, Rectangle<int> endBounds) noexcept
 : interpolationSpace(interpolationSpace)
 , componentID(componentID)
 , startBounds(startBounds)

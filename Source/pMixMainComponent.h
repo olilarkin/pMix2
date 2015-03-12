@@ -38,7 +38,7 @@ private:
   ScopedPointer<CodeEditor> codeEditor;
   ScopedPointer<GraphEditor> graphEditor;
   ScopedPointer<FileBrowser> fileBrowser;
-  ScopedPointer<InterpolationSpaceComponent> interpolationSpace;
+  ScopedPointer<InterpolationSpace> interpolationSpace;
   ScopedPointer<ParamView> paramView;
   StretchableLayoutManager horizontalLayout;
   ScopedPointer<StretchableLayoutResizerBar> horizontalDividerBar;
