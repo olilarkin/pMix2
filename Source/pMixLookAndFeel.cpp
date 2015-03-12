@@ -57,6 +57,8 @@ void pMixLookAndFeel::drawLinearSliderBackground (Graphics& g, int x, int y, int
   const float sliderRadius = (float) (getSliderThumbRadius (slider) - 3);
   
   const Colour trackColour (slider.findColour (Slider::trackColourId));
+  //const Colour trackColour = Colours::darkgrey;
+
   const Colour gradCol1 (trackColour.overlaidWith (Colour (slider.isEnabled() ? 0x13000000 : 0x09000000)));
   const Colour gradCol2 (trackColour.overlaidWith (Colour (0x06000000)));
   //Path indent;
@@ -114,7 +116,7 @@ void pMixLookAndFeel::drawLinearSliderThumb (Graphics& g, int x, int y, int widt
     
   }
   
-  const float outlineThickness = slider.isEnabled() ? 0.8f : 0.3f;
+  //const float outlineThickness = slider.isEnabled() ? 0.8f : 0.3f;
   
   if (style == Slider::LinearHorizontal || style == Slider::LinearVertical)
   {
@@ -131,11 +133,18 @@ void pMixLookAndFeel::drawLinearSliderThumb (Graphics& g, int x, int y, int widt
       ky = y + height * 0.5f;
     }
     
-    drawGlassSphere (g,
-                     kx - sliderRadius,
-                     ky - sliderRadius,
-                     sliderRadius * 2.0f,
-                     knobColour, outlineThickness);
+    Path p;
+    p.addEllipse (kx - sliderRadius, ky - sliderRadius, sliderRadius * 2.0f, sliderRadius * 2.0f);
+    g.setColour(knobColour);
+    g.fillPath (p);
+    
+    g.setColour(Colours::darkgrey);
+    g.drawEllipse(kx - sliderRadius, ky - sliderRadius, sliderRadius * 2.0f, sliderRadius * 2.0f, 1.f);
+//    drawGlassSphere (g,
+//                     kx - sliderRadius,
+//                     ky - sliderRadius,
+//                     sliderRadius * 2.0f,
+//                     knobColour, outlineThickness);
   }
 //  else
 //  {
