@@ -1,3 +1,13 @@
+/*
+  ==============================================================================
+
+    pMixGraphEditor.cpp
+    based on JUCE demo host
+    Author:  Oliver Larkin
+
+  ==============================================================================
+*/
+
 #include "pMixGraphEditor.h"
 #include "pMixCommandIDs.h"
 #include "pMixGraphEditorActions.h"

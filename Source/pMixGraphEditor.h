@@ -1,3 +1,13 @@
+/*
+  ==============================================================================
+
+    pMixGraphEditor.h
+    based on JUCE demo host
+    Author:  Oliver Larkin
+
+  ==============================================================================
+*/
+
 #ifndef __GRAPHEDITOR_JUCEHEADER__
 #define __GRAPHEDITOR_JUCEHEADER__
 
