@@ -20,7 +20,7 @@ type (t)
 {
   setSize (400, 300);
   setUsingNativeTitleBar(true);
-  //setAlwaysOnTop(true);
+  setAlwaysOnTop(true);
   //setDropShadowEnabled(false);
   setContentOwned (pluginEditor, true);
 
