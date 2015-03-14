@@ -95,13 +95,6 @@
               file="../Source/pMixCodeEditor.cpp"/>
         <FILE id="y3b3r7" name="pMixCodeEditor.h" compile="0" resource="0"
               file="../Source/pMixCodeEditor.h"/>
-        <FILE id="PfWPnc" name="pMixParamTreeView.cpp" compile="1" resource="0"
-              file="../Source/pMixParamTreeView.cpp"/>
-        <FILE id="Jx4boH" name="pMixParamTreeView.h" compile="0" resource="0"
-              file="../Source/pMixParamTreeView.h"/>
-        <FILE id="bemJub" name="pMixParamView.cpp" compile="1" resource="0"
-              file="../Source/pMixParamView.cpp"/>
-        <FILE id="L7Qf43" name="pMixParamView.h" compile="0" resource="0" file="../Source/pMixParamView.h"/>
       </GROUP>
       <GROUP id="{73074A0B-8FC5-C225-CA50-71BB74C20300}" name="Faust">
         <FILE id="RtOzhU" name="FaustCodeTokenizer.cpp" compile="1" resource="0"

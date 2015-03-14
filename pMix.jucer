@@ -79,13 +79,6 @@
               file="Source/pMixFileBrowser.h"/>
         <FILE id="soLZcp" name="pMixConsole.cpp" compile="1" resource="0" file="Source/pMixConsole.cpp"/>
         <FILE id="kStY07" name="pMixConsole.h" compile="0" resource="0" file="Source/pMixConsole.h"/>
-        <FILE id="qqMSEw" name="pMixParamView.cpp" compile="1" resource="0"
-              file="Source/pMixParamView.cpp"/>
-        <FILE id="gxpRcI" name="pMixParamView.h" compile="0" resource="0" file="Source/pMixParamView.h"/>
-        <FILE id="Y9eWD4" name="pMixParamTreeView.h" compile="0" resource="0"
-              file="Source/pMixParamTreeView.h"/>
-        <FILE id="NRahlO" name="pMixParamTreeView.cpp" compile="1" resource="0"
-              file="Source/pMixParamTreeView.cpp"/>
         <FILE id="pum3bZ" name="pMixGenericEditor.cpp" compile="1" resource="0"
               file="Source/pMixGenericEditor.cpp"/>
         <FILE id="wQ5qtB" name="pMixGenericEditor.h" compile="0" resource="0"

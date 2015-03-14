@@ -15,11 +15,11 @@
 #include "pMixGraphEditor.h"
 #include "pMixCodeEditor.h"
 #include "pMixLookAndFeel.h"
-#include "pMixFileBrowser.h"
+//#include "pMixFileBrowser.h"
 #include "pMixConsole.h"
 #include "pMixLogger.h"
-#include "pMixParamTreeView.h"
-#include "pMixParamView.h"
+//#include "pMixParamTreeView.h"
+//#include "pMixParamView.h"
 
 class MainComponent  : public Component
 {
@@ -37,13 +37,13 @@ private:
   
   ScopedPointer<CodeEditor> codeEditor;
   ScopedPointer<GraphEditor> graphEditor;
-  ScopedPointer<FileBrowser> fileBrowser;
+//  ScopedPointer<FileBrowser> fileBrowser;
   ScopedPointer<InterpolationSpace> interpolationSpace;
-  ScopedPointer<ParamView> paramView;
   StretchableLayoutManager horizontalLayout;
   ScopedPointer<StretchableLayoutResizerBar> horizontalDividerBar;
-  ScopedPointer<ParamTreeView> paramTreeView;
-  
+//  ScopedPointer<ParamTreeView> paramTreeView;
+//  ScopedPointer<ParamView> paramView;
+
   PMixLogger logger;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

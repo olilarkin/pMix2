@@ -29,8 +29,11 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
 
   addAndMakeVisible(interpolationSpace = new InterpolationSpace(audioEngine));
 
-  addAndMakeVisible( fileBrowser = new FileBrowser());
+//  addAndMakeVisible( fileBrowser = new FileBrowser());
   addAndMakeVisible( codeEditor = new CodeEditor(audioEngine, *graphEditor) );
+  
+  logger.addChangeListener(codeEditor->console);
+
   graphEditor->addChangeListener(codeEditor);
   
   graphEditor->updateComponents();
@@ -41,14 +44,15 @@ MainComponent::~MainComponent()
   LookAndFeel::setDefaultLookAndFeel (nullptr);
 
   //graphEditor->removeAllChangeListeners();
-  //Logger::setCurrentLogger (nullptr);
+  logger.removeChangeListener(codeEditor->console);
+  Logger::setCurrentLogger (nullptr);
 
   removeAllChildren();
 }
 
 void MainComponent::resized()
 {
-  Component* hcomps[] = { graphEditor, horizontalDividerBar, codeEditor  };
+  Component* hcomps[] = { graphEditor, horizontalDividerBar, interpolationSpace  };
   
   horizontalLayout.layOutComponents (hcomps, 3, 0, 0, getWidth(), getHeight()-20, false, true);
 }

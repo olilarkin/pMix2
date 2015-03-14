@@ -68,8 +68,6 @@ OBJECTS := \
   $(OBJDIR)/pMixWebBrowser_3e333589.o \
   $(OBJDIR)/pMixFileBrowser_37eaaf21.o \
   $(OBJDIR)/pMixConsole_f8903cec.o \
-  $(OBJDIR)/pMixParamView_95a42e7.o \
-  $(OBJDIR)/pMixParamTreeView_a13fce25.o \
   $(OBJDIR)/pMixGenericEditor_f1457b39.o \
   $(OBJDIR)/FaustCodeTokenizer_5b0c0a78.o \
   $(OBJDIR)/FaustAudioProcessorParameter_b0d2ebbb.o \
@@ -197,16 +195,6 @@ $(OBJDIR)/pMixFileBrowser_37eaaf21.o: ../../Source/pMixFileBrowser.cpp
 $(OBJDIR)/pMixConsole_f8903cec.o: ../../Source/pMixConsole.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixConsole.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/pMixParamView_95a42e7.o: ../../Source/pMixParamView.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixParamView.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/pMixParamTreeView_a13fce25.o: ../../Source/pMixParamTreeView.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixParamTreeView.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixGenericEditor_f1457b39.o: ../../Source/pMixGenericEditor.cpp
