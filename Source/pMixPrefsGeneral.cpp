@@ -59,6 +59,12 @@ void PMixPrefsGeneral::paint (Graphics& g)
 
     g.fillAll (Colours::white);
 
+    g.setColour (Colours::red);
+    g.setFont (Font (83.10f, Font::plain));
+    g.drawText (TRANS("TODO!"),
+                20, 20, 316, 100,
+                Justification::centred, true);
+
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
 }
@@ -91,7 +97,11 @@ BEGIN_JUCER_METADATA
                  parentClasses="public Component" constructorParams="" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
-  <BACKGROUND backgroundColour="ffffffff"/>
+  <BACKGROUND backgroundColour="ffffffff">
+    <TEXT pos="20 20 316 100" fill="solid: ffff0000" hasStroke="0" text="TODO!"
+          fontname="Default font" fontsize="83.099999999999994316" bold="0"
+          italic="0" justification="36"/>
+  </BACKGROUND>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

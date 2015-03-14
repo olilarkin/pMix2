@@ -59,10 +59,10 @@ void PMixPrefsControllers::paint (Graphics& g)
 
     g.fillAll (Colours::white);
 
-    g.setColour (Colours::black);
-    g.setFont (Font (15.00f, Font::plain));
-    g.drawText (TRANS("Test"),
-                148, 4, 200, 30,
+    g.setColour (Colours::red);
+    g.setFont (Font (83.10f, Font::plain));
+    g.drawText (TRANS("TODO!"),
+                20, 20, 316, 100,
                 Justification::centred, true);
 
     //[UserPaint] Add your own custom painting code here..
@@ -98,8 +98,9 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ffffffff">
-    <TEXT pos="148 4 200 30" fill="solid: ff000000" hasStroke="0" text="Test"
-          fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>
+    <TEXT pos="20 20 316 100" fill="solid: ffff0000" hasStroke="0" text="TODO!"
+          fontname="Default font" fontsize="83.099999999999994316" bold="0"
+          italic="0" justification="36"/>
   </BACKGROUND>
 </JUCER_COMPONENT>
 
