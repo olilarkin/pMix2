@@ -73,8 +73,8 @@ PluginWindow* PluginWindow::getWindowFor (AudioProcessorGraph::Node* const node,
   
   if (ui == nullptr)
   {
-    if (type == Generic || type == Parameters)
-      ui = new PMixGenericAudioProcessorEditor (processor);
+    //if (type == Generic || type == Parameters)
+      //ui = new PMixGenericAudioProcessorEditor (processor);
 //    else if (type == Programs)
 //      ui = new ProgramAudioProcessorEditor (processor);
   }
