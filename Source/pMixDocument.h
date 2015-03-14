@@ -23,12 +23,15 @@ class PMixDocument   : public FileBasedDocument
 public:
   PMixDocument (PMixAudioEngine& audioEngine);
   ~PMixDocument();
-  
+    
   void addPreset(const int nodeId, double x, double y);
   void setPresetPosition(const int nodeId, const int presetIdx, double x, double y);
   void getPresetPosition(const int nodeId, const int presetIdx, double& x, double& y) const;
   void removePreset(const int nodeId, const int presetIdx);
 
+  void setFilterIPos(const int nodeId, double x, double y);
+  void getFilterIPos(const int nodeId, double& x, double& y) const;
+  
   void setFilterColour(const int nodeId, const Colour colour);
   Colour getFilterColour(const int nodeId) const;
   

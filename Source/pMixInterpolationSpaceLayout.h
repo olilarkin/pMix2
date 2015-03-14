@@ -21,7 +21,20 @@ public:
 };
 
 class InterpolationSpacePreset : public Component
+                               , public ChangeListener
 {
+public:
+  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx, Colour colour);
+  ~InterpolationSpacePreset ();
+  void resized ();
+  void mouseDown (const MouseEvent& e);
+  void mouseDrag (const MouseEvent& e);
+  void mouseUp (const MouseEvent& e);
+  void paint (Graphics& g);
+  void update();
+  
+  void changeListenerCallback (ChangeBroadcaster* source);
+
 private:
   ComponentDragger myDragger;
   ComponentBoundsConstrainer boundsConstrainer;
@@ -34,14 +47,6 @@ public:
   const uint32 filterID;
   const uint32 presetIdx;
   Colour colour;
-public:
-  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx, Colour colour);
-  ~InterpolationSpacePreset ();
-  void resized ();
-  void mouseDown (const MouseEvent& e);
-  void mouseDrag (const MouseEvent& e);
-  void mouseUp (const MouseEvent& e);
-  void paint (Graphics& g);
 };
 
 class PMixInterpolationSpaceLayout : public Component
@@ -63,6 +68,8 @@ public:
   SelectedItemSet <Component*>& getLassoSelection();
   
   void changeListenerCallback (ChangeBroadcaster* source);
+
+  void getComponentsForFilter (const uint32 filterID, Array<InterpolationSpacePreset*>& components) const;
 
 private:
   //TooltipWindow tooltipWindow;

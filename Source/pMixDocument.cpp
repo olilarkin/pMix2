@@ -79,6 +79,8 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
       if (!InternalPluginFormat::isInternalFormat(desc->name))
       {
         node->properties.set ("colour", defaultColours.getNextColour().toString());
+        node->properties.set ("iposx", x);
+        node->properties.set ("iposy", y);
         Array<var> presets;
         node->properties.set("presets", presets);
         Array<var> params;
@@ -273,6 +275,8 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   if(!InternalPluginFormat::isInternalFormat(pd.name))
   {
     e->setAttribute("colour", node->properties ["colour"].toString());
+    e->setAttribute ("iposx", node->properties ["iposx"].toString());
+    e->setAttribute ("iposy", node->properties ["iposy"].toString());
   }
   
   e->addChildElement (pd.createXml());
@@ -341,10 +345,13 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   node->properties.set ("y", xml.getDoubleAttribute ("y"));
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
-  node->properties.set ("colour", xml.getStringAttribute ("colour"));
-
+  
   if(!InternalPluginFormat::isInternalFormat(pd.name))
   {
+    node->properties.set ("colour", xml.getStringAttribute ("colour"));
+    node->properties.set ("iposx", xml.getDoubleAttribute ("iposx"));
+    node->properties.set ("iposy", xml.getDoubleAttribute ("iposy"));
+    
     if (const XmlElement* const params = xml.getChildByName ("PARAMS"))
     {
       var vparams = JSON::parse(params->getAllSubText());
@@ -400,8 +407,11 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSou
   node->properties.set ("y", xml.getDoubleAttribute ("y"));
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
-  node->properties.set ("colour", xml.getStringAttribute ("colour"));
 
+  node->properties.set ("colour", xml.getStringAttribute ("colour"));
+  node->properties.set ("iposx", xml.getDoubleAttribute ("iposx"));
+  node->properties.set ("iposy", xml.getDoubleAttribute ("iposy"));
+  
   if (const XmlElement* const params = xml.getChildByName ("PARAMS"))
   {
     var vparams = JSON::parse(params->getAllSubText());
@@ -577,8 +587,10 @@ void PMixDocument::addPreset(const int nodeId, double x, double y)
   obj->setProperty("name", name);
   obj->setProperty("x", x);
   obj->setProperty("y", y);
-  obj->setProperty("r", 1.);
+  obj->setProperty("radius", 1.);
   obj->setProperty("hidden", false);
+//  obj->setProperty("distance", 0.);
+  obj->setProperty("coeff", 0.);
   obj->setProperty("state", paramValues);
 
   var preset = var(obj);
@@ -590,7 +602,15 @@ void PMixDocument::addPreset(const int nodeId, double x, double y)
 
 void PMixDocument::removePreset(const int nodeId, const int presetIdx)
 {
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
   
+  if (node != nullptr)
+  {
+    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+    presetsArr->remove(presetIdx);
+  }
+  
+  changed();
 }
 
 void PMixDocument::setPresetPosition (const int nodeId, const int presetIdx, double x, double y)
@@ -676,4 +696,90 @@ bool PMixDocument::getParameterIsInterpolated(const int nodeId, const int paramI
   }
   
   return false;
+}
+
+void PMixDocument::setFilterIPos(const int nodeId, double x, double y)
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (node != nullptr)
+  {
+    double iposx = x ;
+    double iposy = y;
+    
+    node->properties.set("iposx", x);
+    node->properties.set("iposy", y);
+
+    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+    int numPresets = presetsArr->size();
+    double distances[numPresets];
+    
+    // work out the distances
+    for (int presetIdx = 0; presetIdx < numPresets; presetIdx++)
+    {
+      DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+      double pposx = (double) obj->getProperty("x");
+      double pposy = (double) obj->getProperty("y");
+      
+      double a = pposx - iposx;    //x dist
+      double b = pposy - iposy;    //y dist
+      
+      if(a == 0. && b == 0.)
+        distances[presetIdx] = 0.;
+      else
+        distances[presetIdx] = sqrt(a*a+b*b);
+    }
+    
+    // now do coeefficient
+    
+    double sumf = 0.; // sum of functions
+    
+    for (int presetIdx = 0; presetIdx < numPresets; presetIdx++)
+    {
+      DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+      bool hidden = (bool) obj->getProperty("hidden");
+      double radius = (double) obj->getProperty("radius");
+      
+      double square = distances[presetIdx] * distances[presetIdx];
+      
+      if(!hidden)
+      {
+        sumf += (radius / square);
+      }
+    }
+    
+    for(int presetIdx = 0; presetIdx < numPresets; presetIdx++)
+    {
+      DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+      bool hidden = (bool) obj->getProperty("hidden");
+      double radius = (double) obj->getProperty("radius");
+      
+      double coeff = 0.;
+      
+      if(distances[presetIdx] == 0)
+        coeff = 1.;
+      else
+      {
+        double square = distances[presetIdx] * distances[presetIdx];
+        
+        if(!hidden)
+        {
+          coeff = (radius / square) / sumf;
+        }
+      }
+      
+      obj->setProperty("coeff", coeff);
+    }
+  }
+}
+
+void PMixDocument::getFilterIPos(const int nodeId, double& x, double& y) const
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (node != nullptr)
+  {
+    x = (double) node->properties["iposx"];
+    y = (double) node->properties["iposy"];
+  }
 }

@@ -16,6 +16,7 @@ public:
   void paint (Graphics& g);
 private:
   ScopedPointer<PMixInterpolationSpaceLayout> layout;
+  ScopedPointer<pMixInterpolationSpaceCrossHairs> crosshairs;
 };
 
 #endif //_INTERPOLATIONSPACE_H_ 

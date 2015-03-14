@@ -43,10 +43,52 @@ void InterpolationSpacePreset::resized ()
 
 void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
 {
-  myDragger.startDraggingComponent (this, e);
-  toFront (true);
-  startBounds = getBounds();
-  dynamic_cast<PMixInterpolationSpaceLayout*>(getParentComponent())->getLassoSelection().selectOnly(this);
+  if (e.mods.isPopupMenu())
+  {
+    PopupMenu m;
+
+    if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
+    {
+      AudioProcessor* const processor = f->getProcessor();
+      jassert (processor != nullptr);
+      
+      if(!InternalPluginFormat::isInternalFormat(processor->getName()))
+      {
+        m.addItem (1, "Delete Preset");
+        m.addItem (2, "Rename Preset");
+        m.addItem (3, "Set Colour");
+      }
+    }
+    
+    const int r = m.show();
+    
+    if (r == 1)
+    {
+      audioEngine.getDoc().removePreset(filterID, presetIdx);
+    }
+    else if (r == 2)
+    {
+      
+    }
+    else if (r == 3)
+    {
+//      ColourSelector* colourSelector = new ColourSelector(ColourSelector::showSliders|ColourSelector::showColourAtTop|ColourSelector::showColourspace);
+//      colourSelector->setName ("background");
+//      colourSelector->setCurrentColour (audioEngine.getDoc().getFilterColour(filterID));
+//      colourSelector->addChangeListener (this);
+//      colourSelector->setColour (ColourSelector::backgroundColourId, Colours::lightgrey);
+//      colourSelector->setSize (300, 400);
+//      
+//      CallOutBox::launchAsynchronously (colourSelector, getScreenBounds(), nullptr);
+    }
+  }
+  else
+  {
+    myDragger.startDraggingComponent (this, e);
+    toFront (true);
+    startBounds = getBounds();
+    dynamic_cast<PMixInterpolationSpaceLayout*>(getParentComponent())->getLassoSelection().selectOnly(this);
+  }
 }
 
 void InterpolationSpacePreset::mouseDrag (const MouseEvent& e)
@@ -65,22 +107,42 @@ void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
 void InterpolationSpacePreset::paint (Graphics& g)
 {
   g.setColour(colour);
-  
+  g.setOpacity(0.1);
   g.fillEllipse (5.f, 5.f, getWidth()-10.f, getHeight()-10.f);
   
+  g.setColour(colour);
+  g.fillEllipse ((getWidth()/2.f) - 5.f, (getHeight()/2.f)  - 5.f, 10.f, 10.f);
   g.setColour(Colours::black);
-  
   g.drawEllipse((getWidth()/2.f) - 5.f, (getHeight()/2.f)  - 5.f, 10.f, 10.f, 1.f);
   
   if (dynamic_cast<PMixInterpolationSpaceLayout*>(getParentComponent())->getLassoSelection().isSelected(this))
   {
     Path linePath;
-    linePath.addEllipse (0, 0, getWidth(), getHeight());
+    linePath.addEllipse (2, 2, getWidth()-4, getHeight()-4);
     PathStrokeType stroke (2.5f);
     float dashes[2] = { 4, 4 };
     stroke.createDashedStroke(linePath, linePath, dashes, 2);
     g.setColour(Colours::lightgrey);
     g.fillPath (linePath);
+  }
+}
+
+void InterpolationSpacePreset::update()
+{
+  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (filterID));
+  
+  if (f == nullptr)
+  {
+    delete this;
+    return;
+  }
+}
+
+void InterpolationSpacePreset::changeListenerCallback (ChangeBroadcaster* source)
+{
+  if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
+  {
+    audioEngine.getDoc().setFilterColour(filterID, cs->getCurrentColour());
   }
 }
 
@@ -104,7 +166,6 @@ void PMixInterpolationSpaceLayout::resized ()
 
 void PMixInterpolationSpaceLayout::paint (Graphics& g)
 {
-  g.fillAll (Colours::white);
 }
 
 void PMixInterpolationSpaceLayout::mouseDown (const MouseEvent& e)
@@ -156,32 +217,58 @@ void PMixInterpolationSpaceLayout::changeListenerCallback (ChangeBroadcaster* so
 
 void PMixInterpolationSpaceLayout::updateComponents()
 {
-  deleteAllChildren();
+  for (int i = getNumChildComponents(); --i >= 0;)
+  {
+    if (InterpolationSpacePreset* const pc = dynamic_cast <InterpolationSpacePreset*> (getChildComponent (i)))
+      pc->update();
+  }
   
   for (int i = audioEngine.getDoc().getNumFilters(); --i >= 0;)
   {
     const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
     
-    if (f->properties.getVarPointer("presets") != nullptr)
+    if (!InternalPluginFormat::isInternalFormat(f->getProcessor()->getName()))
     {
+      Array<InterpolationSpacePreset*> comps;
+      getComponentsForFilter(f->nodeId, comps);
       Array<var>* presets = f->properties.getVarPointer("presets")->getArray();
       
-      for (int p=0; p< presets->size(); p++)
+      // if the number of presets for this filter has changed then delete the components and re-create
+      if (comps.size() != presets->size())
       {
-        DynamicObject* obj = presets->getReference(p).getDynamicObject();
+        for (int componentIdx = 0; componentIdx<comps.size(); componentIdx++)
+        {
+          removeChildComponent(comps[componentIdx]);
+          delete comps[componentIdx];
+        }
         
-        String label = obj->getProperty("name");
-        InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeId, p, audioEngine.getDoc().getFilterColour(f->nodeId)  );
-        String componentID;
-        componentID << "p." << (int) f->nodeId << "." << p;
-        comp->setComponentID(componentID);
-        float r = 50. + (50. * (float) obj->getProperty("r"));
-        float x = getWidth() * (float) obj->getProperty("x");
-        float y = getHeight() * (float) obj->getProperty("y");
-        comp->setBounds(x, y, r, r);
-        addAndMakeVisible (comp);
+        for (int presetIdx = 0; presetIdx < presets->size(); presetIdx++)
+        {
+          DynamicObject* obj = presets->getReference(presetIdx).getDynamicObject();
+          
+          String label = obj->getProperty("name");
+          InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeId, presetIdx, audioEngine.getDoc().getFilterColour(f->nodeId)  );
+          String componentID;
+          componentID << "p." << (int) f->nodeId << "." << presetIdx;
+          comp->setComponentID(componentID);
+          float r = 50.f + (50.f * (float) obj->getProperty("r"));
+          float x = getWidth() * (float) obj->getProperty("x");
+          float y = getHeight() * (float) obj->getProperty("y");
+          comp->setBounds(x, y, r, r);
+          addAndMakeVisible (comp);
+        }
       }
     }
     
+  }
+}
+
+void PMixInterpolationSpaceLayout::getComponentsForFilter (const uint32 filterID, Array<InterpolationSpacePreset*>& components) const
+{
+  for (int i = getNumChildComponents(); --i >= 0;)
+  {
+    if (InterpolationSpacePreset* const pc = dynamic_cast <InterpolationSpacePreset*> (getChildComponent (i)))
+      if (pc->filterID == filterID)
+        components.add(pc);
   }
 }
