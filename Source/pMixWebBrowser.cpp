@@ -43,7 +43,7 @@ void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)
       
       if (selectedItem)
       {
-        FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(audioEngine.getDoc().getNodeForId(selectedItem->filterID)->getProcessor());
+        FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(audioEngine.getDoc().getNodeForId(selectedItem->nodeId)->getProcessor());
         
         if (faustProc)
         {

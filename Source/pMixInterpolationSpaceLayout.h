@@ -24,7 +24,7 @@ class InterpolationSpacePreset : public Component
                                , public ChangeListener
 {
 public:
-  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx, Colour colour);
+  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeId, const uint32 presetIdx, Colour colour);
   ~InterpolationSpacePreset ();
   void resized ();
   void mouseDown (const MouseEvent& e);
@@ -38,7 +38,7 @@ public:
   
 public:
   PMixAudioEngine& audioEngine;
-  const uint32 filterID;
+  const uint32 nodeId;
   const uint32 presetIdx;
   
 private:
@@ -71,7 +71,7 @@ public:
   
   void changeListenerCallback (ChangeBroadcaster* source);
 
-  void getComponentsForFilter (const uint32 filterID, Array<InterpolationSpacePreset*>& components) const;
+  void getComponentsForFilter (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const;
 
 private:
   //TooltipWindow tooltipWindow;

@@ -13,13 +13,13 @@
 #pragma mark -
 #pragma mark PinComponent
 
-PinComponent::PinComponent (PMixAudioEngine& audioEngine, const uint32 filterID_, const int index_, const bool isInput_)
-: filterID (filterID_),
+PinComponent::PinComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_, const int index_, const bool isInput_)
+: nodeId (nodeId_),
 index (index_),
 isInput (isInput_),
 audioEngine(audioEngine)
 {
-  if (const AudioProcessorGraph::Node::Ptr node = audioEngine.getDoc().getNodeForId (filterID_))
+  if (const AudioProcessorGraph::Node::Ptr node = audioEngine.getDoc().getNodeForId (nodeId_))
   {
     String tip;
     
@@ -60,9 +60,9 @@ void PinComponent::paint (Graphics& g)
 
 void PinComponent::mouseDown (const MouseEvent& e)
 {
-  getGraphPanel()->beginConnectorDrag (isInput ? 0 : filterID,
+  getGraphPanel()->beginConnectorDrag (isInput ? 0 : nodeId,
                                        index,
-                                       isInput ? filterID : 0,
+                                       isInput ? nodeId : 0,
                                        index,
                                        e);
 }
@@ -85,9 +85,9 @@ GraphEditor* PinComponent::getGraphPanel() const noexcept
 #pragma mark -
 #pragma mark FilterComponent
 
-FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 filterID_)
+FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_)
 : audioEngine (audioEngine)
-, filterID (filterID_)
+, nodeId (nodeId_)
 , numInputs (0)
 , numOutputs (0)
 , pinSize (16)
@@ -126,7 +126,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     m.addItem (1, "Delete this filter");
     m.addItem (2, "Disconnect all pins");
     
-    if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
+    if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
     {
       AudioProcessor* const processor = f->getProcessor();
       jassert (processor != nullptr);
@@ -146,7 +146,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     
     if (r == 1)
     {
-      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
+      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
       {
         AudioPluginInstance* const instance = dynamic_cast<AudioPluginInstance*>(f->getProcessor());
       
@@ -155,25 +155,25 @@ void FilterComponent::mouseDown (const MouseEvent& e)
           removeEditor();
           
           audioEngine.getDoc().beginTransaction();
-          audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, filterID), TRANS("remove filter"));
+          audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, nodeId), TRANS("remove filter"));
         }
       }
       return;
     }
     else if (r == 2)
     {
-      audioEngine.getDoc().disconnectFilter (filterID);
+      audioEngine.getDoc().disconnectFilter (nodeId);
     }
     else if (r == 3)
     {
       Random rand;
-      audioEngine.getDoc().addPreset(filterID, rand.nextFloat(), rand.nextFloat());
+      audioEngine.getDoc().addPreset(nodeId, rand.nextFloat(), rand.nextFloat());
     }
     else if (r == 4)
     {
       ColourSelector* colourSelector = new ColourSelector(ColourSelector::showSliders|ColourSelector::showColourAtTop|ColourSelector::showColourspace);
       colourSelector->setName ("background");
-      colourSelector->setCurrentColour (audioEngine.getDoc().getFilterColour(filterID));
+      colourSelector->setCurrentColour (audioEngine.getDoc().getFilterColour(nodeId));
       colourSelector->addChangeListener (this);
       colourSelector->setColour (ColourSelector::backgroundColourId, Colours::lightgrey);
       colourSelector->setSize (300, 400);
@@ -182,12 +182,12 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     }
     else if (r == 5 || r == 6)
     {
-      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
+      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
 
       {
         for (int p=0; p < f->getProcessor()->getNumParameters(); p++)
         {
-          audioEngine.getDoc().setParameterToInterpolate(filterID, p, r==5);
+          audioEngine.getDoc().setParameterToInterpolate(nodeId, p, r==5);
         }
         
         repaint();
@@ -195,7 +195,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
     }
     else
     {
-      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
+      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
       {
         AudioProcessor* const processor = f->getProcessor();
         jassert (processor != nullptr);
@@ -216,7 +216,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
   {
     moving = true;
     getGraphPanel()->getLassoSelection().selectOnly(this);
-    audioEngine.getDoc().getNodePosition(filterID, startPos.x, startPos.y);
+    audioEngine.getDoc().getNodePosition(nodeId, startPos.x, startPos.y);
   }
 }
 
@@ -232,7 +232,7 @@ void FilterComponent::mouseDrag (const MouseEvent& e)
     endPos.x = (pos.getX() + getWidth() / 2) / (double) getParentWidth();
     endPos.y = (pos.getY() + getHeight() / 2) / (double) getParentHeight();
     
-    audioEngine.getDoc().setNodePosition (filterID, endPos.x, endPos.y);
+    audioEngine.getDoc().setNodePosition (nodeId, endPos.x, endPos.y);
     
     getGraphPanel()->updateComponents();
   }
@@ -242,7 +242,7 @@ void FilterComponent::mouseUp (const MouseEvent& e)
 {
   if (e.mouseWasClicked() && e.getNumberOfClicks() == 2)
   {
-    if (const AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
+    if (const AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
     {
       AudioProcessor* const processor = f->getProcessor();
       if(!InternalPluginFormat::isInternalFormat(processor->getName()))
@@ -260,7 +260,7 @@ void FilterComponent::mouseUp (const MouseEvent& e)
     {
       moving = false;
       audioEngine.getDoc().beginTransaction();
-      audioEngine.getDoc().perform(new MoveFilterAction(audioEngine, *getGraphPanel(), filterID, startPos, endPos), "move filter");
+      audioEngine.getDoc().perform(new MoveFilterAction(audioEngine, *getGraphPanel(), nodeId, startPos, endPos), "move filter");
     }
   }
 }
@@ -338,7 +338,7 @@ void FilterComponent::getPinPos (const int index, const bool isInput, float& x, 
 
 void FilterComponent::update()
 {
-  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (filterID));
+  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (nodeId));
   
   if (f == nullptr)
   {
@@ -392,23 +392,23 @@ void FilterComponent::update()
 
     int i;
     for (i = 0; i < f->getProcessor()->getNumInputChannels(); ++i)
-      addAndMakeVisible (new PinComponent (audioEngine, filterID, i, true));
+      addAndMakeVisible (new PinComponent (audioEngine, nodeId, i, true));
     
     if (f->getProcessor()->acceptsMidi())
-      addAndMakeVisible (new PinComponent (audioEngine, filterID, PMixDocument::midiChannelNumber, true));
+      addAndMakeVisible (new PinComponent (audioEngine, nodeId, PMixDocument::midiChannelNumber, true));
     
     for (i = 0; i < f->getProcessor()->getNumOutputChannels(); ++i)
-      addAndMakeVisible (new PinComponent (audioEngine, filterID, i, false));
+      addAndMakeVisible (new PinComponent (audioEngine, nodeId, i, false));
     
     if (f->getProcessor()->producesMidi())
-      addAndMakeVisible (new PinComponent (audioEngine, filterID, PMixDocument::midiChannelNumber, false));
+      addAndMakeVisible (new PinComponent (audioEngine, nodeId, PMixDocument::midiChannelNumber, false));
     
     resized();
   }
   
   {
     double x, y;
-    audioEngine.getDoc().getNodePosition (filterID, x, y);
+    audioEngine.getDoc().getNodePosition (nodeId, x, y);
     setCentreRelative ((float) x, (float) y);
   }
 }
@@ -422,7 +422,7 @@ void FilterComponent::changeListenerCallback (ChangeBroadcaster* source)
 {
   if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
   {    
-    audioEngine.getDoc().setFilterColour(filterID, cs->getCurrentColour());
+    audioEngine.getDoc().setFilterColour(nodeId, cs->getCurrentColour());
     editor->repaint();
   }
 }

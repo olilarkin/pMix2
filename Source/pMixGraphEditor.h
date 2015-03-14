@@ -26,7 +26,7 @@ public:
   
   void createNewFilter (const PluginDescription* desc, int x, int y);
 
-  FilterComponent* getComponentForFilter (uint32 filterID) const;
+  FilterComponent* getComponentForFilter (uint32 nodeId) const;
   ConnectorComponent* getComponentForConnection (const AudioProcessorGraph::Connection& conn) const;
   PinComponent* findPinAt (int x, int y) const;
 

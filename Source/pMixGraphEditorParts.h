@@ -19,13 +19,13 @@ class PinComponent : public Component
                    , public SettableTooltipClient
 {
 public:
-  PinComponent (PMixAudioEngine& audio, const uint32 filterID_, const int index_, const bool isInput_);
+  PinComponent (PMixAudioEngine& audio, const uint32 nodeId_, const int index_, const bool isInput_);
   void paint (Graphics& g);
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
   
-  const uint32 filterID;
+  const uint32 nodeId;
   const int index;
   const bool isInput;
   
@@ -44,7 +44,7 @@ class FilterComponent : public Component
                       , public ChangeListener
 {
 public:
-  FilterComponent (PMixAudioEngine& audioEngine, const uint32 filterID_);
+  FilterComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_);
   ~FilterComponent();
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
@@ -61,7 +61,7 @@ public:
   
 public:
   PMixAudioEngine& audioEngine;
-  const uint32 filterID;
+  const uint32 nodeId;
   int numInputs, numOutputs;
   
 private:

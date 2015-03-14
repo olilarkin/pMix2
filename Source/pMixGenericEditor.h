@@ -16,7 +16,7 @@
 class PMixParamSlider : public Slider
 {
 public:
-  PMixParamSlider (PMixAudioEngine &audioEngine, AudioProcessor& p, int paramIdx, uint32 filterID);
+  PMixParamSlider (PMixAudioEngine &audioEngine, AudioProcessor& p, int paramIdx, uint32 nodeId);
   
   void valueChanged() override;
   String getTextFromValue (double value) override;
@@ -27,7 +27,7 @@ private:
   PMixAudioEngine &audioEngine;
   AudioProcessor& owner;
   const int index;
-  const uint32 filterID;
+  const uint32 nodeId;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixParamSlider)
 };
@@ -37,7 +37,7 @@ class PMixProcessorParameterPropertyComp : public PropertyComponent
                                          , private Timer
 {
 public:
-  PMixProcessorParameterPropertyComp (PMixAudioEngine &audioEngine, const String& name, AudioProcessor& p, int paramIdx, uint32 filterID);
+  PMixProcessorParameterPropertyComp (PMixAudioEngine &audioEngine, const String& name, AudioProcessor& p, int paramIdx, uint32 nodeId);
   ~PMixProcessorParameterPropertyComp();
   
   void refresh() override;
@@ -53,7 +53,7 @@ private:
   const int index;
   bool volatile paramHasChanged;
   PMixParamSlider slider;
-  uint32 filterID;
+  uint32 nodeId;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixProcessorParameterPropertyComp)
 };
@@ -61,7 +61,7 @@ private:
 class PMixGenericAudioProcessorEditor : public AudioProcessorEditor
 {
 public:
-  PMixGenericAudioProcessorEditor (PMixAudioEngine &audioEngine, AudioProcessor* owner, uint32 filterID);
+  PMixGenericAudioProcessorEditor (PMixAudioEngine &audioEngine, AudioProcessor* owner, uint32 nodeId);
   ~PMixGenericAudioProcessorEditor();
   
   void paint (Graphics&) override;

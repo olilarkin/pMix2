@@ -68,12 +68,12 @@ void GraphEditor::createNewFilter (const PluginDescription* desc, int x, int y)
   }
 }
 
-FilterComponent* GraphEditor::getComponentForFilter (const uint32 filterID) const
+FilterComponent* GraphEditor::getComponentForFilter (const uint32 nodeId) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
     if (FilterComponent* const fc = dynamic_cast <FilterComponent*> (getChildComponent (i)))
-      if (fc->filterID == filterID)
+      if (fc->nodeId == nodeId)
         return fc;
   }
 
@@ -218,12 +218,12 @@ void GraphEditor::dragConnector (const MouseEvent& e)
 
       if (srcFilter == 0 && ! pin->isInput)
       {
-        srcFilter = pin->filterID;
+        srcFilter = pin->nodeId;
         srcChannel = pin->index;
       }
       else if (dstFilter == 0 && pin->isInput)
       {
-        dstFilter = pin->filterID;
+        dstFilter = pin->nodeId;
         dstChannel = pin->index;
       }
 
@@ -266,7 +266,7 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
       if (pin->isInput)
         return;
 
-      srcFilter = pin->filterID;
+      srcFilter = pin->nodeId;
       srcChannel = pin->index;
     }
     else
@@ -274,7 +274,7 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
       if (! pin->isInput)
         return;
 
-      dstFilter = pin->filterID;
+      dstFilter = pin->nodeId;
       dstChannel = pin->index;
     }
 

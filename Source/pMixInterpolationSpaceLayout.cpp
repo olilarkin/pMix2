@@ -21,9 +21,9 @@ InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
   setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 }
 
-InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 filterID, const uint32 presetIdx, Colour colour)
+InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeId, const uint32 presetIdx, Colour colour)
 : audioEngine(audioEngine)
-, filterID(filterID)
+, nodeId(nodeId)
 , presetIdx(presetIdx)
 , colour(colour)
 , opacity(1.)
@@ -48,7 +48,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
   {
     PopupMenu m;
 
-    if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (filterID))
+    if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
     {
       AudioProcessor* const processor = f->getProcessor();
       jassert (processor != nullptr);
@@ -65,7 +65,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
     
     if (r == 1)
     {
-      audioEngine.getDoc().removePreset(filterID, presetIdx);
+      audioEngine.getDoc().removePreset(nodeId, presetIdx);
     }
     else if (r == 2)
     {
@@ -75,7 +75,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
     {
 //      ColourSelector* colourSelector = new ColourSelector(ColourSelector::showSliders|ColourSelector::showColourAtTop|ColourSelector::showColourspace);
 //      colourSelector->setName ("background");
-//      colourSelector->setCurrentColour (audioEngine.getDoc().getFilterColour(filterID));
+//      colourSelector->setCurrentColour (audioEngine.getDoc().getFilterColour(nodeId));
 //      colourSelector->addChangeListener (this);
 //      colourSelector->setColour (ColourSelector::backgroundColourId, Colours::lightgrey);
 //      colourSelector->setSize (300, 400);
@@ -130,7 +130,7 @@ void InterpolationSpacePreset::paint (Graphics& g)
 
 void InterpolationSpacePreset::update()
 {
-  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (filterID));
+  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (nodeId));
   
   if (f == nullptr)
   {
@@ -138,8 +138,8 @@ void InterpolationSpacePreset::update()
     return;
   }
   
-  colour = audioEngine.getDoc().getFilterColour(filterID);
-  opacity = audioEngine.getDoc().getPresetWeight(filterID, presetIdx);
+  colour = audioEngine.getDoc().getFilterColour(nodeId);
+  opacity = audioEngine.getDoc().getPresetWeight(nodeId, presetIdx);
   
   repaint();
 }
@@ -148,7 +148,7 @@ void InterpolationSpacePreset::changeListenerCallback (ChangeBroadcaster* source
 {
   if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
   {
-    audioEngine.getDoc().setFilterColour(filterID, cs->getCurrentColour());
+    audioEngine.getDoc().setFilterColour(nodeId, cs->getCurrentColour());
   }
 }
 
@@ -269,12 +269,12 @@ void PMixInterpolationSpaceLayout::updateComponents()
   }
 }
 
-void PMixInterpolationSpaceLayout::getComponentsForFilter (const uint32 filterID, Array<InterpolationSpacePreset*>& components) const
+void PMixInterpolationSpaceLayout::getComponentsForFilter (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
     if (InterpolationSpacePreset* const pc = dynamic_cast <InterpolationSpacePreset*> (getChildComponent (i)))
-      if (pc->filterID == filterID)
+      if (pc->nodeId == nodeId)
         components.add(pc);
   }
 }

@@ -71,7 +71,7 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
       
       if (selectedItem)
       {
-        selectedNodeID = selectedItem->filterID;
+        selectedNodeID = selectedItem->nodeId;
         FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(audioEngine.getDoc().getNodeForId(selectedNodeID)->getProcessor());
         
         if (faustProc)

@@ -9,10 +9,10 @@
 
 #include "pMixInterpolationSpaceCrosshairs.h"
 
-InterpolationSpaceIPos::InterpolationSpaceIPos(PMixAudioEngine& audioEngine, const uint32 filterID, Colour colour)
+InterpolationSpaceIPos::InterpolationSpaceIPos(PMixAudioEngine& audioEngine, const uint32 nodeId, Colour colour)
 : audioEngine(audioEngine)
 , colour(colour)
-, filterID(filterID)
+, nodeId(nodeId)
 {
 }
 
@@ -38,7 +38,7 @@ void InterpolationSpaceIPos::mouseDrag (const MouseEvent& e)
   Point<double> normalizedPos;
   normalizedPos.x = getX() / (double) getParentWidth();
   normalizedPos.y = getY() / (double) getParentHeight();
-  audioEngine.getDoc().setFilterIPos(filterID, normalizedPos.x, normalizedPos.y);
+  audioEngine.getDoc().setFilterIPos(nodeId, normalizedPos.x, normalizedPos.y);
   
   myDragger.dragComponent (this, e, &boundsConstrainer);
   getParentComponent()->repaint();
@@ -72,7 +72,7 @@ void InterpolationSpaceIPos::paint (Graphics& g)
 
 void InterpolationSpaceIPos::update()
 {
-  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (filterID));
+  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (nodeId));
   
   if (f == nullptr)
   {
@@ -80,7 +80,7 @@ void InterpolationSpaceIPos::update()
     return;
   }
   
-  colour = audioEngine.getDoc().getFilterColour(filterID);
+  colour = audioEngine.getDoc().getFilterColour(nodeId);
   repaint();
 }
 
@@ -166,12 +166,12 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
   }
 }
 
-InterpolationSpaceIPos* pMixInterpolationSpaceCrossHairs::getComponentForFilter (const uint32 filterID) const
+InterpolationSpaceIPos* pMixInterpolationSpaceCrossHairs::getComponentForFilter (const uint32 nodeId) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
     if (InterpolationSpaceIPos* const ic = dynamic_cast <InterpolationSpaceIPos*> (getChildComponent (i)))
-      if (ic->filterID == filterID)
+      if (ic->nodeId == nodeId)
         return ic;
   }
   

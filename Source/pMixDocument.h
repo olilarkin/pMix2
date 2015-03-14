@@ -28,17 +28,17 @@ public:
   
   void timerCallback();
 
-  void addPreset(const int nodeId, double x, double y);
-  void setPresetPosition(const int nodeId, const int presetIdx, double x, double y);
-  void getPresetPosition(const int nodeId, const int presetIdx, double& x, double& y) const;
-  double getPresetWeight(const int nodeId, const int presetIdx);
-  void removePreset(const int nodeId, const int presetIdx);
+  void addPreset(const uint32 nodeId, double x, double y);
+  void setPresetPosition(const uint32 nodeId, const int presetIdx, double x, double y);
+  void getPresetPosition(const uint32 nodeId, const int presetIdx, double& x, double& y) const;
+  double getPresetWeight(const uint32 nodeId, const int presetIdx);
+  void removePreset(const uint32 nodeId, const int presetIdx);
 
-  void setFilterIPos(const int nodeId, double x, double y);
-  void getFilterIPos(const int nodeId, double& x, double& y) const;
+  void setFilterIPos(const uint32 nodeId, double x, double y);
+  void getFilterIPos(const uint32 nodeId, double& x, double& y) const;
   
-  void setFilterColour(const int nodeId, const Colour colour);
-  Colour getFilterColour(const int nodeId) const;
+  void setFilterColour(const uint32 nodeId, const Colour colour);
+  Colour getFilterColour(const uint32 nodeId) const;
   
   int getNumFilters() const noexcept;
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
@@ -48,12 +48,12 @@ public:
   void removeFilter (const uint32 filterUID);
   void disconnectFilter (const uint32 filterUID);
   
-  bool getParameterIsInterpolated(const int nodeId, const int paramIdx);
-  void setParameterToInterpolate(const int nodeId, const int paramIdx, bool interpolate);
+  bool getParameterIsInterpolated(const uint32 nodeId, const int paramIdx);
+  void setParameterToInterpolate(const uint32 nodeId, const int paramIdx, bool interpolate);
 
   void removeIllegalConnections();
-  void setNodePosition (const int nodeId, double x, double y);
-  void getNodePosition (const int nodeId, double& x, double& y) const;
+  void setNodePosition (const uint32 nodeId, double x, double y);
+  void getNodePosition (const uint32 nodeId, double& x, double& y) const;
   int getNumConnections() const noexcept;
   const AudioProcessorGraph::Connection* getConnection (const int index) const noexcept;
   const AudioProcessorGraph::Connection* getConnectionBetween (uint32 sourceFilterUID, int sourceFilterChannel, uint32 destFilterUID, int destFilterChannel) const noexcept;

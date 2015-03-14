@@ -26,7 +26,7 @@ bool MovePresetAction::perform()
   Point<double> normalizedPos;
   normalizedPos.x = endBounds.getX() / (double) presetComp->getParentWidth();
   normalizedPos.y = endBounds.getY() / (double) presetComp->getParentHeight();
-  presetComp->audioEngine.getDoc().setPresetPosition(presetComp->filterID, presetComp->presetIdx, normalizedPos.x, normalizedPos.y);
+  presetComp->audioEngine.getDoc().setPresetPosition(presetComp->nodeId, presetComp->presetIdx, normalizedPos.x, normalizedPos.y);
   return true;
 }
 
