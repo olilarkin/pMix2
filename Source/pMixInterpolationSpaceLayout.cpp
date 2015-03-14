@@ -26,6 +26,7 @@ InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine,
 , filterID(filterID)
 , presetIdx(presetIdx)
 , colour(colour)
+, opacity(1.)
 {
   //addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));
 }
@@ -107,7 +108,7 @@ void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
 void InterpolationSpacePreset::paint (Graphics& g)
 {
   g.setColour(colour);
-  g.setOpacity(0.1);
+  g.setOpacity(opacity);
   g.fillEllipse (5.f, 5.f, getWidth()-10.f, getHeight()-10.f);
   
   g.setColour(colour);
@@ -136,6 +137,11 @@ void InterpolationSpacePreset::update()
     delete this;
     return;
   }
+  
+  colour = audioEngine.getDoc().getFilterColour(filterID);
+  opacity = audioEngine.getDoc().getPresetWeight(filterID, presetIdx);
+  
+  repaint();
 }
 
 void InterpolationSpacePreset::changeListenerCallback (ChangeBroadcaster* source)
@@ -251,7 +257,7 @@ void PMixInterpolationSpaceLayout::updateComponents()
           String componentID;
           componentID << "p." << (int) f->nodeId << "." << presetIdx;
           comp->setComponentID(componentID);
-          float r = 50.f + (50.f * (float) obj->getProperty("r"));
+          float r = 50.f + (100.f * (float) obj->getProperty("radius"));
           float x = getWidth() * (float) obj->getProperty("x");
           float y = getHeight() * (float) obj->getProperty("y");
           comp->setBounds(x, y, r, r);

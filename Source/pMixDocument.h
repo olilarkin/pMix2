@@ -27,6 +27,7 @@ public:
   void addPreset(const int nodeId, double x, double y);
   void setPresetPosition(const int nodeId, const int presetIdx, double x, double y);
   void getPresetPosition(const int nodeId, const int presetIdx, double& x, double& y) const;
+  double getPresetWeight(const int nodeId, const int presetIdx);
   void removePreset(const int nodeId, const int presetIdx);
 
   void setFilterIPos(const int nodeId, double x, double y);

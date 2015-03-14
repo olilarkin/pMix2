@@ -31,22 +31,24 @@ public:
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
   void paint (Graphics& g);
-  void update();
   
   void changeListenerCallback (ChangeBroadcaster* source);
 
+  void update();
+  
+public:
+  PMixAudioEngine& audioEngine;
+  const uint32 filterID;
+  const uint32 presetIdx;
+  
 private:
   ComponentDragger myDragger;
   ComponentBoundsConstrainer boundsConstrainer;
   Rectangle<int> startBounds;
   Rectangle<int> endBounds;
   ScopedPointer<InterpolationSpaceLabel> label;
-  
-public:
-  PMixAudioEngine& audioEngine;
-  const uint32 filterID;
-  const uint32 presetIdx;
   Colour colour;
+  float opacity;
 };
 
 class PMixInterpolationSpaceLayout : public Component

@@ -24,15 +24,17 @@ public:
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
   void paint (Graphics& g);
-  
-  void addPresetLocation(float x, float y);
-  
+
+  void update();
+
 private:
   PMixAudioEngine& audioEngine;
-  const uint32 filterID;
   ComponentDragger myDragger;
   ComponentBoundsConstrainer boundsConstrainer;
   Colour colour;
+  
+public:
+  const uint32 filterID;
 };
 
 class pMixInterpolationSpaceCrossHairs : public Component
@@ -48,11 +50,10 @@ public:
   void changeListenerCallback (ChangeBroadcaster* source);
   
   void updateComponents();
+  InterpolationSpaceIPos* getComponentForFilter (const uint32 filterID) const;
 
 private:
   PMixAudioEngine& audioEngine;
-  Array<Array<Point<float>>> presetsLocations;
-
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (pMixInterpolationSpaceCrossHairs)
 };
 

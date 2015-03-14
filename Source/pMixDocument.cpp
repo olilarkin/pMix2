@@ -640,6 +640,20 @@ void PMixDocument::getPresetPosition (const int nodeId, const int presetIdx, dou
   }
 }
 
+double PMixDocument::getPresetWeight(const int nodeId, const int presetIdx)
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (node != nullptr)
+  {
+    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+    DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+    return (double) obj->getProperty("coeff");
+  }
+  
+  return 0.;
+}
+
 void PMixDocument::setFilterColour(const int nodeId, const Colour colour)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
@@ -770,6 +784,8 @@ void PMixDocument::setFilterIPos(const int nodeId, double x, double y)
       
       obj->setProperty("coeff", coeff);
     }
+    
+    changed();
   }
 }
 
