@@ -27,7 +27,7 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   //addAndMakeVisible (paramTreeView = new ParamTreeView(audioEngine));
   //addAndMakeVisible (paramView = new ParamView(audioEngine));
 
-  addAndMakeVisible(interpolationSpace = new InterpolationSpaceComponent(audioEngine));
+  addAndMakeVisible(interpolationSpace = new InterpolationSpace(audioEngine));
 
   addAndMakeVisible( fileBrowser = new FileBrowser());
   addAndMakeVisible( codeEditor = new CodeEditor(audioEngine, *graphEditor) );

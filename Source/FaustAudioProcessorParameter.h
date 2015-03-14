@@ -11,7 +11,6 @@
 #define FAUSTAUDIOPROCESSORPARAMETER_H_INCLUDED
 
 #include "JuceHeader.h"
-
 #include "FaustAudioProcessor.h"
 
 class FaustAudioProcessorParameter : public AudioProcessorParameter
