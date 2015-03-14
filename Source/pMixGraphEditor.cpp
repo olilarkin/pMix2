@@ -22,7 +22,6 @@ GraphEditor::~GraphEditor()
   audioEngine.getDoc().removeChangeListener (this);
   selectedItems.removeChangeListener (this);
   draggingConnector = nullptr;
-  removeChildComponent (&lassoComp);
   deleteAllChildren();
 }
 

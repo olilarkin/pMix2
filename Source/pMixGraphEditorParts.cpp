@@ -291,7 +291,7 @@ void FilterComponent::paint (Graphics& g)
   //g.drawFittedText (getName(), getLocalBounds().reduced (4, 2), Justification::centred, 2);
   
   if (getGraphPanel()->getLassoSelection().isSelected(this))
-    g.setColour (Colours::red);
+    g.setColour (Colours::darkgrey);
   else
     g.setColour (Colours::grey);
   //g.drawRect (x, y, w, h);
