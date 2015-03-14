@@ -18,12 +18,16 @@ const char* const filenameWildcard = "*.pmix";
 
 class PMixAudioEngine;
 
-class PMixDocument   : public FileBasedDocument
+class PMixDocument : public FileBasedDocument
+                   , public Timer
+
 {
 public:
   PMixDocument (PMixAudioEngine& audioEngine);
   ~PMixDocument();
-    
+  
+  void timerCallback();
+
   void addPreset(const int nodeId, double x, double y);
   void setPresetPosition(const int nodeId, const int presetIdx, double x, double y);
   void getPresetPosition(const int nodeId, const int presetIdx, double& x, double& y) const;

@@ -16,6 +16,7 @@ PMixDocument::PMixDocument (PMixAudioEngine& audioEngine)
                      snapShown (true),
                      componentOverlayOpacity (0.33f)
 {
+  startTimer (20);
 }
 
 PMixDocument::~PMixDocument()
@@ -81,6 +82,7 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
         node->properties.set ("colour", defaultColours.getNextColour().toString());
         node->properties.set ("iposx", x);
         node->properties.set ("iposy", y);
+        node->properties.set ("update", false);
         Array<var> presets;
         node->properties.set("presets", presets);
         Array<var> params;
@@ -770,7 +772,7 @@ void PMixDocument::setFilterIPos(const int nodeId, double x, double y)
       
       double coeff = 0.;
       
-      if(distances[presetIdx] == 0)
+      if(distances[presetIdx] == 0.)
         coeff = 1.;
       else
       {
@@ -786,6 +788,8 @@ void PMixDocument::setFilterIPos(const int nodeId, double x, double y)
     }
     
     changed();
+    
+    node->properties.set("update", true);
   }
 }
 
@@ -799,3 +803,42 @@ void PMixDocument::getFilterIPos(const int nodeId, double& x, double& y) const
     y = (double) node->properties["iposy"];
   }
 }
+
+void PMixDocument::timerCallback()
+{
+  for (int i = getNumFilters(); --i >= 0;)
+  {
+    const AudioProcessorGraph::Node::Ptr node (audioEngine.getDoc().getNode (i));
+    
+    if (!InternalPluginFormat::isInternalFormat(node->getProcessor()->getName()))
+    {
+      bool needsUpdate = node->properties["update"];
+      
+      if (needsUpdate)
+      {
+        Array<var>* params = node->properties.getVarPointer("params")->getArray();
+        Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+
+        for (int item=0; item<params->size(); item++)
+        {
+          var parameterIdx = params->getReference(item);
+          
+          double sum = 0.;
+          
+          for (int presetIdx=0; presetIdx < presetsArr->size(); presetIdx++)
+          {
+            DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+            double coeff = obj->getProperty("coeff");
+            Array<var>* preset = obj->getProperty("state").getArray();
+            sum = sum + (double(preset->getReference(parameterIdx)) * coeff);
+          }
+          
+          node->getProcessor()->setParameterNotifyingHost(parameterIdx, (float) sum);
+        }
+        
+        node->properties.set("update", false);
+      }
+    }
+  }
+}
+
