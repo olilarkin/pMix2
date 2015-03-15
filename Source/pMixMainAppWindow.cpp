@@ -32,13 +32,11 @@ MainAppWindow::MainAppWindow(PMixAudioEngine& audioEngine)
   getCommandManager().registerAllCommandsForTarget (this);
   
 #if JUCE_MAC
-  
   PopupMenu pop;
   pop.addCommandItem (&getCommandManager(), CommandIDs::aboutBox);
   pop.addSeparator();
   pop.addCommandItem (&getCommandManager(), CommandIDs::showPrefs);
   pop.addSeparator();
-  
   setMacMainMenu (this, &pop);
 #else
   setMenuBar (this);
@@ -77,8 +75,11 @@ bool MainAppWindow::tryToQuitApplication()
 
 StringArray MainAppWindow::getMenuBarNames()
 {
+#if JUCE_LINUX || JUCE_WIN
   const char* const names[] = { "File", "Edit", "View", "Options", nullptr };
-
+#else
+  const char* const names[] = { "File", "Edit", "View", nullptr };
+#endif
   return StringArray (names);
 }
 
@@ -124,14 +125,14 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     showMenu.addCommandItem (&getCommandManager(), CommandIDs::showGraphEditor);
     showMenu.addCommandItem (&getCommandManager(), CommandIDs::showISpace);
     showMenu.addCommandItem (&getCommandManager(), CommandIDs::showCodeEditor);
-    showMenu.addCommandItem (&getCommandManager(), CommandIDs::showParameters);
+//    showMenu.addCommandItem (&getCommandManager(), CommandIDs::showParameters);
     menu.addSubMenu("Show", showMenu);
 
     PopupMenu floatMenu;
-    floatMenu.addItem (CommandIDs::floatGraphEditor, "Graph Editor", true, true);
+    floatMenu.addItem (CommandIDs::floatGraphEditor, "Graph Editor", true, false);
     floatMenu.addItem (CommandIDs::floatISpace, "Interpolation Space", true, false);
     floatMenu.addItem (CommandIDs::floatCodeEditor, "Code Editor", true, false);
-    floatMenu.addItem (CommandIDs::floatParameters, "Parameters", true, false);
+//    floatMenu.addItem (CommandIDs::floatParameters, "Parameters", true, false);
     menu.addSubMenu("Float", floatMenu);
     
     menu.addSeparator();
@@ -201,12 +202,12 @@ void MainAppWindow::getAllCommands (Array <CommandID>& commands)
     CommandIDs::showISpace,
     CommandIDs::showGraphEditor,
     CommandIDs::showCodeEditor,
-    CommandIDs::showParameters,
+//    CommandIDs::showParameters,
     
     CommandIDs::floatGraphEditor,
     CommandIDs::floatISpace,
     CommandIDs::floatCodeEditor,
-    CommandIDs::floatParameters,
+//    CommandIDs::floatParameters,
   };
 
   commands.addArray (ids, numElementsInArray (ids));
@@ -297,11 +298,11 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
-    case CommandIDs::showParameters:
-      result.setInfo (TRANS("Parameters"), TRANS("Shows the Parameters"), category, 0);
+//    case CommandIDs::showParameters:
+//      result.setInfo (TRANS("Parameters"), TRANS("Shows the Parameters"), category, 0);
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
-      break;
+//      break;
       
     case CommandIDs::floatGraphEditor:
       result.setInfo (TRANS("Graph Editor"), TRANS("Floats the Graph Editor"), category, 0);
