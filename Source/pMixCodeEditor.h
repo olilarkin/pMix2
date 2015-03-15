@@ -30,8 +30,6 @@ public:
   void changeListenerCallback (ChangeBroadcaster* source);
   void buttonClicked (Button* button);
   
-  ScopedPointer<Console> console;
-
 private:
   FaustTokeniser tokeniser;
   CodeDocument codeDocument;

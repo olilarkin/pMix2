@@ -21,15 +21,10 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   verticalLayout.setItemLayout (0, 100, -1., -0.35);
   verticalLayout.setItemLayout (1, 8, 8, 8);
   verticalLayout.setItemLayout (2, 2, -1.0, 100);
-  verticalLayout.setItemLayout (3, 8, 8, 8);
-  verticalLayout.setItemLayout (4, 2, -1.0, -0.65);
   
   addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &tokeniser));
   addAndMakeVisible(dividerBar1 = new StretchableLayoutResizerBar (&verticalLayout, 1, false));
-  addAndMakeVisible (webBrowser = new WebBrowser(audioEngine));
-  graphEditor.addChangeListener(webBrowser);
-  addAndMakeVisible(dividerBar2 = new StretchableLayoutResizerBar (&verticalLayout, 3, false));
-  addAndMakeVisible (console = new Console());
+  addAndMakeVisible (webBrowser = new WebBrowser(audioEngine, graphEditor));
   addAndMakeVisible (&compileButton);
   addAndMakeVisible (&svgButton);
 
@@ -60,9 +55,9 @@ void CodeEditor::resized()
   svgButton.setBounds(108, 8, 100, 20 );
 //  editor->setBounds (r.withTrimmedTop (40));
   
-  Component* vcomps[] = { editor, dividerBar1, console , dividerBar2, webBrowser };
+  Component* vcomps[] = { editor, dividerBar1, webBrowser };
   
-  verticalLayout.layOutComponents (vcomps, 5,
+  verticalLayout.layOutComponents (vcomps, 3,
                                    0, 40, getWidth(), getHeight() - 40,
                                    true,     // lay out side-by-side
                                    true);     // resize the components' heights as well as widths
@@ -101,7 +96,6 @@ void CodeEditor::buttonClicked (Button* button)
   {
     if (button == &compileButton)
     {
-      console->clear();
       String newSourceCode = codeDocument.getAllContent();
       graphEditor.updateFaustNode(selectedNodeID, newSourceCode);
     }

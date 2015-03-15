@@ -11,13 +11,19 @@
 #include "pMixWebBrowser.h"
 #include "pMixGraphEditor.h"
 
-WebBrowser::WebBrowser(PMixAudioEngine& audioEngine)
+WebBrowser::WebBrowser(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 : audioEngine(audioEngine)
+, graphEditor(graphEditor)
 , selectedFaustAudioPluginInstance(nullptr)
 {
   addAndMakeVisible (browser = new WebBrowserComponent ());
-  
+  graphEditor.addChangeListener(this);
   browser->goToURL("");
+}
+
+WebBrowser::~WebBrowser()
+{
+  graphEditor.removeChangeListener(this);
 }
 
 void WebBrowser::paint (Graphics& g)

@@ -12,14 +12,15 @@
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
+#include "pMixGraphEditor.h"
 
 class WebBrowser : public Component
                  , public ChangeListener
 //, public Button::Listener
 {
 public:
-  WebBrowser(PMixAudioEngine& audioEngine);
-  
+  WebBrowser(PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
+  ~WebBrowser();
   void paint (Graphics& g) override;
   void resized() override;
   
@@ -30,6 +31,7 @@ public:
 
 private:
   PMixAudioEngine& audioEngine;
+  GraphEditor& graphEditor;
   FaustAudioPluginInstance* selectedFaustAudioPluginInstance;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WebBrowser);
