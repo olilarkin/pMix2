@@ -20,6 +20,7 @@
 #include "pMixLogger.h"
 //#include "pMixParamTreeView.h"
 //#include "pMixParamView.h"
+#include "pMixRHPTabContainer.h"
 
 class MainComponent  : public Component
 {
@@ -35,17 +36,18 @@ private:
   pMixLookAndFeel lookAndFeel;
   PMixAudioEngine& audioEngine;
   
-  ScopedPointer<CodeEditor> codeEditor;
+//  ScopedPointer<CodeEditor> codeEditor;
   ScopedPointer<GraphEditor> graphEditor;
 //  ScopedPointer<FileBrowser> fileBrowser;
-  ScopedPointer<InterpolationSpace> interpolationSpace;
+//  ScopedPointer<InterpolationSpace> interpolationSpace;
   StretchableLayoutManager horizontalLayout;
   ScopedPointer<StretchableLayoutResizerBar> horizontalDividerBar;
 //  ScopedPointer<ParamTreeView> paramTreeView;
 //  ScopedPointer<ParamView> paramView;
 
   PMixLogger logger;
-
+  ScopedPointer<PMixTabContainer> rightHandPanel;
+  
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
 

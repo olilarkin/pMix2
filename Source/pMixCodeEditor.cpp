@@ -39,6 +39,13 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   
   compileButton.addListener(this);
   svgButton.addListener(this);
+  
+  graphEditor.addChangeListener(this);
+}
+
+CodeEditor::~CodeEditor()
+{
+  graphEditor.removeChangeListener(this);
 }
 
 void CodeEditor::paint (Graphics& g)

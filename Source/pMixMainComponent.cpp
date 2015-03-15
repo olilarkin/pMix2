@@ -24,26 +24,16 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   //Logger::setCurrentLogger(&logger);
 
   addAndMakeVisible (graphEditor = new GraphEditor(audioEngine));
-  //addAndMakeVisible (paramTreeView = new ParamTreeView(audioEngine));
-  //addAndMakeVisible (paramView = new ParamView(audioEngine));
+  addAndMakeVisible(rightHandPanel = new PMixTabContainer(audioEngine, *graphEditor));
 
-  addAndMakeVisible(interpolationSpace = new InterpolationSpace(audioEngine, *graphEditor));
-
-//  addAndMakeVisible( fileBrowser = new FileBrowser());
-  addAndMakeVisible( codeEditor = new CodeEditor(audioEngine, *graphEditor) );
-  
-  logger.addChangeListener(codeEditor->console);
-
-  graphEditor->addChangeListener(codeEditor);
+//  logger.addChangeListener(codeEditor->console);
   graphEditor->updateComponents();
 }
 
 MainComponent::~MainComponent()
 {
   LookAndFeel::setDefaultLookAndFeel (nullptr);
-
-  //graphEditor->removeAllChangeListeners();
-  logger.removeChangeListener(codeEditor->console);
+//  logger.removeChangeListener(codeEditor->console);
   Logger::setCurrentLogger (nullptr);
 
   removeAllChildren();
@@ -51,7 +41,7 @@ MainComponent::~MainComponent()
 
 void MainComponent::resized()
 {
-  Component* hcomps[] = { graphEditor, horizontalDividerBar, interpolationSpace  };
+  Component* hcomps[] = { graphEditor, horizontalDividerBar, rightHandPanel  };
   
   horizontalLayout.layOutComponents (hcomps, 3, 0, 0, getWidth(), getHeight()-20, false, true);
 }

@@ -23,6 +23,10 @@
         <FILE id="z4s0dl" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       </GROUP>
       <GROUP id="{B0FCDBA2-07CB-C4DA-CAE0-3BE24B0D7724}" name="Panels">
+        <FILE id="tGD0p1" name="pMixRHPTabContainer.cpp" compile="1" resource="0"
+              file="../Source/pMixRHPTabContainer.cpp"/>
+        <FILE id="kJoaHO" name="pMixRHPTabContainer.h" compile="0" resource="0"
+              file="../Source/pMixRHPTabContainer.h"/>
         <GROUP id="{A0CA1618-CBBA-DD2C-2E85-AA4910A81EA8}" name="InterpolationSpace">
           <FILE id="hNo06I" name="pMixInterpolationSpaceActions.cpp" compile="1"
                 resource="0" file="../Source/pMixInterpolationSpaceActions.cpp"/>

@@ -22,7 +22,7 @@ class CodeEditor : public Component
 {
 public:
   CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
-  
+  ~CodeEditor();
   void paint (Graphics& g) override;
   
   void resized() override;

@@ -51,6 +51,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/pMixRHPTabContainer_91db8e9b.o \
   $(OBJDIR)/pMixInterpolationSpaceLayout_cb9ddbe1.o \
   $(OBJDIR)/pMixInterpolationSpaceCrosshairs_d34850c8.o \
   $(OBJDIR)/pMixInterpolationSpaceActions_92513270.o \
@@ -108,6 +109,11 @@ clean:
 strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/pMixRHPTabContainer_91db8e9b.o: ../../Source/pMixRHPTabContainer.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixRHPTabContainer.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixInterpolationSpaceLayout_cb9ddbe1.o: ../../Source/pMixInterpolationSpaceLayout.cpp
 	-@mkdir -p $(OBJDIR)
