@@ -52,7 +52,7 @@ Colour PMixParamSlider::getSliderColour()
   if (audioEngine.getDoc().getParameterIsInterpolated(nodeId, index))
     sliderColour = audioEngine.getDoc().getFilterColour(nodeId);
   else
-    sliderColour = findColour (Slider::thumbColourId);
+    sliderColour = Colours::white;
   
   return sliderColour;
 }

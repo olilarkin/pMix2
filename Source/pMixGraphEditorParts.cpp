@@ -55,7 +55,7 @@ void PinComponent::paint (Graphics& g)
   
   p.addRectangle (w * 0.4f, isInput ? (0.5f * h) : 0.0f, w * 0.2f, h * 0.5f);
   
-  g.setColour (index == PMixDocument::midiChannelNumber ? Colours::red : Colours::green);
+  g.setColour (index == PMixDocument::midiChannelNumber ? Colours::grey : Colours::black);
   g.fillPath (p);
 }
 
@@ -278,25 +278,22 @@ bool FilterComponent::hitTest (int x, int y)
 void FilterComponent::paint (Graphics& g)
 {
   g.setColour (Colours::lightgrey);
-  
+
   const int x = 4;
   const int y = pinSize;
   const int w = getWidth() - x * 2;
   const int h = getHeight() - pinSize * 2;
   
   g.fillRoundedRectangle(x, y, w, h, 3);
-  //    g.fillRect (x, y, w, h);
-  
+
   g.setColour (Colours::black);
-  //g.setFont (font);
-  //g.drawFittedText (getName(), getLocalBounds().reduced (4, 2), Justification::centred, 2);
-  
+
   if (getGraphPanel()->getLassoSelection().isSelected(this))
     g.setColour (Colours::darkgrey);
   else
     g.setColour (Colours::grey);
-  //g.drawRect (x, y, w, h);
-  g.drawRoundedRectangle(x, y, w, h, 3, 2);
+
+  g.drawRoundedRectangle(x, y, w, h, 2, 2);
 }
 
 void FilterComponent::resized()
@@ -375,7 +372,7 @@ void FilterComponent::update()
     addAndMakeVisible(filterName = new Label(name, name));
     filterName->setJustificationType(Justification::centred);
     filterName->setInterceptsMouseClicks(false, false);
-  
+    filterName->setFont(Font(12.f));
   
     if(!InternalPluginFormat::isInternalFormat(name))
     {
@@ -533,11 +530,11 @@ void ConnectorComponent::paint (Graphics& g)
   if (sourceFilterChannel == PMixDocument::midiChannelNumber
       || destFilterChannel == PMixDocument::midiChannelNumber)
   {
-    g.setColour (Colours::red);
+    g.setColour (Colours::grey);
   }
   else
   {
-    g.setColour (Colours::green);
+    g.setColour (Colours::black);
   }
   
   g.fillPath (linePath);
@@ -617,7 +614,7 @@ void ConnectorComponent::resized()
   PathStrokeType wideStroke (8.0f);
   wideStroke.createStrokedPath (hitPath, linePath);
   
-  PathStrokeType stroke (2.5f);
+  PathStrokeType stroke (1.5f);
   //stroke.createStrokedPath (linePath, linePath);
   float dashes[2] = { 4, 4 };
   stroke.createDashedStroke(linePath, linePath, dashes, 2);
