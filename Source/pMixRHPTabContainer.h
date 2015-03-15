@@ -46,6 +46,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    CodeEditor* getCodeEditor() { return dynamic_cast<CodeEditor*>(tabbedComponent->getTabContentComponent(0)); }
     //[/UserMethods]
 
     void paint (Graphics& g);

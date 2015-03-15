@@ -130,7 +130,6 @@ void GraphEditor::changeListenerCallback (ChangeBroadcaster* source)
   if (source == &selectedItems)
   {
     sendChangeMessage();
-
     repaint();
   }
   else
@@ -437,3 +436,12 @@ void GraphEditor::updateFaustNode (uint32 nodeID, String& newSourceCode)
   sendChangeMessage();
 }
 
+void GraphEditor::clear()
+{
+  for (int i = audioEngine.getDoc().getNumFilters(); --i >= 0;)
+  {
+    const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
+    
+    getComponentForFilter (f->nodeId)->removeEditor();
+  }
+}

@@ -17,8 +17,8 @@
 #include "pMixGraphEditor.h"
 
 class CodeEditor : public Component
+                 , public MenuBarModel
                  , public ChangeListener
-                 , public Button::Listener
 {
 public:
   CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
@@ -30,9 +30,17 @@ public:
   void changeListenerCallback (ChangeBroadcaster* source);
   void buttonClicked (Button* button);
   
+  StringArray getMenuBarNames() override;
+  PopupMenu getMenuForIndex (int menuIndex, const String& menuName) override;
+  void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
+  
+  void clear();
+  
 private:
   FaustTokeniser tokeniser;
   CodeDocument codeDocument;
+  
+  ScopedPointer<MenuBarComponent> menuBar;
   ScopedPointer<CodeEditorComponent> editor;
   ScopedPointer<WebBrowser> webBrowser;
 
@@ -41,9 +49,6 @@ private:
 
   StretchableLayoutManager verticalLayout;
   ScopedPointer<StretchableLayoutResizerBar> dividerBar1, dividerBar2;
-
-  TextButton compileButton;
-  TextButton svgButton;
   FaustAudioPluginInstance* selectedFaustAudioPluginInstance;
   uint32 selectedNodeID;
   

@@ -31,7 +31,8 @@ public:
   void resized();
   void setZoom (double scale);
   double getZoom() const;
-
+  void clear();
+  
 private:
   pMixLookAndFeel lookAndFeel;
   PMixAudioEngine& audioEngine;

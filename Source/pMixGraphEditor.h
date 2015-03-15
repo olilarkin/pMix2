@@ -43,7 +43,7 @@ public:
   void resized();
   void changeListenerCallback (ChangeBroadcaster* source);
   void updateComponents();
-
+  void clear();
   
   void beginConnectorDrag (uint32 sourceFilterID, int sourceFilterChannel,
                            uint32 destFilterID, int destFilterChannel,

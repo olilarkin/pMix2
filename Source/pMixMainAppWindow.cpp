@@ -338,6 +338,7 @@ bool MainAppWindow::perform (const InvocationInfo& info)
     case CommandIDs::newdoc:
       if (mainComponent != nullptr && audioEngine.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
       {
+        getMainComponent()->clear();
         audioEngine.getDoc().clear();
         audioEngine.getDoc().initialize();
       }

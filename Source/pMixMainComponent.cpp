@@ -54,3 +54,9 @@ double MainComponent::getZoom() const
 {
   return 1.0;
 }
+
+void MainComponent::clear()
+{
+  graphEditor->clear();
+  rightHandPanel->getCodeEditor()->clear();
+}
