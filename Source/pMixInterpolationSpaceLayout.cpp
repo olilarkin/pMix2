@@ -154,8 +154,9 @@ void InterpolationSpacePreset::changeListenerCallback (ChangeBroadcaster* source
   }
 }
 
-PMixInterpolationSpaceLayout::PMixInterpolationSpaceLayout(PMixAudioEngine& audioEngine)
+PMixInterpolationSpaceLayout::PMixInterpolationSpaceLayout(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 : audioEngine(audioEngine)
+, graphEditor(graphEditor)
 {
   audioEngine.getDoc().addChangeListener (this);
   selectedItems.addChangeListener(this);
@@ -186,7 +187,25 @@ void PMixInterpolationSpaceLayout::mouseDown (const MouseEvent& e)
     
     m.addItem (1, "Add preset for filter");
     
-    m.show();
+    const int r = m.show();
+    
+    if (r == 1)
+    {
+      if(graphEditor.getLassoSelection().getNumSelected() == 1)
+      {
+        FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
+        
+        if (selectedItem)
+        {
+          AudioProcessor* proc = audioEngine.getDoc().getNodeForId(selectedItem->nodeId)->getProcessor();
+          
+          if (!InternalPluginFormat::isInternalFormat(proc->getName()))
+          {
+            audioEngine.getDoc().addPreset(selectedItem->nodeId, e.getMouseDownX()/getWidth(), e.getMouseDownY()/getHeight());
+          }
+        }
+      }
+    }
   }
   else
   {

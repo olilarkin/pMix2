@@ -13,6 +13,7 @@
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
 #include "pMixInterpolationSpaceActions.h"
+#include "pMixGraphEditor.h"
 
 class InterpolationSpaceLabel : public Label
 {
@@ -56,7 +57,7 @@ class PMixInterpolationSpaceLayout : public Component
                                    , public ChangeListener
 {
 public:
-  PMixInterpolationSpaceLayout(PMixAudioEngine& audioEngine);
+  PMixInterpolationSpaceLayout(PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
   ~PMixInterpolationSpaceLayout();
 
   void paint (Graphics&);
@@ -76,6 +77,7 @@ public:
 private:
   //TooltipWindow tooltipWindow;
   PMixAudioEngine& audioEngine;
+  GraphEditor& graphEditor;
   SelectedItemSet<Component*> selectedItems;
   LassoComponent<Component*> lassoComp;
   void updateComponents();

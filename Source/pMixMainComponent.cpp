@@ -27,7 +27,7 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   //addAndMakeVisible (paramTreeView = new ParamTreeView(audioEngine));
   //addAndMakeVisible (paramView = new ParamView(audioEngine));
 
-  addAndMakeVisible(interpolationSpace = new InterpolationSpace(audioEngine));
+  addAndMakeVisible(interpolationSpace = new InterpolationSpace(audioEngine, *graphEditor));
 
 //  addAndMakeVisible( fileBrowser = new FileBrowser());
   addAndMakeVisible( codeEditor = new CodeEditor(audioEngine, *graphEditor) );
@@ -35,7 +35,6 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   logger.addChangeListener(codeEditor->console);
 
   graphEditor->addChangeListener(codeEditor);
-  
   graphEditor->updateComponents();
 }
 

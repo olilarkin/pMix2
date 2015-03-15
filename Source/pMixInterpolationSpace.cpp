@@ -1,8 +1,8 @@
 #include "pMixInterpolationSpace.h"
 
-InterpolationSpace::InterpolationSpace (PMixAudioEngine& audioEngine)
+InterpolationSpace::InterpolationSpace (PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 {
-  addAndMakeVisible(layout = new PMixInterpolationSpaceLayout(audioEngine));
+  addAndMakeVisible(layout = new PMixInterpolationSpaceLayout(audioEngine, graphEditor));
   addAndMakeVisible(crosshairs = new pMixInterpolationSpaceCrossHairs(audioEngine));
 }
 
