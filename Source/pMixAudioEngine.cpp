@@ -19,8 +19,10 @@ PMixAudioEngine::PMixAudioEngine()
   PropertiesFile::Options options;
   options.applicationName     = "pMix";
   options.filenameSuffix      = "settings";
-  options.osxLibrarySubFolder = "Preferences";
-  
+  options.osxLibrarySubFolder = "Application Support";
+#ifdef JUCE_MAC
+  options.folderName = "pMix2";
+#endif
   appProperties = new ApplicationProperties();
   appProperties->setStorageParameters (options);
   
