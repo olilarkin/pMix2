@@ -152,7 +152,7 @@ void CodeEditor::menuItemSelected (int menuItemID, int topLevelMenuIndex)
     {
       switch (menuItemID)
       {
-        case 0:
+        case 1:
         {
           String newSourceCode = codeDocument.getAllContent();
           graphEditor.updateFaustNode(selectedNodeID, newSourceCode);
