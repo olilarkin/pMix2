@@ -48,8 +48,6 @@ void CodeEditor::resized()
   Rectangle<int> area (getLocalBounds());
   menuBar->setBounds (area.removeFromTop (LookAndFeel::getDefaultLookAndFeel().getDefaultMenuBarHeight()));
 
-//  editor->setBounds (r.withTrimmedTop (40));
-  
   Component* vcomps[] = { editor, dividerBar1, webBrowser };
   
   verticalLayout.layOutComponents (vcomps, 3,
@@ -115,7 +113,7 @@ PopupMenu CodeEditor::getMenuForIndex (int menuIndex, const String& menuName)
   switch (menuIndex)
   {
     case 0:
-      menu.addItem(1, "Recompile", true);
+      menu.addItem(1, "Recompile", selectedFaustAudioPluginInstance != nullptr);
       menu.addSeparator();
       menu.addItem(2, "Import .dsp file", false);
       menu.addItem(3, "Save As .dsp file ...", false);
