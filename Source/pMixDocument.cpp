@@ -649,8 +649,12 @@ double PMixDocument::getPresetWeight(const uint32 nodeId, const int presetIdx)
   if (node != nullptr)
   {
     Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
-    DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
-    return (double) obj->getProperty("coeff");
+    
+    if (presetIdx < presetsArr->size())
+    {
+      DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+      return (double) obj->getProperty("coeff");
+    }
   }
   
   return 0.;
