@@ -57,7 +57,9 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
       {
         m.addItem (1, "Delete Preset");
         m.addItem (2, "Rename Preset");
-        m.addItem (3, "Set Colour");
+        m.addItem (3, "Update Preset");
+        m.addItem (4, "Randomize Preset");
+        m.addItem (5, "Set Colour");
       }
     }
     
@@ -177,8 +179,20 @@ void PMixInterpolationSpaceLayout::paint (Graphics& g)
 void PMixInterpolationSpaceLayout::mouseDown (const MouseEvent& e)
 {
   selectedItems.deselectAll();
-  addChildComponent (lassoComp);
-  lassoComp.beginLasso (e, this);
+  
+  if (e.mods.isPopupMenu())
+  {
+    PopupMenu m;
+    
+    m.addItem (1, "Add preset for filter");
+    
+    m.show();
+  }
+  else
+  {
+    addChildComponent (lassoComp);
+    lassoComp.beginLasso (e, this);
+  }
 }
 
 void PMixInterpolationSpaceLayout::mouseDrag (const MouseEvent& e)
