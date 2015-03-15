@@ -591,7 +591,7 @@ void PMixDocument::addPreset(const uint32 nodeId, double x, double y)
   obj->setProperty("radius", 1.);
   obj->setProperty("hidden", false);
 //  obj->setProperty("distance", 0.);
-  obj->setProperty("coeff", 0.);
+  obj->setProperty("coeff", 1.);
   obj->setProperty("state", paramValues);
 
   var preset = var(obj);
