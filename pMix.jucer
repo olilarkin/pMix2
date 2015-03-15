@@ -92,6 +92,7 @@
         <FILE id="NgTWTW" name="pMixApp.cpp" compile="1" resource="0" file="Source/pMixApp.cpp"/>
         <FILE id="QyuONq" name="pMixApp.h" compile="0" resource="0" file="Source/pMixApp.h"/>
       </GROUP>
+      <FILE id="mevvda" name="pMixConstants.h" compile="0" resource="0" file="Source/pMixConstants.h"/>
       <FILE id="hlYhw1" name="pMixDefaultColours.h" compile="0" resource="0"
             file="Source/pMixDefaultColours.h"/>
       <FILE id="zVO2XV" name="pMixCommandIDs.h" compile="0" resource="0"

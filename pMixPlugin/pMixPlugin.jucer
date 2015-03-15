@@ -96,6 +96,7 @@
         <FILE id="y3b3r7" name="pMixCodeEditor.h" compile="0" resource="0"
               file="../Source/pMixCodeEditor.h"/>
       </GROUP>
+      <FILE id="OXvZEi" name="pMixConstants.h" compile="0" resource="0" file="../Source/pMixConstants.h"/>
       <FILE id="kooByR" name="pMixGenericEditor.cpp" compile="1" resource="0"
             file="../Source/pMixGenericEditor.cpp"/>
       <FILE id="i6bGfC" name="pMixGenericEditor.h" compile="0" resource="0"

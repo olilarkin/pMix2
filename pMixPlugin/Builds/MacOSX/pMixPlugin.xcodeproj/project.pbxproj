@@ -171,6 +171,7 @@
 		18DFF8EC0812CF22CEC00090 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixPrefsColours.h; path = ../../../Source/pMixPrefsColours.h; sourceTree = "SOURCE_ROOT"; };
 		18E7291075DF37A8A35AB302 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_StringPairArray.h"; path = "../../../../../juce/modules/juce_core/text/juce_StringPairArray.h"; sourceTree = "SOURCE_ROOT"; };
 		1902BD33542903B5FF6C7A34 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_AudioFormat.h"; path = "../../../../../juce/modules/juce_audio_formats/format/juce_AudioFormat.h"; sourceTree = "SOURCE_ROOT"; };
+		195A96421AF085F00B19DDAF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixConstants.h; path = ../../../Source/pMixConstants.h; sourceTree = "SOURCE_ROOT"; };
 		1A28C5FD4EE874E77D7E0E93 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_events.h"; path = "../../../../../juce/modules/juce_events/juce_events.h"; sourceTree = "SOURCE_ROOT"; };
 		1AE9099EFA9D2F3958B5CB42 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "juce_LuaCodeTokeniser.cpp"; path = "../../../../../juce/modules/juce_gui_extra/code_editor/juce_LuaCodeTokeniser.cpp"; sourceTree = "SOURCE_ROOT"; };
 		1B09819162874B27FFABAB7B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "juce_Atomic.h"; path = "../../../../../juce/modules/juce_core/memory/juce_Atomic.h"; sourceTree = "SOURCE_ROOT"; };
@@ -1093,6 +1094,7 @@
 		F82850DC30F7DFA5B2524BDA = {isa = PBXGroup; children = (
 					5104DAEC43C00633EC6009F9,
 					269D2EFC7C6DFAE2CDB657C3,
+					195A96421AF085F00B19DDAF,
 					A2B491ED9630BAFB4F22B682,
 					7885A4DA65A1979BABFA78C7,
 					BC0F5B0C046D94C93942CB64,

@@ -10,6 +10,7 @@
 
 #include "pMixGraphEditorParts.h"
 #include "pMixGraphEditorActions.h"
+#include "pMixConstants.h"
 
 #pragma mark -
 #pragma mark PinComponent
@@ -305,9 +306,7 @@ void FilterComponent::resized()
       const int total = pc->isInput ? numIns : numOuts;
       const int index = pc->index == PMixDocument::midiChannelNumber ? (total - 1) : pc->index;
       
-      pc->setBounds (proportionOfWidth ((1 + index) / (total + 1.0f)) - pinSize / 2,
-                     pc->isInput ? 0 : (getHeight() - pinSize),
-                     pinSize, pinSize);
+      pc->setBounds(PINS_LEFT_OFFSET + (index * OFFSET_BETWEEN_PINS), pc->isInput ? 0 : (getHeight() - pinSize), pinSize, pinSize);
     }
   }
   
@@ -356,7 +355,7 @@ void FilterComponent::update()
   int h = 50;
 
   // Update width based on number of I/O
-  w = jmax (w, (jmax (numIns, numOuts) + 1) * 20);
+  w = jmax (w, PINS_LEFT_OFFSET + ((jmax (numIns, numOuts) + 1) * OFFSET_BETWEEN_PINS));
   
   String name = f->getProcessor()->getName();
   
@@ -619,8 +618,8 @@ void ConnectorComponent::resized()
   float dashes[2] = { 4, 4 };
   stroke.createDashedStroke(linePath, linePath, dashes, 2);
   
-  const float arrowW = 5.0f;
-  const float arrowL = 4.0f;
+  const float arrowW = 3.0f;
+  const float arrowL = 2.0f;
   
   Path arrow;
   arrow.addTriangle (-arrowL, arrowW,
