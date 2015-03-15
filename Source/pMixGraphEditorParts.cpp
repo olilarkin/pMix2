@@ -292,7 +292,7 @@ void FilterComponent::paint (Graphics& g)
   g.setColour (Colours::black);
 
   if (getGraphPanel()->getLassoSelection().isSelected(this))
-    g.setColour (Colours::darkgrey);
+    g.setColour (Colours::black);
   else
     g.setColour (Colours::grey);
 
