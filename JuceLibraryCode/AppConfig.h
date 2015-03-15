@@ -31,6 +31,7 @@
 #define JUCE_MODULE_AVAILABLE_juce_cryptography          1
 #define JUCE_MODULE_AVAILABLE_juce_data_structures       1
 #define JUCE_MODULE_AVAILABLE_juce_events                1
+#define JUCE_MODULE_AVAILABLE_juce_faustllvm             1
 #define JUCE_MODULE_AVAILABLE_juce_graphics              1
 #define JUCE_MODULE_AVAILABLE_juce_gui_basics            1
 #define JUCE_MODULE_AVAILABLE_juce_gui_extra             1

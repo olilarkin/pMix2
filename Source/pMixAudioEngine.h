@@ -14,8 +14,6 @@
 
 #include "pMixDocument.h"
 #include "pMixInternalFilters.h"
-#include "FaustFileFilter.h"
-#include "FaustPluginFormat.h"
 
 ApplicationCommandManager& getCommandManager();
 

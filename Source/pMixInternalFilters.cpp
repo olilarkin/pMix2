@@ -1,6 +1,4 @@
-//#include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixInternalFilters.h"
-#include "FaustAudioProcessor.h"
 
 InternalPluginFormat::InternalPluginFormat()
 {
@@ -25,7 +23,7 @@ InternalPluginFormat::InternalPluginFormat()
   }
   
   {
-    FaustAudioProcessor::fillInitialInPluginDescription (faustDesc);
+    FaustAudioPluginInstance::fillInitialInPluginDescription (faustDesc);
   }
 }
 
@@ -45,7 +43,7 @@ AudioPluginInstance* InternalPluginFormat::createInstanceFromDescription (const 
     return new AudioProcessorGraph::AudioGraphIOProcessor (AudioProcessorGraph::AudioGraphIOProcessor::midiOutputNode);
   
   if (desc.name == faustDesc.name)
-    return new FaustAudioProcessor();
+    return new FaustAudioPluginInstance();
 
   return 0;
 }

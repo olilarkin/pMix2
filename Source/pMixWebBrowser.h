@@ -12,7 +12,6 @@
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
-#include "FaustAudioProcessor.h"
 
 class WebBrowser : public Component
                  , public ChangeListener
@@ -31,7 +30,7 @@ public:
 
 private:
   PMixAudioEngine& audioEngine;
-  FaustAudioProcessor* selectedFaustAudioProcessor;
+  FaustAudioPluginInstance* selectedFaustAudioPluginInstance;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WebBrowser);
 };

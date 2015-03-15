@@ -15,8 +15,6 @@
 #include "pMixWebBrowser.h"
 #include "pMixConsole.h"
 #include "pMixGraphEditor.h"
-#include "FaustAudioProcessor.h"
-#include "FaustCodeTokenizer.h"
 
 class CodeEditor : public Component
                  , public ChangeListener
@@ -48,7 +46,7 @@ private:
 
   TextButton compileButton;
   TextButton svgButton;
-  FaustAudioProcessor* selectedFaustAudioProcessor;
+  FaustAudioPluginInstance* selectedFaustAudioPluginInstance;
   uint32 selectedNodeID;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CodeEditor);

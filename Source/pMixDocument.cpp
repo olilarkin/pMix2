@@ -1,6 +1,5 @@
 #include "pMixDocument.h"
 #include "pMixAudioEngine.h"
-#include "FaustAudioProcessor.h"
 
 const int PMixDocument::midiChannelNumber = 0x1000;
 
@@ -65,7 +64,7 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
     if (instance != nullptr)
       node = audioEngine.getGraph().addNode (instance);
 
-    FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(instance);
+    FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
     
     if (faustProc)
       faustProc->initialize(getLibraryPath());
@@ -321,7 +320,7 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   
   if (pd.name == "Faust Effect")
   {
-    FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(instance);
+    FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
     faustProc->initialize(getLibraryPath());
   }
 
@@ -382,7 +381,7 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSou
   
   AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
   
-  FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(instance);
+  FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
   faustProc->initialize(getLibraryPath());
   
   if (newSourceCode.length())

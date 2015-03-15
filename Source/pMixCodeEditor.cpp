@@ -15,7 +15,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 , graphEditor(graphEditor)
 , compileButton("Compile")
 , svgButton("View SVG")
-, selectedFaustAudioProcessor(nullptr)
+, selectedFaustAudioPluginInstance(nullptr)
 , selectedNodeID(0)
 {
   verticalLayout.setItemLayout (0, 100, -1., -0.35);
@@ -72,11 +72,11 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
       if (selectedItem)
       {
         selectedNodeID = selectedItem->nodeId;
-        FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(audioEngine.getDoc().getNodeForId(selectedNodeID)->getProcessor());
+        FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(audioEngine.getDoc().getNodeForId(selectedNodeID)->getProcessor());
         
         if (faustProc)
         {
-          selectedFaustAudioProcessor = faustProc;
+          selectedFaustAudioPluginInstance = faustProc;
           editor->loadContent(faustProc->getSourcecode());
           return;
         }
@@ -84,13 +84,13 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
     }
   }
   
-  selectedFaustAudioProcessor = nullptr;
+  selectedFaustAudioPluginInstance = nullptr;
   editor->loadContent("");
 }
 
 void CodeEditor::buttonClicked (Button* button)
 {
-  if (selectedFaustAudioProcessor != nullptr)
+  if (selectedFaustAudioPluginInstance != nullptr)
   {
     if (button == &compileButton)
     {
@@ -100,7 +100,7 @@ void CodeEditor::buttonClicked (Button* button)
     }
     else if (button == &svgButton)
     {
-      selectedFaustAudioProcessor->getFactory()->displaySVG();
+      selectedFaustAudioPluginInstance->getFactory()->displaySVG();
     }
   }
 }

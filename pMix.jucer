@@ -84,26 +84,6 @@
         <FILE id="wQ5qtB" name="pMixGenericEditor.h" compile="0" resource="0"
               file="Source/pMixGenericEditor.h"/>
       </GROUP>
-      <GROUP id="{EADCA9A7-4EA4-DACE-AFCE-6A50FCEEFFE9}" name="Faust">
-        <FILE id="JLQaQv" name="FaustPluginFormat.h" compile="0" resource="0"
-              file="Source/FaustPluginFormat.h"/>
-        <FILE id="mdRVIA" name="FaustCodeTokenizer.cpp" compile="1" resource="0"
-              file="Source/FaustCodeTokenizer.cpp"/>
-        <FILE id="oFnEPc" name="FaustCodeTokenizer.h" compile="0" resource="0"
-              file="Source/FaustCodeTokenizer.h"/>
-        <FILE id="DwMReX" name="FaustAudioProcessorParameter.cpp" compile="1"
-              resource="0" file="Source/FaustAudioProcessorParameter.cpp"/>
-        <FILE id="WsFs9f" name="FaustAudioProcessorParameter.h" compile="0"
-              resource="0" file="Source/FaustAudioProcessorParameter.h"/>
-        <FILE id="DBJuQb" name="FaustAudioProcessor.cpp" compile="1" resource="0"
-              file="Source/FaustAudioProcessor.cpp"/>
-        <FILE id="Q4Vrll" name="FaustAudioProcessor.h" compile="0" resource="0"
-              file="Source/FaustAudioProcessor.h"/>
-        <FILE id="T4zcqX" name="FaustGenFactory.cpp" compile="1" resource="0"
-              file="Source/FaustGenFactory.cpp"/>
-        <FILE id="OHwBYB" name="FaustGenFactory.h" compile="0" resource="0"
-              file="Source/FaustGenFactory.h"/>
-      </GROUP>
       <GROUP id="{0EE3E71E-3E66-6D8E-96D1-19B55B6F2917}" name="App">
         <FILE id="RdcPAb" name="pMixMainAppWindow.cpp" compile="1" resource="0"
               file="Source/pMixMainAppWindow.cpp"/>
@@ -171,6 +151,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
+        <MODULEPATH id="juce_faustllvm" path="../../Projects"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Linux" externalLibraries="faust&#10;crypto&#10;curses"
@@ -197,6 +178,7 @@
         <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
+        <MODULEPATH id="juce_faustllvm" path="../../Projects"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
@@ -210,6 +192,7 @@
     <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_faustllvm" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>

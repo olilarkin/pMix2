@@ -13,7 +13,7 @@
 
 WebBrowser::WebBrowser(PMixAudioEngine& audioEngine)
 : audioEngine(audioEngine)
-, selectedFaustAudioProcessor(nullptr)
+, selectedFaustAudioPluginInstance(nullptr)
 {
   addAndMakeVisible (browser = new WebBrowserComponent ());
   
@@ -43,11 +43,11 @@ void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)
       
       if (selectedItem)
       {
-        FaustAudioProcessor* faustProc = dynamic_cast<FaustAudioProcessor*>(audioEngine.getDoc().getNodeForId(selectedItem->nodeId)->getProcessor());
+        FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(audioEngine.getDoc().getNodeForId(selectedItem->nodeId)->getProcessor());
         
         if (faustProc)
         {
-          selectedFaustAudioProcessor = faustProc;
+          selectedFaustAudioPluginInstance = faustProc;
           browser->goToURL(faustProc->getFactory()->getSVGPath());
           return;
         }
@@ -55,6 +55,6 @@ void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)
     }
   }
   
-  selectedFaustAudioProcessor = nullptr;
+  selectedFaustAudioPluginInstance = nullptr;
   browser->goToURL("");
 }
