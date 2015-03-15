@@ -51,7 +51,6 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
-  $(OBJDIR)/pMixRHPTabContainer_91db8e9b.o \
   $(OBJDIR)/pMixInterpolationSpaceLayout_cb9ddbe1.o \
   $(OBJDIR)/pMixInterpolationSpaceCrosshairs_d34850c8.o \
   $(OBJDIR)/pMixInterpolationSpaceActions_92513270.o \
@@ -70,6 +69,7 @@ OBJECTS := \
   $(OBJDIR)/pMixFileBrowser_37eaaf21.o \
   $(OBJDIR)/pMixConsole_f8903cec.o \
   $(OBJDIR)/pMixGenericEditor_f1457b39.o \
+  $(OBJDIR)/pMixRHPTabContainer_91db8e9b.o \
   $(OBJDIR)/pMixMainAppWindow_68a956cd.o \
   $(OBJDIR)/pMixApp_f4968cb6.o \
   $(OBJDIR)/pMixLookAndFeel_bf43c93.o \
@@ -109,11 +109,6 @@ clean:
 strip:
 	@echo Stripping pMix
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
-
-$(OBJDIR)/pMixRHPTabContainer_91db8e9b.o: ../../Source/pMixRHPTabContainer.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixRHPTabContainer.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixInterpolationSpaceLayout_cb9ddbe1.o: ../../Source/pMixInterpolationSpaceLayout.cpp
 	-@mkdir -p $(OBJDIR)
@@ -203,6 +198,11 @@ $(OBJDIR)/pMixConsole_f8903cec.o: ../../Source/pMixConsole.cpp
 $(OBJDIR)/pMixGenericEditor_f1457b39.o: ../../Source/pMixGenericEditor.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixGenericEditor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixRHPTabContainer_91db8e9b.o: ../../Source/pMixRHPTabContainer.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixRHPTabContainer.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixMainAppWindow_68a956cd.o: ../../Source/pMixMainAppWindow.cpp

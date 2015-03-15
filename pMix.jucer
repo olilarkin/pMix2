@@ -7,10 +7,6 @@
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
     <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
       <GROUP id="{CAF3F9DD-46F9-316E-823D-FDCCC4B33FF3}" name="Panels">
-        <FILE id="m7QEQv" name="pMixRHPTabContainer.cpp" compile="1" resource="0"
-              file="Source/pMixRHPTabContainer.cpp"/>
-        <FILE id="Ix2G4S" name="pMixRHPTabContainer.h" compile="0" resource="0"
-              file="Source/pMixRHPTabContainer.h"/>
         <GROUP id="{4367FB8D-95C9-2548-7796-CB25871799D4}" name="InterpolationSpace">
           <FILE id="K6myvS" name="pMixInterpolationSpaceLayout.cpp" compile="1"
                 resource="0" file="Source/pMixInterpolationSpaceLayout.cpp"/>
@@ -87,6 +83,10 @@
               file="Source/pMixGenericEditor.cpp"/>
         <FILE id="wQ5qtB" name="pMixGenericEditor.h" compile="0" resource="0"
               file="Source/pMixGenericEditor.h"/>
+        <FILE id="m7QEQv" name="pMixRHPTabContainer.cpp" compile="1" resource="0"
+              file="Source/pMixRHPTabContainer.cpp"/>
+        <FILE id="Ix2G4S" name="pMixRHPTabContainer.h" compile="0" resource="0"
+              file="Source/pMixRHPTabContainer.h"/>
       </GROUP>
       <GROUP id="{0EE3E71E-3E66-6D8E-96D1-19B55B6F2917}" name="App">
         <FILE id="RdcPAb" name="pMixMainAppWindow.cpp" compile="1" resource="0"
@@ -135,11 +135,11 @@
                extraCompilerFlags="" extraDefs="" postbuildCommand="cp $SRCROOT/../../FaustLibs/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.9 SDK" osxCompatibility="10.7 SDK" osxArchitecture="64BitUniversal"
-                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/usr/local/lib&#10;/opt/local/lib&#10;/opt/local/libexec/llvm-3.5/lib"
+                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib&#10;../../OSXStaticLibs"
                        headerPath="/usr/local/include" cppLibType="libc++"/>
         <CONFIGURATION name="Release" osxSDK="10.9 SDK" osxCompatibility="10.7 SDK"
                        osxArchitecture="64BitUniversal" isDebug="0" optimisation="2"
-                       targetName="pMix" headerPath="/usr/local/include" libraryPath="/usr/local/lib&#10;/opt/local/lib&#10;/opt/local/libexec/llvm-3.5/lib"
+                       targetName="pMix" headerPath="/usr/local/include" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib&#10;../../OSXStaticLibs"
                        cppLibType="libc++"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
