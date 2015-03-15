@@ -159,6 +159,8 @@ void FilterComponent::mouseDown (const MouseEvent& e)
           audioEngine.getDoc().beginTransaction();
           audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, nodeId), TRANS("remove filter"));
         }
+        
+        getGraphPanel()->getLassoSelection().deselectAll();
       }
       return;
     }
