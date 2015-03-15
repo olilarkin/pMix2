@@ -1,0 +1,26 @@
+diff --git a/modules/juce_audio_processors/processors/juce_AudioProcessorGraph.cpp b/modules/juce_audio_processors/processors/juce_AudioProcessorGraph.cpp
+index 84dd0e2..87a8ea9 100644
+--- a/modules/juce_audio_processors/processors/juce_AudioProcessorGraph.cpp
++++ b/modules/juce_audio_processors/processors/juce_AudioProcessorGraph.cpp
+@@ -1183,7 +1183,7 @@ void AudioProcessorGraph::buildRenderingSequence()
+     int numMidiBuffersNeeded = 1;
+ 
+     {
+-        MessageManagerLock mml;
++        //MessageManagerLock mml;
+ 
+         Array<Node*> orderedNodes;
+ 
+diff --git a/modules/juce_core/text/juce_Identifier.cpp b/modules/juce_core/text/juce_Identifier.cpp
+index bac4dd5..7e670dd 100644
+--- a/modules/juce_core/text/juce_Identifier.cpp
++++ b/modules/juce_core/text/juce_Identifier.cpp
+@@ -42,7 +42,7 @@ Identifier::Identifier (const String& nm)
+ {
+     /* An Identifier string must be suitable for use as a script variable or XML
+        attribute, so it can only contain this limited set of characters.. */
+-    jassert (isValidIdentifier (toString()));
++    //jassert (isValidIdentifier (toString()));
+ }
+ 
+ Identifier::Identifier (const char* nm)
