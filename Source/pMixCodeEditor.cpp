@@ -60,6 +60,11 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
 {
   if (source == &graphEditor)
   {
+    if (selectedFaustAudioPluginInstance != nullptr)
+    {
+      selectedFaustAudioPluginInstance->setSourceCode(codeDocument.getAllContent(), false);
+    }
+    
     if(graphEditor.getLassoSelection().getNumSelected() == 1)
     {
       FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
@@ -72,7 +77,7 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
         if (faustProc)
         {
           selectedFaustAudioPluginInstance = faustProc;
-          editor->loadContent(faustProc->getSourcecode());
+          editor->loadContent(faustProc->getSourceCode());
           editor->setInterceptsMouseClicks(true, true);
           return;
         }
@@ -82,22 +87,6 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
   
   clear();
 }
-
-//void CodeEditor::buttonClicked (Button* button)
-//{
-//  if (selectedFaustAudioPluginInstance != nullptr)
-//  {
-//    if (button == &compileButton)
-//    {
-//      String newSourceCode = codeDocument.getAllContent();
-//      graphEditor.updateFaustNode(selectedNodeID, newSourceCode);
-//    }
-//    else if (button == &svgButton)
-//    {
-//      selectedFaustAudioPluginInstance->getFactory()->displaySVG();
-//    }
-//  }
-//}
 
 StringArray CodeEditor::getMenuBarNames()
 {
