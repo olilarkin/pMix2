@@ -10,6 +10,8 @@
 	<string>pMixPlugin</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>7DEA6241D71055AD1006E431D76C8F71EF2344BE</key>
+		<string>github.com:CMRCYork/juce_faustllvm.git</string>
 		<key>9C4DEC88FC1CEE2147E5A7C05BFC5F77BC0A7A98</key>
 		<string>bitbucket.org:olilarkin/pmix.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>pMixPlugin/Builds/MacOSX/pMixPlugin.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>7DEA6241D71055AD1006E431D76C8F71EF2344BE</key>
+		<string>../../../../../../juce_faustllvm</string>
 		<key>9C4DEC88FC1CEE2147E5A7C05BFC5F77BC0A7A98</key>
 		<string>../../../../..</string>
 	</dict>
@@ -28,6 +32,14 @@
 	<string>9C4DEC88FC1CEE2147E5A7C05BFC5F77BC0A7A98</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7DEA6241D71055AD1006E431D76C8F71EF2344BE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>juce_faustllvm</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

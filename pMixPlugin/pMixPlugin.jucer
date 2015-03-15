@@ -96,24 +96,6 @@
         <FILE id="y3b3r7" name="pMixCodeEditor.h" compile="0" resource="0"
               file="../Source/pMixCodeEditor.h"/>
       </GROUP>
-      <GROUP id="{73074A0B-8FC5-C225-CA50-71BB74C20300}" name="Faust">
-        <FILE id="RtOzhU" name="FaustCodeTokenizer.cpp" compile="1" resource="0"
-              file="../Source/FaustCodeTokenizer.cpp"/>
-        <FILE id="PjNMdK" name="FaustCodeTokenizer.h" compile="0" resource="0"
-              file="../Source/FaustCodeTokenizer.h"/>
-        <FILE id="ifotW3" name="FaustAudioProcessorParameter.cpp" compile="1"
-              resource="0" file="../Source/FaustAudioProcessorParameter.cpp"/>
-        <FILE id="KLDxNm" name="FaustAudioProcessorParameter.h" compile="0"
-              resource="0" file="../Source/FaustAudioProcessorParameter.h"/>
-        <FILE id="kUfRnk" name="FaustAudioProcessor.cpp" compile="1" resource="0"
-              file="../Source/FaustAudioProcessor.cpp"/>
-        <FILE id="FquO7I" name="FaustAudioProcessor.h" compile="0" resource="0"
-              file="../Source/FaustAudioProcessor.h"/>
-        <FILE id="LMyfdk" name="FaustGenFactory.cpp" compile="1" resource="0"
-              file="../Source/FaustGenFactory.cpp"/>
-        <FILE id="mFUulE" name="FaustGenFactory.h" compile="0" resource="0"
-              file="../Source/FaustGenFactory.h"/>
-      </GROUP>
       <FILE id="kooByR" name="pMixGenericEditor.cpp" compile="1" resource="0"
             file="../Source/pMixGenericEditor.cpp"/>
       <FILE id="i6bGfC" name="pMixGenericEditor.h" compile="0" resource="0"
@@ -175,6 +157,7 @@
         <MODULEPATH id="juce_audio_processors" path="../../../juce/modules"/>
         <MODULEPATH id="juce_audio_plugin_client" path="../../../juce/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../../juce/modules"/>
+        <MODULEPATH id="juce_faustllvm" path="../../../Projects"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -189,11 +172,12 @@
     <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_faustllvm" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_QUICKTIME="disabled" JUCE_PLUGINHOST_VST="enabled" JUCE_PLUGINHOST_VST3="enabled"
-               JUCE_PLUGINHOST_AU="enabled"/>
+  <JUCEOPTIONS JUCE_QUICKTIME="disabled" JUCE_PLUGINHOST_VST="enabled" JUCE_PLUGINHOST_VST3="disabled"
+               JUCE_PLUGINHOST_AU="disabled"/>
 </JUCERPROJECT>
