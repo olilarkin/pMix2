@@ -15,11 +15,8 @@
 #include "pMixGraphEditor.h"
 #include "pMixCodeEditor.h"
 #include "pMixLookAndFeel.h"
-//#include "pMixFileBrowser.h"
 #include "pMixConsole.h"
 #include "pMixLogger.h"
-//#include "pMixParamTreeView.h"
-//#include "pMixParamView.h"
 #include "pMixRHPTabContainer.h"
 
 class MainComponent  : public Component
@@ -37,14 +34,9 @@ private:
   pMixLookAndFeel lookAndFeel;
   PMixAudioEngine& audioEngine;
   
-//  ScopedPointer<CodeEditor> codeEditor;
   ScopedPointer<GraphEditor> graphEditor;
-//  ScopedPointer<FileBrowser> fileBrowser;
-//  ScopedPointer<InterpolationSpace> interpolationSpace;
   StretchableLayoutManager horizontalLayout;
   ScopedPointer<StretchableLayoutResizerBar> horizontalDividerBar;
-//  ScopedPointer<ParamTreeView> paramTreeView;
-//  ScopedPointer<ParamView> paramView;
 
   PMixLogger logger;
   ScopedPointer<PMixTabContainer> rightHandPanel;
