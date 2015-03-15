@@ -60,10 +60,10 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
 {
   if (source == &graphEditor)
   {
-    if (selectedFaustAudioPluginInstance != nullptr)
-    {
-      selectedFaustAudioPluginInstance->setSourceCode(codeDocument.getAllContent(), false);
-    }
+//    if (selectedFaustAudioPluginInstance != nullptr)
+//    {
+//      selectedFaustAudioPluginInstance->setSourceCode(codeDocument.getAllContent(), false);
+//    }
     
     if(graphEditor.getLassoSelection().getNumSelected() == 1)
     {
