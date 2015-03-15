@@ -284,7 +284,7 @@ void FilterComponent::paint (Graphics& g)
   const int w = getWidth() - x * 2;
   const int h = getHeight() - pinSize * 2;
   
-  g.fillRoundedRectangle(x, y, w, h, 3);
+  g.fillRect(x, y, w, h);
 
   g.setColour (Colours::black);
 
@@ -293,7 +293,7 @@ void FilterComponent::paint (Graphics& g)
   else
     g.setColour (Colours::grey);
 
-  g.drawRoundedRectangle(x, y, w, h, 2, 2);
+  g.drawRoundedRectangle(x, y, w, h, 2, 1);
 }
 
 void FilterComponent::resized()
@@ -372,7 +372,7 @@ void FilterComponent::update()
     addAndMakeVisible(filterName = new Label(name, name));
     filterName->setJustificationType(Justification::centred);
     filterName->setInterceptsMouseClicks(false, false);
-    filterName->setFont(Font(12.f));
+    filterName->setFont(font);
   
     if(!InternalPluginFormat::isInternalFormat(name))
     {
