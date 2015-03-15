@@ -161,7 +161,10 @@ void MainAppWindow::menuItemSelected (int menuItemID, int topLevelMenuIndex)
     recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()->getValue ("recentPMixDocumentFiles"));
 
     if (mainComponent != nullptr && audioEngine.getDoc().saveIfNeededAndUserAgrees() == FileBasedDocument::savedOk)
+    {
+      getMainComponent()->clear();
       audioEngine.getDoc().loadFrom (recentFiles.getFile (menuItemID - CommandIDs::recentFilesMenu), true);
+    }
   }
 }
 
