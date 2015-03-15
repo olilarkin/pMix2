@@ -23,6 +23,7 @@ public:
 
 class InterpolationSpacePreset : public Component
                                , public ChangeListener
+                               , public LabelListener
 {
 public:
   InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeId, const uint32 presetIdx, Colour colour);
@@ -35,6 +36,9 @@ public:
   
   void changeListenerCallback (ChangeBroadcaster* source);
 
+  void labelTextChanged (Label* labelThatHasChanged);
+
+  
   void update();
   
 public:

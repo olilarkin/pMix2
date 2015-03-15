@@ -8,6 +8,7 @@
 */
 
 #include "pMixInterpolationSpaceLayout.h"
+#include "pMixConstants.h"
 
 InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
 : Label(String::empty, labelText)
@@ -28,18 +29,21 @@ InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine,
 , colour(colour)
 , opacity(1.)
 {
-  //addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));
+  addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));
+  label->addListener(this);
 }
 
 InterpolationSpacePreset::~InterpolationSpacePreset ()
 {
+  label->removeListener(this);
 }
 
 void InterpolationSpacePreset::resized ()
 {
   int radius = getWidth()/2;
-  boundsConstrainer.setMinimumOnscreenAmounts(radius,radius,radius,radius);
-  //  label->centreWithSize(getWidth()-5, 20);
+  boundsConstrainer.setMinimumOnscreenAmounts(radius, radius, radius, radius);
+  label->setBounds(0, 40., getWidth(), 20);
+  //label->centreWithSize(getWidth()-5, 20);
 }
 
 void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
@@ -71,7 +75,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
     }
     else if (r == 2)
     {
-      
+      label->showEditor();
     }
     else if (r == 3)
     {
@@ -152,6 +156,11 @@ void InterpolationSpacePreset::changeListenerCallback (ChangeBroadcaster* source
   {
     audioEngine.getDoc().setFilterColour(nodeId, cs->getCurrentColour());
   }
+}
+
+void InterpolationSpacePreset::labelTextChanged (Label* labelThatHasChanged)
+{
+  audioEngine.getDoc().setPresetName(nodeId, presetIdx, labelThatHasChanged->getText());
 }
 
 PMixInterpolationSpaceLayout::PMixInterpolationSpaceLayout(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
@@ -290,7 +299,7 @@ void PMixInterpolationSpaceLayout::updateComponents()
           String componentID;
           componentID << "p." << (int) f->nodeId << "." << presetIdx;
           comp->setComponentID(componentID);
-          float r = 50.f + (100.f * (float) obj->getProperty("radius"));
+          float r = MIN_RADIUS + (RADIUS_RANGE * (float) obj->getProperty("radius"));
           float x = getWidth() * (float) obj->getProperty("x");
           float y = getHeight() * (float) obj->getProperty("y");
           comp->setBounds(x, y, r, r);

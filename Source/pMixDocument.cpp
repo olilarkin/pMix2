@@ -625,6 +625,8 @@ void PMixDocument::setPresetPosition (const uint32 nodeId, const int presetIdx, 
     obj->setProperty("x", jlimit (0.0, 1.0, x));
     obj->setProperty("y", jlimit (0.0, 1.0, y));
   }
+  
+  changed();
 }
 
 void PMixDocument::getPresetPosition (const uint32 nodeId, const int presetIdx, double& x, double& y) const
@@ -657,6 +659,20 @@ double PMixDocument::getPresetWeight(const uint32 nodeId, const int presetIdx)
   }
   
   return 0.;
+}
+
+void PMixDocument::setPresetName(const uint32 nodeId, const int presetIdx, String newName)
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (node != nullptr)
+  {
+    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+    DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+    obj->setProperty("name", newName);
+  }
+  
+  changed();
 }
 
 void PMixDocument::setFilterColour(const uint32 nodeId, const Colour colour)

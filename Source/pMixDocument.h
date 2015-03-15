@@ -33,6 +33,7 @@ public:
   void getPresetPosition(const uint32 nodeId, const int presetIdx, double& x, double& y) const;
   double getPresetWeight(const uint32 nodeId, const int presetIdx);
   void removePreset(const uint32 nodeId, const int presetIdx);
+  void setPresetName(const uint32 nodeId, const int presetIdx, String newName);
 
   void setFilterIPos(const uint32 nodeId, double x, double y);
   void getFilterIPos(const uint32 nodeId, double& x, double& y) const;
