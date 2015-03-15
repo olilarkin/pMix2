@@ -595,10 +595,9 @@ void PMixDocument::addPreset(const uint32 nodeId, double x, double y)
   obj->setProperty("state", paramValues);
 
   var preset = var(obj);
-  
   presetsArr->append(preset);
-  
-  changed();
+
+  setFilterIPos(nodeId, x, y); // will call changed()
 }
 
 void PMixDocument::removePreset(const uint32 nodeId, const int presetIdx)
