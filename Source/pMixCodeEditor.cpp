@@ -146,6 +146,24 @@ PopupMenu CodeEditor::getMenuForIndex (int menuIndex, const String& menuName)
 
 void CodeEditor::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 {
+  switch (topLevelMenuIndex)
+  {
+    case 0:
+    {
+      switch (menuItemID)
+      {
+        case 0:
+        {
+          String newSourceCode = codeDocument.getAllContent();
+          graphEditor.updateFaustNode(selectedNodeID, newSourceCode);
+          break;
+        }
+      }
+      break;
+    }
+    default:
+      break;
+  }
 }
 
 void CodeEditor::clear()
