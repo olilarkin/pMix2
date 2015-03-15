@@ -363,7 +363,7 @@ void FilterComponent::update()
   
   setName (name);
 
-  if (numIns != numInputs || numOuts != numOutputs)
+  if (numIns != numInputs || numOuts != numOutputs || editor == nullptr)
   {
     numInputs = numIns;
     numOutputs = numOuts;
