@@ -43,34 +43,4 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginWindow)
 };
 
-//class ProcessorProgramPropertyComp : public PropertyComponent,
-//private AudioProcessorListener
-//{
-//public:
-//  ProcessorProgramPropertyComp (const String& name, AudioProcessor& p, int index_);
-//  ~ProcessorProgramPropertyComp();
-//  void refresh();
-//  void audioProcessorChanged (AudioProcessor*);
-//  void audioProcessorParameterChanged (AudioProcessor*, int, float);
-//  
-//private:
-//  AudioProcessor& owner;
-//  const int index;
-//  
-//  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProcessorProgramPropertyComp)
-//};
-//
-//class ProgramAudioProcessorEditor : public AudioProcessorEditor
-//{
-//public:
-//  ProgramAudioProcessorEditor (AudioProcessor* const p);
-//  void paint (Graphics& g);
-//  void resized();
-//  
-//private:
-//  PropertyPanel panel;
-//  
-//  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProgramAudioProcessorEditor)
-//};
-
 #endif  // PMIXPLUGINWINDOW_H_INCLUDED
