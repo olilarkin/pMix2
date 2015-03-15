@@ -58,17 +58,15 @@ void PMixAudioEngine::changeListenerCallback (ChangeBroadcaster* broadcaster)
 {
   if (broadcaster == &knownPluginList)
   {
-//    menuItemsChanged();
-//    
-//    // save the plugin list every time it gets chnaged, so that if we're scanning
-//    // and it crashes, we've still saved the previous ones
-//    ScopedPointer<XmlElement> savedPluginList (knownPluginList.createXml());
-//    
-//    if (savedPluginList != nullptr)
-//    {
-//      getAppProperties().getUserSettings()->setValue ("pluginList", savedPluginList);
-//      getAppProperties().saveIfNeeded();
-//    }
+    // save the plugin list every time it gets chnaged, so that if we're scanning
+    // and it crashes, we've still saved the previous ones
+    ScopedPointer<XmlElement> savedPluginList (knownPluginList.createXml());
+    
+    if (savedPluginList != nullptr)
+    {
+      getAppProperties().getUserSettings()->setValue ("pluginList", savedPluginList);
+      getAppProperties().saveIfNeeded();
+    }
   }
 }
 

@@ -432,12 +432,12 @@ void MainAppWindow::showPreferences()
 
   o.runModal();
 
-//  ScopedPointer<XmlElement> audioState (getDeviceManager().createStateXml());
-//
-//  audioEngine.getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
-//  audioEngine.getAppProperties().getUserSettings()->saveIfNeeded();
-//
-//  audioEngine.getDoc().removeIllegalConnections();
+  ScopedPointer<XmlElement> audioState (getDeviceManager().createStateXml());
+
+  audioEngine.getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
+  audioEngine.getAppProperties().getUserSettings()->saveIfNeeded();
+
+  audioEngine.getDoc().removeIllegalConnections();
 }
 
 MainComponent* MainAppWindow::getMainComponent() const
