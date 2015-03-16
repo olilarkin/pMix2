@@ -166,8 +166,8 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/&#10;/usr/lib/llvm-3.5/lib/"
                        isDebug="1" optimisation="1" targetName="pMix" linuxArchitecture="-m64"/>
-        <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
-                       targetName="pMix" linuxArchitecture="-m64"/>
+        <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/&#10;/usr/lib/llvm-3.5/lib/"
+                       isDebug="0" optimisation="2" targetName="pMix" linuxArchitecture="-m64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_opengl" path="../../juce/modules"/>
