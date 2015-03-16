@@ -10,7 +10,7 @@
 #ifndef FAUSTCODETOKENIZER_H_INCLUDED
 #define FAUSTCODETOKENIZER_H_INCLUDED
 
-#include "juce_gui_extra.h"
+#include "modules/juce_gui_extra/juce_gui_extra.h"
 
 using namespace juce;
 

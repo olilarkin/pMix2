@@ -65,7 +65,7 @@ FaustgenFactory::FaustgenFactory(const String& name, const File& path)
   // Built the complete resource path
   fLibraryPath.add(path);
   
-#if JUCE_MAC
+#if JUCE_MAC || JUCE_LINUX
   // Draw path in temporary folder
   fDrawPath = FAUST_DRAW_PATH;
 #endif
@@ -119,7 +119,7 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
   
   // Prepare compile options
   std::string error;
- 	const char* argv[32];
+  const char* argv[32];
   memset(argv, 0, 32 * sizeof(char*));
   
   jassert(fCompileOptions.size() < 32);
@@ -355,7 +355,7 @@ bool FaustgenFactory::tryOpenSVG()
 {
   // Open the svg diagram file inside a web browser
   char command[512];
-#ifdef WIN32
+#ifdef JUCE_WIN32
   sprintf(command, "type \"file:///%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
 #else
   sprintf(command, "open -a Safari \"file://%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
@@ -367,7 +367,7 @@ void FaustgenFactory::openSVG()
 {
   // Open the svg diagram file inside a web browser
   char command[512];
-#ifdef WIN32
+#ifdef JUCE_WIN32
   sprintf(command, "start \"\" \"file:///%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
 #else
   sprintf(command, "open -a Safari \"file://%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
@@ -380,7 +380,7 @@ void FaustgenFactory::removeSVG()
 {
   // Possibly done by "compileoptions" or displaySVG
   char command[512];
-#ifdef WIN32
+#ifdef JUCE_WIN32
   sprintf(command, "rmdir /S/Q \"%sfaustgen-%d-svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
 #else
   sprintf(command, "rm -r \"%sfaustgen-%d-svg\"", fDrawPath.toRawUTF8(), fFaustNumber);

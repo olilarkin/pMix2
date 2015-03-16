@@ -11,7 +11,7 @@
 #define FaustAudioProcessorParameter_H_INCLUDED
 
 #include "FaustAudioPluginInstance.h"
-#include "juce_audio_processors.h"
+#include "modules/juce_audio_processors/juce_audio_processors.h"
 
 using namespace juce;
 

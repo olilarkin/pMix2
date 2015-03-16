@@ -10,7 +10,6 @@
 #ifndef FAUSTPLUGINFORMAT_H_INCLUDED
 #define FAUSTPLUGINFORMAT_H_INCLUDED
 
-#include "JuceHeader.h"
 #include "FaustAudioPluginInstance.h"
 
 class FaustPluginFormat   : public AudioPluginFormat

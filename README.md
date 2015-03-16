@@ -16,13 +16,15 @@ Due to the complexity of this project please closely follow the instructions:
 
 **VST3 SDK**
 
-The IntroJucer projects expect the Steinberg VST 3 SDK to be installed in this location: ~/SDKs/VST3 SDK 
+The IntroJucer projects expect the Steinberg VST 3 SDK to be installed in this location: 
+
+~/SDKs/VST3 SDK 
 
 You can download the VST3 SDK here: https://www.steinberg.net/en/company/developers.html
 
 vstsdk360_22_11_2013_build_100.zip was used
 
-see note below regarding vst 2.4 SDK.
+see note below regarding VST2.4 SDK.
 
 **LLVM 3.5**
 
@@ -30,7 +32,7 @@ Install via Macports e.g. sudo port install llvm-3.5 +universal . The .jucer pro
 
 **FAUST (faust2 branch)**
 
-You need to have built and installed the faust2 branch from source and it should be build against LLVM/CLANG 3.5. You will probably need libmicrohttpd, libsndfile installed as well. Consult the faust documentation/mailing list. NOTE: the macports faust2-devel is using LLVM/CLANG 3.4. 
+You need to have built and installed the faust2 branch from source and it should be built against LLVM/CLANG 3.5. You will probably need libmicrohttpd, libsndfile installed as well. Consult the faust documentation/mailing list. NOTE: the macports faust2-devel is using LLVM/CLANG 3.4. 
 
 The .jucer projects expect to link against /usr/local/lib/libfaust.a
 
@@ -64,7 +66,7 @@ See http://www.juce.com/learn/introjucer
 
 * pMix has been developed on Mac OSX and there hasn't yet been time to get it working on the other intended platforms! Hopefully there should not be any platform dependencies that prevent it working on Linux and Windows.
 * JUCE's VST2 plug-in support is most mature, so VST2 plug-ins are preferable to VST3, however Steinberg no longer distribute the VST2.4 SDK so VST3 support must be enabled in order to find the VST2.4 headers in the VST3 SDK.
-* If you don't care about plugin hostingsupport, you can disable it on the juce_audio_processors module tab by opening the pMix.jucer in the Introjucer.
+* If you don't care about plugin hosting support, you can disable it on the juce_audio_processors module tab by opening the pMix.jucer in the Introjucer.
 * AU plug-in hosting is currently disabled, you can turn it on via thte introjucer
 
 **License:**

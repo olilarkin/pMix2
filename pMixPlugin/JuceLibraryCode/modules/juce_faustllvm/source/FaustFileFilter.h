@@ -10,7 +10,7 @@
 #ifndef FAUSTFILEFILTER_H_INCLUDED
 #define FAUSTFILEFILTER_H_INCLUDED
 
-#include "juce_core.h"
+#include "modules/juce_core/juce_core.h"
 
 class FaustDSPFileFilter : public FileFilter
 {

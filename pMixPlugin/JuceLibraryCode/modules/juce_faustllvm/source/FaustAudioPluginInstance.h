@@ -39,7 +39,7 @@
 #ifndef FaustAudioPluginInstance_H_INCLUDED
 #define FaustAudioPluginInstance_H_INCLUDED
 
-#include "juce_audio_processors.h"
+#include "modules/juce_audio_processors/juce_audio_processors.h"
 
 #include "FaustGenFactory.h"
 #include "faust/gui/UI.h"
