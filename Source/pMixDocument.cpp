@@ -67,8 +67,10 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
     FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
     
     if (faustProc)
+    {
       faustProc->initialize(getLibraryPath());
-    
+    }
+
     if (node != nullptr)
     {
       node->properties.set ("x", x);
@@ -746,9 +748,9 @@ void PMixDocument::setFilterIPos(const uint32 nodeId, double x, double y)
 
     Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
     int numPresets = presetsArr->size();
-    double distances[numPresets];
+    Array<double> distances;
     
-    // work out the distances
+    // work out the disstances
     for (int presetIdx = 0; presetIdx < numPresets; presetIdx++)
     {
       DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
@@ -759,9 +761,9 @@ void PMixDocument::setFilterIPos(const uint32 nodeId, double x, double y)
       double b = pposy - iposy;    //y dist
       
       if(a == 0. && b == 0.)
-        distances[presetIdx] = 0.;
+        distances.add(0.);
       else
-        distances[presetIdx] = sqrt(a*a+b*b);
+        distances.add(sqrt(a*a+b*b));
     }
     
     // now do coeefficient
