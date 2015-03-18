@@ -7,3 +7,11 @@ pMixPlugin/Builds/MacOSX/build
 *xcuserdata
 *.DS_Store
 Builds/VisualStudio2013/Debug/
+Builds/VisualStudio2013/Release/
+*.aux
+*.glo
+*.ist
+*.log
+*.out
+*.synctex.gz
+*.toc

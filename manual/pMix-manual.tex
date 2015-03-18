@@ -1,0 +1,183 @@
+%PREAMBLE --------------------------------------------------------------------------------------------------------
+
+\documentclass[a4paper,14pt]{report}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=25mm,
+ right=25mm,
+ top=30mm,
+ bottom=30mm,
+ }
+
+\setlength\parindent{0pt}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\usepackage{nameref}
+\usepackage{pdflscape}
+\usepackage{float}
+\usepackage[scaled]{helvet}
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+%for RTF import
+\usepackage{fancyvrb,standalone}
+
+\usepackage{graphicx}
+
+\graphicspath{ {images/} }
+
+\usepackage{tikz}
+
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     linkcolor = black,
+     urlcolor = blue,
+     citecolor    = gray
+}
+
+\usepackage{titlesec, blindtext, color}
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{10pt}}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+\titlespacing*{\chapter}{0pt}{-60pt}{20pt}
+\renewcommand{\chaptername}{}
+%\renewcommand{\thechapter}{}
+
+\usepackage[toc,nonumberlist,numberedsection]{glossaries}
+\makeglossaries
+
+
+%glossary terms
+\newacronym{DAW}{DAW}{Digital Audio Workstation}
+\newacronym{VST}{VST}{Virtual Studio Technology}
+\newglossaryentry{preset}
+{
+	name={preset}, 
+	description={A stored configuration of parameters/settings that represents the state of an audio effect or synthesiser}
+}
+
+%\usepackage{todonotes}
+%
+%\usepackage{draftwatermark}
+%\SetWatermarkText{DRAFT}
+%\SetWatermarkLightness{0.99}
+%\SetWatermarkScale{1}
+
+%PREAMBLE --------------------------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{titlepage}~\\[4cm]
+\begin{center}
+%\includegraphics[scale=0.8]{pMix_Logo}\\[2cm]
+\textsc{\huge pMix - Preset Mixer}\\[2cm]
+\textsc{\LARGE User Manual}\\[1cm]
+\textsc{Oli Larkin 2015}\\[8cm]
+%\includegraphics[scale=0.4]{PIB_logo_vector}
+\end{center}
+\end{titlepage}
+\large
+
+\marginparwidth = 25pt
+
+%\listoftodos
+\tableofcontents
+\setcounter{tocdepth}{1}
+
+%\begin{tikzpicture}
+ %   \node at (0,0) {\includegraphics[scale=0.4]{pMix_screenshot_actualsize_980x581}};
+   % \draw[red,ultra thick,rounded corners] (7.5,5.3) rectangle (9.4,6.2);
+%\end{tikzpicture}
+
+\chapter{Introduction}
+
+
+\section{Key Features}
+
+\begin{itemize}
+\item 
+\end{itemize}
+
+\section{System Requirements}
+
+\subsection*{Mac}
+\begin{itemize}
+\item OSX Lion (10.7) or higher
+\item 32bit or 64bit VST 2.4, VST 3 or Audio Unit host for plug-in version
+\item Minimum Intel i5 CPU and 4GB ram or more recommended
+\end{itemize}
+\subsection*{Windows}
+\begin{itemize}
+\item Windows XP, Vista, 7 or 8
+\item 32bit or 64bit VST 2.4, VST 3 host for plug-in version
+\item Minimum Intel i5 CPU and 4GB ram or more recommended
+\end{itemize}
+\subsection*{Linux}
+\begin{itemize}
+\item Minimum Intel i5 CPU and 4GB ram or more recommended
+\end{itemize}
+
+\section{Installation}
+\subsection*{Mac}
+\subsection*{Windows}
+\subsection*{Linux}
+
+
+\chapter{Getting Started}
+
+
+\chapter{Global Settings}
+
+
+\chapter{Stand-alone Application}
+
+
+\chapter{Host Notes}
+This section contains information regarding using pMix in specific plug-in host applications. 
+
+\chapter{Further Reading} \label{chap:furtherreading}
+
+TODO: 
+
+\begin{itemize}
+\item \href{http://www.olilarkin.co.uk}{Preset Interpolators}
+\end{itemize}
+
+\chapter{Support Info}
+TODO: 
+
+%\begin{itemize}
+%\item What is the pMix version number? \\*
+%\emph{e.g. v1.0.0}
+%\item What plug-in format were you using? \\*
+%\emph{e.g. VST2, VST3, Audio Unit or Stand-alone app}
+%\end{itemize}
+
+\section*{Feature Requests and Feedback}
+If you like (or dislike) aspects of pMix we'd really appreciate your feedback. 
+
+\chapter{Credits and Acknowledgements}
+pMix is designed and developed by Oli Larkin \\* 
+\section*{Thanks:}
+\begin{itemize}
+\item pMix beta testers
+\end{itemize}
+
+\printglossaries
+
+\chapter{License}
+
+\subsection*{Copyrights and trademarks:}
+pMix \copyright Copyright Oliver Larkin 2008 - 2015\\*
+\href{www.olilarkin.co.uk}{www.olilarkin.co.uk}\\*\\*
+
+VST is a trademark of Steinberg Media Technologies GmbH\\*
+Audio Unit is a trademark of Apple, Inc.\\*
+
+\end{document}
