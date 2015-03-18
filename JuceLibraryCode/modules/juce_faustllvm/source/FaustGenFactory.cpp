@@ -87,7 +87,7 @@ void FaustgenFactory::freeDSPFactory()
     (*it)->freeDSP();
   }
 
-  //deleteDSPFactory(fDSPfactory); //commented out in faustgen~
+  deleteDSPFactory(fDSPfactory);
   fDSPfactory = 0;
 }
 
@@ -207,9 +207,13 @@ llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
   
   // Otherwise creates default DSP keeping the same input/output number
   fDSPfactory = createDSPFactoryFromString("default", DEFAULT_CODE, 0, 0, getTarget(), error, LLVM_OPTIMIZATION);
-  dsp = createDSPInstance(fDSPfactory);
-  logStr << "Allocation of default DSP succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
-  
+
+  if (fDSPfactory)
+  {
+    dsp = createDSPInstance(fDSPfactory);
+    logStr << "Allocation of default DSP succeeded, " << dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
+  }
+
 end:
   LOG(logStr);
   jassert(dsp);
