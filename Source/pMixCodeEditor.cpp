@@ -26,7 +26,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   addAndMakeVisible(dividerBar1 = new StretchableLayoutResizerBar (&verticalLayout, 1, false));
   addAndMakeVisible (webBrowser = new WebBrowser(audioEngine, graphEditor));
 
-  editor->setFont(Font ("Andale Mono", 16.f, 0));
+  editor->setFont(Font(Font::getDefaultMonospacedFontName(), 16.f, 0));
   editor->setTabSize(2, true);
   editor->loadContent ("");
   
