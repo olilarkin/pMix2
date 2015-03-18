@@ -187,6 +187,35 @@
         <MODULEPATH id="juce_faustllvm" path="../../Projects"/>
       </MODULEPATHS>
     </LINUX_MAKE>
+    <VS2013 targetFolder="Builds/VisualStudio2013" externalLibraries="faust.lib&#10;libeay32.lib&#10;ssleay32.lib&#10;LLVMInstrumentation.lib&#10;LLVMIRReader.lib&#10;LLVMAsmParser.lib&#10;LLVMDebugInfo.lib&#10;LLVMOption.lib&#10;LLVMLTO.lib&#10;LLVMLinker.lib&#10;LLVMipo.lib&#10;LLVMVectorize.lib&#10;LLVMBitWriter.lib&#10;LLVMBitReader.lib&#10;LLVMTableGen.lib&#10;LLVMXCoreDisassembler.lib&#10;LLVMXCoreCodeGen.lib&#10;LLVMXCoreDesc.lib&#10;LLVMXCoreInfo.lib&#10;LLVMXCoreAsmPrinter.lib&#10;LLVMX86Disassembler.lib&#10;LLVMX86AsmParser.lib&#10;LLVMX86CodeGen.lib&#10;LLVMX86Desc.lib&#10;LLVMX86Info.lib&#10;LLVMX86AsmPrinter.lib&#10;LLVMX86Utils.lib&#10;LLVMSystemZDisassembler.lib&#10;LLVMSystemZCodeGen.lib&#10;LLVMSystemZAsmParser.lib&#10;LLVMSystemZDesc.lib&#10;LLVMSystemZInfo.lib&#10;LLVMSystemZAsmPrinter.lib&#10;LLVMSparcCodeGen.lib&#10;LLVMSparcDesc.lib&#10;LLVMSparcInfo.lib&#10;LLVMR600CodeGen.lib&#10;LLVMR600Desc.lib&#10;LLVMR600Info.lib&#10;LLVMR600AsmPrinter.lib&#10;LLVMPowerPCCodeGen.lib&#10;LLVMPowerPCAsmParser.lib&#10;LLVMPowerPCDesc.lib&#10;LLVMPowerPCInfo.lib&#10;LLVMPowerPCAsmPrinter.lib&#10;LLVMNVPTXCodeGen.lib&#10;LLVMNVPTXDesc.lib&#10;LLVMNVPTXInfo.lib&#10;LLVMNVPTXAsmPrinter.lib&#10;LLVMMSP430CodeGen.lib&#10;LLVMMSP430Desc.lib&#10;LLVMMSP430Info.lib&#10;LLVMMSP430AsmPrinter.lib&#10;LLVMMipsDisassembler.lib&#10;LLVMMipsCodeGen.lib&#10;LLVMMipsAsmParser.lib&#10;LLVMMipsDesc.lib&#10;LLVMMipsInfo.lib&#10;LLVMMipsAsmPrinter.lib&#10;LLVMHexagonCodeGen.lib&#10;LLVMHexagonAsmPrinter.lib&#10;LLVMHexagonDesc.lib&#10;LLVMHexagonInfo.lib&#10;LLVMCppBackendCodeGen.lib&#10;LLVMCppBackendInfo.lib&#10;LLVMARMDisassembler.lib&#10;LLVMARMCodeGen.lib&#10;LLVMARMAsmParser.lib&#10;LLVMARMDesc.lib&#10;LLVMARMInfo.lib&#10;LLVMARMAsmPrinter.lib&#10;LLVMAArch64Disassembler.lib&#10;LLVMAArch64CodeGen.lib&#10;LLVMSelectionDAG.lib&#10;LLVMAsmPrinter.lib&#10;LLVMAArch64AsmParser.lib&#10;LLVMAArch64Desc.lib&#10;LLVMAArch64Info.lib&#10;LLVMAArch64AsmPrinter.lib&#10;LLVMAArch64Utils.lib&#10;gtest_main.lib&#10;gtest.lib&#10;LLVMMCDisassembler.lib&#10;LLVMMCParser.lib&#10;LLVMInterpreter.lib&#10;LLVMMCJIT.lib&#10;LLVMJIT.lib&#10;LLVMCodeGen.lib&#10;LLVMObjCARCOpts.lib&#10;LLVMScalarOpts.lib&#10;LLVMInstCombine.lib&#10;LLVMTransformUtils.lib&#10;LLVMipa.lib&#10;LLVMAnalysis.lib&#10;LLVMRuntimeDyld.lib&#10;LLVMExecutionEngine.lib&#10;LLVMTarget.lib&#10;LLVMMC.lib&#10;LLVMObject.lib&#10;LLVMCore.lib&#10;LLVMSupport.lib"
+            vst3Folder="C:\Users\Oliver Larkin\SDKs\vstsdk2.4" vstFolder="C:\Users\Oliver Larkin\SDKs\VST3 SDK"
+            extraCompilerFlags="/wd4100&#10;/wd4068&#10;/wd4996">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="pMix" headerPath="C:\Users\Oliver Larkin\Dev\include\&#10;C:\Users\Oliver Larkin\SDKs\asiosdk2.3\common"
+                       libraryPath="C:\LLVM-build\lib\Debug&#10;C:\openssl\lib" useRuntimeLibDLL="1"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="2" targetName="pMix" libraryPath="C:\LLVM-build\lib\Release&#10;C:\openssl\lib"
+                       headerPath="C:\Users\Oliver Larkin\Dev\include\&#10;C:\Users\Oliver Larkin\SDKs\asiosdk2.3"
+                       useRuntimeLibDLL="1"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_opengl" path="../../juce"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce"/>
+        <MODULEPATH id="juce_graphics" path="../../juce"/>
+        <MODULEPATH id="juce_faustllvm" path="../../juce"/>
+        <MODULEPATH id="juce_events" path="../../juce"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce"/>
+        <MODULEPATH id="juce_core" path="../../juce"/>
+        <MODULEPATH id="juce_audio_utils" path="../../juce"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce"/>
+      </MODULEPATHS>
+    </VS2013>
   </EXPORTFORMATS>
   <MODULES>
     <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>

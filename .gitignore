@@ -6,3 +6,4 @@ Builds/MacOSX/pMix.xcodeproj/project.xcworkspace
 pMixPlugin/Builds/MacOSX/build
 *xcuserdata
 *.DS_Store
+Builds/VisualStudio2013/Debug/
