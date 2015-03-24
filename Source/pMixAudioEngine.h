@@ -30,6 +30,8 @@ public:
 
   KnownPluginList& getKnownPluginList() { return knownPluginList; }
   KnownPluginList::SortMethod getSortMethod() noexcept { return pluginSortMethod; }
+  const File getDMPFile() { return getAppProperties().getUserSettings()->getFile().getSiblingFile ("RecentlyCrashedPluginsList"); }
+  
   PMixDocument &getDoc() noexcept { return doc; }
   ApplicationProperties& getAppProperties() { return *appProperties; }
 

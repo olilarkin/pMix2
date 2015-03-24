@@ -53,11 +53,11 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-  PMixAudioEngine& audioEngine;
-  ScopedPointer<PluginListComponent> pluginListComponent;
+    PMixAudioEngine& audioEngine;
     //[/UserVariables]
 
     //==============================================================================
+    ScopedPointer<PluginListComponent> pluginListComponent;
 
 
     //==============================================================================

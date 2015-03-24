@@ -30,22 +30,10 @@
 PMixPrefsPlugins::PMixPrefsPlugins (PMixAudioEngine& audioEngine)
     : audioEngine(audioEngine)
 {
+    addAndMakeVisible (pluginListComponent = new PluginListComponent (audioEngine.getFormatManager(), audioEngine.getKnownPluginList(), audioEngine.getDMPFile(), audioEngine.getAppProperties().getUserSettings()));
+
 
     //[UserPreSize]
-  const File deadMansPedalFile (audioEngine.getAppProperties().getUserSettings()->getFile().getSiblingFile ("RecentlyCrashedPluginsList"));
-  addAndMakeVisible( pluginListComponent = new PluginListComponent (audioEngine.getFormatManager(), audioEngine.getKnownPluginList(), deadMansPedalFile, audioEngine.getAppProperties().getUserSettings()), true);
-  
-  
-  //    KnownPluginList::SortMethod pluginSortMethod = audioEngine.getSortMethod();
-  //
-  //    PopupMenu sortTypeMenu;
-  //    sortTypeMenu.addItem (200, "List plugins in default order",      true, pluginSortMethod == KnownPluginList::defaultOrder);
-  //    sortTypeMenu.addItem (201, "List plugins in alphabetical order", true, pluginSortMethod == KnownPluginList::sortAlphabetically);
-  //    sortTypeMenu.addItem (202, "List plugins by category",           true, pluginSortMethod == KnownPluginList::sortByCategory);
-  //    sortTypeMenu.addItem (203, "List plugins by manufacturer",       true, pluginSortMethod == KnownPluginList::sortByManufacturer);
-  //    sortTypeMenu.addItem (204, "List plugins based on the directory structure", true, pluginSortMethod == KnownPluginList::sortByFileSystemLocation);
-  //    menu.addSubMenu ("Plugin menu type", sortTypeMenu);
-  
     //[/UserPreSize]
 
     setSize (600, 400);
@@ -60,6 +48,7 @@ PMixPrefsPlugins::~PMixPrefsPlugins()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
+    pluginListComponent = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -83,8 +72,8 @@ void PMixPrefsPlugins::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
+    pluginListComponent->setBounds (8, 8, getWidth() - 16, getHeight() - 16);
     //[UserResized] Add your own custom resize handling here..
-  pluginListComponent->setBounds (getLocalBounds().reduced (4));
     //[/UserResized]
 }
 
@@ -109,6 +98,9 @@ BEGIN_JUCER_METADATA
                  snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="0"
                  initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ffffffff"/>
+  <GENERICCOMPONENT name="" id="e9532f1fb8d54751" memberName="pluginListComponent"
+                    virtualName="" explicitFocusOrder="0" pos="8 8 16M 16M" class="PluginListComponent"
+                    params="audioEngine.getFormatManager(), audioEngine.getKnownPluginList(), audioEngine.getDMPFile(), audioEngine.getAppProperties().getUserSettings()"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
