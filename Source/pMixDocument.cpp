@@ -840,12 +840,14 @@ void PMixDocument::timerCallback()
         Array<var>* params = node->properties.getVarPointer("params")->getArray();
         Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
 
+        //loop over all parameters marked for interpolating
         for (int item=0; item<params->size(); item++)
         {
           var parameterIdx = params->getReference(item);
           
           double sum = 0.;
           
+          //loop over all presets
           for (int presetIdx=0; presetIdx < presetsArr->size(); presetIdx++)
           {
             DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
