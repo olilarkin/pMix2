@@ -1,5 +1,6 @@
 #include "pMixDocument.h"
 #include "pMixAudioEngine.h"
+#include "pMixConstants.h"
 
 const int PMixDocument::midiChannelNumber = 0x1000;
 

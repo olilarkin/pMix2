@@ -18,6 +18,7 @@
 */
 
 //[Headers] You can add your own extra header files here...
+#include "pMixConstants.h"
 //[/Headers]
 
 #include "pMixPrefsAudio.h"
@@ -28,7 +29,7 @@
 
 //==============================================================================
 PMixPrefsAudio::PMixPrefsAudio (AudioDeviceManager& deviceManager)
-    : AudioDeviceSelectorComponent(deviceManager, 0, 32, 0, 32, true, true, true, false)
+    : AudioDeviceSelectorComponent(deviceManager, 0, MAX_NAUDIO_IO, 0, MAX_NAUDIO_IO, true, true, true, false)
 {
 
     //[UserPreSize]
@@ -92,7 +93,7 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="PMixPrefsAudio" componentName=""
                  parentClasses="public AudioDeviceSelectorComponent" constructorParams="AudioDeviceManager&amp; deviceManager"
-                 variableInitialisers="AudioDeviceSelectorComponent(deviceManager, 0, 256, 0, 256, true, true, true, false)"
+                 variableInitialisers="AudioDeviceSelectorComponent(deviceManager, 0, MAX_NAUDIO_IO, 0, MAX_NAUDIO_IO, true, true, true, false)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ffffffff"/>

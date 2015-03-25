@@ -3,15 +3,7 @@
 
 #include "JuceHeader.h"
 #include "pMixDefaultColours.h"
-
-#if JUCE_MAC
-//#include "bench-llvm.cpp"
-#define FAUST_LIBRARY_PATH "/Contents/Resources/"
-#define SEPARATOR '/'
-#elif JUCE_WIN32
-//#define FAUST_LIBRARY_PATH "\\faustgen-resources\\"
-#define SEPARATOR '\\'
-#endif
+#include "pMixConstants.h"
 
 const char* const filenameSuffix = ".pmix";
 const char* const filenameWildcard = "*.pmix";
