@@ -44,7 +44,8 @@ PMixAudioEngine::PMixAudioEngine()
     LOG(pluginBeingScanned);
   }
   
-  pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()->getIntValue ("pluginSortMethod", KnownPluginList::sortByFormat);
+  pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()->getIntValue ("pluginSortMethod", KnownPluginList::sortByFileSystemLocation);
+  setPluginSortMethod(pluginSortMethod);
 
 #if JUCE_MAC
   knownPluginList.addToBlacklist("/Library/Audio/Plug-Ins/VST/pMixPlugin.vst");
