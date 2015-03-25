@@ -2190,7 +2190,7 @@
 					73CE1A8AA178EC000E1B0F7C,
 					D0811EE2F0C9152A6367C7AD, ); name = Source; sourceTree = "<group>"; };
 		D282DD88273227A1DD67D4FF = {isa = XCBuildConfiguration; buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
