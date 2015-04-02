@@ -12,7 +12,7 @@
 
 PMixAudioEngine::PMixAudioEngine()
 : doc(*this)
-, faustDSPFormat(doc.getLibraryPath())
+, faustDSPFormat(doc.getLibraryPath(), File(FAUST_DRAW_PATH))
 {
   // initialise our settings file..
   

@@ -53,7 +53,7 @@ static std::string getTarget()
 static std::string getTarget() { return ""; }
 #endif
 
-FaustgenFactory::FaustgenFactory(const String& name, const File& path)
+FaustgenFactory::FaustgenFactory(const String& name, const File& path, const File& svgPath)
 {
   fUpdateInstance = 0;
   fName = name;
@@ -64,11 +64,7 @@ FaustgenFactory::FaustgenFactory(const String& name, const File& path)
   
   // Built the complete resource path
   fLibraryPath.add(path);
-  
-#if JUCE_MAC || JUCE_LINUX
-  // Draw path in temporary folder
-  fDrawPath = FAUST_DRAW_PATH;
-#endif
+  fDrawPath = svgPath;
 }
 
 FaustgenFactory::~FaustgenFactory()
@@ -129,25 +125,25 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
     argv[opt] = (char*) fCompileOptions.getReference(opt).toRawUTF8();
   }
   
-  // Generate SVG file
-  if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
+  if (fDrawPath != File::nonexistent)
   {
-    //TODO: if there is an error here STOP
-    LOG("Generate SVG error : " + error);
-  }
-  
-  // set "width" and "height" of svg to 100% so they fill web browser, TODO: improve this
-  String path;
-  path << "/" << fDrawPath << "faustgen-" << fFaustNumber << "-svg/process.svg";
-  File svgFile(path);
-  
-  if (svgFile.exists())
-  {
-    XmlDocument svgXML(svgFile);
-    ScopedPointer<XmlElement> mainElement (svgXML.getDocumentElement());
-    mainElement->setAttribute("width", "100%");
-    mainElement->setAttribute("height", "100%");
-    mainElement->writeToFile(svgFile, String::empty);
+    // Generate SVG file
+    if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
+    {
+      //TODO: if there is an error here STOP
+      LOG("Generate SVG error : " + error);
+    }
+
+    File svgFile = getSVGFile();
+    
+    if (svgFile.exists())
+    {
+      XmlDocument svgXML(svgFile);
+      ScopedPointer<XmlElement> mainElement (svgXML.getDocumentElement());
+      mainElement->setAttribute("width", "100%");
+      mainElement->setAttribute("height", "100%");
+      mainElement->writeToFile(svgFile, String::empty);
+    }
   }
   
   llvm_dsp_factory* factory = createDSPFactoryFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
@@ -265,26 +261,22 @@ void FaustgenFactory::printCompileOptions()
 
 void FaustgenFactory::defaultCompileOptions()
 {
-  // Clear and set default value
   fCompileOptions.clear();
   
   // By default when double
   if (sizeof(FAUSTFLOAT) == 8)
-  {
     addCompileOption("-double");
-  }
   
-  // Add -svg to current compile options
-  addCompileOption("-svg");
+  if (fDrawPath != File::nonexistent)
+    addCompileOption("-svg");
   
-  // All library paths
   for (int path=0;path<fLibraryPath.getNumPaths();path++)
-  {
     addCompileOption("-I", fLibraryPath[path].getFullPathName());
-  }
   
   // Draw path
-  addCompileOption("-O", fDrawPath);
+  if (fDrawPath != File::nonexistent)
+    addCompileOption("-O", fDrawPath.getFullPathName());
+  
   //addCompileOption("-o", "tmp1.cpp");
   
   for (int opt = 0; opt < fExtraOptions.size(); opt++)
@@ -355,64 +347,50 @@ default_sourcecode:
   fSourceCode = DEFAULT_CODE;
 }
 
-bool FaustgenFactory::tryOpenSVG()
-{
-  // Open the svg diagram file inside a web browser
-  char command[512];
-#ifdef JUCE_WIN32
-  sprintf(command, "type \"file:///%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
-#else
-  sprintf(command, "open -a Safari \"file://%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
-#endif
-  return (system(command) == 0);
-}
-
-void FaustgenFactory::openSVG()
-{
-  // Open the svg diagram file inside a web browser
-  char command[512];
-#ifdef JUCE_WIN32
-  sprintf(command, "start \"\" \"file:///%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
-#else
-  sprintf(command, "open -a Safari \"file://%sfaustgen-%d-svg/process.svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
-#endif
-  //LOG("openSVG %s", command);
-  system(command);
-}
-
 void FaustgenFactory::removeSVG()
 {
-  // Possibly done by "compileoptions" or displaySVG
-  char command[512];
-#ifdef JUCE_WIN32
-  sprintf(command, "rmdir /S/Q \"%sfaustgen-%d-svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
-#else
-  sprintf(command, "rm -r \"%sfaustgen-%d-svg\"", fDrawPath.toRawUTF8(), fFaustNumber);
-#endif
-  system(command);
+  if (fDrawPath != File::nonexistent)
+  {
+    getSVGFile().getParentDirectory().deleteRecursively();
+  }
 }
 
 void FaustgenFactory::displaySVG()
 {
-  // Try to open SVG svg diagram file inside a web browser
-  if (!tryOpenSVG())
-  {
-    LOG("SVG diagram not available, recompile to produce it");
-    
-    // Force recompilation to produce it
-    llvm_dsp_factory* factory = createFactoryFromSourceCode(0);
-    //deleteDSPFactory(factory); // commented out in faustgen~
-    
-    // Open the SVG diagram file inside a web browser
-    openSVG();
-  }
+//  // Try to open SVG svg diagram file inside a web browser
+//  if (!tryOpenSVG())
+//  {
+//    LOG("SVG diagram not available, recompile to produce it");
+//    
+//    // Force recompilation to produce it
+//    llvm_dsp_factory* factory = createFactoryFromSourceCode(0);
+//    //deleteDSPFactory(factory); // commented out in faustgen~
+//    
+//    // Open the SVG diagram file inside a web browser
+//    openSVG();
+//  }
 }
 
-String FaustgenFactory::getSVGPath()
+File FaustgenFactory::getSVGFile()
 {
-  String path;
-  path << "file://" << fDrawPath << "faustgen-" << fFaustNumber << "-svg/process.svg";
-  return path;
+  File svgPathForThisInstance(fDrawPath.getChildFile(getSVGFolderName()));
+  return svgPathForThisInstance.getChildFile("process.svg");
+}
+
+String FaustgenFactory::getSVGFileURI()
+{
+  File svgFile = getSVGFile();
+  
+  String URI;
+  URI << "file://" << svgFile.getFullPathName(); //TODO: will this work on windows?
+  return URI;
+}
+
+String FaustgenFactory::getSVGFolderName()
+{
+  String name;
+  name << "faustgen-" << fFaustNumber << "-svg";
+  return name;
 }
 
 void FaustgenFactory::updateSourceCode(String sourceCode, FaustAudioPluginInstance* instance)

@@ -101,7 +101,6 @@ public:
 // Unique
   void createDSP();
   void freeDSP();
-  bool allocateFactory(const String& effectName, const File& path);
   
   void setSourceCode(String sourceCode, bool compile);
   String getSourceCode();
@@ -116,9 +115,11 @@ public:
   const bool getHighlight() { return highlight; }
 
   //MUST CALL AFTER CREATION
-  void initialize(const File &path);
+  void initialize(const File &libraryPath, const File& svgPath = File::nonexistent);
   
 private:
+  bool allocateFactory(const String& effectName, const File& libraryPath, const File& svgPath = File::nonexistent);
+
   var fJSONInterface;
   FaustgenFactory* fDSPfactory;
   llvm_dsp* fDSP;
