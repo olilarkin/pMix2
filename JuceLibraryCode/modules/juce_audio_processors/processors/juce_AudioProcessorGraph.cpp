@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -860,7 +860,7 @@ AudioProcessorGraph::Node::Node (const uint32 nodeID, AudioProcessor* const p) n
     jassert (processor != nullptr);
 }
 
-void AudioProcessorGraph::Node::prepare (const double sampleRate, const int blockSize,
+void AudioProcessorGraph::Node::prepare (const double newSampleRate, const int newBlockSize,
                                          AudioProcessorGraph* const graph)
 {
     if (! isPrepared)
@@ -870,9 +870,9 @@ void AudioProcessorGraph::Node::prepare (const double sampleRate, const int bloc
 
         processor->setPlayConfigDetails (processor->getNumInputChannels(),
                                          processor->getNumOutputChannels(),
-                                         sampleRate, blockSize);
+                                         newSampleRate, newBlockSize);
 
-        processor->prepareToPlay (sampleRate, blockSize);
+        processor->prepareToPlay (newSampleRate, newBlockSize);
     }
 }
 
@@ -977,7 +977,6 @@ bool AudioProcessorGraph::removeNode (const uint32 nodeId)
     {
         if (nodes.getUnchecked(i)->nodeId == nodeId)
         {
-            nodes.getUnchecked(i)->setParentGraph (nullptr);
             nodes.remove (i);
             triggerAsyncUpdate();
 
@@ -1183,7 +1182,7 @@ void AudioProcessorGraph::buildRenderingSequence()
     int numMidiBuffersNeeded = 1;
 
     {
-        //MessageManagerLock mml;
+        MessageManagerLock mml;
 
         Array<Node*> orderedNodes;
 
@@ -1270,17 +1269,19 @@ void AudioProcessorGraph::reset()
         nodes.getUnchecked(i)->getProcessor()->reset();
 }
 
-void AudioProcessorGraph::setNonRealtime (bool isNonRealtime) noexcept
+void AudioProcessorGraph::setNonRealtime (bool isProcessingNonRealtime) noexcept
 {
     const ScopedLock sl (getCallbackLock());
 
     for (int i = 0; i < nodes.size(); ++i)
-        nodes.getUnchecked(i)->getProcessor()->setNonRealtime (isNonRealtime);
+        nodes.getUnchecked(i)->getProcessor()->setNonRealtime (isProcessingNonRealtime);
 }
 
 void AudioProcessorGraph::setPlayHead (AudioPlayHead* audioPlayHead)
 {
     const ScopedLock sl (getCallbackLock());
+
+    AudioProcessor::setPlayHead (audioPlayHead);
 
     for (int i = 0; i < nodes.size(); ++i)
         nodes.getUnchecked(i)->getProcessor()->setPlayHead (audioPlayHead);
@@ -1361,7 +1362,7 @@ void AudioProcessorGraph::AudioGraphIOProcessor::fillInPluginDescription (Plugin
     d.uid = d.name.hashCode();
     d.category = "I/O devices";
     d.pluginFormatName = "Internal";
-    d.manufacturerName = "Raw Material Software";
+    d.manufacturerName = "ROLI Ltd.";
     d.version = "1.0";
     d.isInstrument = false;
 

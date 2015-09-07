@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -198,10 +198,13 @@ void Label::editorShown (TextEditor* textEditor)
     listeners.callChecked (checker, &LabelListener::editorShown, this, *textEditor);
 }
 
-void Label::editorAboutToBeHidden (TextEditor*)
+void Label::editorAboutToBeHidden (TextEditor* textEditor)
 {
     if (ComponentPeer* const peer = getPeer())
         peer->dismissPendingTextInput();
+
+    Component::BailOutChecker checker (this);
+    listeners.callChecked (checker, &LabelListener::editorHidden, this, *textEditor);
 }
 
 void Label::showEditor()

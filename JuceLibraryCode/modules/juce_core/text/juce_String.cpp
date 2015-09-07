@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the juce_core module of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission to use, copy, modify, and/or distribute this software for any purpose with
    or without fee is hereby granted, provided that the above copyright notice and this
@@ -86,12 +86,7 @@ public:
         if (text.getAddress() == nullptr || text.isEmpty())
             return CharPointerType (&(emptyString.text));
 
-        CharPointer t (text);
-        size_t bytesNeeded = sizeof (CharType);
-
-        while (! t.isEmpty())
-            bytesNeeded += CharPointerType::getBytesRequiredFor (t.getAndAdvance());
-
+        const size_t bytesNeeded = sizeof (CharType) + CharPointerType::getBytesRequiredFor (text);
         const CharPointerType dest (createUninitialisedBytes (bytesNeeded));
         CharPointerType (dest).writeAll (text);
         return dest;
@@ -1617,10 +1612,10 @@ String String::upToLastOccurrenceOf (StringRef sub,
 
 bool String::isQuotedString() const
 {
-    const String trimmed (trimStart());
+    const juce_wchar trimmedStart = trimStart()[0];
 
-    return trimmed[0] == '"'
-        || trimmed[0] == '\'';
+    return trimmedStart == '"'
+        || trimmedStart == '\'';
 }
 
 String String::unquoted() const
@@ -2229,7 +2224,7 @@ public:
         return CharPointer_UTF32 (buffer);
     }
 
-    void runTest()
+    void runTest() override
     {
         Random r = getRandom();
 

@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -717,8 +717,8 @@ public:
     {
     public:
         //==============================================================================
-        Iterator (const Path& path);
-        ~Iterator();
+        Iterator (const Path& path) noexcept;
+        ~Iterator() noexcept;
 
         //==============================================================================
         /** Moves onto the next element in the path.
@@ -727,7 +727,7 @@ public:
             the elementType variable will be set to the type of the current element,
             and some of the x and y variables will be filled in with values.
         */
-        bool next();
+        bool next() noexcept;
 
         //==============================================================================
         enum PathElementType

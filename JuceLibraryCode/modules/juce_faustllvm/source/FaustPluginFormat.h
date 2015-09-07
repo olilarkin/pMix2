@@ -15,11 +15,13 @@
 class FaustPluginFormat   : public AudioPluginFormat
 {
 private:
-  String faustLibraryPath;
-  
+  File faustLibraryPath;
+  File svgPath;
+
 public:
-  FaustPluginFormat(String faustLibraryPath)
+  FaustPluginFormat(const File& faustLibraryPath, const File& svgPath = File::nonexistent)
   : faustLibraryPath(faustLibraryPath)
+  , svgPath(svgPath)
   {};
   
   ~FaustPluginFormat() {}
@@ -123,7 +125,7 @@ public:
       File dspFile = File(desc.fileOrIdentifier);
       
       result = new FaustAudioPluginInstance();
-      result->initialize(faustLibraryPath);
+      result->initialize(faustLibraryPath, svgPath);
       result->getFactory()->addLibraryPath(dspFile.getParentDirectory());
       result->getFactory()->updateSourceCode(dspFile.loadFileAsString(), result);
       result->prepareToPlay(initialSampleRate, initialBufferSize);

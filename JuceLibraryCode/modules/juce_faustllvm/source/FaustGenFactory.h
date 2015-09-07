@@ -65,7 +65,7 @@ private:
   String fBitCode;
   
   FileSearchPath fLibraryPath;    // paths to search for the Faust libraries
-  String fDrawPath;               // path where to put SVG files
+  File fDrawPath;               // path where to put SVG files
   
   StringArray fExtraOptions;
   
@@ -84,7 +84,7 @@ private:
 public:
   CriticalSection fDSPMutex;    // mutex to protect RT audio thread when recompiling DSP
 
-  FaustgenFactory(const String& name, const File& path);
+  FaustgenFactory(const String& name, const File& libraryPath, const File& svgPath = File::nonexistent);
   ~FaustgenFactory();
   
   llvm_dsp_factory* createFactoryFromBitcode();
@@ -111,12 +111,18 @@ public:
   void updateSourceCode(String sourceCode, FaustAudioPluginInstance* instance);
     
   // Compile DSP with -svg option and display the SVG files
-  bool tryOpenSVG();
-  void openSVG();
   void removeSVG();
   void displaySVG();
-  String getSVGPath();
   
+  // return JUCE File for to process.svg for this instance (even if it doesn't exist)
+  File getSVGFile();
+  
+  // returns a URL "file://"
+  String getSVGFileURI();
+
+  // returns the full path to the folder containing process.svg for this instance
+  String getSVGFolderName();
+
   void addInstance(FaustAudioPluginInstance* dsp) { fInstances.insert(dsp); }
   void removeInstance(FaustAudioPluginInstance* dsp)
   {

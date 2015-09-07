@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -1567,17 +1567,17 @@ void Path::restoreFromString (StringRef stringVersion)
 }
 
 //==============================================================================
-Path::Iterator::Iterator (const Path& path_)
-    : path (path_),
-      index (0)
+Path::Iterator::Iterator (const Path& p) noexcept
+    : x1 (0), y1 (0), x2 (0), y2 (0), x3 (0), y3 (0),
+      path (p), index (0)
 {
 }
 
-Path::Iterator::~Iterator()
+Path::Iterator::~Iterator() noexcept
 {
 }
 
-bool Path::Iterator::next()
+bool Path::Iterator::next() noexcept
 {
     const float* const elements = path.data.elements;
 
