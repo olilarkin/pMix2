@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the juce_core module of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission to use, copy, modify, and/or distribute this software for any purpose with
    or without fee is hereby granted, provided that the above copyright notice and this
@@ -70,8 +70,10 @@ namespace
     typedef id (*MsgSendSuperFn) (struct objc_super*, SEL, ...);
     static inline MsgSendSuperFn getMsgSendSuperFn() noexcept   { return (MsgSendSuperFn) (void*) objc_msgSendSuper; }
 
+   #if ! JUCE_PPC
     typedef double (*MsgSendFPRetFn) (id, SEL op, ...);
     static inline MsgSendFPRetFn getMsgSendFPRetFn() noexcept   { return (MsgSendFPRetFn) (void*) objc_msgSend_fpret; }
+   #endif
    #endif
 }
 

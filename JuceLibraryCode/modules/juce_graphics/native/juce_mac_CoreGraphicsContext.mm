@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -405,7 +405,9 @@ void CoreGraphicsContext::fillCGRect (const CGRect& cgRect, const bool replaceEx
 {
     if (replaceExistingContents)
     {
-      #if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_5
+      #if JUCE_IOS
+        CGContextSetBlendMode (context, kCGBlendModeCopy);
+      #elif MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_5
         CGContextClearRect (context, cgRect);
       #else
        #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5

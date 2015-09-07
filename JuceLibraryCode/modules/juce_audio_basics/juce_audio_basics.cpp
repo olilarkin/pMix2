@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -40,6 +40,10 @@
  #define JUCE_USE_SSE_INTRINSICS 0
 #endif
 
+#if JUCE_MINGW
+ #define alloca __builtin_alloca
+#endif
+
 #ifndef JUCE_USE_SSE_INTRINSICS
  #define JUCE_USE_SSE_INTRINSICS 1
 #endif
@@ -66,6 +70,9 @@
 
 #if __ARM_NEON__ && ! (JUCE_USE_VDSP_FRAMEWORK || defined (JUCE_USE_ARM_NEON))
  #define JUCE_USE_ARM_NEON 1
+#endif
+
+#if JUCE_USE_ARM_NEON
  #include <arm_neon.h>
 #endif
 

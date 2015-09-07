@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -208,6 +208,10 @@ public:
         A Justification parameter lets you specify how the text is laid out within the rectangle,
         both horizontally and vertically.
 
+        The minimumHorizontalScale parameter specifies how much the text can be squashed horizontally
+        to try to squeeze it into the space. If you don't want any horizontal scaling to occur, you
+        can set this value to 1.0f. Pass 0 if you want it to use the default value.
+
         @see Graphics::drawFittedText
     */
     void addFittedText (const Font& font,
@@ -215,7 +219,7 @@ public:
                         float x, float y, float width, float height,
                         Justification layout,
                         int maximumLinesToUse,
-                        float minimumHorizontalScale = 0.7f);
+                        float minimumHorizontalScale = 0.0f);
 
     /** Appends another glyph arrangement to this one. */
     void addGlyphArrangement (const GlyphArrangement&);

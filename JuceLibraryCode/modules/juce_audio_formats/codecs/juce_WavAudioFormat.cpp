@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -609,16 +609,18 @@ namespace WavFileHelpers
     {
         static MemoryBlock createFrom (const StringPairArray& values)
         {
-            const String s = values[WavAudioFormat::tracktionLoopInfo];
-            MemoryBlock data;
+            MemoryOutputStream out;
+            const String s (values[WavAudioFormat::tracktionLoopInfo]);
 
             if (s.isNotEmpty())
             {
-                MemoryOutputStream os (data, false);
-                os.writeString (s);
+                out.writeString (s);
+
+                if ((out.getDataSize() & 1) != 0)
+                    out.writeByte (0);
             }
 
-            return data;
+            return out.getMemoryBlock();
         }
     };
 
@@ -1265,8 +1267,8 @@ private:
 class MemoryMappedWavReader   : public MemoryMappedAudioFormatReader
 {
 public:
-    MemoryMappedWavReader (const File& file, const WavAudioFormatReader& reader)
-        : MemoryMappedAudioFormatReader (file, reader, reader.dataChunkStart,
+    MemoryMappedWavReader (const File& wavFile, const WavAudioFormatReader& reader)
+        : MemoryMappedAudioFormatReader (wavFile, reader, reader.dataChunkStart,
                                          reader.dataLength, reader.bytesPerFrame)
     {
     }

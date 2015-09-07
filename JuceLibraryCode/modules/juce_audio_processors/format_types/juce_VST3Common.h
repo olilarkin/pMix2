@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -60,12 +60,17 @@ static bool doUIDsMatch (const Steinberg::TUID a, const Steinberg::TUID b) noexc
     }
 
 //==============================================================================
-static juce::String toString (const Steinberg::char8* string) noexcept      { return juce::String (string); }
-static juce::String toString (const Steinberg::char16* string) noexcept     { return juce::String (juce::CharPointer_UTF16 ((juce::CharPointer_UTF16::CharType*) string)); }
+inline juce::String toString (const Steinberg::char8* string) noexcept      { return juce::String (string); }
+inline juce::String toString (const Steinberg::char16* string) noexcept     { return juce::String (juce::CharPointer_UTF16 ((juce::CharPointer_UTF16::CharType*) string)); }
 
 // NB: The casts are handled by a Steinberg::UString operator
-static juce::String toString (const Steinberg::UString128& string) noexcept { return toString (static_cast<const Steinberg::char16*> (string)); }
-static juce::String toString (const Steinberg::UString256& string) noexcept { return toString (static_cast<const Steinberg::char16*> (string)); }
+inline juce::String toString (const Steinberg::UString128& string) noexcept { return toString (static_cast<const Steinberg::char16*> (string)); }
+inline juce::String toString (const Steinberg::UString256& string) noexcept { return toString (static_cast<const Steinberg::char16*> (string)); }
+
+static void toString128 (Steinberg::Vst::String128 result, const char* source)
+{
+    Steinberg::UString (result, 128).fromAscii (source);
+}
 
 static void toString128 (Steinberg::Vst::String128 result, const juce::String& source)
 {
@@ -250,7 +255,7 @@ public:
                         break;
 
                     case Steinberg::Vst::Event::kDataEvent:
-                        result.addEvent (MidiMessage::createSysExMessage (e.data.bytes, e.data.size),
+                        result.addEvent (MidiMessage::createSysExMessage (e.data.bytes, (int) e.data.size),
                                          e.sampleOffset);
                         break;
 
@@ -300,7 +305,7 @@ public:
             {
                 e.type          = Steinberg::Vst::Event::kDataEvent;
                 e.data.bytes    = msg.getSysExData();
-                e.data.size     = msg.getSysExDataSize();
+                e.data.size     = (uint32) msg.getSysExDataSize();
                 e.data.type     = Steinberg::Vst::DataEvent::kMidiSysEx;
             }
             else if (msg.isAftertouch())
@@ -391,7 +396,7 @@ namespace VST3BufferExchange
         channelIndexOffset += numChansForBus;
     }
 
-    static void mapBufferToBusses (Array<Steinberg::Vst::AudioBusBuffers>& result, BusMap& busMapToUse,
+    inline void mapBufferToBusses (Array<Steinberg::Vst::AudioBusBuffers>& result, BusMap& busMapToUse,
                                    const Array<Steinberg::Vst::SpeakerArrangement>& arrangements,
                                    AudioSampleBuffer& source)
     {
@@ -402,7 +407,7 @@ namespace VST3BufferExchange
                                     arrangements.getUnchecked (i), source);
     }
 
-    static void mapBufferToBusses (Array<Steinberg::Vst::AudioBusBuffers>& result,
+    inline void mapBufferToBusses (Array<Steinberg::Vst::AudioBusBuffers>& result,
                                    Steinberg::Vst::IAudioProcessor& processor,
                                    BusMap& busMapToUse, bool isInput, int numBusses,
                                    AudioSampleBuffer& source)

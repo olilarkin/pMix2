@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -66,6 +66,7 @@ public class JuceAppActivity   extends Activity
     {
         super.onCreate (savedInstanceState);
 
+        isScreenSaverEnabled = true;
         viewHolder = new ViewHolder (this);
         setContentView (viewHolder);
 
@@ -141,6 +142,7 @@ public class JuceAppActivity   extends Activity
 
     //==============================================================================
     private ViewHolder viewHolder;
+    private boolean isScreenSaverEnabled;
 
     public final ComponentPeerView createNewView (boolean opaque, long host)
     {
@@ -220,6 +222,24 @@ public class JuceAppActivity   extends Activity
     public final void excludeClipRegion (android.graphics.Canvas canvas, float left, float top, float right, float bottom)
     {
         canvas.clipRect (left, top, right, bottom, android.graphics.Region.Op.DIFFERENCE);
+    }
+
+    //==============================================================================
+    public final void setScreenSaver (boolean enabled)
+    {
+        if (isScreenSaverEnabled != enabled)
+        {
+            isScreenSaverEnabled = enabled;
+            if (enabled)
+                getWindow().clearFlags (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            else
+                getWindow().addFlags (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+    }
+
+    public final boolean getScreenSaver ()
+    {
+        return isScreenSaverEnabled;
     }
 
     //==============================================================================
@@ -331,15 +351,26 @@ public class JuceAppActivity   extends Activity
             setFocusableInTouchMode (true);
             setOnFocusChangeListener (this);
             requestFocus();
+
+            // swap red and blue colours to match internal opengl texture format
+            ColorMatrix colorMatrix = new ColorMatrix();
+
+            float[] colorTransform = { 0,    0,    1.0f, 0,    0,
+                                       0,    1.0f, 0,    0,    0,
+                                       1.0f, 0,    0,    0,    0,
+                                       0,    0,    0,    1.0f, 0 };
+
+            colorMatrix.set (colorTransform);
+            paint.setColorFilter (new ColorMatrixColorFilter (colorMatrix));
         }
 
         //==============================================================================
-        private native void handlePaint (long host, Canvas canvas);
+        private native void handlePaint (long host, Canvas canvas, Paint paint);
 
         @Override
         public void onDraw (Canvas canvas)
         {
-            handlePaint (host, canvas);
+            handlePaint (host, canvas, paint);
         }
 
         @Override
@@ -350,6 +381,7 @@ public class JuceAppActivity   extends Activity
 
         private boolean opaque;
         private long host;
+        private Paint paint = new Paint();
 
         //==============================================================================
         private native void handleMouseDown (long host, int index, float x, float y, long time);
@@ -446,6 +478,22 @@ public class JuceAppActivity   extends Activity
         {
             handleKeyUp (host, keyCode, event.getUnicodeChar());
             return true;
+        }
+
+        @Override
+        public boolean onKeyMultiple (int keyCode, int count, KeyEvent event)
+        {
+            if (keyCode != KeyEvent.KEYCODE_UNKNOWN || event.getAction() != KeyEvent.ACTION_MULTIPLE)
+                return super.onKeyMultiple (keyCode, count, event);
+
+            if (event.getCharacters() != null)
+            {
+                int utf8Char = event.getCharacters().codePointAt (0);
+                handleKeyDown (host, utf8Char, utf8Char);
+                return true;
+            }
+
+            return false;
         }
 
         // this is here to make keyboard entry work on a Galaxy Tab2 10.1
@@ -671,11 +719,10 @@ public class JuceAppActivity   extends Activity
         private long position;
     }
 
-    public static final HTTPStream createHTTPStream (String address,
-                                                     boolean isPost, byte[] postData, String headers,
-                                                     int timeOutMs, int[] statusCode,
-                                                     StringBuffer responseHeaders,
-                                                     int numRedirectsToFollow)
+    public static final HTTPStream createHTTPStream (String address, boolean isPost, byte[] postData,
+                                                     String headers, int timeOutMs, int[] statusCode,
+                                                     StringBuffer responseHeaders, int numRedirectsToFollow,
+                                                     String httpRequestCmd)
     {
         // timeout parameter of zero for HttpUrlConnection is a blocking connect (negative value for juce::URL)
         if (timeOutMs < 0)
@@ -716,9 +763,9 @@ public class JuceAppActivity   extends Activity
                             }
                         }
 
+                        connection.setRequestMethod (httpRequestCmd);
                         if (isPost)
                         {
-                            connection.setRequestMethod ("POST");
                             connection.setDoOutput (true);
 
                             if (postData != null)
