@@ -98,7 +98,7 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
     else
     {
       AlertWindow::showMessageBox (AlertWindow::WarningIcon,
-                                   TRANS("Couldn't create filter"),
+                                   TRANS("Couldn't create node"),
                                    errorMessage);
       
       return 0xFFFFFFFF;

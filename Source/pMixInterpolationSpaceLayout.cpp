@@ -194,7 +194,7 @@ void PMixInterpolationSpaceLayout::mouseDown (const MouseEvent& e)
   {
     PopupMenu m;
     
-    m.addItem (1, "Add preset for filter");
+    m.addItem (1, "Add preset for node");
     
     const int r = m.show();
     

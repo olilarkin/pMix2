@@ -34,10 +34,8 @@ public:
   bool pluginNeedsRescanning (const PluginDescription&) override       { return false; }
   StringArray searchPathsForPlugins (const FileSearchPath&, bool) override         { return StringArray(); }
   AudioPluginInstance* createInstanceFromDescription (const PluginDescription&, double, int) override;
-
   
   static bool isInternalFormat(String name);
-
   
 private:
   PluginDescription audioInDesc;

@@ -74,7 +74,7 @@ void GraphEditor::createNewFilter (const PluginDescription* desc, int x, int y)
   if (desc != nullptr)
   {
     audioEngine.getDoc().beginTransaction();
-    audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add filter"));
+    audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
   }
 }
 

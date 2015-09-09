@@ -125,7 +125,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
   if (e.mods.isPopupMenu())
   {
     PopupMenu m;
-    m.addItem (1, "Delete this filter");
+    m.addItem (1, "Delete this node");
     m.addItem (2, "Disconnect all pins");
     
     if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
@@ -157,7 +157,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
           removeEditor();
           
           audioEngine.getDoc().beginTransaction();
-          audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, nodeId), TRANS("remove filter"));
+          audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, nodeId), TRANS("remove node"));
         }
         
         getGraphPanel()->getLassoSelection().deselectAll();
@@ -264,7 +264,7 @@ void FilterComponent::mouseUp (const MouseEvent& e)
     {
       moving = false;
       audioEngine.getDoc().beginTransaction();
-      audioEngine.getDoc().perform(new MoveFilterAction(audioEngine, *getGraphPanel(), nodeId, startPos, endPos), "move filter");
+      audioEngine.getDoc().perform(new MoveFilterAction(audioEngine, *getGraphPanel(), nodeId, startPos, endPos), "move node");
     }
   }
 }
