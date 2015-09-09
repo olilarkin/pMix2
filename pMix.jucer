@@ -135,11 +135,11 @@
                extraCompilerFlags="" extraDefs="" postbuildCommand="cp $SRCROOT/../../FaustLibs/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.9 SDK" osxCompatibility="10.7 SDK" osxArchitecture="32BitUniversal"
-                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-3.5/lib"
+                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
                        headerPath="/usr/local/include" cppLibType="libc++"/>
         <CONFIGURATION name="Release" osxSDK="10.9 SDK" osxCompatibility="10.7 SDK"
                        osxArchitecture="64BitUniversal" isDebug="0" optimisation="2"
-                       targetName="pMix" headerPath="/usr/local/include" libraryPath="/opt/local/libexec/llvm-3.5/lib"
+                       targetName="pMix" headerPath="/usr/local/include" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
                        cppLibType="libc++"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
