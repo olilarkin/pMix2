@@ -58,7 +58,7 @@ public:
     desc.fileOrIdentifier = fileOrIdentifier;
     desc.uid = 0;
     
-    ScopedPointer<FaustAudioPluginInstance> instance (dynamic_cast<FaustAudioPluginInstance*> (createInstanceFromDescription (desc, 44100., 512)));
+    ScopedPointer<FaustAudioPluginInstance> instance (dynamic_cast<FaustAudioPluginInstance*> (createInstanceFromDescription (desc, 44100., -1 /* so we don't compile*/)));
     
     if (instance == nullptr)
       return;
@@ -125,10 +125,14 @@ public:
       File dspFile = File(desc.fileOrIdentifier);
       
       result = new FaustAudioPluginInstance();
-      result->initialize(faustLibraryPath, svgPath);
-      result->getFactory()->addLibraryPath(dspFile.getParentDirectory());
-      result->getFactory()->updateSourceCode(dspFile.loadFileAsString(), result);
-      result->prepareToPlay(initialSampleRate, initialBufferSize);
+      
+      if (initialBufferSize != -1) // should be > -1 when we want to compile the faust code
+      {
+        result->initialize(faustLibraryPath, svgPath);
+        result->getFactory()->addLibraryPath(dspFile.getParentDirectory());
+        result->getFactory()->updateSourceCode(dspFile.loadFileAsString(), result);
+        result->prepareToPlay(initialSampleRate, initialBufferSize);
+      }
     }
     
     return result.release();

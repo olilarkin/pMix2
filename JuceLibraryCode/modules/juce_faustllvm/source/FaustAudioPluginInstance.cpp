@@ -51,7 +51,8 @@ FaustAudioPluginInstance::~FaustAudioPluginInstance()
 {
   freeDSP();
   
-  fDSPfactory->removeInstance(this);
+  if (fDSPfactory != nullptr)
+    fDSPfactory->removeInstance(this);
 }
 
 void FaustAudioPluginInstance::fillInPluginDescription (PluginDescription& description) const
@@ -70,8 +71,15 @@ void FaustAudioPluginInstance::fillInPluginDescription (PluginDescription& descr
   //description.lastFileModTime = Time(0);
   description.isInstrument = false;
   description.hasSharedContainer = false;
-  description.numInputChannels = fDSP->getNumInputs();
-  description.numOutputChannels = fDSP->getNumOutputs();
+
+  if(fDSP != nullptr) {
+    description.numInputChannels = fDSP->getNumInputs();
+    description.numOutputChannels = fDSP->getNumOutputs();
+  }
+  else {
+    description.numInputChannels = 0;
+    description.numOutputChannels = 0;
+  }
 }
 
 //static
