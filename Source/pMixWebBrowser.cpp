@@ -54,7 +54,7 @@ void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)
         if (faustProc)
         {
           selectedFaustAudioPluginInstance = faustProc;
-          browser->goToURL(faustProc->getFactory()->getSVGPath());
+          browser->goToURL(faustProc->getFactory()->getHTMLURI());
           return;
         }
       }

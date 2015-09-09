@@ -138,11 +138,8 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
     
     if (svgFile.exists())
     {
-      XmlDocument svgXML(svgFile);
-      ScopedPointer<XmlElement> mainElement (svgXML.getDocumentElement());
-      mainElement->setAttribute("width", "100%");
-      mainElement->setAttribute("height", "100%");
-      mainElement->writeToFile(svgFile, String::empty);
+      File htmlFile(fDrawPath.getFullPathName() + "/" + getSVGFolderName() + "/index.html");
+      htmlFile.appendText(HTML_WRAPPER);
     }
   }
   
@@ -377,12 +374,12 @@ File FaustgenFactory::getSVGFile()
   return svgPathForThisInstance.getChildFile("process.svg");
 }
 
-String FaustgenFactory::getSVGFileURI()
+String FaustgenFactory::getHTMLURI()
 {
-  File svgFile = getSVGFile();
-  
+  File svgPathForThisInstance(fDrawPath.getChildFile(getSVGFolderName()));
+    
   String URI;
-  URI << "file://" << svgFile.getFullPathName(); //TODO: will this work on windows?
+  URI << "file://" << svgPathForThisInstance.getChildFile("index.html").getFullPathName(); //TODO: will this work on windows?
   return URI;
 }
 
