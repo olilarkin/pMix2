@@ -14,6 +14,10 @@ PMixAudioEngine::PMixAudioEngine()
 : doc(*this)
 , faustDSPFormat(doc.getLibraryPath(), File(FAUST_DRAW_PATH))
 {
+  Logger::setCurrentLogger(&logger);
+  
+  LOG("pMix v 0.01");
+
   // initialise our settings file..
   
   PropertiesFile::Options options;
@@ -38,11 +42,15 @@ PMixAudioEngine::PMixAudioEngine()
     
   ScopedPointer<PluginDirectoryScanner> scanner = new PluginDirectoryScanner(knownFaustDSPList, faustDSPFormat, faustDSPFormat.getDefaultLocationsToSearch(), true, File::nonexistent);
   
+  LOG("Scanning Faust .dsp files...");
+
   String pluginBeingScanned;
 
   while (scanner->scanNextFile(true, pluginBeingScanned)) {
-    LOG(pluginBeingScanned);
   }
+  
+  String str(knownFaustDSPList.getNumTypes());
+  //LOG("found " + str + " faust .dsp files");
   
   pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()->getIntValue ("pluginSortMethod", KnownPluginList::sortByFileSystemLocation);
   setPluginSortMethod(pluginSortMethod);

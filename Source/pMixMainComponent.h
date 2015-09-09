@@ -15,8 +15,6 @@
 #include "pMixGraphEditor.h"
 #include "pMixCodeEditor.h"
 #include "pMixLookAndFeel.h"
-#include "pMixConsole.h"
-#include "pMixLogger.h"
 #include "pMixRHPTabContainer.h"
 
 class MainComponent  : public Component
@@ -38,7 +36,6 @@ private:
   StretchableLayoutManager horizontalLayout;
   ScopedPointer<StretchableLayoutResizerBar> horizontalDividerBar;
 
-  PMixLogger logger;
   ScopedPointer<PMixTabContainer> rightHandPanel;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

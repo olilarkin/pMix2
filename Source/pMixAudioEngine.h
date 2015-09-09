@@ -14,6 +14,7 @@
 
 #include "pMixDocument.h"
 #include "pMixInternalFilters.h"
+#include "pMixLogger.h"
 
 ApplicationCommandManager& getCommandManager();
 
@@ -33,6 +34,8 @@ public:
   const File getDMPFile() { return getAppProperties().getUserSettings()->getFile().getSiblingFile ("RecentlyCrashedPluginsList"); }
   
   PMixDocument &getDoc() noexcept { return doc; }
+  PMixLogger &getLogger() noexcept { return logger; }
+
   ApplicationProperties& getAppProperties() { return *appProperties; }
 
   void setPluginSortMethod(KnownPluginList::SortMethod sortMethod);
@@ -55,6 +58,7 @@ private:
   
   KnownPluginList knownFaustDSPList;
   FaustPluginFormat faustDSPFormat;
+  PMixLogger logger;
 
   ScopedPointer<ApplicationProperties> appProperties;
 

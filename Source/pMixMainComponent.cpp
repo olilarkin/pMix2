@@ -21,12 +21,9 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   horizontalDividerBar = new StretchableLayoutResizerBar (&horizontalLayout, 1, true);
   addAndMakeVisible (horizontalDividerBar);
   
-  //Logger::setCurrentLogger(&logger);
-
   addAndMakeVisible (graphEditor = new GraphEditor(audioEngine));
   addAndMakeVisible(rightHandPanel = new PMixTabContainer(audioEngine, *graphEditor));
 
-//  logger.addChangeListener(codeEditor->console);
   graphEditor->updateComponents();
 }
 

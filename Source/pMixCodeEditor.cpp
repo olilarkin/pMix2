@@ -25,17 +25,22 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &tokeniser));
   addAndMakeVisible(dividerBar1 = new StretchableLayoutResizerBar (&verticalLayout, 1, false));
   addAndMakeVisible (webBrowser = new WebBrowser(audioEngine, graphEditor));
+  addAndMakeVisible(console = new Console());
+  audioEngine.getLogger().addChangeListener(console);
 
   editor->setFont(Font(Font::getDefaultMonospacedFontName(), 16.f, 0));
   editor->setTabSize(2, true);
   editor->loadContent ("");
   
   graphEditor.addChangeListener(this);
+  
+  audioEngine.getLogger().logMessage("Ready.");
 }
 
 CodeEditor::~CodeEditor()
 {
   graphEditor.removeChangeListener(this);
+  audioEngine.getLogger().removeChangeListener(console);
 }
 
 void CodeEditor::paint (Graphics& g)

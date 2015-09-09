@@ -43,6 +43,7 @@ private:
   ScopedPointer<MenuBarComponent> menuBar;
   ScopedPointer<CodeEditorComponent> editor;
   ScopedPointer<WebBrowser> webBrowser;
+  ScopedPointer<Console> console;
 
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
