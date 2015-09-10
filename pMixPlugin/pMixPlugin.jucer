@@ -8,7 +8,7 @@
               pluginIsSynth="0" pluginWantsMidiIn="1" pluginProducesMidiOut="1"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="1"
               pluginAUExportPrefix="pMixPluginAU" pluginRTASCategory="" aaxIdentifier="com.OliLarkin.pMixPlugin"
-              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.1.1"
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="3.2.0"
               companyWebsite="www.olilarkin.co.uk" companyEmail="contact@olilarkin.co.uk"
               companyName="Oli Larkin Plugins" defines="PMIX_PLUGIN=1">
   <MAINGROUP id="AyXwwn" name="pMixPlugin">
@@ -140,11 +140,11 @@
                externalLibraries="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="10.9 SDK" osxCompatibility="10.7 SDK" osxArchitecture="64BitUniversal"
-                       isDebug="1" optimisation="1" targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.5/lib"
+                       isDebug="1" optimisation="1" targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
                        headerPath="/usr/local/include" cppLibType="libc++"/>
         <CONFIGURATION name="Release" osxSDK="10.9 SDK" osxCompatibility="10.7 SDK"
                        osxArchitecture="64BitUniversal" isDebug="0" optimisation="2"
-                       targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;"
+                       targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
                        cppLibType="libc++" headerPath="/usr/local/include&#10;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -167,21 +167,21 @@
     </XCODE_MAC>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_audio_utils" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_faustllvm" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_faustllvm" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled" JUCE_PLUGINHOST_VST="enabled" JUCE_PLUGINHOST_VST3="disabled"
                JUCE_PLUGINHOST_AU="disabled"/>
