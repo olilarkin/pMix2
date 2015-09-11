@@ -82,7 +82,11 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
         if (faustProc)
         {
           selectedFaustAudioPluginInstance = faustProc;
-          editor->loadContent(faustProc->getSourceCode());
+          
+          // todo if instance is compiled OK
+          selectedFaustAudioPluginInstance->getFactory()->startSVGThread();  
+                  
+          editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());
           editor->setInterceptsMouseClicks(true, true);
           return;
         }
@@ -92,6 +96,7 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
   
   clear();
 }
+
 
 StringArray CodeEditor::getMenuBarNames()
 {
