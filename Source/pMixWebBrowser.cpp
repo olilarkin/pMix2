@@ -14,10 +14,10 @@
 WebBrowser::WebBrowser(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 : audioEngine(audioEngine)
 , graphEditor(graphEditor)
-, selectedFaustAudioPluginInstance(nullptr)
 {
   addAndMakeVisible (browser = new WebBrowserComponent ());
   graphEditor.addChangeListener(this);
+  audioEngine.getDoc().addChangeListener(this);
   browser->goToURL("");
 }
 
@@ -39,13 +39,27 @@ void WebBrowser::resized()
 
 void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)
 {
-  GraphEditor* graphEditor = dynamic_cast<GraphEditor*>(source);
+  PMixDocument* doc = dynamic_cast<PMixDocument*>(source);
+
+  // every time the doc changes, loop over nodes and register as a listener to all the faust nodes.
+  if (doc) {
+    for (int i = 0; i <audioEngine.getGraph().getNumNodes(); i++) {
+      FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(audioEngine.getDoc().getNode(i)->getProcessor());
+
+      if (faustProc)
+        faustProc->getFactory()->registerSVGThreadListenser(this);
+    }
+    
+    return;
+  }
   
-  if (graphEditor)
+  GraphEditor* pgraphEditor = dynamic_cast<GraphEditor*>(source);
+  
+  if (pgraphEditor)
   {
-    if(graphEditor->getLassoSelection().getNumSelected() == 1)
+    if(pgraphEditor->getLassoSelection().getNumSelected() == 1)
     {
-      FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor->getLassoSelection().getSelectedItem(0));
+      FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(pgraphEditor->getLassoSelection().getSelectedItem(0));
       
       if (selectedItem)
       {
@@ -53,14 +67,29 @@ void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)
         
         if (faustProc)
         {
-          selectedFaustAudioPluginInstance = faustProc;
-          browser->goToURL(faustProc->getFactory()->getHTMLURI());
+          browser->goToURL("file:///Users/oli/Dev/MyJUCEProjects/Projects/pMix/wait.html");
           return;
         }
       }
     }
   }
   
-  selectedFaustAudioPluginInstance = nullptr;
+  FaustgenFactory::SVGRenderThread* thread = dynamic_cast<FaustgenFactory::SVGRenderThread*>(source);
+  
+  // if an SVGRenderThread has triggered this change message
+  if (thread)
+  {
+    // if a single item is selected in the graph editor update the browser
+    if(graphEditor.getLassoSelection().getNumSelected() == 1)
+    {
+      FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
+
+      if (selectedItem) {
+        browser->goToURL(thread->getFactory()->getHTMLURI());
+        return;
+      }
+    }
+  }
+
   browser->goToURL("");
 }
