@@ -161,6 +161,7 @@
     <ClCompile Include="..\..\Source\pMixLookAndFeel.cpp"/>
     <ClCompile Include="..\..\Source\pMixDocument.cpp"/>
     <ClCompile Include="..\..\Source\pMixPluginWindow.cpp"/>
+    <ClCompile Include="..\..\Source\pMixFloatWindow.cpp"/>
     <ClCompile Include="..\..\Source\pMixMainComponent.cpp"/>
     <ClCompile Include="..\..\Source\pMixInternalFilters.cpp"/>
     <ClCompile Include="..\..\Source\pMixAudioEngine.cpp"/>
@@ -1326,6 +1327,7 @@
     <ClInclude Include="..\..\Source\pMixLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\pMixDocument.h"/>
     <ClInclude Include="..\..\Source\pMixPluginWindow.h"/>
+    <ClInclude Include="..\..\Source\pMixFloatWindow.h"/>
     <ClInclude Include="..\..\Source\pMixMainComponent.h"/>
     <ClInclude Include="..\..\Source\pMixInternalFilters.h"/>
     <ClInclude Include="..\..\Source\pMixAudioEngine.h"/>

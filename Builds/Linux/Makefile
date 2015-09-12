@@ -73,6 +73,7 @@ OBJECTS := \
   $(OBJDIR)/pMixLookAndFeel_bf43c93.o \
   $(OBJDIR)/pMixDocument_9b99d1f0.o \
   $(OBJDIR)/pMixPluginWindow_8e0c1d8.o \
+  $(OBJDIR)/pMixFloatWindow_b286ca81.o \
   $(OBJDIR)/pMixMainComponent_71d6859.o \
   $(OBJDIR)/pMixInternalFilters_8e34e293.o \
   $(OBJDIR)/pMixAudioEngine_de4ed8cd.o \
@@ -226,6 +227,11 @@ $(OBJDIR)/pMixDocument_9b99d1f0.o: ../../Source/pMixDocument.cpp
 $(OBJDIR)/pMixPluginWindow_8e0c1d8.o: ../../Source/pMixPluginWindow.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling pMixPluginWindow.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/pMixFloatWindow_b286ca81.o: ../../Source/pMixFloatWindow.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling pMixFloatWindow.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixMainComponent_71d6859.o: ../../Source/pMixMainComponent.cpp

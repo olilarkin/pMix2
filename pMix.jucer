@@ -113,6 +113,10 @@
             file="Source/pMixPluginWindow.cpp"/>
       <FILE id="eUeKMz" name="pMixPluginWindow.h" compile="0" resource="0"
             file="Source/pMixPluginWindow.h"/>
+      <FILE id="aw2DwS" name="pMixFloatWindow.cpp" compile="1" resource="0"
+            file="Source/pMixFloatWindow.cpp"/>
+      <FILE id="srAgsP" name="pMixFloatWindow.h" compile="0" resource="0"
+            file="Source/pMixFloatWindow.h"/>
       <FILE id="atxxnI" name="pMixMainComponent.cpp" compile="1" resource="0"
             file="Source/pMixMainComponent.cpp"/>
       <FILE id="cjM5RC" name="pMixMainComponent.h" compile="0" resource="0"

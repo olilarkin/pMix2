@@ -391,6 +391,9 @@
     <ClCompile Include="..\..\Source\pMixPluginWindow.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\pMixFloatWindow.cpp">
+      <Filter>pMix\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\pMixMainComponent.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
@@ -1711,6 +1714,9 @@
       <Filter>pMix\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\pMixPluginWindow.h">
+      <Filter>pMix\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\pMixFloatWindow.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\pMixMainComponent.h">
