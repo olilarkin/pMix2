@@ -46,7 +46,7 @@ namespace CommandIDs
   static const int zoomNormal             = 0x30000C;
   
   static const int showISpace             = 0x30000D;
-  static const int showGraphEditor        = 0x30000E;
+  static const int showConsole            = 0x30000E;
   static const int showCodeEditor         = 0x30000F;
 
   static const int newAudioInput          = 0x300010;
@@ -55,10 +55,10 @@ namespace CommandIDs
   static const int newMIDIOutput          = 0x300013;
   static const int newFaustEffect         = 0x300014;
   
-  static const int floatGraphEditor       = 0x300015;
+  static const int floatConsole           = 0x300015;
   static const int floatISpace            = 0x300016;
   static const int floatCodeEditor        = 0x300017;
-  static const int floatParameters        = 0x300018;
+  //static const int floatParameters        = 0x300018;
   
 }
 

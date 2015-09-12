@@ -122,14 +122,14 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
   {
     // "View" menu
     PopupMenu showMenu;
-    showMenu.addCommandItem (&getCommandManager(), CommandIDs::showGraphEditor);
+    showMenu.addCommandItem (&getCommandManager(), CommandIDs::showConsole);
     showMenu.addCommandItem (&getCommandManager(), CommandIDs::showISpace);
     showMenu.addCommandItem (&getCommandManager(), CommandIDs::showCodeEditor);
 //    showMenu.addCommandItem (&getCommandManager(), CommandIDs::showParameters);
     menu.addSubMenu("Show", showMenu);
 
     PopupMenu floatMenu;
-    floatMenu.addItem (CommandIDs::floatGraphEditor, "Graph Editor", true, false);
+    floatMenu.addItem (CommandIDs::floatConsole, "Graph Editor", true, false);
     floatMenu.addItem (CommandIDs::floatISpace, "Interpolation Space", true, false);
     floatMenu.addItem (CommandIDs::floatCodeEditor, "Code Editor", true, false);
 //    floatMenu.addItem (CommandIDs::floatParameters, "Parameters", true, false);
@@ -203,11 +203,11 @@ void MainAppWindow::getAllCommands (Array <CommandID>& commands)
 //    CommandIDs::newFaustEffect         ,
     
     CommandIDs::showISpace,
-    CommandIDs::showGraphEditor,
+    CommandIDs::showConsole,
     CommandIDs::showCodeEditor,
 //    CommandIDs::showParameters,
     
-    CommandIDs::floatGraphEditor,
+    CommandIDs::floatConsole,
     CommandIDs::floatISpace,
     CommandIDs::floatCodeEditor,
 //    CommandIDs::floatParameters,
@@ -286,7 +286,7 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       result.defaultKeypresses.add (KeyPress ('b', ModifierKeys::commandModifier, 0));
       break;
       
-    case CommandIDs::showGraphEditor:
+    case CommandIDs::showConsole:
       result.setInfo (TRANS("Graph Editor"), TRANS("Shows the Graph Editor"), category, 0);
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
@@ -307,8 +307,8 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
 //      break;
       
-    case CommandIDs::floatGraphEditor:
-      result.setInfo (TRANS("Graph Editor"), TRANS("Floats the Graph Editor"), category, 0);
+    case CommandIDs::floatConsole:
+      result.setInfo (TRANS("Console"), TRANS("Floats the Console"), category, 0);
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
@@ -322,11 +322,11 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
-    case CommandIDs::floatParameters:
-      result.setInfo (TRANS("Parameters"), TRANS("Floats the Parameters"), category, 0);
-      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
-      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
-      break;
+//    case CommandIDs::floatParameters:
+//      result.setInfo (TRANS("Parameters"), TRANS("Floats the Parameters"), category, 0);
+//      //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
+//      //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+//      break;
     default:
       break;
   }
@@ -391,6 +391,25 @@ bool MainAppWindow::perform (const InvocationInfo& info)
     case CommandIDs::redo:
       // TODO
       audioEngine.getDoc().getUndoManager().redo();
+      break;
+      
+    case CommandIDs::showISpace:
+      break;
+      
+    case CommandIDs::showConsole:
+      break;
+      
+    case CommandIDs::showCodeEditor:
+      break;
+      
+    case CommandIDs::floatISpace:
+      break;
+      
+    case CommandIDs::floatConsole:
+      break;
+      
+    case CommandIDs::floatCodeEditor:
+      
       break;
       
     default:
