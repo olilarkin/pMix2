@@ -22,7 +22,11 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   addAndMakeVisible (horizontalDividerBar);
   
   addAndMakeVisible (graphEditor = new GraphEditor(audioEngine));
-  addAndMakeVisible(rightHandPanel = new PMixTabContainer(audioEngine, *graphEditor));
+  
+  codeEditor = new CodeEditor (audioEngine, *graphEditor);
+  iSpace = new InterpolationSpace (audioEngine, *graphEditor);
+  
+  addAndMakeVisible(rightHandPanel = new PMixTabContainer(audioEngine, *graphEditor, *codeEditor, *iSpace));
 
   graphEditor->updateComponents();
 }

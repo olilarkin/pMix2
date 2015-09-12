@@ -33,6 +33,9 @@ private:
   PMixAudioEngine& audioEngine;
   
   ScopedPointer<GraphEditor> graphEditor;
+  ScopedPointer<CodeEditor> codeEditor;
+  ScopedPointer<InterpolationSpace> iSpace;
+  
   StretchableLayoutManager horizontalLayout;
   ScopedPointer<StretchableLayoutResizerBar> horizontalDividerBar;
 
