@@ -14,6 +14,7 @@
 
 GraphEditor::GraphEditor (PMixAudioEngine& audioEngine)
   : audioEngine (audioEngine)
+  , somethingIsBeingDraggedOver (false)
 {
   audioEngine.getDoc().addChangeListener (this);
   selectedItems.addChangeListener(this);
@@ -38,6 +39,12 @@ GraphEditor::~GraphEditor()
 void GraphEditor::paint (Graphics& g)
 {
   g.fillAll (Colours::white);
+  
+  if (somethingIsBeingDraggedOver)
+  {
+    g.setColour (Colours::red);
+    g.drawRect (getLocalBounds(), 3);
+  }
 }
 
 void GraphEditor::mouseDown (const MouseEvent& e)
@@ -444,4 +451,46 @@ void GraphEditor::clear()
     
     getComponentForFilter (f->nodeId)->removeEditor();
   }
+}
+
+bool GraphEditor::isInterestedInFileDrag (const StringArray& files)
+{
+  if (files.size() == 1)
+  {
+    File theFile(files[0]);
+    if (theFile.getFileExtension() == ".dsp")
+      return true;
+  }
+  
+  return false;
+}
+
+void GraphEditor::fileDragEnter (const StringArray& files, int x, int y)
+{
+  somethingIsBeingDraggedOver = true;
+
+  repaint();
+}
+
+void GraphEditor::fileDragMove (const StringArray& files, int x, int y)
+{
+}
+
+void GraphEditor::fileDragExit (const StringArray& files)
+{
+  somethingIsBeingDraggedOver = false;
+
+  repaint();
+}
+
+void GraphEditor::filesDropped (const StringArray& files, int x, int y)
+{
+  somethingIsBeingDraggedOver = false;
+  
+  PluginDescription desc;
+  FaustAudioPluginInstance::fillInitialInPluginDescription(desc);
+  desc.fileOrIdentifier = files[0];
+  audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, &desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
+
+  repaint();
 }

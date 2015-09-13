@@ -23,7 +23,8 @@ class GraphEditor : public Component,
                     public ChangeListener,
                     public LassoSource<Component*>,
                     public ChangeBroadcaster,
-                    public ApplicationCommandTarget
+                    public ApplicationCommandTarget,
+                    public FileDragAndDropTarget
 {
 public:
   GraphEditor (PMixAudioEngine& audioEngine);
@@ -62,12 +63,20 @@ public:
   void getAllCommands (Array <CommandID>& commands);
   void getCommandInfo (CommandID commandID, ApplicationCommandInfo& result);
   bool perform (const InvocationInfo& info);
+  
+  // FileDragAndDropTarget
+  bool isInterestedInFileDrag (const StringArray& files) override;
+  void fileDragEnter (const StringArray& files, int x, int y) override;
+  void fileDragMove (const StringArray& files, int x, int y) override;
+  void fileDragExit (const StringArray& files) override;
+  void filesDropped (const StringArray& files, int x, int y) override;
 
 private:
   PMixAudioEngine& audioEngine;
   LassoComponent<Component*> lassoComp;
   SelectedItemSet<Component*> selectedItems;
   ScopedPointer<ConnectorComponent> draggingConnector;
+  bool somethingIsBeingDraggedOver;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphEditor)
 };
