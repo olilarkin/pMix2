@@ -24,6 +24,7 @@ WebBrowser::WebBrowser(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 WebBrowser::~WebBrowser()
 {
   graphEditor.removeChangeListener(this);
+  audioEngine.getDoc().removeChangeListener(this);
 }
 
 void WebBrowser::paint (Graphics& g)
