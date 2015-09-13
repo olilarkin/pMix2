@@ -129,10 +129,9 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     menu.addSubMenu("Show", showMenu);
 
     PopupMenu floatMenu;
-    floatMenu.addItem (CommandIDs::floatConsole, "Graph Editor", true, false);
-    floatMenu.addItem (CommandIDs::floatISpace, "Interpolation Space", true, false);
-    floatMenu.addItem (CommandIDs::floatCodeEditor, "Code Editor", true, false);
-//    floatMenu.addItem (CommandIDs::floatParameters, "Parameters", true, false);
+    floatMenu.addCommandItem (&getCommandManager(), CommandIDs::floatConsole);
+    floatMenu.addCommandItem (&getCommandManager(), CommandIDs::floatISpace);
+    floatMenu.addCommandItem (&getCommandManager(), CommandIDs::floatCodeEditor);
     menu.addSubMenu("Float", floatMenu);
     
     menu.addSeparator();
@@ -287,7 +286,7 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       break;
       
     case CommandIDs::showConsole:
-      result.setInfo (TRANS("Graph Editor"), TRANS("Shows the Graph Editor"), category, 0);
+      result.setInfo (TRANS("Console"), TRANS("Shows the Console"), category, 0);
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
