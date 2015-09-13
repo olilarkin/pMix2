@@ -65,6 +65,7 @@ PMixAudioEngine::~PMixAudioEngine()
 {
   knownPluginList.removeChangeListener (this);  
   doc.clear();
+  graph.clear();
   appProperties = nullptr;
 }
 

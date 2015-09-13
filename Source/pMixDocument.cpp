@@ -21,7 +21,6 @@ PMixDocument::PMixDocument (PMixAudioEngine& audioEngine)
 
 PMixDocument::~PMixDocument()
 {
-  audioEngine.getGraph().clear();
 }
 
 uint32 PMixDocument::getNextUID() noexcept
