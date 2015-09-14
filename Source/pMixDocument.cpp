@@ -69,7 +69,6 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
     if (faustProc)
     {
       const File drawPath = File(FAUST_DRAW_PATH);
-      
       faustProc->initialize(getLibraryPath(), drawPath);
     }
 

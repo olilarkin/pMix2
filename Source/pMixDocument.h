@@ -101,7 +101,7 @@ private:
   bool snapActive, snapShown;
   float componentOverlayOpacity;
   PMixDefaultColours defaultColours;
-  
+    
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixDocument)
 };
 
