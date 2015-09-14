@@ -21,8 +21,6 @@ void pMixApp::initialise (const String& commandLine)
 
   commandManager.registerAllCommandsForTarget (this);
 
-  mainWindow->menuItemsChanged();
-
 //  if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getMainComponent() != nullptr)
 //  {
 //    mainWindow->getMainComponent()->getDoc().loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);

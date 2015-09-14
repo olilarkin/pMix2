@@ -16,17 +16,28 @@
 #include "pMixCodeEditor.h"
 #include "pMixLookAndFeel.h"
 #include "pMixRHPTabContainer.h"
+#include "pMixFloatWindow.h"
 
 class MainComponent  : public Component
 {
 public:
+  enum EFloatWindows
+  {
+    kWindowCodeEditor = 0,
+    kWindowISpace,
+    kWindowConsole
+  };
+  
   MainComponent (PMixAudioEngine& audioEngine);
   ~MainComponent();
   
+  void paint (Graphics& g);
   void resized();
   void setZoom (double scale);
   double getZoom() const;
   void clear();
+  
+  void floatWindow(int whichWindow, bool floatIt);
   
 private:
   pMixLookAndFeel lookAndFeel;
@@ -40,6 +51,9 @@ private:
   ScopedPointer<StretchableLayoutResizerBar> horizontalDividerBar;
 
   ScopedPointer<PMixTabContainer> rightHandPanel;
+  
+  PMixFloatWindow* iSpaceWindow;
+  PMixFloatWindow* codeEditorWindow;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

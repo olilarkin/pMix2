@@ -15,20 +15,15 @@
 class PMixFloatWindow  : public DocumentWindow
 {
 public:
-  PMixFloatWindow (const String &name, Component &contentComponent)
-  : DocumentWindow(name, Colours::white, DocumentWindow::allButtons, true)
-  {
-    setUsingNativeTitleBar(true);
-    centreWithSize (400, 400);
-    //setContentNonOwned(contentComponent, true);
-  }
+  PMixFloatWindow (const String &name, Component* parent, int windowID);
+  ~PMixFloatWindow();
   
-  ~PMixFloatWindow() {};
+  void closeButtonPressed();
   
-  void closeButtonPressed()
-  {
-    delete this;
-  }
+  void attachContent(Component* content);
+private:
+  Component *parent;
+  int windowID;
 };
 
 #endif  // PMIXFLOATWINDOW_H_INCLUDED

@@ -25,9 +25,14 @@ public:
 
   void paint (Graphics& g);
   void resized();
+  
+  void addTabForContent(Component& content, int window);
+  void removeTabForContent(Component& content);
 
 private:
   ScopedPointer<TabbedComponent> tabbedComponent;
+  InterpolationSpace& iSpace;
+  CodeEditor& codeEditor;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixTabContainer)
 };

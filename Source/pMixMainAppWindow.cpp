@@ -41,6 +41,8 @@ MainAppWindow::MainAppWindow(PMixAudioEngine& audioEngine)
 #else
   setMenuBar (this);
 #endif
+  
+  setApplicationCommandManagerToWatch(&getCommandManager());
 }
 
 MainAppWindow::~MainAppWindow()
@@ -308,16 +310,19 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       
     case CommandIDs::floatConsole:
       result.setInfo (TRANS("Console"), TRANS("Floats the Console"), category, 0);
+      result.setTicked(audioEngine.getAppProperties().getUserSettings()->getBoolValue("floatConsole"));
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
     case CommandIDs::floatISpace:
       result.setInfo (TRANS("Interpolation Space"), TRANS("Floats the Interpolation Space"), category, 0);
+      result.setTicked(audioEngine.getAppProperties().getUserSettings()->getBoolValue("floatInterpolationSpace"));
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
     case CommandIDs::floatCodeEditor:
       result.setInfo (TRANS("Code Editor"), TRANS("Floats the Code Editor"), category, 0);
+      result.setTicked(audioEngine.getAppProperties().getUserSettings()->getBoolValue("floatCodeEditor"));
       //      result.setActive (currentPaintRoutine != nullptr || currentLayout != nullptr);
       //result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
       break;
@@ -402,13 +407,16 @@ bool MainAppWindow::perform (const InvocationInfo& info)
       break;
       
     case CommandIDs::floatISpace:
+      getMainComponent()->floatWindow(MainComponent::kWindowISpace,
+                                      !(audioEngine.getAppProperties().getUserSettings()->getBoolValue("floatInterpolationSpace")));
       break;
       
     case CommandIDs::floatConsole:
       break;
       
     case CommandIDs::floatCodeEditor:
-      
+      getMainComponent()->floatWindow(MainComponent::kWindowCodeEditor,
+                                      !(audioEngine.getAppProperties().getUserSettings()->getBoolValue("floatCodeEditor")));
       break;
       
     default:
