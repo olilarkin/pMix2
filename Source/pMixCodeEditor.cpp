@@ -45,7 +45,7 @@ CodeEditor::~CodeEditor()
 
 void CodeEditor::paint (Graphics& g)
 {
-  //g.fillAll (Colours::lightgrey);
+  g.fillAll (Colours::white);
 }
 
 void CodeEditor::resized()

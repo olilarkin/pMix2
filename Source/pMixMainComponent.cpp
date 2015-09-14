@@ -40,6 +40,11 @@ MainComponent::~MainComponent()
   removeAllChildren();
 }
 
+void MainComponent::paint (Graphics& g)
+{
+  g.fillAll (Colours::white);
+}
+
 void MainComponent::resized()
 {
   Component* hcomps[] = { graphEditor, horizontalDividerBar, rightHandPanel  };
