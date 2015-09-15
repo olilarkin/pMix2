@@ -375,7 +375,7 @@ void FilterComponent::update()
     filterName->setInterceptsMouseClicks(false, false);
     filterName->setFont(font);
   
-    if(!InternalPluginFormat::isInternalFormat(name))
+    if(!InternalPluginFormat::isInternalFormat(name) && f->getProcessor()->getNumParameters() > 0)
     {
       addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (audioEngine, f->getProcessor(), f->nodeId));
       w = jmax (w, editor->getWidth() + 20 );
