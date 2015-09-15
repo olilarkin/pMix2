@@ -192,22 +192,24 @@ void PMixInterpolationSpaceLayout::mouseDown (const MouseEvent& e)
   
   if (e.mods.isPopupMenu())
   {
-    PopupMenu m;
-    
-    m.addItem (1, "Add preset for node");
-    
-    const int r = m.show();
-    
-    if (r == 1)
+    if(graphEditor.getLassoSelection().getNumSelected() == 1)
     {
-      if(graphEditor.getLassoSelection().getNumSelected() == 1)
+      FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
+      
+      if (selectedItem)
       {
-        FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
+        AudioProcessor* proc = audioEngine.getDoc().getNodeForId(selectedItem->nodeId)->getProcessor();
         
-        if (selectedItem)
+        PopupMenu m;
+        
+        bool hasParams = (proc->getNumParameters() > 0);
+
+        m.addItem (1, "Add preset for node", hasParams);
+        
+        const int r = m.show();
+        
+        if (r == 1)
         {
-          AudioProcessor* proc = audioEngine.getDoc().getNodeForId(selectedItem->nodeId)->getProcessor();
-          
           if (!InternalPluginFormat::isInternalFormat(proc->getName()))
           {
             audioEngine.getDoc().addPreset(selectedItem->nodeId, e.getMouseDownX()/getWidth(), e.getMouseDownY()/getHeight());

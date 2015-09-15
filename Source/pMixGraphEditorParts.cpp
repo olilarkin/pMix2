@@ -136,10 +136,12 @@ void FilterComponent::mouseDown (const MouseEvent& e)
       
       if(!InternalPluginFormat::isInternalFormat(processor->getName()))
       {
-        m.addItem (3, "Add a pMix Preset");
-        m.addItem (4, "Set pMix Colour");
-        m.addItem (5, "Interpolate all Parameters");
-        m.addItem (6, "Clear all Parameters");
+        bool hasParams = (processor->getNumParameters() > 0);
+        
+        m.addItem (3, "Add a pMix Preset", hasParams);
+        m.addItem (4, "Set pMix Colour", hasParams);
+        m.addItem (5, "Interpolate all Parameters", hasParams);
+        m.addItem (6, "Clear all Parameters", hasParams);
         m.addSeparator();
         m.addItem (7, "Show plugin UI");
       }
