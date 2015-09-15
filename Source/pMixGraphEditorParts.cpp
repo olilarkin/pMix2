@@ -93,10 +93,10 @@ FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 nod
 , font (13.0f, Font::bold)
 , numIns (0)
 , numOuts (0)
-, highlight(false)
 , moving(false)
 , editor(nullptr)
 , filterName(nullptr)
+, highlight(false)
 {
   setSize (100, 50);
 }

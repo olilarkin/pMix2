@@ -64,7 +64,6 @@ public:
   PMixAudioEngine& audioEngine;
   const uint32 nodeId;
   int numInputs, numOutputs;
-  bool highlight;
   
 private:
   int pinSize;
@@ -78,6 +77,7 @@ private:
   friend class MoveFilterAction;
   PMixGenericAudioProcessorEditor* editor;
   Label* filterName;
+  bool highlight;
   GraphEditor* getGraphPanel() const noexcept;
   
   FilterComponent (const FilterComponent&);
