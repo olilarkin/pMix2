@@ -14,7 +14,7 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
 , iSpaceWindow(nullptr)
 , codeEditorWindow(nullptr)
 {
-  setOpenGLRenderingEngine();
+  //setOpenGLRenderingEngine();
   LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
 
   horizontalLayout.setItemLayout (0, -0.2, -0.8, -0.35);
