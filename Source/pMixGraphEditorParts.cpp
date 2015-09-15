@@ -435,7 +435,9 @@ void FilterComponent::changeListenerCallback (ChangeBroadcaster* source)
   if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
   {    
     audioEngine.getDoc().setFilterColour(nodeId, cs->getCurrentColour());
-    editor->repaint();
+    
+    if (editor != nullptr)
+      editor->repaint();
   }
 }
 
