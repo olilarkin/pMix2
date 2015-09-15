@@ -619,10 +619,10 @@ void ConnectorComponent::resized()
   
   linePath.clear();
   linePath.startNewSubPath (x1, y1);
-  linePath.lineTo(x2, y2);
-  //linePath.cubicTo (x1, y1 + (y2 - y1) * 0.33f,
-  //                  x2, y1 + (y2 - y1) * 0.66f,
-  //                  x2, y2);
+  //linePath.lineTo(x2, y2);
+  linePath.cubicTo (x1, y1 + (y2 - y1) * 0.33f,
+                    x2, y1 + (y2 - y1) * 0.66f,
+                    x2, y2);
   
   PathStrokeType wideStroke (8.0f);
   wideStroke.createStrokedPath (hitPath, linePath);
