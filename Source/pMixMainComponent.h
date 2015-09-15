@@ -39,6 +39,11 @@ public:
   
   void floatWindow(int whichWindow, bool floatIt);
   
+  StringArray getRenderingEngines() const;
+  int getActiveRenderingEngine() const;
+  void setRenderingEngine (int index);
+  void setOpenGLRenderingEngine();
+  
 private:
   pMixLookAndFeel lookAndFeel;
   PMixAudioEngine& audioEngine;
@@ -54,6 +59,11 @@ private:
   
   PMixFloatWindow* iSpaceWindow;
   PMixFloatWindow* codeEditorWindow;
+  
+#if JUCE_OPENGL
+  OpenGLContext openGLContext;
+#endif
+  
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

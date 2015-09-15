@@ -14,6 +14,7 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
 , iSpaceWindow(nullptr)
 , codeEditorWindow(nullptr)
 {
+  setOpenGLRenderingEngine();
   LookAndFeel::setDefaultLookAndFeel (&lookAndFeel);
 
   horizontalLayout.setItemLayout (0, -0.2, -0.8, -0.35);
@@ -138,4 +139,56 @@ void MainComponent::floatWindow(int whichWindow, bool floatIt)
     }
   }
 
+}
+
+static const char* openGLRendererName = "OpenGL Renderer";
+
+StringArray MainComponent::getRenderingEngines() const
+{
+  StringArray renderingEngines;
+  
+  if (ComponentPeer* peer = getPeer())
+    renderingEngines = peer->getAvailableRenderingEngines();
+  
+#if JUCE_OPENGL
+  renderingEngines.add (openGLRendererName);
+#endif
+  
+  return renderingEngines;
+}
+
+void MainComponent::setRenderingEngine (int index)
+{
+//  showMessageBubble (getRenderingEngines()[index]);
+  
+#if JUCE_OPENGL
+  if (getRenderingEngines()[index] == openGLRendererName)
+  {
+    openGLContext.attachTo (*getTopLevelComponent());
+    return;
+  }
+  
+  openGLContext.detach();
+#endif
+  
+  if (ComponentPeer* peer = getPeer())
+    peer->setCurrentRenderingEngine (index);
+}
+
+void MainComponent::setOpenGLRenderingEngine()
+{
+  setRenderingEngine (getRenderingEngines().indexOf (openGLRendererName));
+}
+
+int MainComponent::getActiveRenderingEngine() const
+{
+#if JUCE_OPENGL
+  if (openGLContext.isAttached())
+    return getRenderingEngines().indexOf (openGLRendererName);
+#endif
+  
+  if (ComponentPeer* peer = getPeer())
+    return peer->getCurrentRenderingEngine();
+  
+  return 0;
 }
