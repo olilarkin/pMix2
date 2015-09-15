@@ -52,12 +52,9 @@ void PinComponent::paint (Graphics& g)
   const float h = (float) getHeight();
   
   Path p;
-  p.addEllipse (w * 0.25f, h * 0.25f, w * 0.5f, h * 0.5f);
-  
-  p.addRectangle (w * 0.4f, isInput ? (0.5f * h) : 0.0f, w * 0.2f, h * 0.5f);
-  
+  p.addRoundedRectangle(w * 0.25f, isInput ? (0.8f * h) : 0.0f, w * 0.75f, h * 0.2f, 1.f, 1.f, isInput, isInput, !isInput, !isInput);
   g.setColour (index == PMixDocument::midiChannelNumber ? Colours::grey : Colours::black);
-  g.fillPath (p);
+  g.fillPath(p);
 }
 
 void PinComponent::mouseDown (const MouseEvent& e)
