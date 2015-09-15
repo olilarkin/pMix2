@@ -96,6 +96,7 @@ FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 nod
 , font (13.0f, Font::bold)
 , numIns (0)
 , numOuts (0)
+, highlight(false)
 , moving(false)
 , editor(nullptr)
 , filterName(nullptr)
@@ -281,6 +282,9 @@ bool FilterComponent::hitTest (int x, int y)
 void FilterComponent::paint (Graphics& g)
 {
   g.setColour (Colours::lightgrey);
+  
+  if (highlight)
+    g.setColour (Colours::white);
 
   const int x = 4;
   const int y = pinSize;
@@ -290,12 +294,12 @@ void FilterComponent::paint (Graphics& g)
   g.fillRect(x, y, w, h);
 
   g.setColour (Colours::black);
-
+  
   if (getGraphPanel()->getLassoSelection().isSelected(this))
     g.setColour (Colours::black);
   else
     g.setColour (Colours::grey);
-
+  
   g.drawRoundedRectangle(x, y, w, h, 2, 1);
 }
 
@@ -353,7 +357,12 @@ void FilterComponent::update()
   if (f->getProcessor()->producesMidi())
     ++numOuts;
   
-  int w = 80;
+  FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(f->getProcessor());
+  
+  if (faustProc)
+    highlight = faustProc->getHighlight();
+
+  int w = 10;
   int h = 50;
 
   // Update width based on number of I/O

@@ -134,10 +134,11 @@ void GraphEditor::resized()
 
 void GraphEditor::changeListenerCallback (ChangeBroadcaster* source)
 {
+  repaint();
+
   if (source == &selectedItems)
   {
     sendChangeMessage();
-    repaint();
   }
   else
     updateComponents();

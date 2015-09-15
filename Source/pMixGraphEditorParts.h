@@ -64,6 +64,7 @@ public:
   PMixAudioEngine& audioEngine;
   const uint32 nodeId;
   int numInputs, numOutputs;
+  bool highlight;
   
 private:
   int pinSize;
