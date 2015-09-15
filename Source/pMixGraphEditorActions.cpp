@@ -101,3 +101,29 @@ int MoveFilterAction::getSizeInUnits()
 {
   return (int) sizeof (*this); //xxx should be more accurate
 }
+
+CreateConnectionAction::CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcFilter, int srcChannel, uint32 dstFilter, int dstChannel) noexcept
+: audioEngine(audioEngine)
+, srcFilter(srcFilter)
+, srcChannel(srcChannel)
+, dstFilter(dstFilter)
+, dstChannel(dstChannel)
+{
+}
+
+bool CreateConnectionAction::perform()
+{
+  return audioEngine.getDoc().addConnection (srcFilter, srcChannel, dstFilter, dstChannel);
+}
+
+bool CreateConnectionAction::undo()
+{
+  audioEngine.getDoc().removeConnection (srcFilter, srcChannel, dstFilter, dstChannel);
+  
+  return true;
+}
+
+int CreateConnectionAction::getSizeInUnits()
+{
+  return (int) sizeof (*this); //xxx should be more accurate
+}

@@ -68,4 +68,21 @@ private:
   JUCE_DECLARE_NON_COPYABLE (MoveFilterAction)
 };
 
+class CreateConnectionAction  : public UndoableAction
+{
+public:
+  CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcFilter, int srcChannel, uint32 dstFilter, int dstChannel) noexcept;
+  bool perform();
+  bool undo();
+  int getSizeInUnits();
+  
+private:
+  PMixAudioEngine& audioEngine;
+  uint32 srcFilter;
+  int srcChannel;
+  uint32 dstFilter;
+  int dstChannel;
+  JUCE_DECLARE_NON_COPYABLE (CreateConnectionAction)
+};
+
 #endif  // PMIXGRAPHEDITORACTIONS_H_INCLUDED

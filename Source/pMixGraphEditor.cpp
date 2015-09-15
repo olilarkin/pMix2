@@ -295,7 +295,8 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
       dstChannel = pin->index;
     }
 
-    audioEngine.getDoc().addConnection (srcFilter, srcChannel, dstFilter, dstChannel);
+    audioEngine.getDoc().beginTransaction();
+    audioEngine.getDoc().perform(new CreateConnectionAction(audioEngine, srcFilter, srcChannel, dstFilter, dstChannel), TRANS("add connection"));
   }
 }
 
