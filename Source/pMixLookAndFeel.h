@@ -17,6 +17,9 @@ public:
   Font getPopupMenuFont();
   void drawStretchableLayoutResizerBar (Graphics& g, int /*w*/, int /*h*/, bool /*isVerticalBar*/,
                                         bool isMouseOver, bool isMouseDragging);
+  
+  void drawLabel(Graphics&, Label&);
+  
 private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (pMixLookAndFeel);
 };

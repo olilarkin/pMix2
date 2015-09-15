@@ -374,6 +374,8 @@ void FilterComponent::update()
     filterName->setJustificationType(Justification::centred);
     filterName->setInterceptsMouseClicks(false, false);
     filterName->setFont(font);
+    
+    w = jmax (w, filterName->getFont().getStringWidth(name) + 15);
   
     if(!InternalPluginFormat::isInternalFormat(name) && f->getProcessor()->getNumParameters() > 0)
     {
