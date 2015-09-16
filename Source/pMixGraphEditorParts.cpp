@@ -288,6 +288,22 @@ void FilterComponent::mouseUp (const MouseEvent& e)
   }
 }
 
+void FilterComponent::mouseDoubleClick (const MouseEvent&)
+{
+  if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
+  {
+    AudioProcessor* const processor = f->getProcessor();
+    jassert (processor != nullptr);
+    
+    String name = processor->getName();
+    
+    PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal : PluginWindow::Generic;
+    
+    if (PluginWindow* const w = PluginWindow::getWindowFor (f, type))
+      w->toFront (true);
+  }
+}
+
 bool FilterComponent::hitTest (int x, int y)
 {
   for (int i = getNumChildComponents(); --i >= 0;)

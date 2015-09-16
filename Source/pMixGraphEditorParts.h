@@ -53,6 +53,8 @@ public:
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
+  void mouseDoubleClick (const MouseEvent&);
+  
   bool hitTest (int x, int y);
   void paint (Graphics& g);
   void resized();
