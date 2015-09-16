@@ -321,7 +321,7 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
 
   AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
   
-  if (pd.name == "Faust Effect")
+  if (pd.pluginFormatName == "FAUST")
   {
     FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
     faustProc->initialize(getLibraryPath());
