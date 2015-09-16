@@ -81,7 +81,7 @@ void GraphEditor::createNewFilter (const PluginDescription* desc, int x, int y)
   if (desc != nullptr)
   {
     audioEngine.getDoc().beginTransaction();
-    audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
+    audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, *this, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
   }
 }
 
@@ -492,7 +492,7 @@ void GraphEditor::filesDropped (const StringArray& files, int x, int y)
   PluginDescription desc;
   FaustAudioPluginInstance::fillInitialInPluginDescription(desc);
   desc.fileOrIdentifier = files[0];
-  audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, &desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
+  audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, *this, &desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
 
   repaint();
 }

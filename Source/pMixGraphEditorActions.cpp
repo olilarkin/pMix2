@@ -10,8 +10,9 @@
 #include "pMixGraphEditorActions.h"
 #include "pMixPluginWindow.h"
 
-CreateFilterAction::CreateFilterAction (PMixAudioEngine& audioEngine, const PluginDescription* desc, double x, double y) noexcept
+CreateFilterAction::CreateFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const PluginDescription* desc, double x, double y) noexcept
 : audioEngine(audioEngine)
+, graphEditor(graphEditor)
 , x(x)
 , y(y)
 , desc(desc)
@@ -32,7 +33,8 @@ bool CreateFilterAction::perform()
 bool CreateFilterAction::undo()
 {
   audioEngine.getDoc().removeFilter(nodeID);
-  
+  graphEditor.getLassoSelection().deselectAll();
+
   return true;
 }
 
@@ -41,8 +43,9 @@ int CreateFilterAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-RemoveFilterAction::RemoveFilterAction (PMixAudioEngine& audioEngine, uint32 nodeID) noexcept
+RemoveFilterAction::RemoveFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID) noexcept
 : audioEngine(audioEngine)
+, graphEditor(graphEditor)
 , nodeID(nodeID)
 {
   nodeXML = audioEngine.getDoc().createNodeXml(audioEngine.getGraph().getNodeForId(nodeID));
@@ -53,7 +56,8 @@ bool RemoveFilterAction::perform()
   PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
   
   audioEngine.getDoc().removeFilter (nodeID);
-  
+  graphEditor.getLassoSelection().deselectAll();
+
   if (nodeID < 0xFFFFFFFF)
     return true;
   else

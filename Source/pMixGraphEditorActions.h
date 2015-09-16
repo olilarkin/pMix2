@@ -23,13 +23,14 @@ class PinComponent;
 class CreateFilterAction  : public UndoableAction
 {
 public:
-  CreateFilterAction (PMixAudioEngine& audioEngine, const PluginDescription* desc, double x, double y) noexcept;
+  CreateFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const PluginDescription* desc, double x, double y) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
   PMixAudioEngine& audioEngine;
+  GraphEditor& graphEditor;
   double x, y;
   const PluginDescription* desc;
   uint32 nodeID;
@@ -39,13 +40,14 @@ private:
 class RemoveFilterAction  : public UndoableAction
 {
 public:
-  RemoveFilterAction (PMixAudioEngine& audioEngine, uint32 nodeID) noexcept;
+  RemoveFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
   PMixAudioEngine& audioEngine;
+  GraphEditor& graphEditor;
   uint32 nodeID;
   ScopedPointer<XmlElement> nodeXML;
   JUCE_DECLARE_NON_COPYABLE (RemoveFilterAction)
