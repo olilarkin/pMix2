@@ -250,6 +250,9 @@ void GraphEditor::dragConnector (const MouseEvent& e)
 
       if (audioEngine.getDoc().canConnect (srcFilter, srcChannel, dstFilter, dstChannel))
       {
+        pin->mouseOver = true;
+        pin->repaint();
+
         x = pin->getParentComponent()->getX() + pin->getX() + pin->getWidth() / 2;
         y = pin->getParentComponent()->getY() + pin->getY() + pin->getHeight() / 2;
 
@@ -445,7 +448,7 @@ void GraphEditor::updateFaustNode (uint32 nodeID, String& newSourceCode)
       audioEngine.getDoc().addConnection((uint32) e->getIntAttribute ("srcFilter"), e->getIntAttribute ("srcChannel"), (uint32) e->getIntAttribute ("dstFilter"), e->getIntAttribute ("dstChannel"));
     }
   }
-  
+    
   sendChangeMessage();
 }
 
