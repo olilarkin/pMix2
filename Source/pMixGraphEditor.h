@@ -34,7 +34,8 @@ public:
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
-  
+  void mouseDoubleClick (const MouseEvent&);
+
   void createNewFilter (const PluginDescription* desc, int x, int y);
 
   FilterComponent* getComponentForFilter (uint32 nodeId) const;

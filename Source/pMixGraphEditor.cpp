@@ -58,10 +58,14 @@ void GraphEditor::mouseDown (const MouseEvent& e)
   }
   else
   {
-    //selectedItems.deselectAll();
     addChildComponent (lassoComp);
     lassoComp.beginLasso (e, this);
   }
+}
+
+void GraphEditor::mouseDoubleClick (const MouseEvent&)
+{
+  selectedItems.deselectAll();
 }
 
 void GraphEditor::mouseDrag (const MouseEvent& e)
