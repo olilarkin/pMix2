@@ -16,10 +16,11 @@
 #pragma mark PinComponent
 
 PinComponent::PinComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_, const int index_, const bool isInput_)
-: nodeId (nodeId_),
-index (index_),
-isInput (isInput_),
-audioEngine(audioEngine)
+: nodeId (nodeId_)
+, index (index_)
+, isInput (isInput_)
+, mouseOver(false)
+, audioEngine(audioEngine)
 {
   if (const AudioProcessorGraph::Node::Ptr node = audioEngine.getDoc().getNodeForId (nodeId_))
   {
@@ -48,11 +49,19 @@ audioEngine(audioEngine)
 
 void PinComponent::paint (Graphics& g)
 {
-  const float w = (float) getWidth();
-  const float h = (float) getHeight();
+//  const float w = (float) getWidth();
+//  const float h = (float) getHeight();
+  
+  if (mouseOver)
+  {
+    Path p;
+    p.addRoundedRectangle(0.f, isInput ? 11.f : 0.0f, 16.f, 6.f, 1.f, 1.f, isInput, isInput, !isInput, !isInput);
+    g.setColour (Colours::lightgrey);
+    g.fillPath(p);
+  }
   
   Path p;
-  p.addRoundedRectangle(w * 0.25f, isInput ? (0.8f * h) : 0.0f, w * 0.75f, h * 0.2f, 1.f, 1.f, isInput, isInput, !isInput, !isInput);
+  p.addRoundedRectangle(2.f, isInput ? 13.f : 0.0f, 12.f, 3.f, 1.f, 1.f, isInput, isInput, !isInput, !isInput);
   g.setColour (index == PMixDocument::midiChannelNumber ? Colours::grey : Colours::black);
   g.fillPath(p);
 }
@@ -74,6 +83,18 @@ void PinComponent::mouseDrag (const MouseEvent& e)
 void PinComponent::mouseUp (const MouseEvent& e)
 {
   getGraphPanel()->endDraggingConnector (e);
+}
+
+void PinComponent::mouseEnter (const MouseEvent& e)
+{
+  mouseOver = true;
+  repaint();
+}
+
+void PinComponent::mouseExit (const MouseEvent& e)
+{
+  mouseOver = false;
+  repaint();
 }
 
 GraphEditor* PinComponent::getGraphPanel() const noexcept

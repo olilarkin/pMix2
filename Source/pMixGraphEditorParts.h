@@ -25,14 +25,17 @@ public:
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
-  
+  void mouseEnter (const MouseEvent& e);
+  void mouseExit (const MouseEvent& e);
+
   const uint32 nodeId;
   const int index;
   const bool isInput;
-  
+  bool mouseOver;
+
 private:
   PMixAudioEngine& audioEngine;
-  
+
   GraphEditor* getGraphPanel() const noexcept;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PinComponent)
