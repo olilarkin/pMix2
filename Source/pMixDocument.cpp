@@ -14,7 +14,8 @@ PMixDocument::PMixDocument (PMixAudioEngine& audioEngine)
                      snapGridPixels (8),
                      snapActive (true),
                      snapShown (true),
-                     componentOverlayOpacity (0.33f)
+                     componentOverlayOpacity (0.33f),
+                     drawPath(FAUST_DRAW_PATH)
 {
   startTimer (20);
 }
@@ -68,7 +69,6 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
     
     if (faustProc)
     {
-      const File drawPath = File(FAUST_DRAW_PATH);
       faustProc->initialize(getLibraryPath(), drawPath);
     }
 
@@ -324,7 +324,7 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
   if (pd.pluginFormatName == "FAUST")
   {
     FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
-    faustProc->initialize(getLibraryPath());
+    faustProc->initialize(getLibraryPath(), drawPath);
   }
 
   if (instance == nullptr)
@@ -385,7 +385,7 @@ void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSou
   AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
   
   FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
-  faustProc->initialize(getLibraryPath());
+  faustProc->initialize(getLibraryPath(), drawPath);
   
   if (newSourceCode.length())
     faustProc->setSourceCode(newSourceCode, true);
