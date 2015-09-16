@@ -30,11 +30,12 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 
   editor->setFont(Font(Font::getDefaultMonospacedFontName(), 16.f, 0));
   editor->setTabSize(2, true);
-  editor->loadContent ("");
   
   graphEditor.addChangeListener(this);
   
   audioEngine.getLogger().logMessage("Ready.");
+  
+  clear();
 }
 
 CodeEditor::~CodeEditor()
