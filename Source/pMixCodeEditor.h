@@ -16,6 +16,14 @@
 #include "pMixConsole.h"
 #include "pMixGraphEditor.h"
 
+namespace CodeEditorMenuIDs
+{
+  static const int fileMenu      = 0x000000;
+  static const int editMenu      = 0x000001;
+  static const int viewMenu      = 0x000002;
+  static const int helpMenu      = 0x000003;
+};
+
 class CodeEditor : public Component
                  , public MenuBarModel
                  , public ChangeListener

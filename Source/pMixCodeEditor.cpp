@@ -112,20 +112,20 @@ PopupMenu CodeEditor::getMenuForIndex (int menuIndex, const String& menuName)
 
   switch (menuIndex)
   {
-    case 0:
+    case CodeEditorMenuIDs::fileMenu:
       menu.addItem(1, "Recompile", selectedFaustAudioPluginInstance != nullptr);
       menu.addSeparator();
       menu.addItem(2, "Import .dsp file", false);
       menu.addItem(3, "Save As .dsp file ...", false);
       menu.addItem(4, "Export ...", false);
       break;
-    case 1:
+    case CodeEditorMenuIDs::editMenu:
       menu.addItem(1, "Copy", false);
       menu.addItem(2, "Paste", false);
       menu.addItem(3, "Delete", false);
       menu.addItem(4, "Select All", false);
       break;
-    case 2:
+    case CodeEditorMenuIDs::viewMenu:
       menu.addItem(1, "Show Diagram", true, true);
       menu.addItem(2, "Show Console", true, false);
       menu.addSeparator();
@@ -133,7 +133,7 @@ PopupMenu CodeEditor::getMenuForIndex (int menuIndex, const String& menuName)
       menu.addItem(4, "Decrease Font Size", false, false);
       menu.addItem(5, "Editor Settings...", false, false);
       break;
-    case 3:
+    case CodeEditorMenuIDs::helpMenu:
       menu.addItem(1, "Open Faust Libraries", false);
       menu.addItem(2, "Read PDF guide", false);
       break;
@@ -148,7 +148,7 @@ void CodeEditor::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 {
   switch (topLevelMenuIndex)
   {
-    case 0:
+    case CodeEditorMenuIDs::fileMenu:
     {
       switch (menuItemID)
       {
