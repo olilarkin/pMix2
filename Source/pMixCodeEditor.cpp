@@ -198,7 +198,7 @@ void CodeEditor::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 void CodeEditor::clear()
 {
   selectedFaustAudioPluginInstance = nullptr;
-  editor->loadContent("Create or select a Faust filter to view the code");
+  editor->loadContent("Create or select a Faust node to view the code");
   editor->setInterceptsMouseClicks(false, false);
   webBrowser->browser->goToURL("");
 }
