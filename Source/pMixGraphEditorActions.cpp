@@ -32,6 +32,7 @@ bool CreateFilterAction::perform()
 
 bool CreateFilterAction::undo()
 {
+  PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
   audioEngine.getDoc().removeFilter(nodeID);
   graphEditor.getLassoSelection().deselectAll();
 
