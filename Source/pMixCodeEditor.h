@@ -18,10 +18,16 @@
 
 namespace CodeEditorMenuIDs
 {
-  static const int fileMenu      = 0x000000;
-  static const int editMenu      = 0x000001;
-  static const int viewMenu      = 0x000002;
-  static const int helpMenu      = 0x000003;
+  static const int fileMenu = 0x000000;
+  static const int editMenu = 0x000001;
+  static const int viewMenu = 0x000002;
+  static const int helpMenu = 0x000003;
+};
+
+namespace CodeEditorBottomViewIDs
+{
+  static const int diagram = 1;
+  static const int console = 2;
 };
 
 class CodeEditor : public Component
@@ -44,6 +50,8 @@ public:
   
   void clear();
   
+  void showConsoleOrBrowser(int which);
+  
 private:
   FaustTokeniser tokeniser;
   CodeDocument codeDocument;
@@ -60,6 +68,7 @@ private:
   ScopedPointer<StretchableLayoutResizerBar> dividerBar1, dividerBar2;
   FaustAudioPluginInstance* selectedFaustAudioPluginInstance;
   uint32 selectedNodeID;
+  int show;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CodeEditor);
 };

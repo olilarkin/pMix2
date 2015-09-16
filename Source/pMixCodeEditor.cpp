@@ -15,6 +15,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 , graphEditor(graphEditor)
 , selectedFaustAudioPluginInstance(nullptr)
 , selectedNodeID(0)
+, show(CodeEditorBottomViewIDs::diagram)
 {
   addAndMakeVisible (menuBar = new MenuBarComponent (this));
 
@@ -54,7 +55,22 @@ void CodeEditor::resized()
   Rectangle<int> area (getLocalBounds());
   menuBar->setBounds (area.removeFromTop (LookAndFeel::getDefaultLookAndFeel().getDefaultMenuBarHeight()));
 
-  Component* vcomps[] = { editor, dividerBar1, webBrowser };
+  Component* vcomps[3];//{ editor, dividerBar1, console };
+  vcomps[0] = editor;
+  vcomps[1] = dividerBar1;
+  
+  if (show == CodeEditorBottomViewIDs::diagram)
+  {
+    console->setVisible(false);
+    webBrowser->setVisible(true);
+    vcomps[2] = webBrowser;
+  }
+  else
+  {
+    console->setVisible(true);
+    webBrowser->setVisible(false);
+    vcomps[2] = console;
+  }
   
   verticalLayout.layOutComponents (vcomps, 3,
                                    area.getX(), area.getY(), area.getWidth(), area.getHeight(),
@@ -126,8 +142,8 @@ PopupMenu CodeEditor::getMenuForIndex (int menuIndex, const String& menuName)
       menu.addItem(4, "Select All", false);
       break;
     case CodeEditorMenuIDs::viewMenu:
-      menu.addItem(1, "Show Diagram", true, true);
-      menu.addItem(2, "Show Console", true, false);
+      menu.addItem(CodeEditorBottomViewIDs::diagram, "Show Diagram", true, show == CodeEditorBottomViewIDs::diagram);
+      menu.addItem(CodeEditorBottomViewIDs::console, "Show Console", true, show == CodeEditorBottomViewIDs::console);
       menu.addSeparator();
       menu.addItem(3, "Increase Font Size", false, false);
       menu.addItem(4, "Decrease Font Size", false, false);
@@ -161,6 +177,19 @@ void CodeEditor::menuItemSelected (int menuItemID, int topLevelMenuIndex)
       }
       break;
     }
+    case CodeEditorMenuIDs::viewMenu:
+      switch (menuItemID)
+      {
+        case CodeEditorBottomViewIDs::console:
+          showConsoleOrBrowser(CodeEditorBottomViewIDs::console);
+          break;
+        case CodeEditorBottomViewIDs::diagram:
+          showConsoleOrBrowser(CodeEditorBottomViewIDs::diagram);
+          break;
+        default:
+          break;
+      }
+      break;
     default:
       break;
   }
@@ -172,4 +201,10 @@ void CodeEditor::clear()
   editor->loadContent("Create or select a Faust filter to view the code");
   editor->setInterceptsMouseClicks(false, false);
   webBrowser->browser->goToURL("");
+}
+
+void CodeEditor::showConsoleOrBrowser(int which)
+{
+  show = which;
+  resized();
 }
