@@ -78,6 +78,8 @@ public:
 
   void getComponentsForFilter (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const;
 
+  void repaintPresetsForFilter (const uint32 nodeId);
+  
 private:
   //TooltipWindow tooltipWindow;
   PMixAudioEngine& audioEngine;

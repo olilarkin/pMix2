@@ -12,11 +12,12 @@
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
+#include "pMixInterpolationSpaceLayout.h"
 
 class InterpolationSpaceIPos : public Component
 {
 public:
-  InterpolationSpaceIPos(PMixAudioEngine& audioEngine, const uint32 nodeId, Colour colour);
+  InterpolationSpaceIPos(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout, const uint32 nodeId, Colour colour);
   ~InterpolationSpaceIPos();
   
   void resized ();
@@ -29,6 +30,8 @@ public:
 
 private:
   PMixAudioEngine& audioEngine;
+  PMixInterpolationSpaceLayout& layout;
+
   ComponentDragger myDragger;
   ComponentBoundsConstrainer boundsConstrainer;
   Colour colour;
@@ -41,7 +44,7 @@ class pMixInterpolationSpaceCrossHairs : public Component
                                        , public ChangeListener
 {
 public:
-  pMixInterpolationSpaceCrossHairs(PMixAudioEngine& audioEngine);
+  pMixInterpolationSpaceCrossHairs(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout);
   ~pMixInterpolationSpaceCrossHairs();
   
   void paint (Graphics&);
@@ -54,6 +57,8 @@ public:
 
 private:
   PMixAudioEngine& audioEngine;
+  PMixInterpolationSpaceLayout& layout;
+  
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (pMixInterpolationSpaceCrossHairs)
 };
 

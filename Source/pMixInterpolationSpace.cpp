@@ -3,7 +3,7 @@
 InterpolationSpace::InterpolationSpace (PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 {
   addAndMakeVisible(layout = new PMixInterpolationSpaceLayout(audioEngine, graphEditor));
-  addAndMakeVisible(crosshairs = new pMixInterpolationSpaceCrossHairs(audioEngine));
+  addAndMakeVisible(crosshairs = new pMixInterpolationSpaceCrossHairs(audioEngine, *layout));
 }
 
 InterpolationSpace::~InterpolationSpace ()

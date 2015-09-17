@@ -304,7 +304,8 @@ void PMixInterpolationSpaceLayout::updateComponents()
           float r = MIN_RADIUS + (RADIUS_RANGE * (float) obj->getProperty("radius"));
           float x = getWidth() * (float) obj->getProperty("x");
           float y = getHeight() * (float) obj->getProperty("y");
-          comp->setBounds(x, y, r, r);
+          comp->setCentrePosition(x, y);
+          comp->setSize(r, r);
           addAndMakeVisible (comp);
         }
       }
@@ -322,3 +323,18 @@ void PMixInterpolationSpaceLayout::getComponentsForFilter (const uint32 nodeId, 
         components.add(pc);
   }
 }
+
+void PMixInterpolationSpaceLayout::repaintPresetsForFilter (const uint32 nodeId)
+{
+  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId(nodeId));
+
+  Array<InterpolationSpacePreset*> comps;
+  getComponentsForFilter(f->nodeId, comps);
+  
+  for (int i=0; i<comps.size(); i++) {
+    comps[i]->update();
+  }
+}
+
+
+

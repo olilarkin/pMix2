@@ -9,8 +9,9 @@
 
 #include "pMixInterpolationSpaceCrosshairs.h"
 
-InterpolationSpaceIPos::InterpolationSpaceIPos(PMixAudioEngine& audioEngine, const uint32 nodeId, Colour colour)
+InterpolationSpaceIPos::InterpolationSpaceIPos(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout, const uint32 nodeId, Colour colour)
 : audioEngine(audioEngine)
+, layout(layout)
 , colour(colour)
 , nodeId(nodeId)
 {
@@ -41,7 +42,8 @@ void InterpolationSpaceIPos::mouseDrag (const MouseEvent& e)
   audioEngine.getDoc().setFilterIPos(nodeId, normalizedPos.x, normalizedPos.y);
   
   myDragger.dragComponent (this, e, &boundsConstrainer);
-  getParentComponent()->repaint();
+  
+  layout.repaintPresetsForFilter(nodeId);
 }
 
 void InterpolationSpaceIPos::mouseUp (const MouseEvent& e)
@@ -84,8 +86,9 @@ void InterpolationSpaceIPos::update()
   repaint();
 }
 
-pMixInterpolationSpaceCrossHairs::pMixInterpolationSpaceCrossHairs(PMixAudioEngine& audioEngine)
+pMixInterpolationSpaceCrossHairs::pMixInterpolationSpaceCrossHairs(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout)
 : audioEngine(audioEngine)
+, layout(layout)
 {
   setInterceptsMouseClicks(false, true);
   audioEngine.getDoc().addChangeListener (this);
