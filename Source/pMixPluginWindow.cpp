@@ -91,6 +91,7 @@ PluginWindow* PluginWindow::getWindowFor (AudioProcessorGraph::Node* const node,
 
 PluginWindow::~PluginWindow()
 {
+  dynamic_cast<AudioPluginInstance*> (owner->getProcessor())->editorBeingDeleted( dynamic_cast<AudioProcessorEditor*>(getContentComponent()) );
   activePluginWindows.removeFirstMatchingValue (this);
   clearContentComponent();
 }
