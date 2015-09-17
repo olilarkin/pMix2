@@ -68,7 +68,7 @@ void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)
         
         if (faustProc)
         {
-          browser->goToURL("file:///Users/oli/Dev/MyJUCEProjects/Projects/pMix/wait.html");
+          browser->goToURL(audioEngine.getDoc().getLibraryPath() + "wait.html");
           return;
         }
       }
