@@ -751,7 +751,7 @@ void PMixDocument::setFilterIPos(const uint32 nodeId, double x, double y)
     int numPresets = presetsArr->size();
     Array<double> distances;
     
-    // work out the disstances
+    // work out the distances
     for (int presetIdx = 0; presetIdx < numPresets; presetIdx++)
     {
       DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
