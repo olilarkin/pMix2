@@ -103,5 +103,6 @@ void PluginWindow::moved()
 
 void PluginWindow::closeButtonPressed()
 {
+  dynamic_cast<AudioPluginInstance*> (owner->getProcessor())->editorBeingDeleted( dynamic_cast<AudioProcessorEditor*>(getContentComponent()) );
   delete this;
 }
