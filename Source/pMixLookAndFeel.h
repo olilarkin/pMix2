@@ -19,7 +19,7 @@ public:
                                         bool isMouseOver, bool isMouseDragging);
   
   void drawLabel(Graphics&, Label&);
-  
+  void drawCallOutBoxBackground (CallOutBox &, Graphics &, const Path &, Image &cachedImage);
 private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (pMixLookAndFeel);
 };

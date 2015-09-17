@@ -247,3 +247,22 @@ void pMixLookAndFeel::drawLabel (Graphics& g, Label& label)
   g.drawRect (label.getLocalBounds());
 }
 
+void pMixLookAndFeel::drawCallOutBoxBackground (CallOutBox& box, Graphics& g,
+                                                const Path& path, Image& cachedImage)
+{
+  if (cachedImage.isNull())
+  {
+    cachedImage = Image (Image::ARGB, box.getWidth(), box.getHeight(), true);
+    Graphics g2 (cachedImage);
+    
+    DropShadow (Colours::black.withAlpha (0.7f), 8, Point<int> (0, 2)).drawForPath (g2, path);
+  }
+  
+  g.setColour (Colours::black);
+  g.drawImageAt (cachedImage, 0, 0);
+  
+  g.setColour (Colours::lightgrey);
+  g.fillPath (path);
+}
+
+
