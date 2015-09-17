@@ -2352,7 +2352,7 @@
 					77BE31C450DAEB585BACC237,
 					4AB8E989220619F1C4139E41,
 					A35F435CAA78A9E053209B1D, ); runOnlyForDeploymentPostprocessing = 0; };
-		1A15EB62D8BE255A8ACBF995 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "cp $SRCROOT/../../FaustLibs/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/"; };
+		1A15EB62D8BE255A8ACBF995 = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (  ); runOnlyForDeploymentPostprocessing = 0; name = "Post-build script"; shellPath = /bin/sh; shellScript = "cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/"; };
 		0B8CA6223FC75F4829FB208F = {isa = PBXNativeTarget; buildConfigurationList = D111D18F29DD70C317CFB47C; buildPhases = (
 					33D1B4E3831DD4AA5ECB8954,
 					674FB0D9939A8034BF79821D,
