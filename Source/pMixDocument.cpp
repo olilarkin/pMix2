@@ -600,7 +600,9 @@ void PMixDocument::addPreset(const uint32 nodeId, double x, double y)
   var preset = var(obj);
   presetsArr->append(preset);
 
-  setFilterIPos(nodeId, x, y); // will call changed()
+  setFilterIPos(nodeId, x, y);
+  
+  changed();
 }
 
 void PMixDocument::removePreset(const uint32 nodeId, const int presetIdx)
@@ -807,9 +809,7 @@ void PMixDocument::setFilterIPos(const uint32 nodeId, double x, double y)
       
       obj->setProperty("coeff", coeff);
     }
-    
-    changed();
-    
+
     node->properties.set("update", true);
   }
 }
