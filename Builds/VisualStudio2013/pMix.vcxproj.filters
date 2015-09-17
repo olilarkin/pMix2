@@ -988,6 +988,9 @@
     <ClCompile Include="..\..\..\juce_faustllvm\source\FaustAudioPluginInstance.cpp">
       <Filter>Juce Modules\juce_faustllvm\source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\juce_faustllvm\source\FaustAudioProcessorEditor.cpp">
+      <Filter>Juce Modules\juce_faustllvm\source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\juce_faustllvm\source\FaustAudioProcessorParameter.cpp">
       <Filter>Juce Modules\juce_faustllvm\source</Filter>
     </ClCompile>
@@ -2452,6 +2455,9 @@
       <Filter>Juce Modules\juce_events</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\juce_faustllvm\source\FaustAudioPluginInstance.h">
+      <Filter>Juce Modules\juce_faustllvm\source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\juce_faustllvm\source\FaustAudioProcessorEditor.h">
       <Filter>Juce Modules\juce_faustllvm\source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\juce_faustllvm\source\FaustAudioProcessorParameter.h">
