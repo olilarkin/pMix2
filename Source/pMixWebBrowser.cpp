@@ -68,7 +68,13 @@ void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)
         
         if (faustProc)
         {
-          browser->goToURL(audioEngine.getDoc().getLibraryPath() + "wait.html");
+          if (!faustProc->getHighlight())
+          {
+            browser->goToURL(audioEngine.getDoc().getLibraryPath() + "wait.html");
+          }
+          else
+            browser->goToURL("");
+          
           return;
         }
       }

@@ -65,6 +65,8 @@ public:
   
   void changeListenerCallback (ChangeBroadcaster* source);
   
+  void bubbleMessage(String msg);
+  
 public:
   PMixAudioEngine& audioEngine;
   const uint32 nodeId;

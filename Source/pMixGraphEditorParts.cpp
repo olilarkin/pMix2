@@ -473,6 +473,18 @@ void FilterComponent::changeListenerCallback (ChangeBroadcaster* source)
   }
 }
 
+void FilterComponent::bubbleMessage(String msg)
+{
+  BubbleMessageComponent* bbl = new BubbleMessageComponent();
+  AttributedString text (msg);
+  text.setJustification (Justification::centred);
+  bbl->setAlwaysOnTop (true);
+  bbl->addToDesktop (0);
+  
+  bbl->showAt(this, text, 2000., true, true);
+}
+
+
 #pragma mark -
 #pragma mark ConnectorComponent
 

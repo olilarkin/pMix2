@@ -100,11 +100,18 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
         {
           selectedFaustAudioPluginInstance = faustProc;
           
-          // todo if instance is compiled OK
-          selectedFaustAudioPluginInstance->getFactory()->startSVGThread();  
-                  
-          editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());
-          editor->setInterceptsMouseClicks(true, true);
+          if (!selectedFaustAudioPluginInstance->getHighlight())
+          {
+            selectedFaustAudioPluginInstance->getFactory()->startSVGThread();
+            
+            editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());
+            editor->setInterceptsMouseClicks(true, true);
+          }
+          else
+          {
+            graphEditor.getComponentForFilter(selectedNodeID)->bubbleMessage(selectedFaustAudioPluginInstance->getCompilerMessage());
+          }
+
           return;
         }
       }
