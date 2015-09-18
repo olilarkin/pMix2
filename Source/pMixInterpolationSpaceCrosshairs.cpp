@@ -142,7 +142,18 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
   for (int i = getNumChildComponents(); --i >= 0;)
   {
     if (InterpolationSpaceIPos* const ic = dynamic_cast <InterpolationSpaceIPos*> (getChildComponent (i)))
+    {
+      const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId(ic->nodeId));
+
+      var iposx = f->properties["iposx"];
+      var iposy = f->properties["iposy"];
+      
+      float x = getWidth() * (float) iposx;
+      float y = getHeight() * (float) iposy;
+      ic->setCentrePosition(x, y);
+      
       ic->update();
+    }
   }
 
   for (int i = audioEngine.getDoc().getNumFilters(); --i >= 0;)
@@ -163,9 +174,9 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
           float r = 25.f;
           float x = getWidth() * (float) iposx;
           float y = getHeight() * (float) iposy;
-          comp->setCentrePosition(x, y);
           comp->setSize(r*2.f, r*2.f);
-          
+          comp->setCentrePosition(x, y);
+          comp->update();
           addAndMakeVisible(comp);
         }
       }

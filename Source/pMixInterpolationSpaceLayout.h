@@ -32,6 +32,7 @@ public:
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
+
   void paint (Graphics& g);
   
   void changeListenerCallback (ChangeBroadcaster* source);
@@ -70,7 +71,8 @@ public:
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
-  
+  void mouseDoubleClick (const MouseEvent& e);
+
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
   SelectedItemSet <Component*>& getLassoSelection();
   

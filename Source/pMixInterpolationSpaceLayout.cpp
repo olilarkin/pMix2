@@ -100,7 +100,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
 
 void InterpolationSpacePreset::mouseDrag (const MouseEvent& e)
 {
-  myDragger.dragComponent (this, e, &boundsConstrainer);
+  myDragger.dragComponent (this, e, &boundsConstrainer);  
 }
 
 void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
@@ -109,6 +109,7 @@ void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
   
   audioEngine.getDoc().beginTransaction();
   audioEngine.getDoc().perform(new MovePresetAction(dynamic_cast<PMixInterpolationSpaceLayout*>(getParentComponent()), getComponentID(), startBounds, endBounds), "change preset bounds");
+  
 }
 
 void InterpolationSpacePreset::paint (Graphics& g)
@@ -212,7 +213,10 @@ void PMixInterpolationSpaceLayout::mouseDown (const MouseEvent& e)
         {
           if (!InternalPluginFormat::isInternalFormat(proc->getName()))
           {
-            audioEngine.getDoc().addPreset(selectedItem->nodeId, e.getMouseDownX()/getWidth(), e.getMouseDownY()/getHeight());
+            double x = (double) e.getMouseDownX()/getWidth();
+            double y = (double) e.getMouseDownY()/getHeight();
+
+            audioEngine.getDoc().addPreset(selectedItem->nodeId, x, y);
           }
         }
       }
@@ -235,6 +239,32 @@ void PMixInterpolationSpaceLayout::mouseUp (const MouseEvent& e)
 {
   lassoComp.endLasso();
   removeChildComponent (&lassoComp);
+}
+
+void PMixInterpolationSpaceLayout::mouseDoubleClick (const MouseEvent& e)
+{
+  if(graphEditor.getLassoSelection().getNumSelected() == 1)
+  {
+    FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
+    
+    if (selectedItem)
+    {
+      AudioProcessor* proc = audioEngine.getDoc().getNodeForId(selectedItem->nodeId)->getProcessor();
+      
+      bool hasParams = (proc->getNumParameters() > 0);
+
+      if (hasParams)
+      {
+        if (!InternalPluginFormat::isInternalFormat(proc->getName()))
+        {
+          double x = (double) e.getMouseDownX()/getWidth();
+          double y = (double) e.getMouseDownY()/getHeight();
+          
+          audioEngine.getDoc().addPreset(selectedItem->nodeId, x, y);
+        }
+      }
+    }
+  }
 }
 
 //LassoSource
@@ -304,8 +334,11 @@ void PMixInterpolationSpaceLayout::updateComponents()
           float r = MIN_RADIUS + (RADIUS_RANGE * (float) obj->getProperty("radius"));
           float x = getWidth() * (float) obj->getProperty("x");
           float y = getHeight() * (float) obj->getProperty("y");
-          comp->setCentrePosition(x, y);
+          
           comp->setSize(r, r);
+          comp->setCentrePosition(x, y);
+          comp->update();
+          
           addAndMakeVisible (comp);
         }
       }
