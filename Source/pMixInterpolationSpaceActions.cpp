@@ -20,23 +20,30 @@ MovePresetAction::MovePresetAction (PMixInterpolationSpaceLayout* interpolationS
 
 bool MovePresetAction::perform()
 {
-  InterpolationSpacePreset* presetComp = dynamic_cast<InterpolationSpacePreset*>(interpolationSpace->findChildWithID(componentID));
-  presetComp->setBounds(endBounds);
-  
-  Point<double> normalizedPos;
-  normalizedPos.x = endBounds.getX() / (double) presetComp->getParentWidth();
-  normalizedPos.y = endBounds.getY() / (double) presetComp->getParentHeight();
-  presetComp->audioEngine.getDoc().setPresetPosition(presetComp->nodeId, presetComp->presetIdx, normalizedPos.x, normalizedPos.y);
+  doStuff(endBounds);
   return true;
 }
 
 bool MovePresetAction::undo()
 {
-  interpolationSpace->findChildWithID(componentID)->setBounds(startBounds);
+  doStuff(startBounds);
   return true;
 }
 
 int MovePresetAction::getSizeInUnits()
 {
   return (int) sizeof (*this); //xxx should be more accurate
+}
+
+void MovePresetAction::doStuff(Rectangle<int>& whichBounds)
+{
+  InterpolationSpacePreset* presetComp = dynamic_cast<InterpolationSpacePreset*>(interpolationSpace->findChildWithID(componentID));
+  presetComp->setBounds(whichBounds);
+  
+  Point<double> normalizedPos;
+  normalizedPos.x = whichBounds.getCentreX() / (double) presetComp->getParentWidth();
+  normalizedPos.y = whichBounds.getCentreY() / (double) presetComp->getParentHeight();
+  presetComp->audioEngine.getDoc().setPresetPosition(presetComp->nodeId, presetComp->presetIdx, normalizedPos.x, normalizedPos.y);
+  
+  interpolationSpace->repaintPresetsForFilter(presetComp->nodeId);
 }

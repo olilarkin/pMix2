@@ -22,6 +22,8 @@ public:
   bool undo();
   int getSizeInUnits();
   
+  void doStuff(Rectangle<int>& whichBounds);
+  
 private:
   PMixInterpolationSpaceLayout* interpolationSpace;
   String componentID;
