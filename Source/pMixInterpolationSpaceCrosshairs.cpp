@@ -37,8 +37,9 @@ void InterpolationSpaceIPos::mouseDown (const MouseEvent& e)
 void InterpolationSpaceIPos::mouseDrag (const MouseEvent& e)
 {
   Point<double> normalizedPos;
-  normalizedPos.x = getX() / (double) getParentWidth();
-  normalizedPos.y = getY() / (double) getParentHeight();
+  Rectangle<int> bounds = getBounds();
+  normalizedPos.x = bounds.getCentreX()  / (double) getParentWidth();
+  normalizedPos.y = bounds.getCentreY() / (double) getParentHeight();
   audioEngine.getDoc().setFilterIPos(nodeId, normalizedPos.x, normalizedPos.y);
   
   myDragger.dragComponent (this, e, &boundsConstrainer);
@@ -156,11 +157,12 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
 
         if (presets->size() >= 2)
         {
-          InterpolationSpaceIPos* comp = new InterpolationSpaceIPos(audioEngine, f->nodeId, audioEngine.getDoc().getFilterColour(f->nodeId));
-          float r = 50.f;
+          InterpolationSpaceIPos* comp = new InterpolationSpaceIPos(audioEngine, layout, f->nodeId, audioEngine.getDoc().getFilterColour(f->nodeId));
+          float r = 25.f;
           float x = getWidth() * (float) iposx;
           float y = getHeight() * (float) iposy;
-          comp->setBounds(x, y, r, r);
+          comp->setCentrePosition(x, y);
+          comp->setSize(r*2.f, r*2.f);
           
           addAndMakeVisible(comp);
         }
