@@ -147,6 +147,10 @@ PopupMenu CodeEditor::getMenuForIndex (int menuIndex, const String& menuName)
       menu.addItem(2, "Paste", false);
       menu.addItem(3, "Delete", false);
       menu.addItem(4, "Select All", false);
+      menu.addSeparator();
+      menu.addItem(5, "Comment Selection", false);
+      menu.addItem(6, "Uncomment Selection", false);
+
       break;
     case CodeEditorMenuIDs::viewMenu:
       menu.addItem(CodeEditorBottomViewIDs::diagram, "Show Diagram", true, show == CodeEditorBottomViewIDs::diagram);
