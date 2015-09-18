@@ -50,7 +50,7 @@ void InterpolationSpaceIPos::mouseDrag (const MouseEvent& e)
 
 void InterpolationSpaceIPos::mouseUp (const MouseEvent& e)
 {
-  setMouseCursor (MouseCursor::NormalCursor );
+  setMouseCursor (MouseCursor::NormalCursor);
 }
 
 void InterpolationSpaceIPos::paint (Graphics& g)
