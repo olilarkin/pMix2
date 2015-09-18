@@ -29,7 +29,8 @@ public:
 
   void setFilterIPos(const uint32 nodeId, double x, double y);
   void getFilterIPos(const uint32 nodeId, double& x, double& y) const;
-  
+  void updateCoefficients(const AudioProcessorGraph::Node::Ptr node);
+
   void setFilterColour(const uint32 nodeId, const Colour colour);
   Colour getFilterColour(const uint32 nodeId) const;
   
