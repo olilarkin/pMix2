@@ -628,9 +628,9 @@ void PMixDocument::setPresetPosition (const uint32 nodeId, const int presetIdx, 
     DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
     obj->setProperty("x", jlimit (0.0, 1.0, x));
     obj->setProperty("y", jlimit (0.0, 1.0, y));
+    
+    updateCoefficients(node);
   }
-  
-  changed();
 }
 
 void PMixDocument::getPresetPosition (const uint32 nodeId, const int presetIdx, double& x, double& y) const
@@ -743,12 +743,31 @@ void PMixDocument::setFilterIPos(const uint32 nodeId, double x, double y)
   
   if (node != nullptr)
   {
-    double iposx = x ;
-    double iposy = y;
-    
     node->properties.set("iposx", x);
     node->properties.set("iposy", y);
 
+    updateCoefficients(node);
+  }
+}
+
+void PMixDocument::getFilterIPos(const uint32 nodeId, double& x, double& y) const
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (node != nullptr)
+  {
+    x = (double) node->properties["iposx"];
+    y = (double) node->properties["iposy"];
+  }
+}
+
+void PMixDocument::updateCoefficients(const AudioProcessorGraph::Node::Ptr node)
+{  
+  if (node != nullptr)
+  {
+    double iposx = (double) node->properties["iposx"];
+    double iposy = (double) node->properties["iposy"];
+    
     Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
     int numPresets = presetsArr->size();
     Array<double> distances;
@@ -809,19 +828,8 @@ void PMixDocument::setFilterIPos(const uint32 nodeId, double x, double y)
       
       obj->setProperty("coeff", coeff);
     }
-
+    
     node->properties.set("update", true);
-  }
-}
-
-void PMixDocument::getFilterIPos(const uint32 nodeId, double& x, double& y) const
-{
-  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
-  
-  if (node != nullptr)
-  {
-    x = (double) node->properties["iposx"];
-    y = (double) node->properties["iposy"];
   }
 }
 
