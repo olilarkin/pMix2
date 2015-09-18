@@ -30,6 +30,7 @@ void InterpolationSpaceIPos::resized ()
 
 void InterpolationSpaceIPos::mouseDown (const MouseEvent& e)
 {
+  setMouseCursor (MouseCursor::NoCursor);
   myDragger.startDraggingComponent (this, e);
   toFront (true);
 }
@@ -49,6 +50,7 @@ void InterpolationSpaceIPos::mouseDrag (const MouseEvent& e)
 
 void InterpolationSpaceIPos::mouseUp (const MouseEvent& e)
 {
+  setMouseCursor (MouseCursor::NormalCursor );
 }
 
 void InterpolationSpaceIPos::paint (Graphics& g)
