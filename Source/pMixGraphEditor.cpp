@@ -382,10 +382,10 @@ bool GraphEditor::perform (const InvocationInfo& info)
       break;
       
     case CommandIDs::del:
-      // TODO
+      deleteSelection();
       break;
     case CommandIDs::selectAll:
-      // TODO
+      selectAll();
       break;
       
 //    case CommandIDs::zoomIn:      getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() * 2.0)); break;
@@ -502,4 +502,27 @@ void GraphEditor::filesDropped (const StringArray& files, int x, int y)
   audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, *this, &desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
 
   repaint();
+}
+
+void GraphEditor::deleteSelection()
+{
+  for (int i = 0; i < selectedItems.getNumSelected(); i++)
+  {
+    Component* c = selectedItems.getSelectedItem(i);
+    
+    FilterComponent* fc = dynamic_cast<FilterComponent*>(c);
+    
+    if (fc)
+      audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, *this, fc->nodeId), TRANS("remove node"));
+  }
+  
+  updateComponents();
+}
+
+void GraphEditor::selectAll()
+{
+  for (int i = 0; i < getNumChildComponents(); i++)
+  {
+    selectedItems.addToSelection(getChildComponent(i));
+  }
 }

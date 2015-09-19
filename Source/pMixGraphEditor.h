@@ -53,6 +53,10 @@ public:
   void dragConnector (const MouseEvent& e);
   void endDraggingConnector (const MouseEvent& e);
 
+  
+  void deleteSelection();
+  void selectAll();
+
   void updateFaustNode (uint32 nodeID, String& newSourceCode);
   
   //LassoSource
