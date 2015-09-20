@@ -58,8 +58,7 @@ public:
   void clear();
   
   XmlElement* createXml() const;
-  void createNodeFromXml (const XmlElement& xml);
-  void createFaustNodeFromXml (XmlElement& xml, const String& newSourceCode);
+  void createNodeFromXml (XmlElement& xml, const String& newSourceCode = String::empty);
   void restoreFromXml (const XmlElement& xml);
   static XmlElement* createNodeXml (AudioProcessorGraph::Node* const node) noexcept;
 

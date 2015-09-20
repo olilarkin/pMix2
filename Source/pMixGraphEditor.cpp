@@ -435,9 +435,7 @@ void GraphEditor::updateFaustNode (uint32 nodeID, String& newSourceCode)
       double origY = e->getDoubleAttribute("y");
       e->setAttribute("x", origX);
       e->setAttribute("y", origY);
-//      audioEngine.getDoc().createNodeFromXml(*e);
-      audioEngine.getDoc().createFaustNodeFromXml(*e, newSourceCode);
-      audioEngine.getDoc().changed();
+      audioEngine.getDoc().createNodeFromXml(*e, newSourceCode);
     }
   }
   

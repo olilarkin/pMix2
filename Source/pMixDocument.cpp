@@ -306,50 +306,55 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   return e;
 }
 
-//TODO: why two createNodeFromXml methods
-void PMixDocument::createNodeFromXml (const XmlElement& xml)
+void PMixDocument::createNodeFromXml (XmlElement& xml, const String& newSourceCode)
 {
   PluginDescription pd;
-
+  
   forEachXmlChildElement (xml, e)
   {
     if (pd.loadFromXml (*e))
       break;
   }
-
+  
   String errorMessage;
-
+  
   AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
   
   if (pd.pluginFormatName == "FAUST")
   {
     FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
     faustProc->initialize(getLibraryPath(), drawPath);
+    
+    if (newSourceCode.length())
+      faustProc->setSourceCode(newSourceCode, true);
+    
+    // TODO: this is a bit wrong!
+    faustProc->prepareToPlay(44100., 8192);
+    
+//    xml.setAttribute("numInputs", faustProc->getNumInputChannels());
+//    xml.setAttribute("numOutputs", faustProc->getNumOutputChannels()); ???
   }
-
-  if (instance == nullptr)
-  {
-    // xxx handle ins + outs
-  }
-
-  if (instance == nullptr)
-    return;
-
+  
+  
   AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().addNode (instance, xml.getIntAttribute ("uid")));
-
-  if (const XmlElement* const state = xml.getChildByName ("STATE"))
+  
+  if (!newSourceCode.length())
   {
-    MemoryBlock m;
-    m.fromBase64Encoding (state->getAllSubText());
-
-    node->getProcessor()->setStateInformation (m.getData(), (int) m.getSize());
+    if (const XmlElement* const state = xml.getChildByName ("STATE"))
+    {
+      MemoryBlock m;
+      m.fromBase64Encoding (state->getAllSubText());
+      
+      node->getProcessor()->setStateInformation (m.getData(), (int) m.getSize());
+    }
   }
-
+  
   node->properties.set ("x", xml.getDoubleAttribute ("x"));
   node->properties.set ("y", xml.getDoubleAttribute ("y"));
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
-  
+
+  // presets etc for faust & plugin nodes
   if(!InternalPluginFormat::isInternalFormat(pd.name))
   {
     node->properties.set ("colour", xml.getStringAttribute ("colour"));
@@ -368,65 +373,8 @@ void PMixDocument::createNodeFromXml (const XmlElement& xml)
       node->properties.set ("presets", vpresets);
     }
   }
-}
-
-void PMixDocument::createFaustNodeFromXml (XmlElement& xml, const String& newSourceCode)
-{
-  PluginDescription pd;
   
-  forEachXmlChildElement (xml, e)
-  {
-    if (pd.loadFromXml (*e))
-      break;
-  }
-  
-  String errorMessage;
-  
-  AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
-  
-  FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
-  faustProc->initialize(getLibraryPath(), drawPath);
-  
-  if (newSourceCode.length())
-    faustProc->setSourceCode(newSourceCode, true);
-  
-  // TODO: this is a bit wrong!
-  faustProc->prepareToPlay(44100., 8192);
-  
-  xml.setAttribute("numInputs", faustProc->getNumInputChannels());
-  xml.setAttribute("numOutputs", faustProc->getNumOutputChannels());
-  
-  AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().addNode (instance, xml.getIntAttribute ("uid")));
-  
-  //TODO: reload state if compile failed
-//  if (const XmlElement* const state = xml.getChildByName ("STATE"))
-//  {
-//    MemoryBlock m;
-//    m.fromBase64Encoding (state->getAllSubText());
-//    
-//    node->getProcessor()->setStateInformation (m.getData(), (int) m.getSize());
-//  }
-  
-  node->properties.set ("x", xml.getDoubleAttribute ("x"));
-  node->properties.set ("y", xml.getDoubleAttribute ("y"));
-  node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
-  node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
-
-  node->properties.set ("colour", xml.getStringAttribute ("colour"));
-  node->properties.set ("iposx", xml.getDoubleAttribute ("iposx"));
-  node->properties.set ("iposy", xml.getDoubleAttribute ("iposy"));
-  
-  if (const XmlElement* const params = xml.getChildByName ("PARAMS"))
-  {
-    var vparams = JSON::parse(params->getAllSubText());
-    node->properties.set ("params", vparams);
-  }
-  
-  if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
-  {
-    var vpresets = JSON::parse(presets->getAllSubText());
-    node->properties.set ("presets", vpresets);
-  }
+  changed();
 }
 
 
