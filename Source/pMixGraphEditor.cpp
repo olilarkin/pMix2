@@ -344,7 +344,7 @@ void GraphEditor::getCommandInfo (const CommandID commandID, ApplicationCommandI
       break;
     case CommandIDs::del:
       result.setInfo ("Delete", "Deletes the selection", category, 0);
-      result.defaultKeypresses.add (KeyPress (KeyPress::backspaceKey, ModifierKeys::commandModifier, 0));
+      result.defaultKeypresses.add (KeyPress (KeyPress::backspaceKey, ModifierKeys::noModifiers, 0));
       break;
     case CommandIDs::selectAll:
       result.setInfo ("Select All", "Select All", category, 0);
