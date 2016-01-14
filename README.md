@@ -67,7 +67,7 @@ See http://www.juce.com/learn/introjucer
 * pMix has been developed on Mac OSX and there hasn't yet been time to get it working on the other intended platforms! Hopefully there should not be any platform dependencies that prevent it working on Linux and Windows.
 * JUCE's VST2 plug-in support is most mature, so VST2 plug-ins are preferable to VST3, however Steinberg no longer distribute the VST2.4 SDK so VST3 support must be enabled in order to find the VST2.4 headers in the VST3 SDK.
 * If you don't care about plugin hosting support, you can disable it on the juce_audio_processors module tab by opening the pMix.jucer in the Introjucer.
-* AU plug-in hosting is currently disabled, you can turn it on via thte introjucer
+* AU plug-in hosting is currently disabled, you can turn it on via the introjucer
 
 **License:**
 
