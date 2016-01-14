@@ -161,7 +161,7 @@
 // juce_gui_basics flags:
 
 #ifndef    JUCE_ENABLE_REPAINT_DEBUGGING
- //#define JUCE_ENABLE_REPAINT_DEBUGGING
+ #define   JUCE_ENABLE_REPAINT_DEBUGGING 0
 #endif
 
 #ifndef    JUCE_USE_XSHM
