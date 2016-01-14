@@ -112,7 +112,7 @@ void PMixPluginAudioProcessor::changeProgramName (int index, const String& newNa
 
 void PMixPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-  audioEngine.getGraph().setPlayConfigDetails (getNumInputChannels(), getNumOutputChannels(), sampleRate, samplesPerBlock);
+  audioEngine.getGraph().setPlayConfigDetails (getTotalNumInputChannels(), getTotalNumOutputChannels(), sampleRate, samplesPerBlock);
   audioEngine.getGraph().prepareToPlay (sampleRate, samplesPerBlock);
 }
 
