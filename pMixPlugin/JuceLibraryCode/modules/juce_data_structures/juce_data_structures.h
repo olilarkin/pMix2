@@ -2,4 +2,3 @@
 // module headers to the correct external folder.
 
 #include "../../../../../../juce/modules/juce_data_structures/juce_data_structures.h"
-

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "9C4DEC88FC1CEE2147E5A7C05BFC5F77BC0A7A98",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "7DEA6241D71055AD1006E431D76C8F71EF2344BE" : 0,
+    "9C4DEC88FC1CEE2147E5A7C05BFC5F77BC0A7A98" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "86A88F70-85BE-420D-B635-D2E437728EA3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "7DEA6241D71055AD1006E431D76C8F71EF2344BE" : "juce_faustllvm",
+    "9C4DEC88FC1CEE2147E5A7C05BFC5F77BC0A7A98" : "pMix"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "pMixPlugin",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "pMixPlugin\/Builds\/MacOSX\/pMixPlugin.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:CMRCYork\/juce_faustllvm.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7DEA6241D71055AD1006E431D76C8F71EF2344BE"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:olilarkin\/pmix.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9C4DEC88FC1CEE2147E5A7C05BFC5F77BC0A7A98"
+    }
+  ]
+}

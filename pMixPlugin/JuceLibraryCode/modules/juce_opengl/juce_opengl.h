@@ -2,4 +2,3 @@
 // module headers to the correct external folder.
 
 #include "../../../../../../juce/modules/juce_opengl/juce_opengl.h"
-

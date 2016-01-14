@@ -21,10 +21,12 @@ Currently JUCE must be patched in order to avoid a deadlock when AudioProcessorG
 
 **License:**
 
-  pMix - Copyright Oliver Larkin 2008 - 2015.  
-  Contemporary Music Research Centre  
-  Music Department  
-  University of York  
-  License: GPL
+pMix - Copyright Oliver Larkin 2008 - 2016
+
+pMix v2    
+Contemporary Music Research Centre  
+Music Department  
+University of York  
+License: GPL
   
-  www.cmrcyork.org | www.olilarkin.co.uk
+www.cmrcyork.org | www.olilarkin.co.uk
