@@ -30,11 +30,11 @@ public:
   GraphEditor (PMixAudioEngine& audioEngine);
   ~GraphEditor();
 
-  void paint (Graphics& g);
-  void mouseDown (const MouseEvent& e);
-  void mouseDrag (const MouseEvent& e);
-  void mouseUp (const MouseEvent& e);
-  void mouseDoubleClick (const MouseEvent&);
+  void paint (Graphics& g) override;
+  void mouseDown (const MouseEvent& e) override;
+  void mouseDrag (const MouseEvent& e) override;
+  void mouseUp (const MouseEvent& e) override;
+  void mouseDoubleClick (const MouseEvent&) override;
 
   void createNewFilter (const PluginDescription* desc, int x, int y);
 
@@ -42,8 +42,9 @@ public:
   ConnectorComponent* getComponentForConnection (const AudioProcessorGraph::Connection& conn) const;
   PinComponent* findPinAt (int x, int y) const;
 
-  void resized();
-  void changeListenerCallback (ChangeBroadcaster* source);
+  void resized() override;
+  void changeListenerCallback (ChangeBroadcaster* source) override;
+  
   void updateComponents();
   void clear();
   
@@ -60,14 +61,14 @@ public:
   void updateFaustNode (uint32 nodeID, String& newSourceCode);
   
   //LassoSource
-  void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
-  SelectedItemSet<Component*>& getLassoSelection();
+  void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area) override;
+  SelectedItemSet<Component*>& getLassoSelection() override;
   
   //ApplicationCommandTarget
-  ApplicationCommandTarget* getNextCommandTarget();
-  void getAllCommands (Array <CommandID>& commands);
-  void getCommandInfo (CommandID commandID, ApplicationCommandInfo& result);
-  bool perform (const InvocationInfo& info);
+  ApplicationCommandTarget* getNextCommandTarget() override;
+  void getAllCommands (Array <CommandID>& commands) override;
+  void getCommandInfo (CommandID commandID, ApplicationCommandInfo& result) override;
+  bool perform (const InvocationInfo& info) override;
   
   // FileDragAndDropTarget
   bool isInterestedInFileDrag (const StringArray& files) override;

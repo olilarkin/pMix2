@@ -44,9 +44,9 @@ public:
   
   void audioProcessorChanged (AudioProcessor*) override  {}
   
-  void audioProcessorParameterChanged (AudioProcessor* p, int parameterIndex, float newValue);
-  void timerCallback();
-  void mouseDown (const MouseEvent& e);
+  void audioProcessorParameterChanged (AudioProcessor* p, int parameterIndex, float newValue) override;
+  void timerCallback() override;
+  void mouseDown (const MouseEvent& e) override;
 private:
   PMixAudioEngine &audioEngine;
   AudioProcessor& owner;

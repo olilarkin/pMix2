@@ -24,7 +24,7 @@ public:
   void paint (Graphics& g) override;
   void resized() override;
   
-  void changeListenerCallback (ChangeBroadcaster* source);
+  void changeListenerCallback (ChangeBroadcaster* source) override;
   //void buttonClicked (Button* button);
   
   ScopedPointer<WebBrowserComponent> browser;
