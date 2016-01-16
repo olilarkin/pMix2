@@ -307,6 +307,9 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
   }
 }
 
+
+#pragma mark ApplicationCommandTarget
+
 ApplicationCommandTarget* GraphEditor::getNextCommandTarget()
 {
   return findFirstTargetParentComponent();
