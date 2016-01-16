@@ -383,11 +383,11 @@ void FilterComponent::update()
     return;
   }
 
-  numIns = f->getProcessor()->getNumInputChannels();
+  numIns = f->getProcessor()->getTotalNumInputChannels();
   if (f->getProcessor()->acceptsMidi())
     ++numIns;
   
-  numOuts = f->getProcessor()->getNumOutputChannels();
+  numOuts = f->getProcessor()->getTotalNumOutputChannels();
   if (f->getProcessor()->producesMidi())
     ++numOuts;
   
@@ -435,13 +435,13 @@ void FilterComponent::update()
     setSize (w, h);
 
     int i;
-    for (i = 0; i < f->getProcessor()->getNumInputChannels(); ++i)
+    for (i = 0; i < f->getProcessor()->getTotalNumInputChannels(); ++i)
       addAndMakeVisible (new PinComponent (audioEngine, nodeId, i, true));
     
     if (f->getProcessor()->acceptsMidi())
       addAndMakeVisible (new PinComponent (audioEngine, nodeId, PMixDocument::midiChannelNumber, true));
     
-    for (i = 0; i < f->getProcessor()->getNumOutputChannels(); ++i)
+    for (i = 0; i < f->getProcessor()->getTotalNumOutputChannels(); ++i)
       addAndMakeVisible (new PinComponent (audioEngine, nodeId, i, false));
     
     if (f->getProcessor()->producesMidi())
