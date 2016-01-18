@@ -32,7 +32,7 @@ private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
   double x, y;
-  const PluginDescription* desc;
+  PluginDescription desc;
   uint32 nodeID;
   JUCE_DECLARE_NON_COPYABLE (CreateFilterAction)
 };

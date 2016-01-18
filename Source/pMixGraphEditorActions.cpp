@@ -15,13 +15,13 @@ CreateFilterAction::CreateFilterAction (PMixAudioEngine& audioEngine, GraphEdito
 , graphEditor(graphEditor)
 , x(x)
 , y(y)
-, desc(desc)
+, desc(*desc)
 {
 }
 
 bool CreateFilterAction::perform()
 {
-  nodeID = audioEngine.getDoc().addFilter (desc, x, y);
+  nodeID = audioEngine.getDoc().addFilter (&desc, x, y);
   
   if (nodeID < 0xFFFFFFFF)
     return true;
