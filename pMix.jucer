@@ -135,7 +135,7 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="~/SDKs/vstsdk2.4" vst3Folder="~/SDKs/VST3 SDK"
                customPList="" bigIcon="OqTrli" smallIcon="OqTrli" externalLibraries=""
-               extraLinkerFlags="" extraCompilerFlags="" extraDefs="" postbuildCommand="cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/">
+               extraLinkerFlags="" extraCompilerFlags="" extraDefs="" postbuildCommand="if [ -d &quot;/usr/local/lib/faust/&quot; ]; then&#10;  echo copying faust libraries to bundle resources&#10;  cp /usr/local/lib/faust/*.lib $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;  cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;else&#10;  echo faust not installed at /usr/local/lib&#10;fi">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="32BitUniversal"
                        isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-3.7/lib&#10;/usr/local/lib"
