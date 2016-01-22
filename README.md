@@ -19,9 +19,9 @@ Due to the complexity of this project please closely follow the instructions:
 
 pMix v2 is built using JUCE and the .jucer project expects to find the JUCE source and the juce_faustllvm juce modules source in a directory relative to the pMix source code. On my development machine the paths are like this...
 
-~/Dev/MyJUCEProjects/JUCE
-~/Dev/MyJUCEProjects/Projects/juce_faustllvm
-~/Dev/MyJUCEProjects/Projects/pMix
+~/Dev/MyJUCEProjects/JUCE  
+~/Dev/MyJUCEProjects/Projects/juce_faustllvm  
+~/Dev/MyJUCEProjects/Projects/pMix  
 
 the paths to these things can be modified via the .jucer project
 
