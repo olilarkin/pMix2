@@ -1367,6 +1367,7 @@
     <ClInclude Include="..\..\Source\pMixConsole.h"/>
     <ClInclude Include="..\..\Source\pMixGenericEditor.h"/>
     <ClInclude Include="..\..\Source\pMixRHPTabContainer.h"/>
+    <ClInclude Include="..\..\Source\pMixAboutBox.h"/>
     <ClInclude Include="..\..\Source\pMixMainAppWindow.h"/>
     <ClInclude Include="..\..\Source\pMixApp.h"/>
     <ClInclude Include="..\..\Source\pMixConstants.h"/>

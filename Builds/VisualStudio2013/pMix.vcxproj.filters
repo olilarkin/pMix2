@@ -1755,6 +1755,9 @@
     <ClInclude Include="..\..\Source\pMixRHPTabContainer.h">
       <Filter>pMix\Source\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\pMixAboutBox.h">
+      <Filter>pMix\Source\App</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\pMixMainAppWindow.h">
       <Filter>pMix\Source\App</Filter>
     </ClInclude>

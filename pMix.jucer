@@ -90,6 +90,7 @@
               file="Source/pMixRHPTabContainer.h"/>
       </GROUP>
       <GROUP id="{0EE3E71E-3E66-6D8E-96D1-19B55B6F2917}" name="App">
+        <FILE id="Wis9w5" name="pMixAboutBox.h" compile="0" resource="0" file="Source/pMixAboutBox.h"/>
         <FILE id="RdcPAb" name="pMixMainAppWindow.cpp" compile="1" resource="0"
               file="Source/pMixMainAppWindow.cpp"/>
         <FILE id="C0NjfE" name="pMixMainAppWindow.h" compile="0" resource="0"

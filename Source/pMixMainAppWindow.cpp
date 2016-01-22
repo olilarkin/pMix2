@@ -1,5 +1,6 @@
 #include "pMixMainAppWindow.h"
-#include "pMixCommandIDs.h"
+#include "pMixPrefsComponent.h"
+#include "pMixAboutBox.h"
 
 static double snapToIntegerZoom (double zoom)
 {
@@ -370,7 +371,7 @@ bool MainAppWindow::perform (const InvocationInfo& info)
       showPreferences();
       break;
     case CommandIDs::aboutBox:
-      // TODO
+      showAbout();
       break;
 
 //    case CommandIDs::copy:
@@ -468,6 +469,22 @@ void MainAppWindow::showPreferences()
   audioEngine.getAppProperties().getUserSettings()->saveIfNeeded();
 
   audioEngine.getDoc().removeIllegalConnections();
+}
+
+void MainAppWindow::showAbout()
+{
+  pMixAboutBox aboutBoxComponent;
+  
+  DialogWindow::LaunchOptions o;
+  o.content.setNonOwned (&aboutBoxComponent);
+  o.dialogTitle                   = "About pMix";
+  o.componentToCentreAround       = getMainComponent();
+  o.dialogBackgroundColour        = Colours::white;
+  o.escapeKeyTriggersCloseButton  = true;
+  o.useNativeTitleBar             = true;
+  o.resizable                     = false;
+  
+  o.runModal();
 }
 
 MainComponent* MainAppWindow::getMainComponent() const

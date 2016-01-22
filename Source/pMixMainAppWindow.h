@@ -14,7 +14,6 @@
 
 #include "pMixAudioEngine.h"
 #include "pMixMainComponent.h"
-#include "pMixPrefsComponent.h"
 #include "pMixCommandIDs.h"
 
 ApplicationCommandManager& getCommandManager();
@@ -55,6 +54,8 @@ public:
   MainComponent* getMainComponent() const;
   PMixAudioEngine& getAudioEngine() { return audioEngine; }
   void showPreferences();
+  void showAbout();
+  
 private:
   PMixAudioEngine& audioEngine;
 
