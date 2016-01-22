@@ -103,14 +103,20 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
           if (!selectedFaustAudioPluginInstance->getHighlight())
           {
             selectedFaustAudioPluginInstance->getFactory()->startSVGThread();
-            
-            editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());
-            editor->setInterceptsMouseClicks(true, true);
           }
           else
           {
-            graphEditor.getComponentForFilter(selectedNodeID)->bubbleMessage(selectedFaustAudioPluginInstance->getCompilerMessage());
+            String error = selectedFaustAudioPluginInstance->getCompilerMessage();
+            
+            String lineNo = error.fromFirstOccurrenceOf(": ", false, true).upToFirstOccurrenceOf(" :", false, true);
+            
+            graphEditor.getComponentForFilter(selectedNodeID)->bubbleMessage(error);
+            
+            //editor->setHighlightedRegion(<#const Range<int> &newRange#>);
           }
+          
+          editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());
+          editor->setInterceptsMouseClicks(true, true);
 
           return;
         }
