@@ -10,12 +10,23 @@ pMix version 2 will eventually work on Mac, Linux and Windows and can operate as
 
 Currently it is being developed using JUCE on Mac with Xcode 7.2 and the 10.11 SDK, with OSX deployment target set to 10.9. It won't yet compile/work well on other platforms.
 
+
 ##Dependencies:
 
 Due to the complexity of this project please closely follow the instructions:
 
-**VST3 SDK**
+**JUCE**
 
+pMix v2 is built using JUCE and the .jucer project expects to find the JUCE source and the juce_faustllvm juce modules source in a directory relative to the pMix source code. On my development machine the paths are like this...
+
+~/Dev/MyJUCEProjects/JUCE
+~/Dev/MyJUCEProjects/Projects/juce_faustllvm
+~/Dev/MyJUCEProjects/Projects/pMix
+
+the paths to these things can be modified via the .jucer project
+
+**VST3 SDK**
+	
 The .jucer projects expect the Steinberg VST 3 SDK to be installed in this location: 
 
 ~/SDKs/VST3 SDK 
