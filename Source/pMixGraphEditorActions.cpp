@@ -68,9 +68,7 @@ bool RemoveFilterAction::perform()
 
 bool RemoveFilterAction::undo()
 {
-  audioEngine.getDoc().createNodeFromXml(*nodeXML);
-  audioEngine.getDoc().changed();
-  
+  audioEngine.getDoc().createNodeFromXml(*nodeXML);  
   return true;
 }
 
