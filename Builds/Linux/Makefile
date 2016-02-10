@@ -63,7 +63,7 @@ OBJECTS := \
   $(OBJDIR)/pMixPrefsControllers_939ed25c.o \
   $(OBJDIR)/pMixPrefsComponent_29159002.o \
   $(OBJDIR)/pMixCodeEditor_9c72070f.o \
-  $(OBJDIR)/pMixWebBrowser_3e333589.o \
+  $(OBJDIR)/pMixSVGDisplay_81b3cd13.o \
   $(OBJDIR)/pMixFileBrowser_37eaaf21.o \
   $(OBJDIR)/pMixConsole_f8903cec.o \
   $(OBJDIR)/pMixGenericEditor_f1457b39.o \
@@ -179,9 +179,9 @@ $(OBJDIR)/pMixCodeEditor_9c72070f.o: ../../Source/pMixCodeEditor.cpp
 	@echo "Compiling pMixCodeEditor.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/pMixWebBrowser_3e333589.o: ../../Source/pMixWebBrowser.cpp
+$(OBJDIR)/pMixSVGDisplay_81b3cd13.o: ../../Source/pMixSVGDisplay.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixWebBrowser.cpp"
+	@echo "Compiling pMixSVGDisplay.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixFileBrowser_37eaaf21.o: ../../Source/pMixFileBrowser.cpp

@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    pMixWebBrowser.h
+    pMixSVGDisplay.h
     Author:  Oliver Larkin
 
   ==============================================================================
@@ -14,13 +14,13 @@
 #include "pMixAudioEngine.h"
 #include "pMixGraphEditor.h"
 
-class WebBrowser : public Component
+class SVGDisplay : public Component
                  , public ChangeListener
 //, public Button::Listener
 {
 public:
-  WebBrowser(PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
-  ~WebBrowser();
+  SVGDisplay(PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
+  ~SVGDisplay();
   void paint (Graphics& g) override;
   void resized() override;
   
@@ -33,7 +33,7 @@ private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
   
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WebBrowser);
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SVGDisplay);
 };
 
 

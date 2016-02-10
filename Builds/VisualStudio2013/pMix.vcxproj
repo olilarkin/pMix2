@@ -151,7 +151,7 @@
     <ClCompile Include="..\..\Source\pMixPrefsControllers.cpp"/>
     <ClCompile Include="..\..\Source\pMixPrefsComponent.cpp"/>
     <ClCompile Include="..\..\Source\pMixCodeEditor.cpp"/>
-    <ClCompile Include="..\..\Source\pMixWebBrowser.cpp"/>
+    <ClCompile Include="..\..\Source\pMixSVGDisplay.cpp"/>
     <ClCompile Include="..\..\Source\pMixFileBrowser.cpp"/>
     <ClCompile Include="..\..\Source\pMixConsole.cpp"/>
     <ClCompile Include="..\..\Source\pMixGenericEditor.cpp"/>
@@ -1362,7 +1362,7 @@
     <ClInclude Include="..\..\Source\pMixPrefsControllers.h"/>
     <ClInclude Include="..\..\Source\pMixPrefsComponent.h"/>
     <ClInclude Include="..\..\Source\pMixCodeEditor.h"/>
-    <ClInclude Include="..\..\Source\pMixWebBrowser.h"/>
+    <ClInclude Include="..\..\Source\pMixSVGDisplay.h"/>
     <ClInclude Include="..\..\Source\pMixFileBrowser.h"/>
     <ClInclude Include="..\..\Source\pMixConsole.h"/>
     <ClInclude Include="..\..\Source\pMixGenericEditor.h"/>

@@ -23,10 +23,6 @@
         <FILE id="z4s0dl" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       </GROUP>
       <GROUP id="{B0FCDBA2-07CB-C4DA-CAE0-3BE24B0D7724}" name="Panels">
-        <FILE id="tGD0p1" name="pMixRHPTabContainer.cpp" compile="1" resource="0"
-              file="../Source/pMixRHPTabContainer.cpp"/>
-        <FILE id="kJoaHO" name="pMixRHPTabContainer.h" compile="0" resource="0"
-              file="../Source/pMixRHPTabContainer.h"/>
         <GROUP id="{A0CA1618-CBBA-DD2C-2E85-AA4910A81EA8}" name="InterpolationSpace">
           <FILE id="hNo06I" name="pMixInterpolationSpaceActions.cpp" compile="1"
                 resource="0" file="../Source/pMixInterpolationSpaceActions.cpp"/>
@@ -91,14 +87,18 @@
               file="../Source/pMixFileBrowser.cpp"/>
         <FILE id="UCYaV3" name="pMixFileBrowser.h" compile="0" resource="0"
               file="../Source/pMixFileBrowser.h"/>
-        <FILE id="zQClD8" name="pMixWebBrowser.cpp" compile="1" resource="0"
-              file="../Source/pMixWebBrowser.cpp"/>
-        <FILE id="cTRD38" name="pMixWebBrowser.h" compile="0" resource="0"
-              file="../Source/pMixWebBrowser.h"/>
         <FILE id="rTh7Ts" name="pMixCodeEditor.cpp" compile="1" resource="0"
               file="../Source/pMixCodeEditor.cpp"/>
         <FILE id="y3b3r7" name="pMixCodeEditor.h" compile="0" resource="0"
               file="../Source/pMixCodeEditor.h"/>
+        <FILE id="u1jLvC" name="pMixSVGDisplay.cpp" compile="1" resource="0"
+              file="../Source/pMixSVGDisplay.cpp"/>
+        <FILE id="aT3fJx" name="pMixSVGDisplay.h" compile="0" resource="0"
+              file="../Source/pMixSVGDisplay.h"/>
+        <FILE id="tGD0p1" name="pMixRHPTabContainer.cpp" compile="1" resource="0"
+              file="../Source/pMixRHPTabContainer.cpp"/>
+        <FILE id="kJoaHO" name="pMixRHPTabContainer.h" compile="0" resource="0"
+              file="../Source/pMixRHPTabContainer.h"/>
       </GROUP>
       <FILE id="OXvZEi" name="pMixConstants.h" compile="0" resource="0" file="../Source/pMixConstants.h"/>
       <FILE id="kooByR" name="pMixGenericEditor.cpp" compile="1" resource="0"

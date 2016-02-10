@@ -12,7 +12,7 @@
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
-#include "pMixWebBrowser.h"
+#include "pMixSVGDisplay.h"
 #include "pMixConsole.h"
 #include "pMixGraphEditor.h"
 
@@ -58,7 +58,7 @@ private:
   
   ScopedPointer<MenuBarComponent> menuBar;
   ScopedPointer<CodeEditorComponent> editor;
-  ScopedPointer<WebBrowser> webBrowser;
+  ScopedPointer<SVGDisplay> svgDisplay;
   ScopedPointer<Console> console;
 
   PMixAudioEngine& audioEngine;

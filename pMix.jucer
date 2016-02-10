@@ -70,10 +70,10 @@
               file="Source/pMixCodeEditor.cpp"/>
         <FILE id="wnQxO5" name="pMixCodeEditor.h" compile="0" resource="0"
               file="Source/pMixCodeEditor.h"/>
-        <FILE id="V6FMNN" name="pMixWebBrowser.cpp" compile="1" resource="0"
-              file="Source/pMixWebBrowser.cpp"/>
-        <FILE id="BqInql" name="pMixWebBrowser.h" compile="0" resource="0"
-              file="Source/pMixWebBrowser.h"/>
+        <FILE id="V6FMNN" name="pMixSVGDisplay.cpp" compile="1" resource="0"
+              file="Source/pMixSVGDisplay.cpp"/>
+        <FILE id="BqInql" name="pMixSVGDisplay.h" compile="0" resource="0"
+              file="Source/pMixSVGDisplay.h"/>
         <FILE id="t148Q2" name="pMixFileBrowser.cpp" compile="1" resource="0"
               file="Source/pMixFileBrowser.cpp"/>
         <FILE id="NQkMVH" name="pMixFileBrowser.h" compile="0" resource="0"

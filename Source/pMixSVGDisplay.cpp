@@ -1,17 +1,16 @@
 /*
   ==============================================================================
 
-    pMixWebBrowser.cpp
-    Created: 1 Feb 2015 9:43:23pm
+    pMixSVGDisplay.cpp
     Author:  Oliver Larkin
 
   ==============================================================================
 */
 
-#include "pMixWebBrowser.h"
+#include "pMixSVGDisplay.h"
 #include "pMixGraphEditor.h"
 
-WebBrowser::WebBrowser(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
+SVGDisplay::SVGDisplay(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 : audioEngine(audioEngine)
 , graphEditor(graphEditor)
 {
@@ -21,24 +20,24 @@ WebBrowser::WebBrowser(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   browser->goToURL("");
 }
 
-WebBrowser::~WebBrowser()
+SVGDisplay::~SVGDisplay()
 {
   graphEditor.removeChangeListener(this);
   audioEngine.getDoc().removeChangeListener(this);
 }
 
-void WebBrowser::paint (Graphics& g)
+void SVGDisplay::paint (Graphics& g)
 {
   //g.fillAll (Colours::lightgrey);
 }
 
-void WebBrowser::resized()
+void SVGDisplay::resized()
 {
   Rectangle<int> r (getLocalBounds());
   browser->setBounds (r);
 }
 
-void WebBrowser::changeListenerCallback (ChangeBroadcaster* source)
+void SVGDisplay::changeListenerCallback (ChangeBroadcaster* source)
 {
   PMixDocument* doc = dynamic_cast<PMixDocument*>(source);
 

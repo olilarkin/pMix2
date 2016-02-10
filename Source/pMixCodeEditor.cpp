@@ -25,7 +25,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   
   addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &tokeniser));
   addAndMakeVisible(dividerBar1 = new StretchableLayoutResizerBar (&verticalLayout, 1, false));
-  addAndMakeVisible (webBrowser = new WebBrowser(audioEngine, graphEditor));
+  addAndMakeVisible (svgDisplay = new SVGDisplay(audioEngine, graphEditor));
   addAndMakeVisible(console = new Console());
   audioEngine.getLogger().addChangeListener(console);
 
@@ -62,13 +62,13 @@ void CodeEditor::resized()
   if (show == CodeEditorBottomViewIDs::diagram)
   {
     console->setVisible(false);
-    webBrowser->setVisible(true);
-    vcomps[2] = webBrowser;
+    svgDisplay->setVisible(true);
+    vcomps[2] = svgDisplay;
   }
   else
   {
     console->setVisible(true);
-    webBrowser->setVisible(false);
+    svgDisplay->setVisible(false);
     vcomps[2] = console;
   }
   
@@ -111,8 +111,6 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
             String lineNo = error.fromFirstOccurrenceOf(": ", false, true).upToFirstOccurrenceOf(" :", false, true);
             
             graphEditor.getComponentForFilter(selectedNodeID)->bubbleMessage(error);
-            
-            //editor->setHighlightedRegion(<#const Range<int> &newRange#>);
           }
           
           editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());
@@ -217,7 +215,7 @@ void CodeEditor::clear()
   selectedFaustAudioPluginInstance = nullptr;
   editor->loadContent("Create or select a Faust node to view the code");
   editor->setInterceptsMouseClicks(false, false);
-  webBrowser->browser->goToURL("");
+  svgDisplay->browser->goToURL("");
 }
 
 void CodeEditor::showConsoleOrBrowser(int which)

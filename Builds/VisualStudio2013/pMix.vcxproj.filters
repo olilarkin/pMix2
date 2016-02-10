@@ -370,7 +370,7 @@
     <ClCompile Include="..\..\Source\pMixCodeEditor.cpp">
       <Filter>pMix\Source\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\pMixWebBrowser.cpp">
+    <ClCompile Include="..\..\Source\pMixSVGDisplay.cpp">
       <Filter>pMix\Source\Panels</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\pMixFileBrowser.cpp">
@@ -1740,7 +1740,7 @@
     <ClInclude Include="..\..\Source\pMixCodeEditor.h">
       <Filter>pMix\Source\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\pMixWebBrowser.h">
+    <ClInclude Include="..\..\Source\pMixSVGDisplay.h">
       <Filter>pMix\Source\Panels</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\pMixFileBrowser.h">
