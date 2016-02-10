@@ -27,12 +27,15 @@ public:
   void changeListenerCallback (ChangeBroadcaster* source) override;
   //void buttonClicked (Button* button);
   
-  ScopedPointer<WebBrowserComponent> browser;
-
+  void clearDisplay();
+  void loadSVG(const String& url);
+  
 private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
-  
+  DrawableComposite* svgDrawable; // used if no webbrowser component
+  ScopedPointer<WebBrowserComponent> browser;
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SVGDisplay);
 };
 

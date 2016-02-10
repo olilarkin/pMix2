@@ -13,28 +13,49 @@
 SVGDisplay::SVGDisplay(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 : audioEngine(audioEngine)
 , graphEditor(graphEditor)
+, svgDrawable(nullptr)
+, browser(nullptr)
 {
-  addAndMakeVisible (browser = new WebBrowserComponent ());
+  //browser = new WebBrowserComponent();
+  
+  if (browser) {
+    addAndMakeVisible (browser);
+  }
+  
   graphEditor.addChangeListener(this);
   audioEngine.getDoc().addChangeListener(this);
-  browser->goToURL("");
+  
+  clearDisplay();
 }
 
 SVGDisplay::~SVGDisplay()
 {
   graphEditor.removeChangeListener(this);
   audioEngine.getDoc().removeChangeListener(this);
+  
+  if (svgDrawable) {
+    delete svgDrawable;
+    svgDrawable = nullptr;
+  }
 }
 
 void SVGDisplay::paint (Graphics& g)
 {
-  //g.fillAll (Colours::lightgrey);
+  if (browser == nullptr)
+  {
+    g.fillAll (Colours::white);
+    
+    if (svgDrawable)
+      svgDrawable->drawWithin(g, Rectangle<float>(0, 0, getWidth(), getHeight()), RectanglePlacement::Flags::centred, 1.0f);
+  }
 }
 
 void SVGDisplay::resized()
 {
   Rectangle<int> r (getLocalBounds());
-  browser->setBounds (r);
+  
+  if (browser)
+    browser->setBounds (r);
 }
 
 void SVGDisplay::changeListenerCallback (ChangeBroadcaster* source)
@@ -69,10 +90,15 @@ void SVGDisplay::changeListenerCallback (ChangeBroadcaster* source)
         {
           if (!faustProc->getHighlight())
           {
-            browser->goToURL(audioEngine.getDoc().getLibraryPath() + "wait.html");
+            if (browser)
+              browser->goToURL(audioEngine.getDoc().getLibraryPath() + "wait.html");
+            else
+            {
+              //TODO:SVG wait
+            }
           }
           else
-            browser->goToURL("");
+            clearDisplay();
           
           return;
         }
@@ -91,11 +117,37 @@ void SVGDisplay::changeListenerCallback (ChangeBroadcaster* source)
       FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
 
       if (selectedItem) {
-        browser->goToURL(thread->getFactory()->getHTMLURI());
+        if (browser)
+          loadSVG(thread->getFactory()->getHTMLURI());
+        else
+          loadSVG(thread->getFactory()->getSVGFile().getFullPathName());
+
         return;
       }
     }
   }
 
-  browser->goToURL("");
+}
+
+void SVGDisplay::clearDisplay()
+{
+  if (browser) {
+    browser->goToURL("");
+  }
+  else {
+    delete svgDrawable;
+    svgDrawable = nullptr;
+    repaint();
+  }
+}
+
+void SVGDisplay::loadSVG(const String& url)
+{
+  if (browser)
+    browser->goToURL(url);
+  else
+  {
+    svgDrawable = dynamic_cast <DrawableComposite*>(Drawable::createFromImageFile(File(url)));
+    repaint();
+  }
 }

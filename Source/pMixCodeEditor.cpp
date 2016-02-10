@@ -24,6 +24,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   verticalLayout.setItemLayout (2, 2, -1.0, 100);
   
   addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &tokeniser));
+  //editor->setCommandManager(&getCommandManager());
   addAndMakeVisible(dividerBar1 = new StretchableLayoutResizerBar (&verticalLayout, 1, false));
   addAndMakeVisible (svgDisplay = new SVGDisplay(audioEngine, graphEditor));
   addAndMakeVisible(console = new Console());
@@ -215,7 +216,7 @@ void CodeEditor::clear()
   selectedFaustAudioPluginInstance = nullptr;
   editor->loadContent("Create or select a Faust node to view the code");
   editor->setInterceptsMouseClicks(false, false);
-  svgDisplay->browser->goToURL("");
+  svgDisplay->clearDisplay();
 }
 
 void CodeEditor::showConsoleOrBrowser(int which)
