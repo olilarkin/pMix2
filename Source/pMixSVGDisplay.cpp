@@ -147,6 +147,9 @@ void SVGDisplay::loadSVG(const String& url)
     browser->goToURL(url);
   else
   {
+    if(svgDrawable)
+      delete svgDrawable;
+    
     svgDrawable = dynamic_cast <DrawableComposite*>(Drawable::createFromImageFile(File(url)));
     repaint();
   }
