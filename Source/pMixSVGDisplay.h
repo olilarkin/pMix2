@@ -7,8 +7,8 @@
   ==============================================================================
 */
 
-#ifndef PMIXWEBBROWSER_H_INCLUDED
-#define PMIXWEBBROWSER_H_INCLUDED
+#ifndef PMIXSVGDISPLAY_H_INCLUDED
+#define PMIXSVGDISPLAY_H_INCLUDED
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
@@ -40,4 +40,4 @@ private:
 };
 
 
-#endif  // PMIXWEBBROWSER_H_INCLUDED
+#endif  // PMIXSVGDISPLAY_H_INCLUDED
