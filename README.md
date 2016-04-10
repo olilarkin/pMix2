@@ -39,7 +39,7 @@ see note below regarding VST2.4 SDK.
 
 **JUCE_FAUSTLLVM Module Dependencies**
 
-There are more dependencies which are described in the juce_faustllvm [README.md](https://github.com/CMRCYork/juce_faustllvm)
+There are more dependencies which are described in the juce_faustllvm [README.md](https://github.com/olilarkin/juce_faustllvm)
 
 
 ##Compiling:
@@ -57,12 +57,6 @@ If you need to change any paths etc, you should do so using the .jucer project r
 
 **License:**
 
-pMix - Copyright Oliver Larkin 2008 - 2016
-
-pMix v2    
-Contemporary Music Research Centre  
-Music Department  
-University of York  
-License: GPL
-
-www.cmrcyork.org | www.olilarkin.co.uk
+pMix - Copyright Oliver Larkin 2008 - 2016  
+GNU Public License  
+www.olilarkin.co.uk
