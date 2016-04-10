@@ -12,7 +12,6 @@
 
 PMixAudioEngine::PMixAudioEngine()
 : doc(*this)
-, faustDSPFormat(doc.getLibraryPath(), File(FAUST_DRAW_PATH))
 {
   Logger::setCurrentLogger(&logger);
   
@@ -31,16 +30,21 @@ PMixAudioEngine::PMixAudioEngine()
   appProperties->setStorageParameters (options);
   
   formatManager.addDefaultFormats();
-  formatManager.addFormat (new InternalPluginFormat());
-  InternalPluginFormat internalFormat;
-  internalFormat.getAllTypes (internalTypes);
+  
+  InternalPluginFormat* internalFormat = new InternalPluginFormat();
+  internalFormat->getAllTypes (internalTypes);
+  formatManager.addFormat(internalFormat);
+  
+  FaustPluginFormat* faustPluginFormat = new FaustPluginFormat(doc.getLibraryPath(), File(FAUST_DRAW_PATH));
+  faustPluginFormat->getAllTypes(internalTypes);
+  JITformatManager.addFormat(faustPluginFormat);
   
   ScopedPointer<XmlElement> savedPluginList (getAppProperties().getUserSettings()->getXmlValue ("pluginList"));
   
   if (savedPluginList != nullptr)
     knownPluginList.recreateFromXml (*savedPluginList);
     
-  ScopedPointer<PluginDirectoryScanner> scanner = new PluginDirectoryScanner(knownFaustDSPList, faustDSPFormat, faustDSPFormat.getDefaultLocationsToSearch(), true, File::nonexistent);
+  ScopedPointer<PluginDirectoryScanner> scanner = new PluginDirectoryScanner(knownFaustDSPList, *faustPluginFormat, faustPluginFormat->getDefaultLocationsToSearch(), true, File::nonexistent);
   
   LOG("Scanning Faust .dsp files...");
 
@@ -138,3 +142,16 @@ const PluginDescription* PMixAudioEngine::getChosenType (const int menuID) const
   }
 }
 
+AudioPluginInstance* PMixAudioEngine::createPluginInstance(const PluginDescription& desc, String& errorMessage)
+{
+  AudioPluginInstance* result = nullptr;
+  
+  if(desc.pluginFormatName == "FAUST")
+  {
+    result = JITformatManager.createPluginInstance (desc, getGraph().getSampleRate(), getGraph().getBlockSize(), errorMessage);
+  }
+  else
+    result = formatManager.createPluginInstance (desc, getGraph().getSampleRate(), getGraph().getBlockSize(), errorMessage);
+  
+  return result;
+}

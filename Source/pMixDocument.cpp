@@ -52,18 +52,11 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
   {
     String errorMessage;
     
-    AudioPluginInstance* instance;
+    AudioPluginInstance* instance = audioEngine.createPluginInstance(*desc, errorMessage);
+
+    jassert(instance != nullptr);
     
-    if (desc->pluginFormatName == "FAUST") {
-      instance = audioEngine.getFaustFormat().createInstanceFromDescription(*desc, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize());
-    }
-    else
-    {
-      instance = audioEngine.getFormatManager().createPluginInstance (*desc, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
-    }
-    
-    if (instance != nullptr)
-      node = audioEngine.getGraph().addNode (instance);
+    node = audioEngine.getGraph().addNode (instance);
 
     FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
     
@@ -318,7 +311,9 @@ void PMixDocument::createNodeFromXml (XmlElement& xml, const String& newSourceCo
   
   String errorMessage;
   
-  AudioPluginInstance* instance = audioEngine.getFormatManager().createPluginInstance (pd, audioEngine.getGraph().getSampleRate(), audioEngine.getGraph().getBlockSize(), errorMessage);
+  AudioPluginInstance* instance = audioEngine.createPluginInstance(pd, errorMessage);
+  
+  jassert(instance != nullptr);
   
   if (pd.pluginFormatName == "FAUST")
   {
@@ -334,7 +329,6 @@ void PMixDocument::createNodeFromXml (XmlElement& xml, const String& newSourceCo
 //    xml.setAttribute("numInputs", faustProc->getNumInputChannels());
 //    xml.setAttribute("numOutputs", faustProc->getNumOutputChannels()); ???
   }
-  
   
   AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().addNode (instance, xml.getIntAttribute ("uid")));
   

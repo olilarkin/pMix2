@@ -27,7 +27,6 @@ public:
   AudioProcessorGraph& getGraph() noexcept { return graph; }
   //AudioProcessorPlayer& getGraphPlayer() noexcept { return graphPlayer; }
   AudioPluginFormatManager& getFormatManager() noexcept { return formatManager; }
-  FaustPluginFormat& getFaustFormat() noexcept { return faustDSPFormat; }
 
   KnownPluginList& getKnownPluginList() { return knownPluginList; }
   KnownPluginList::SortMethod getSortMethod() noexcept { return pluginSortMethod; }
@@ -46,18 +45,23 @@ public:
 
   //ChangeListener
   void changeListenerCallback (ChangeBroadcaster* broadcaster);
-
+  
+  AudioPluginInstance* createPluginInstance(const PluginDescription& desc, String& errorMessage);
+  
 private:
   PMixDocument doc;
 
-  OwnedArray <PluginDescription> internalTypes;
   AudioProcessorGraph graph;
-  AudioPluginFormatManager formatManager;
+  AudioPluginFormatManager formatManager; // for internal I/O and VST plugins etc
+  AudioPluginFormatManager JITformatManager; // for FAUST formats ...
+  
+  OwnedArray <PluginDescription> internalTypes; // includes FAUST plugin type
+
   KnownPluginList knownPluginList;
   KnownPluginList::SortMethod pluginSortMethod;
   
   KnownPluginList knownFaustDSPList;
-  FaustPluginFormat faustDSPFormat;
+  
   PMixLogger logger;
 
   ScopedPointer<ApplicationProperties> appProperties;

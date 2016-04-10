@@ -21,10 +21,6 @@ InternalPluginFormat::InternalPluginFormat()
     AudioProcessorGraph::AudioGraphIOProcessor p (AudioProcessorGraph::AudioGraphIOProcessor::midiOutputNode);
     p.fillInPluginDescription (midiOutDesc);
   }
-  
-  {
-    FaustAudioPluginInstance::fillInitialInPluginDescription (faustDesc);
-  }
 }
 
 void InternalPluginFormat::createPluginInstance (const PluginDescription& desc,
@@ -47,9 +43,6 @@ void InternalPluginFormat::createPluginInstance (const PluginDescription& desc,
   if (desc.name == midiOutDesc.name)
     retval = new AudioProcessorGraph::AudioGraphIOProcessor (AudioProcessorGraph::AudioGraphIOProcessor::midiOutputNode);
   
-  if (desc.name == faustDesc.name)
-    retval = new FaustAudioPluginInstance();
-  
   callback (userData, retval, retval == nullptr ? NEEDS_TRANS ("Invalid internal filter name") : String());
 }
 
@@ -61,7 +54,6 @@ const PluginDescription* InternalPluginFormat::getDescriptionFor (const Internal
     case audioOutputFilter:     return &audioOutDesc;
     case midiInputFilter:       return &midiInDesc;
     case midiOutputFilter:      return &midiOutDesc;
-    case faustEffect:           return &faustDesc;
     default:                    break;
   }
 
@@ -81,7 +73,5 @@ bool InternalPluginFormat::isInternalFormat(String name)
   if (name == "Audio Output") return true;
   if (name == "Midi Input") return true;
   if (name == "Midi Output") return true;
- // if (name == faustDesc.name) return true;
-  
   return false;
 }

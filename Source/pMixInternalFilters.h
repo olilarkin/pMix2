@@ -15,8 +15,6 @@ public:
     audioOutputFilter,
     midiInputFilter,
     midiOutputFilter,
-    faustEffect,
-
     endOfFilterTypes
   };
 
@@ -45,7 +43,6 @@ private:
   PluginDescription audioOutDesc;
   PluginDescription midiInDesc;
   PluginDescription midiOutDesc;
-  PluginDescription faustDesc;
 };
 
 
