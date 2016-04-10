@@ -30,7 +30,7 @@
 PMixPrefsPlugins::PMixPrefsPlugins (PMixAudioEngine& audioEngine)
     : audioEngine(audioEngine)
 {
-    addAndMakeVisible (pluginListComponent = new PluginListComponent (audioEngine.getFormatManager(), audioEngine.getKnownPluginList(), audioEngine.getDMPFile(), audioEngine.getAppProperties().getUserSettings()));
+    addAndMakeVisible (pluginListComponent = new PluginListComponent (audioEngine.getFormatManager(), audioEngine.getKnownPluginList(), audioEngine.getDMPFile(), audioEngine.getAppProperties().getUserSettings(), true));
 
 
     //[UserPreSize]
