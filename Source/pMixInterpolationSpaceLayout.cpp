@@ -195,7 +195,7 @@ void PMixInterpolationSpaceLayout::mouseDown (const MouseEvent& e)
   {
     if(graphEditor.getLassoSelection().getNumSelected() == 1)
     {
-      FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
+      NodeComponent* selectedItem = dynamic_cast<NodeComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
       
       if (selectedItem)
       {
@@ -245,7 +245,7 @@ void PMixInterpolationSpaceLayout::mouseDoubleClick (const MouseEvent& e)
 {
   if(graphEditor.getLassoSelection().getNumSelected() == 1)
   {
-    FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
+    NodeComponent* selectedItem = dynamic_cast<NodeComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
     
     if (selectedItem)
     {

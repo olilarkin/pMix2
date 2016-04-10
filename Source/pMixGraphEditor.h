@@ -15,7 +15,7 @@
 #include "pMixPluginWindow.h"
 #include "pMixGraphEditorParts.h"
 
-class FilterComponent;
+class NodeComponent;
 class ConnectorComponent;
 class PinComponent;
 
@@ -38,7 +38,7 @@ public:
 
   void createNewFilter (const PluginDescription* desc, int x, int y);
 
-  FilterComponent* getComponentForFilter (uint32 nodeId) const;
+  NodeComponent* getComponentForFilter (uint32 nodeId) const;
   ConnectorComponent* getComponentForConnection (const AudioProcessorGraph::Connection& conn) const;
   PinComponent* findPinAt (int x, int y) const;
 

@@ -107,9 +107,9 @@ GraphEditor* PinComponent::getGraphPanel() const noexcept
 }
 
 #pragma mark -
-#pragma mark FilterComponent
+#pragma mark NodeComponent
 
-FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_)
+NodeComponent::NodeComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_)
 : audioEngine (audioEngine)
 , nodeId (nodeId_)
 , numInputs (0)
@@ -126,12 +126,12 @@ FilterComponent::FilterComponent (PMixAudioEngine& audioEngine, const uint32 nod
   setSize (100, 50);
 }
 
-FilterComponent::~FilterComponent()
+NodeComponent::~NodeComponent()
 {
   deleteAllChildren();
 }
 
-void FilterComponent::removeEditor()
+void NodeComponent::removeEditor()
 {
   if (editor != nullptr)
     delete editor;
@@ -139,7 +139,7 @@ void FilterComponent::removeEditor()
   editor = nullptr;
 }
 
-void FilterComponent::mouseDown (const MouseEvent& e)
+void NodeComponent::mouseDown (const MouseEvent& e)
 {
   originalPos = localPointToGlobal (Point<int>());
   
@@ -247,7 +247,7 @@ void FilterComponent::mouseDown (const MouseEvent& e)
   }
 }
 
-void FilterComponent::mouseDrag (const MouseEvent& e)
+void NodeComponent::mouseDrag (const MouseEvent& e)
 {
   if (! e.mods.isPopupMenu())
   {
@@ -265,7 +265,7 @@ void FilterComponent::mouseDrag (const MouseEvent& e)
   }
 }
 
-void FilterComponent::mouseUp (const MouseEvent& e)
+void NodeComponent::mouseUp (const MouseEvent& e)
 {
   if (e.mouseWasClicked() && e.getNumberOfClicks() == 2)
   {
@@ -292,7 +292,7 @@ void FilterComponent::mouseUp (const MouseEvent& e)
   }
 }
 
-void FilterComponent::mouseDoubleClick (const MouseEvent&)
+void NodeComponent::mouseDoubleClick (const MouseEvent&)
 {
   if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
   {
@@ -308,7 +308,7 @@ void FilterComponent::mouseDoubleClick (const MouseEvent&)
   }
 }
 
-bool FilterComponent::hitTest (int x, int y)
+bool NodeComponent::hitTest (int x, int y)
 {
   for (int i = getNumChildComponents(); --i >= 0;)
     if (getChildComponent(i)->getBounds().contains (x, y))
@@ -317,7 +317,7 @@ bool FilterComponent::hitTest (int x, int y)
   return x >= 3 && x < getWidth() - 6 && y >= pinSize && y < getHeight() - pinSize;
 }
 
-void FilterComponent::paint (Graphics& g)
+void NodeComponent::paint (Graphics& g)
 {
   g.setColour (Colours::lightgrey);
   
@@ -341,7 +341,7 @@ void FilterComponent::paint (Graphics& g)
   g.drawRoundedRectangle(x, y, w, h, 2, 1);
 }
 
-void FilterComponent::resized()
+void NodeComponent::resized()
 {
   for (int i = 0; i < getNumChildComponents(); ++i)
   {
@@ -361,7 +361,7 @@ void FilterComponent::resized()
     editor->setBounds(10, pinSize + filterName->getHeight(), getWidth()-20, getHeight() - pinSize - pinSize - 10 - filterName->getHeight());
 }
 
-void FilterComponent::getPinPos (const int index, const bool isInput, float& x, float& y)
+void NodeComponent::getPinPos (const int index, const bool isInput, float& x, float& y)
 {
   for (int i = 0; i < getNumChildComponents(); ++i)
   {
@@ -377,7 +377,7 @@ void FilterComponent::getPinPos (const int index, const bool isInput, float& x, 
   }
 }
 
-void FilterComponent::update()
+void NodeComponent::update()
 {
   const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (nodeId));
   
@@ -461,12 +461,12 @@ void FilterComponent::update()
   }
 }
 
-GraphEditor* FilterComponent::getGraphPanel() const noexcept
+GraphEditor* NodeComponent::getGraphPanel() const noexcept
 {
   return findParentComponentOfClass<GraphEditor>();
 }
 
-void FilterComponent::changeListenerCallback (ChangeBroadcaster* source)
+void NodeComponent::changeListenerCallback (ChangeBroadcaster* source)
 {
   if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
   {    
@@ -477,7 +477,7 @@ void FilterComponent::changeListenerCallback (ChangeBroadcaster* source)
   }
 }
 
-void FilterComponent::bubbleMessage(String msg)
+void NodeComponent::bubbleMessage(String msg)
 {
   BubbleMessageComponent* bbl = new BubbleMessageComponent();
   AttributedString text (msg);
@@ -581,10 +581,10 @@ void ConnectorComponent::getPoints (float& x1, float& y1, float& x2, float& y2) 
   
   if (GraphEditor* const hostPanel = getGraphPanel())
   {
-    if (FilterComponent* srcFilterComp = hostPanel->getComponentForFilter (sourceFilterID))
+    if (NodeComponent* srcFilterComp = hostPanel->getComponentForFilter (sourceFilterID))
       srcFilterComp->getPinPos (sourceFilterChannel, false, x1, y1);
     
-    if (FilterComponent* dstFilterComp = hostPanel->getComponentForFilter (destFilterID))
+    if (NodeComponent* dstFilterComp = hostPanel->getComponentForFilter (destFilterID))
       dstFilterComp->getPinPos (destFilterChannel, true, x2, y2);
   }
 }

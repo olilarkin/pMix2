@@ -42,14 +42,14 @@ private:
 };
 
 #pragma mark -
-#pragma mark FilterComponent
+#pragma mark NodeComponent
 
-class FilterComponent : public Component
+class NodeComponent : public Component
                       , public ChangeListener
 {
 public:
-  FilterComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_);
-  ~FilterComponent();
+  NodeComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_);
+  ~NodeComponent();
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
@@ -87,8 +87,8 @@ private:
   bool highlight;
   GraphEditor* getGraphPanel() const noexcept;
   
-  FilterComponent (const FilterComponent&);
-  FilterComponent& operator= (const FilterComponent&);
+  NodeComponent (const NodeComponent&);
+  NodeComponent& operator= (const NodeComponent&);
 };
 
 #pragma mark -

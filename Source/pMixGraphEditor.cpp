@@ -89,11 +89,11 @@ void GraphEditor::createNewFilter (const PluginDescription* desc, int x, int y)
   }
 }
 
-FilterComponent* GraphEditor::getComponentForFilter (const uint32 nodeId) const
+NodeComponent* GraphEditor::getComponentForFilter (const uint32 nodeId) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
-    if (FilterComponent* const fc = dynamic_cast <FilterComponent*> (getChildComponent (i)))
+    if (NodeComponent* const fc = dynamic_cast <NodeComponent*> (getChildComponent (i)))
       if (fc->nodeId == nodeId)
         return fc;
   }
@@ -120,7 +120,7 @@ PinComponent* GraphEditor::findPinAt (const int x, const int y) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
-    if (FilterComponent* fc = dynamic_cast <FilterComponent*> (getChildComponent (i)))
+    if (NodeComponent* fc = dynamic_cast <NodeComponent*> (getChildComponent (i)))
     {
       if (PinComponent* pin = dynamic_cast <PinComponent*> (fc->getComponentAt (x - fc->getX(),
                               y - fc->getY())))
@@ -152,7 +152,7 @@ void GraphEditor::updateComponents()
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
-    if (FilterComponent* const fc = dynamic_cast <FilterComponent*> (getChildComponent (i)))
+    if (NodeComponent* const fc = dynamic_cast <NodeComponent*> (getChildComponent (i)))
       fc->update();
   }
 
@@ -180,7 +180,7 @@ void GraphEditor::updateComponents()
 
     if (getComponentForFilter (f->nodeId) == 0)
     {
-      FilterComponent* const comp = new FilterComponent (audioEngine, f->nodeId);
+      NodeComponent* const comp = new NodeComponent (audioEngine, f->nodeId);
       addAndMakeVisible (comp);
       comp->update();
     }
@@ -511,7 +511,7 @@ void GraphEditor::deleteSelection()
   {
     Component* c = selectedItems.getSelectedItem(i);
     
-    FilterComponent* fc = dynamic_cast<FilterComponent*>(c);
+    NodeComponent* fc = dynamic_cast<NodeComponent*>(c);
     
     if (fc)
       audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, *this, fc->nodeId), TRANS("remove node"));

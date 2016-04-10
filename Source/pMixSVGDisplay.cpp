@@ -80,7 +80,7 @@ void SVGDisplay::changeListenerCallback (ChangeBroadcaster* source)
   {
     if(pgraphEditor->getLassoSelection().getNumSelected() == 1)
     {
-      FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(pgraphEditor->getLassoSelection().getSelectedItem(0));
+      NodeComponent* selectedItem = dynamic_cast<NodeComponent*>(pgraphEditor->getLassoSelection().getSelectedItem(0));
       
       if (selectedItem)
       {
@@ -114,7 +114,7 @@ void SVGDisplay::changeListenerCallback (ChangeBroadcaster* source)
     // if a single item is selected in the graph editor update the browser
     if(graphEditor.getLassoSelection().getNumSelected() == 1)
     {
-      FilterComponent* selectedItem = dynamic_cast<FilterComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
+      NodeComponent* selectedItem = dynamic_cast<NodeComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
 
       if (selectedItem) {
         if (browser)

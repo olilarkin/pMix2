@@ -13,7 +13,7 @@
 #include "pMixAudioEngine.h"
 #include "pMixGraphEditorParts.h"
 
-class FilterComponent;
+class NodeComponent;
 class ConnectorComponent;
 class PinComponent;
 
