@@ -406,7 +406,7 @@
     <ClCompile Include="..\..\Source\pMixMainComponent.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\pMixInternalFilters.cpp">
+    <ClCompile Include="..\..\Source\pMixInternalPluginFormat.cpp">
       <Filter>pMix\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\pMixAudioEngine.cpp">
@@ -1797,7 +1797,7 @@
     <ClInclude Include="..\..\Source\pMixMainComponent.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\pMixInternalFilters.h">
+    <ClInclude Include="..\..\Source\pMixInternalPluginFormat.h">
       <Filter>pMix\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\pMixAudioEngine.h">

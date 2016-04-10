@@ -1,3 +1,12 @@
+/*
+  ==============================================================================
+
+    pMixDocument.cpp
+    Author:  Oliver Larkin
+ 
+  ==============================================================================
+*/
+
 #include "pMixDocument.h"
 #include "pMixAudioEngine.h"
 #include "pMixConstants.h"

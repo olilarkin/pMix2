@@ -1,3 +1,13 @@
+/*
+  ==============================================================================
+ 
+    pMixRHPTabContainer.cpp
+    Author:  Oliver Larkin
+ 
+  ==============================================================================
+ */
+
+ 
 #include "pMixRHPTabContainer.h"
 #include "pMixMainComponent.h"
 

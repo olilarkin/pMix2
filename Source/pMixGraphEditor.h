@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#ifndef __GRAPHEDITOR_JUCEHEADER__
-#define __GRAPHEDITOR_JUCEHEADER__
+#ifndef PMIXGRAPHEDITOR_H_INCLUDED
+#define PMIXGRAPHEDITOR_H_INCLUDED
 
 #include "pMixAudioEngine.h"
 #include "pMixPluginWindow.h"
@@ -87,4 +87,4 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphEditor)
 };
 
-#endif   // __GraphEditor_JUCEHEADER__
+#endif   // PMIXGRAPHEDITOR_H_INCLUDED

@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    CodeEditor.h
+    pMixCodeEditor.h
     Author:  Oliver Larkin
 
   ==============================================================================
 */
 
-#ifndef CODEEDITOR_H_INCLUDED
-#define CODEEDITOR_H_INCLUDED
+#ifndef PMIXCODEEDITOR_H_INCLUDED
+#define PMIXCODEEDITOR_H_INCLUDED
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"

@@ -1,3 +1,12 @@
+/*
+  ==============================================================================
+
+    pMixInterpolationSpace.cpp
+    Author:  Oliver Larkin
+
+  ==============================================================================
+*/
+
 #include "pMixInterpolationSpace.h"
 
 InterpolationSpace::InterpolationSpace (PMixAudioEngine& audioEngine, GraphEditor& graphEditor)

@@ -4,16 +4,16 @@
     pMixAudioEngine.h
     Author:  Oliver Larkin
  
-  This class contains the main audio side of pMix and owns the document. It exists before the GUI and should be capable of playing a graph without GUI.
+    This class contains the main audio side of pMix and owns the document. It exists before the GUI and should be capable of playing a graph without GUI.
 
   ==============================================================================
 */
 
-#ifndef PMIXAUDIO_H_INCLUDED
-#define PMIXAUDIO_H_INCLUDED
+#ifndef PMIXAUDIOENGINE_H_INCLUDED
+#define PMIXAUDIOENGINE_H_INCLUDED
 
 #include "pMixDocument.h"
-#include "pMixInternalFilters.h"
+#include "pMixInternalPluginFormat.h"
 #include "pMixLogger.h"
 
 ApplicationCommandManager& getCommandManager();
@@ -72,4 +72,4 @@ private:
 
 
 
-#endif  // PMIXAUDIO_H_INCLUDED
+#endif  // PMIXAUDIOENGINE_H_INCLUDED

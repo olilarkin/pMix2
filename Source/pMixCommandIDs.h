@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    CommandIDs.h
+    pMixCommandIDs.h
     Author:  Oliver Larkin
 
   ==============================================================================
 */
 
-#ifndef COMMANDIDS_H_INCLUDED
-#define COMMANDIDS_H_INCLUDED
+#ifndef PMIXCOMMANDIDS_H_INCLUDED
+#define PMIXCOMMANDIDS_H_INCLUDED
 
 namespace MenuIDs
 {
@@ -63,4 +63,4 @@ namespace CommandIDs
 }
 
 
-#endif  // COMMANDIDS_H_INCLUDED
+#endif  // PMIXCOMMANDIDS_H_INCLUDED

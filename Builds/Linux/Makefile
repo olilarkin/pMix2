@@ -75,7 +75,7 @@ OBJECTS := \
   $(OBJDIR)/pMixPluginWindow_8e0c1d8.o \
   $(OBJDIR)/pMixFloatWindow_b286ca81.o \
   $(OBJDIR)/pMixMainComponent_71d6859.o \
-  $(OBJDIR)/pMixInternalFilters_8e34e293.o \
+  $(OBJDIR)/pMixInternalPluginFormat_69d4d33c.o \
   $(OBJDIR)/pMixAudioEngine_de4ed8cd.o \
   $(OBJDIR)/juce_audio_basics_6b797ca1.o \
   $(OBJDIR)/juce_audio_devices_a742c38b.o \
@@ -239,9 +239,9 @@ $(OBJDIR)/pMixMainComponent_71d6859.o: ../../Source/pMixMainComponent.cpp
 	@echo "Compiling pMixMainComponent.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/pMixInternalFilters_8e34e293.o: ../../Source/pMixInternalFilters.cpp
+$(OBJDIR)/pMixInternalPluginFormat_69d4d33c.o: ../../Source/pMixInternalPluginFormat.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling pMixInternalFilters.cpp"
+	@echo "Compiling pMixInternalPluginFormat.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/pMixAudioEngine_de4ed8cd.o: ../../Source/pMixAudioEngine.cpp

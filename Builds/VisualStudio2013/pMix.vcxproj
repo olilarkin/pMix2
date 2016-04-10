@@ -163,7 +163,7 @@
     <ClCompile Include="..\..\Source\pMixPluginWindow.cpp"/>
     <ClCompile Include="..\..\Source\pMixFloatWindow.cpp"/>
     <ClCompile Include="..\..\Source\pMixMainComponent.cpp"/>
-    <ClCompile Include="..\..\Source\pMixInternalFilters.cpp"/>
+    <ClCompile Include="..\..\Source\pMixInternalPluginFormat.cpp"/>
     <ClCompile Include="..\..\Source\pMixAudioEngine.cpp"/>
     <ClCompile Include="..\..\..\..\juce\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -1387,7 +1387,7 @@
     <ClInclude Include="..\..\Source\pMixPluginWindow.h"/>
     <ClInclude Include="..\..\Source\pMixFloatWindow.h"/>
     <ClInclude Include="..\..\Source\pMixMainComponent.h"/>
-    <ClInclude Include="..\..\Source\pMixInternalFilters.h"/>
+    <ClInclude Include="..\..\Source\pMixInternalPluginFormat.h"/>
     <ClInclude Include="..\..\Source\pMixAudioEngine.h"/>
     <ClInclude Include="..\..\Source\pMixLogger.h"/>
     <ClInclude Include="..\..\..\..\juce\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>

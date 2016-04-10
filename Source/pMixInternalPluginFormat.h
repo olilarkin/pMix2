@@ -1,5 +1,14 @@
-#ifndef __INTERNALFILTERS_JUCEHEADER__
-#define __INTERNALFILTERS_JUCEHEADER__
+/*
+  ==============================================================================
+
+    pMixInternalPluginFormat.h
+    Author:  Oliver Larkin
+ 
+  ==============================================================================
+*/
+
+#ifndef PMIXINTERNALPLUGINFORMAT_H_INCLUDED
+#define PMIXINTERNALPLUGINFORMAT_H_INCLUDED
 
 #include "JuceHeader.h"
 
@@ -46,4 +55,4 @@ private:
 };
 
 
-#endif   // __INTERNALFILTERS_JUCEHEADER__
+#endif   // PMIXINTERNALPLUGINFORMAT_H_INCLUDED

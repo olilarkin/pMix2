@@ -57,7 +57,7 @@ bool RemoveFilterAction::perform()
   PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
   
   audioEngine.getDoc().removeFilter (nodeID);
-  graphEditor.getLassoSelection().deselectAll();
+  //graphEditor.getLassoSelection().deselectAll();
 
   if (nodeID < 0xFFFFFFFF)
     return true;

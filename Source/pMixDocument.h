@@ -1,5 +1,14 @@
-#ifndef __PMixDocument_JUCEHEADER__
-#define __PMixDocument_JUCEHEADER__
+/*
+  ==============================================================================
+
+    pMixDocument.h
+    Author:  Oliver Larkin
+ 
+  ==============================================================================
+*/
+
+#ifndef PMIXDOCUMENT_H_INCLUDED
+#define PMIXDOCUMENT_H_INCLUDED
 
 #include "JuceHeader.h"
 #include "pMixDefaultColours.h"
@@ -107,4 +116,4 @@ private:
 };
 
 
-#endif   // __PMixDocument_JUCEHEADER__
+#endif   // PMIXDOCUMENT_H_INCLUDED

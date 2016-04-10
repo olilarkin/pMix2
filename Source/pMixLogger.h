@@ -33,7 +33,8 @@ public:
    // printf("size %i\n", messageList.size());
     String str = message;
     messageList.push_back(str);
-    sendSynchronousChangeMessage();
+    sendChangeMessage();
+    //sendSynchronousChangeMessage();
   }
   
   bool getLastMessage(String& theMessage)

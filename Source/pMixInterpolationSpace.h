@@ -1,6 +1,14 @@
+/*
+  ==============================================================================
 
-#ifndef _INTERPOLATIONSPACE_H_
-#define _INTERPOLATIONSPACE_H_
+    pMixInterpolationSpace.h
+    Author:  Oliver Larkin
+
+  ==============================================================================
+*/
+
+#ifndef PMIXINTERPOLATIONSPACE_H_INCLUDED
+#define PMIXINTERPOLATIONSPACE_H_INCLUDED
 
 #include "JuceHeader.h"
 #include "pMixGraphEditor.h"
@@ -21,4 +29,4 @@ private:
   ScopedPointer<pMixInterpolationSpaceCrossHairs> crosshairs;
 };
 
-#endif //_INTERPOLATIONSPACE_H_ 
+#endif //PMIXINTERPOLATIONSPACE_H_INCLUDED 

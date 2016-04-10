@@ -122,10 +122,10 @@
             file="Source/pMixMainComponent.cpp"/>
       <FILE id="cjM5RC" name="pMixMainComponent.h" compile="0" resource="0"
             file="Source/pMixMainComponent.h"/>
-      <FILE id="zqfuWQ" name="pMixInternalFilters.cpp" compile="1" resource="0"
-            file="Source/pMixInternalFilters.cpp"/>
-      <FILE id="cQ4d1f" name="pMixInternalFilters.h" compile="0" resource="0"
-            file="Source/pMixInternalFilters.h"/>
+      <FILE id="zqfuWQ" name="pMixInternalPluginFormat.cpp" compile="1" resource="0"
+            file="Source/pMixInternalPluginFormat.cpp"/>
+      <FILE id="cQ4d1f" name="pMixInternalPluginFormat.h" compile="0" resource="0"
+            file="Source/pMixInternalPluginFormat.h"/>
       <FILE id="odL5qk" name="pMixAudioEngine.cpp" compile="1" resource="0"
             file="Source/pMixAudioEngine.cpp"/>
       <FILE id="oy6H27" name="pMixAudioEngine.h" compile="0" resource="0"

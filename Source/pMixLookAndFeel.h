@@ -1,6 +1,6 @@
 
-#ifndef __pMixLookAndFeel_JUCEHEADER__
-#define __pMixLookAndFeel_JUCEHEADER__
+#ifndef PMIXLOOKANDFEEL_H_INCLUDED
+#define PMIXLOOKANDFEEL_H_INCLUDED
 
 #include "JuceHeader.h"
 
@@ -24,4 +24,4 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (pMixLookAndFeel);
 };
 
-#endif   // __pMixLookAndFeel_JUCEHEADER__
+#endif   // PMIXLOOKANDFEEL_H_INCLUDED

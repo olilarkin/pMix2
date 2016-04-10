@@ -1,4 +1,13 @@
-#include "pMixInternalFilters.h"
+/*
+  ==============================================================================
+
+    pMixInternalPluginFormat.cpp
+    Author:  Oliver Larkin
+ 
+  ==============================================================================
+*/
+
+#include "pMixInternalPluginFormat.h"
 
 InternalPluginFormat::InternalPluginFormat()
 {

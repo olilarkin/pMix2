@@ -1,3 +1,12 @@
+/*
+  ==============================================================================
+ 
+    pMixMainAppWindow.cpp
+    Author:  Oliver Larkin
+  
+  ==============================================================================
+ */
+ 
 #include "pMixMainAppWindow.h"
 #include "pMixPrefsComponent.h"
 #include "pMixAboutBox.h"
