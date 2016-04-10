@@ -36,9 +36,9 @@ public:
   void mouseUp (const MouseEvent& e) override;
   void mouseDoubleClick (const MouseEvent&) override;
 
-  void createNewFilter (const PluginDescription* desc, int x, int y);
+  void createNewNode (const PluginDescription* desc, int x, int y);
 
-  NodeComponent* getComponentForFilter (uint32 nodeId) const;
+  NodeComponent* getComponentForNode (uint32 nodeId) const;
   ConnectorComponent* getComponentForConnection (const AudioProcessorGraph::Connection& conn) const;
   PinComponent* findPinAt (int x, int y) const;
 
@@ -48,9 +48,7 @@ public:
   void updateComponents();
   void clear();
   
-  void beginConnectorDrag (uint32 sourceFilterID, int sourceFilterChannel,
-                           uint32 destFilterID, int destFilterChannel,
-                           const MouseEvent& e);
+  void beginConnectorDrag (uint32 sourceNodeID, int sourceNodeChannel, uint32 destNodeID, int destNodeChannel, const MouseEvent& e);
   void dragConnector (const MouseEvent& e);
   void endDraggingConnector (const MouseEvent& e);
 

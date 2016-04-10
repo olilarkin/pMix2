@@ -10,7 +10,7 @@
 #include "pMixGraphEditorActions.h"
 #include "pMixPluginWindow.h"
 
-CreateFilterAction::CreateFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const PluginDescription* desc, double x, double y) noexcept
+CreateNodeAction::CreateNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const PluginDescription* desc, double x, double y) noexcept
 : audioEngine(audioEngine)
 , graphEditor(graphEditor)
 , x(x)
@@ -19,9 +19,9 @@ CreateFilterAction::CreateFilterAction (PMixAudioEngine& audioEngine, GraphEdito
 {
 }
 
-bool CreateFilterAction::perform()
+bool CreateNodeAction::perform()
 {
-  nodeID = audioEngine.getDoc().addFilter (&desc, x, y);
+  nodeID = audioEngine.getDoc().addNode (&desc, x, y);
   
   if (nodeID < 0xFFFFFFFF)
     return true;
@@ -30,21 +30,21 @@ bool CreateFilterAction::perform()
   
 }
 
-bool CreateFilterAction::undo()
+bool CreateNodeAction::undo()
 {
   PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
-  audioEngine.getDoc().removeFilter(nodeID);
+  audioEngine.getDoc().removeNode(nodeID);
   graphEditor.getLassoSelection().deselectAll();
 
   return true;
 }
 
-int CreateFilterAction::getSizeInUnits()
+int CreateNodeAction::getSizeInUnits()
 {
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-RemoveFilterAction::RemoveFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID) noexcept
+RemoveNodeAction::RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID) noexcept
 : audioEngine(audioEngine)
 , graphEditor(graphEditor)
 , nodeID(nodeID)
@@ -52,11 +52,11 @@ RemoveFilterAction::RemoveFilterAction (PMixAudioEngine& audioEngine, GraphEdito
   nodeXML = audioEngine.getDoc().createNodeXml(audioEngine.getGraph().getNodeForId(nodeID));
 }
 
-bool RemoveFilterAction::perform()
+bool RemoveNodeAction::perform()
 {
   PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
   
-  audioEngine.getDoc().removeFilter (nodeID);
+  audioEngine.getDoc().removeNode (nodeID);
   //graphEditor.getLassoSelection().deselectAll();
 
   if (nodeID < 0xFFFFFFFF)
@@ -66,18 +66,18 @@ bool RemoveFilterAction::perform()
   
 }
 
-bool RemoveFilterAction::undo()
+bool RemoveNodeAction::undo()
 {
   audioEngine.getDoc().createNodeFromXml(*nodeXML);  
   return true;
 }
 
-int RemoveFilterAction::getSizeInUnits()
+int RemoveNodeAction::getSizeInUnits()
 {
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-MoveFilterAction::MoveFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
+MoveNodeAction::MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
 : audioEngine(audioEngine)
 , graphEditor(graphEditor)
 , nodeID(nodeID)
@@ -86,42 +86,42 @@ MoveFilterAction::MoveFilterAction (PMixAudioEngine& audioEngine, GraphEditor& g
 {
 }
 
-bool MoveFilterAction::perform()
+bool MoveNodeAction::perform()
 {
   audioEngine.getDoc().setNodePosition (nodeID, endPos.x, endPos.y);
   graphEditor.updateComponents();
   return true;
 }
 
-bool MoveFilterAction::undo()
+bool MoveNodeAction::undo()
 {
   audioEngine.getDoc().setNodePosition (nodeID, startPos.x, startPos.y);
   graphEditor.updateComponents();
   return true;
 }
 
-int MoveFilterAction::getSizeInUnits()
+int MoveNodeAction::getSizeInUnits()
 {
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-CreateConnectionAction::CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcFilter, int srcChannel, uint32 dstFilter, int dstChannel) noexcept
+CreateConnectionAction::CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcsourceNodeUID, int srcChannel, uint32 dstsourceNodeUID, int dstChannel) noexcept
 : audioEngine(audioEngine)
-, srcFilter(srcFilter)
+, srcsourceNodeUID(srcsourceNodeUID)
 , srcChannel(srcChannel)
-, dstFilter(dstFilter)
+, dstsourceNodeUID(dstsourceNodeUID)
 , dstChannel(dstChannel)
 {
 }
 
 bool CreateConnectionAction::perform()
 {
-  return audioEngine.getDoc().addConnection (srcFilter, srcChannel, dstFilter, dstChannel);
+  return audioEngine.getDoc().addConnection (srcsourceNodeUID, srcChannel, dstsourceNodeUID, dstChannel);
 }
 
 bool CreateConnectionAction::undo()
 {
-  audioEngine.getDoc().removeConnection (srcFilter, srcChannel, dstFilter, dstChannel);
+  audioEngine.getDoc().removeConnection (srcsourceNodeUID, srcChannel, dstsourceNodeUID, dstChannel);
   
   return true;
 }

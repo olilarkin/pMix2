@@ -81,9 +81,9 @@ private:
   int numIns, numOuts;
   bool moving;
   //DropShadowEffect shadow;
-  friend class MoveFilterAction;
+  friend class MoveNodeAction;
   PMixGenericAudioProcessorEditor* editor;
-  Label* filterName;
+  Label* nodeName;
   bool highlight;
   GraphEditor* getGraphPanel() const noexcept;
   
@@ -99,8 +99,8 @@ class ConnectorComponent   : public Component
 {
 public:
   ConnectorComponent (PMixAudioEngine& audioEngine);
-  void setInput (const uint32 sourceFilterID_, const int sourceFilterChannel_);
-  void setOutput (const uint32 destFilterID_, const int destFilterChannel_);
+  void setInput (const uint32 sourceNodeID_, const int sourceNodeChannel_);
+  void setOutput (const uint32 destNodeID_, const int destNodeChannel_);
   void dragStart (int x, int y);
   void dragEnd (int x, int y);
   void update();
@@ -113,8 +113,8 @@ public:
   void mouseUp (const MouseEvent& e);
   void resized();
   
-  uint32 sourceFilterID, destFilterID;
-  int sourceFilterChannel, destFilterChannel;
+  uint32 sourceNodeID, destNodeID;
+  int sourceNodeChannel, destNodeChannel;
   
 private:
   PMixAudioEngine& audioEngine;

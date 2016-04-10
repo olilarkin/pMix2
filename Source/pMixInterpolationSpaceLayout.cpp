@@ -81,7 +81,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
     {
 //      ColourSelector* colourSelector = new ColourSelector(ColourSelector::showSliders|ColourSelector::showColourAtTop|ColourSelector::showColourspace);
 //      colourSelector->setName ("background");
-//      colourSelector->setCurrentColour (audioEngine.getDoc().getFilterColour(nodeId));
+//      colourSelector->setCurrentColour (audioEngine.getDoc().getNodeColour(nodeId));
 //      colourSelector->addChangeListener (this);
 //      colourSelector->setColour (ColourSelector::backgroundColourId, Colours::lightgrey);
 //      colourSelector->setSize (300, 400);
@@ -145,7 +145,7 @@ void InterpolationSpacePreset::update()
     return;
   }
   
-  colour = audioEngine.getDoc().getFilterColour(nodeId);
+  colour = audioEngine.getDoc().getNodeColour(nodeId);
   opacity = audioEngine.getDoc().getPresetWeight(nodeId, presetIdx);
   
   repaint();
@@ -155,7 +155,7 @@ void InterpolationSpacePreset::changeListenerCallback (ChangeBroadcaster* source
 {
   if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
   {
-    audioEngine.getDoc().setFilterColour(nodeId, cs->getCurrentColour());
+    audioEngine.getDoc().setNodeColour(nodeId, cs->getCurrentColour());
   }
 }
 
@@ -303,17 +303,17 @@ void PMixInterpolationSpaceLayout::updateComponents()
       pc->update();
   }
   
-  for (int i = audioEngine.getDoc().getNumFilters(); --i >= 0;)
+  for (int i = audioEngine.getDoc().getNumNodes(); --i >= 0;)
   {
     const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
     
     if (!InternalPluginFormat::isInternalFormat(f->getProcessor()->getName()))
     {
       Array<InterpolationSpacePreset*> comps;
-      getComponentsForFilter(f->nodeId, comps);
+      getComponentsForNode(f->nodeId, comps);
       Array<var>* presets = f->properties.getVarPointer("presets")->getArray();
       
-      // if the number of presets for this filter has changed then delete the components and re-create
+      // if the number of presets for this node has changed then delete the components and re-create
       if (comps.size() != presets->size())
       {
         for (int componentIdx = 0; componentIdx<comps.size(); componentIdx++)
@@ -327,7 +327,7 @@ void PMixInterpolationSpaceLayout::updateComponents()
           DynamicObject* obj = presets->getReference(presetIdx).getDynamicObject();
           
           String label = obj->getProperty("name");
-          InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeId, presetIdx, audioEngine.getDoc().getFilterColour(f->nodeId)  );
+          InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeId, presetIdx, audioEngine.getDoc().getNodeColour(f->nodeId)  );
           String componentID;
           componentID << "p." << (int) f->nodeId << "." << presetIdx;
           comp->setComponentID(componentID);
@@ -347,7 +347,7 @@ void PMixInterpolationSpaceLayout::updateComponents()
   }
 }
 
-void PMixInterpolationSpaceLayout::getComponentsForFilter (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const
+void PMixInterpolationSpaceLayout::getComponentsForNode (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
@@ -357,12 +357,12 @@ void PMixInterpolationSpaceLayout::getComponentsForFilter (const uint32 nodeId, 
   }
 }
 
-void PMixInterpolationSpaceLayout::repaintPresetsForFilter (const uint32 nodeId)
+void PMixInterpolationSpaceLayout::repaintPresetsForNode (const uint32 nodeId)
 {
   const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId(nodeId));
 
   Array<InterpolationSpacePreset*> comps;
-  getComponentsForFilter(f->nodeId, comps);
+  getComponentsForNode(f->nodeId, comps);
   
   for (int i=0; i<comps.size(); i++) {
     comps[i]->update();

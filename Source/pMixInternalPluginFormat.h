@@ -18,16 +18,16 @@ public:
   InternalPluginFormat();
   ~InternalPluginFormat() {}
 
-  enum InternalFilterType
+  enum InternalNodeType
   {
-    audioInputFilter = 0,
-    audioOutputFilter,
-    midiInputFilter,
-    midiOutputFilter,
-    endOfFilterTypes
+    audioInputNode = 0,
+    audioOutputNode,
+    midiInputNode,
+    midiOutputNode,
+    endOfNodeTypes
   };
 
-  const PluginDescription* getDescriptionFor (const InternalFilterType type);
+  const PluginDescription* getDescriptionFor (const InternalNodeType type);
 
   void getAllTypes (OwnedArray <PluginDescription>& results);
 

@@ -36,20 +36,20 @@ public:
   void removePreset(const uint32 nodeId, const int presetIdx);
   void setPresetName(const uint32 nodeId, const int presetIdx, String newName);
 
-  void setFilterIPos(const uint32 nodeId, double x, double y);
-  void getFilterIPos(const uint32 nodeId, double& x, double& y) const;
+  void setNodeIPos(const uint32 nodeId, double x, double y);
+  void getNodeIPos(const uint32 nodeId, double& x, double& y) const;
   void updateCoefficients(const AudioProcessorGraph::Node::Ptr node);
 
-  void setFilterColour(const uint32 nodeId, const Colour colour);
-  Colour getFilterColour(const uint32 nodeId) const;
+  void setNodeColour(const uint32 nodeId, const Colour colour);
+  Colour getNodeColour(const uint32 nodeId) const;
   
-  int getNumFilters() const noexcept;
+  int getNumNodes() const noexcept;
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
   const AudioProcessorGraph::Node::Ptr getNodeForId (const uint32 uid) const noexcept;
   
-  uint32 addFilter (const PluginDescription* desc, double x, double y);
-  void removeFilter (const uint32 filterUID);
-  void disconnectFilter (const uint32 filterUID);
+  uint32 addNode (const PluginDescription* desc, double x, double y);
+  void removeNode (const uint32 nodeId);
+  void disconnectNode (const uint32 nodeId);
   
   bool getParameterIsInterpolated(const uint32 nodeId, const int paramIdx);
   void setParameterToInterpolate(const uint32 nodeId, const int paramIdx, bool interpolate);
@@ -59,11 +59,11 @@ public:
   void getNodePosition (const uint32 nodeId, double& x, double& y) const;
   int getNumConnections() const noexcept;
   const AudioProcessorGraph::Connection* getConnection (const int index) const noexcept;
-  const AudioProcessorGraph::Connection* getConnectionBetween (uint32 sourceFilterUID, int sourceFilterChannel, uint32 destFilterUID, int destFilterChannel) const noexcept;
-  bool canConnect (uint32 sourceFilterUID, int sourceFilterChannel, uint32 destFilterUID, int destFilterChannel) const noexcept;
-  bool addConnection (uint32 sourceFilterUID, int sourceFilterChannel, uint32 destFilterUID, int destFilterChannel);
+  const AudioProcessorGraph::Connection* getConnectionBetween (uint32 sourceNodeUID, int sourceNodeChannel, uint32 destNodeUID, int destNodeChannel) const noexcept;
+  bool canConnect (uint32 sourceNodeUID, int sourceNodeChannel, uint32 destNodeUID, int destNodeChannel) const noexcept;
+  bool addConnection (uint32 sourceNodeUID, int sourceNodeChannel, uint32 destNodeUID, int destNodeChannel);
   void removeConnection (const int index);
-  void removeConnection (uint32 sourceFilterUID, int sourceFilterChannel, uint32 destFilterUID, int destFilterChannel);
+  void removeConnection (uint32 sourceNodeUID, int sourceNodeChannel, uint32 destNodeUID, int destNodeChannel);
   void clear();
   
   XmlElement* createXml() const;
@@ -77,7 +77,7 @@ public:
 
   File getLastDocumentOpened();
   void setLastDocumentOpened (const File& file);
-  // The special channel index used to refer to a filter's midi channel
+  // The special channel index used to refer to a node's midi channel
   static const int midiChannelNumber;
   
   void setSnappingGrid (const int numPixels, const bool active, const bool shown);

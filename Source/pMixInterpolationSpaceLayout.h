@@ -66,7 +66,7 @@ public:
   ~PMixInterpolationSpaceLayout();
 
   void paint (Graphics&);
-  void resized();
+  void resized ();
   
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
@@ -78,9 +78,9 @@ public:
   
   void changeListenerCallback (ChangeBroadcaster* source);
 
-  void getComponentsForFilter (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const;
+  void getComponentsForNode (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const;
 
-  void repaintPresetsForFilter (const uint32 nodeId);
+  void repaintPresetsForNode (const uint32 nodeId);
   
 private:
   //TooltipWindow tooltipWindow;

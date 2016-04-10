@@ -20,10 +20,10 @@ class PinComponent;
 #pragma mark -
 #pragma mark UndoableActions
 
-class CreateFilterAction  : public UndoableAction
+class CreateNodeAction  : public UndoableAction
 {
 public:
-  CreateFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const PluginDescription* desc, double x, double y) noexcept;
+  CreateNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const PluginDescription* desc, double x, double y) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -34,13 +34,13 @@ private:
   double x, y;
   PluginDescription desc;
   uint32 nodeID;
-  JUCE_DECLARE_NON_COPYABLE (CreateFilterAction)
+  JUCE_DECLARE_NON_COPYABLE (CreateNodeAction)
 };
 
-class RemoveFilterAction  : public UndoableAction
+class RemoveNodeAction  : public UndoableAction
 {
 public:
-  RemoveFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID) noexcept;
+  RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -50,13 +50,13 @@ private:
   GraphEditor& graphEditor;
   uint32 nodeID;
   ScopedPointer<XmlElement> nodeXML;
-  JUCE_DECLARE_NON_COPYABLE (RemoveFilterAction)
+  JUCE_DECLARE_NON_COPYABLE (RemoveNodeAction)
 };
 
-class MoveFilterAction  : public UndoableAction
+class MoveNodeAction  : public UndoableAction
 {
 public:
-  MoveFilterAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
+  MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -67,22 +67,22 @@ private:
   uint32 nodeID;
   Point<double> startPos;
   Point<double> endPos;
-  JUCE_DECLARE_NON_COPYABLE (MoveFilterAction)
+  JUCE_DECLARE_NON_COPYABLE (MoveNodeAction)
 };
 
 class CreateConnectionAction  : public UndoableAction
 {
 public:
-  CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcFilter, int srcChannel, uint32 dstFilter, int dstChannel) noexcept;
+  CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcsourceNodeUID, int srcChannel, uint32 dstsourceNodeUID, int dstChannel) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
   PMixAudioEngine& audioEngine;
-  uint32 srcFilter;
+  uint32 srcsourceNodeUID;
   int srcChannel;
-  uint32 dstFilter;
+  uint32 dstsourceNodeUID;
   int dstChannel;
   JUCE_DECLARE_NON_COPYABLE (CreateConnectionAction)
 };

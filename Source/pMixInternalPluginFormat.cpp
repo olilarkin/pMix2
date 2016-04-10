@@ -52,17 +52,17 @@ void InternalPluginFormat::createPluginInstance (const PluginDescription& desc,
   if (desc.name == midiOutDesc.name)
     retval = new AudioProcessorGraph::AudioGraphIOProcessor (AudioProcessorGraph::AudioGraphIOProcessor::midiOutputNode);
   
-  callback (userData, retval, retval == nullptr ? NEEDS_TRANS ("Invalid internal filter name") : String());
+  callback (userData, retval, retval == nullptr ? NEEDS_TRANS ("Invalid internal node name") : String());
 }
 
-const PluginDescription* InternalPluginFormat::getDescriptionFor (const InternalFilterType type)
+const PluginDescription* InternalPluginFormat::getDescriptionFor (const InternalNodeType type)
 {
   switch (type)
   {
-    case audioInputFilter:      return &audioInDesc;
-    case audioOutputFilter:     return &audioOutDesc;
-    case midiInputFilter:       return &midiInDesc;
-    case midiOutputFilter:      return &midiOutDesc;
+    case audioInputNode:      return &audioInDesc;
+    case audioOutputNode:     return &audioOutDesc;
+    case midiInputNode:       return &midiInDesc;
+    case midiOutputNode:      return &midiOutDesc;
     default:                    break;
   }
 
@@ -71,8 +71,8 @@ const PluginDescription* InternalPluginFormat::getDescriptionFor (const Internal
 
 void InternalPluginFormat::getAllTypes (OwnedArray <PluginDescription>& results)
 {
-  for (int i = 0; i < (int) endOfFilterTypes; ++i)
-    results.add (new PluginDescription (*getDescriptionFor ((InternalFilterType) i)));
+  for (int i = 0; i < (int) endOfNodeTypes; ++i)
+    results.add (new PluginDescription (*getDescriptionFor ((InternalNodeType) i)));
 }
 
 

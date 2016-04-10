@@ -35,7 +35,7 @@ uint32 PMixDocument::getNextUID() noexcept
   return ++lastUID;
 }
 
-int PMixDocument::getNumFilters() const noexcept
+int PMixDocument::getNumNodes() const noexcept
 {
   return audioEngine.getGraph().getNumNodes();
 }
@@ -50,7 +50,7 @@ const AudioProcessorGraph::Node::Ptr PMixDocument::getNodeForId (const uint32 ui
   return audioEngine.getGraph().getNodeForId (uid);
 }
 
-uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double y)
+uint32 PMixDocument::addNode (const PluginDescription* desc, double x, double y)
 {
   AudioProcessorGraph::Node* node = nullptr;
 
@@ -105,15 +105,15 @@ uint32 PMixDocument::addFilter (const PluginDescription* desc, double x, double 
   return node->nodeId;
 }
 
-void PMixDocument::removeFilter (const uint32 id)
+void PMixDocument::removeNode (const uint32 nodeId)
 {
-  if (audioEngine.getGraph().removeNode (id))
+  if (audioEngine.getGraph().removeNode (nodeId))
     changed();
 }
 
-void PMixDocument::disconnectFilter (const uint32 id)
+void PMixDocument::disconnectNode (const uint32 nodeId)
 {
-  if (audioEngine.getGraph().disconnectNode (id))
+  if (audioEngine.getGraph().disconnectNode (nodeId))
     changed();
 }
 
@@ -158,25 +158,25 @@ const AudioProcessorGraph::Connection* PMixDocument::getConnection (const int in
   return audioEngine.getGraph().getConnection (index);
 }
 
-const AudioProcessorGraph::Connection* PMixDocument::getConnectionBetween (uint32 sourceFilterUID, int sourceFilterChannel,
-    uint32 destFilterUID, int destFilterChannel) const noexcept
+const AudioProcessorGraph::Connection* PMixDocument::getConnectionBetween (uint32 sourceNodeUID, int sourceNodeChannel,
+    uint32 destNodeUID, int destNodeChannel) const noexcept
 {
-  return audioEngine.getGraph().getConnectionBetween (sourceFilterUID, sourceFilterChannel,
-                                     destFilterUID, destFilterChannel);
+  return audioEngine.getGraph().getConnectionBetween (sourceNodeUID, sourceNodeChannel,
+                                     destNodeUID, destNodeChannel);
 }
 
-bool PMixDocument::canConnect (uint32 sourceFilterUID, int sourceFilterChannel,
-                              uint32 destFilterUID, int destFilterChannel) const noexcept
+bool PMixDocument::canConnect (uint32 sourceNodeUID, int sourceNodeChannel,
+                              uint32 destNodeUID, int destNodeChannel) const noexcept
 {
-  return audioEngine.getGraph().canConnect (sourceFilterUID, sourceFilterChannel,
-                           destFilterUID, destFilterChannel);
+  return audioEngine.getGraph().canConnect (sourceNodeUID, sourceNodeChannel,
+                           destNodeUID, destNodeChannel);
 }
 
-bool PMixDocument::addConnection (uint32 sourceFilterUID, int sourceFilterChannel,
-                                 uint32 destFilterUID, int destFilterChannel)
+bool PMixDocument::addConnection (uint32 sourceNodeUID, int sourceNodeChannel,
+                                 uint32 destNodeUID, int destNodeChannel)
 {
-  const bool result = audioEngine.getGraph().addConnection (sourceFilterUID, sourceFilterChannel,
-                      destFilterUID, destFilterChannel);
+  const bool result = audioEngine.getGraph().addConnection (sourceNodeUID, sourceNodeChannel,
+                      destNodeUID, destNodeChannel);
 
   if (result)
     changed();
@@ -190,11 +190,11 @@ void PMixDocument::removeConnection (const int index)
   changed();
 }
 
-void PMixDocument::removeConnection (uint32 sourceFilterUID, int sourceFilterChannel,
-                                    uint32 destFilterUID, int destFilterChannel)
+void PMixDocument::removeConnection (uint32 sourceNodeUID, int sourceNodeChannel,
+                                    uint32 destNodeUID, int destNodeChannel)
 {
-  if (audioEngine.getGraph().removeConnection (sourceFilterUID, sourceFilterChannel,
-                              destFilterUID, destFilterChannel))
+  if (audioEngine.getGraph().removeConnection (sourceNodeUID, sourceNodeChannel,
+                              destNodeUID, destNodeChannel))
     changed();
 }
 
@@ -265,7 +265,7 @@ void PMixDocument::setLastDocumentOpened (const File& file)
     return nullptr;
   }
 
-  XmlElement* e = new XmlElement ("FILTER");
+  XmlElement* e = new XmlElement ("NODE");
   e->setAttribute ("uid", (int) node->nodeId);
   e->setAttribute ("x", node->properties ["x"].toString());
   e->setAttribute ("y", node->properties ["y"].toString());
@@ -391,9 +391,9 @@ XmlElement* PMixDocument::createXml() const
 
     XmlElement* e = new XmlElement ("CONNECTION");
 
-    e->setAttribute ("srcFilter", (int) fc->sourceNodeId);
+    e->setAttribute ("srcNode", (int) fc->sourceNodeId);
     e->setAttribute ("srcChannel", fc->sourceChannelIndex);
-    e->setAttribute ("dstFilter", (int) fc->destNodeId);
+    e->setAttribute ("dstNode", (int) fc->destNodeId);
     e->setAttribute ("dstChannel", fc->destChannelIndex);
     
     xml->addChildElement (e);
@@ -414,7 +414,7 @@ void PMixDocument::restoreFromXml (const XmlElement& xml)
 {
   clear();
 
-  forEachXmlChildElementWithTagName (xml, e, "FILTER")
+  forEachXmlChildElementWithTagName (xml, e, "NODE")
   {
     createNodeFromXml (*e);
     changed();
@@ -425,9 +425,9 @@ void PMixDocument::restoreFromXml (const XmlElement& xml)
 
   forEachXmlChildElementWithTagName (xml, e, "CONNECTION")
   {
-    addConnection ((uint32) e->getIntAttribute ("srcFilter"),
+    addConnection ((uint32) e->getIntAttribute ("srcNode"),
                             e->getIntAttribute ("srcChannel"),
-                   (uint32) e->getIntAttribute ("dstFilter"),
+                   (uint32) e->getIntAttribute ("dstNode"),
                             e->getIntAttribute ("dstChannel"));
   }
 
@@ -491,9 +491,9 @@ void PMixDocument::initialize()
 {
   InternalPluginFormat internalFormat;
   
-  addFilter (internalFormat.getDescriptionFor (InternalPluginFormat::audioInputFilter),  0.5f,  0.1f);
-  //addFilter (internalFormat.getDescriptionFor (InternalPluginFormat::midiInputFilter),   0.25f, 0.1f);
-  addFilter (internalFormat.getDescriptionFor (InternalPluginFormat::audioOutputFilter), 0.5f,  0.9f);
+  addNode(internalFormat.getDescriptionFor (InternalPluginFormat::audioInputNode),  0.5f,  0.1f);
+  //addNode(internalFormat.getDescriptionFor (InternalPluginFormat::midiInputNode),   0.25f, 0.1f);
+  addNode(internalFormat.getDescriptionFor (InternalPluginFormat::audioOutputNode), 0.5f,  0.9f);
   
   setChangedFlag (false);
 }
@@ -548,7 +548,7 @@ void PMixDocument::addPreset(const uint32 nodeId, double x, double y)
   var preset = var(obj);
   presetsArr->append(preset);
 
-  setFilterIPos(nodeId, x, y);
+  setNodeIPos(nodeId, x, y);
   
   changed();
 }
@@ -627,7 +627,7 @@ void PMixDocument::setPresetName(const uint32 nodeId, const int presetIdx, Strin
   changed();
 }
 
-void PMixDocument::setFilterColour(const uint32 nodeId, const Colour colour)
+void PMixDocument::setNodeColour(const uint32 nodeId, const Colour colour)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
 
@@ -638,7 +638,7 @@ void PMixDocument::setFilterColour(const uint32 nodeId, const Colour colour)
   }
 }
 
-Colour PMixDocument::getFilterColour(const uint32 nodeId) const
+Colour PMixDocument::getNodeColour(const uint32 nodeId) const
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
 
@@ -685,7 +685,7 @@ bool PMixDocument::getParameterIsInterpolated(const uint32 nodeId, const int par
   return false;
 }
 
-void PMixDocument::setFilterIPos(const uint32 nodeId, double x, double y)
+void PMixDocument::setNodeIPos(const uint32 nodeId, double x, double y)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
   
@@ -698,7 +698,7 @@ void PMixDocument::setFilterIPos(const uint32 nodeId, double x, double y)
   }
 }
 
-void PMixDocument::getFilterIPos(const uint32 nodeId, double& x, double& y) const
+void PMixDocument::getNodeIPos(const uint32 nodeId, double& x, double& y) const
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
   
@@ -783,7 +783,7 @@ void PMixDocument::updateCoefficients(const AudioProcessorGraph::Node::Ptr node)
 
 void PMixDocument::timerCallback()
 {
-  for (int i = getNumFilters(); --i >= 0;)
+  for (int i = getNumNodes(); --i >= 0;)
   {
     const AudioProcessorGraph::Node::Ptr node (audioEngine.getDoc().getNode (i));
     

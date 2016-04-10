@@ -120,7 +120,7 @@ NodeComponent::NodeComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_
 , numOuts (0)
 , moving(false)
 , editor(nullptr)
-, filterName(nullptr)
+, nodeName(nullptr)
 , highlight(false)
 {
   setSize (100, 50);
@@ -182,14 +182,14 @@ void NodeComponent::mouseDown (const MouseEvent& e)
           removeEditor();
           
           audioEngine.getDoc().beginTransaction();
-          audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, *getGraphPanel(), nodeId), TRANS("remove node"));
+          audioEngine.getDoc().perform(new RemoveNodeAction(audioEngine, *getGraphPanel(), nodeId), TRANS("remove node"));
         }
       }
       return;
     }
     else if (r == 2)
     {
-      audioEngine.getDoc().disconnectFilter (nodeId);
+      audioEngine.getDoc().disconnectNode (nodeId);
     }
     else if (r == 3)
     {
@@ -200,7 +200,7 @@ void NodeComponent::mouseDown (const MouseEvent& e)
     {
       ColourSelector* colourSelector = new ColourSelector(ColourSelector::showSliders|ColourSelector::showColourAtTop|ColourSelector::showColourspace);
       colourSelector->setName ("background");
-      colourSelector->setCurrentColour (audioEngine.getDoc().getFilterColour(nodeId));
+      colourSelector->setCurrentColour (audioEngine.getDoc().getNodeColour(nodeId));
       colourSelector->addChangeListener (this);
       colourSelector->setColour (ColourSelector::backgroundColourId, Colours::lightgrey);
       colourSelector->setSize (300, 400);
@@ -287,7 +287,7 @@ void NodeComponent::mouseUp (const MouseEvent& e)
     {
       moving = false;
       audioEngine.getDoc().beginTransaction();
-      audioEngine.getDoc().perform(new MoveFilterAction(audioEngine, *getGraphPanel(), nodeId, startPos, endPos), "move node");
+      audioEngine.getDoc().perform(new MoveNodeAction(audioEngine, *getGraphPanel(), nodeId, startPos, endPos), "move node");
     }
   }
 }
@@ -354,11 +354,11 @@ void NodeComponent::resized()
     }
   }
   
-  if (filterName != nullptr)
-    filterName->setBounds(0, pinSize, getWidth(), 20);
+  if (nodeName != nullptr)
+    nodeName->setBounds(0, pinSize, getWidth(), 20);
   
   if (editor != nullptr)
-    editor->setBounds(10, pinSize + filterName->getHeight(), getWidth()-20, getHeight() - pinSize - pinSize - 10 - filterName->getHeight());
+    editor->setBounds(10, pinSize + nodeName->getHeight(), getWidth()-20, getHeight() - pinSize - pinSize - 10 - nodeName->getHeight());
 }
 
 void NodeComponent::getPinPos (const int index, const bool isInput, float& x, float& y)
@@ -417,12 +417,12 @@ void NodeComponent::update()
     
     deleteAllChildren();
     
-    addAndMakeVisible(filterName = new Label(name, name));
-    filterName->setJustificationType(Justification::centred);
-    filterName->setInterceptsMouseClicks(false, false);
-    filterName->setFont(font);
+    addAndMakeVisible(nodeName = new Label(name, name));
+    nodeName->setJustificationType(Justification::centred);
+    nodeName->setInterceptsMouseClicks(false, false);
+    nodeName->setFont(font);
     
-    w = jmax (w, filterName->getFont().getStringWidth(name) + 15);
+    w = jmax (w, nodeName->getFont().getStringWidth(name) + 15);
   
     if(!InternalPluginFormat::isInternalFormat(name) && f->getProcessor()->getNumParameters() > 0)
     {
@@ -470,7 +470,7 @@ void NodeComponent::changeListenerCallback (ChangeBroadcaster* source)
 {
   if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
   {    
-    audioEngine.getDoc().setFilterColour(nodeId, cs->getCurrentColour());
+    audioEngine.getDoc().setNodeColour(nodeId, cs->getCurrentColour());
     
     if (editor != nullptr)
       editor->repaint();
@@ -493,10 +493,10 @@ void NodeComponent::bubbleMessage(String msg)
 #pragma mark ConnectorComponent
 
 ConnectorComponent::ConnectorComponent (PMixAudioEngine& audioEngine)
-: sourceFilterID (0),
-destFilterID (0),
-sourceFilterChannel (0),
-destFilterChannel (0),
+: sourceNodeID (0),
+destNodeID (0),
+sourceNodeChannel (0),
+destNodeChannel (0),
 audioEngine (audioEngine),
 lastInputX (0),
 lastInputY (0),
@@ -506,22 +506,22 @@ lastOutputY (0)
   //setAlwaysOnTop (true);
 }
 
-void ConnectorComponent::setInput (const uint32 sourceFilterID_, const int sourceFilterChannel_)
+void ConnectorComponent::setInput (const uint32 sourceNodeID_, const int sourceNodeChannel_)
 {
-  if (sourceFilterID != sourceFilterID_ || sourceFilterChannel != sourceFilterChannel_)
+  if (sourceNodeID != sourceNodeID_ || sourceNodeChannel != sourceNodeChannel_)
   {
-    sourceFilterID = sourceFilterID_;
-    sourceFilterChannel = sourceFilterChannel_;
+    sourceNodeID = sourceNodeID_;
+    sourceNodeChannel = sourceNodeChannel_;
     update();
   }
 }
 
-void ConnectorComponent::setOutput (const uint32 destFilterID_, const int destFilterChannel_)
+void ConnectorComponent::setOutput (const uint32 destNodeID_, const int destNodeChannel_)
 {
-  if (destFilterID != destFilterID_ || destFilterChannel != destFilterChannel_)
+  if (destNodeID != destNodeID_ || destNodeChannel != destNodeChannel_)
   {
-    destFilterID = destFilterID_;
-    destFilterChannel = destFilterChannel_;
+    destNodeID = destNodeID_;
+    destNodeChannel = destNodeChannel_;
     update();
   }
 }
@@ -581,18 +581,18 @@ void ConnectorComponent::getPoints (float& x1, float& y1, float& x2, float& y2) 
   
   if (GraphEditor* const hostPanel = getGraphPanel())
   {
-    if (NodeComponent* srcFilterComp = hostPanel->getComponentForFilter (sourceFilterID))
-      srcFilterComp->getPinPos (sourceFilterChannel, false, x1, y1);
+    if (NodeComponent* srcNodeComp = hostPanel->getComponentForNode (sourceNodeID))
+      srcNodeComp->getPinPos (sourceNodeChannel, false, x1, y1);
     
-    if (NodeComponent* dstFilterComp = hostPanel->getComponentForFilter (destFilterID))
-      dstFilterComp->getPinPos (destFilterChannel, true, x2, y2);
+    if (NodeComponent* dstNodeComp = hostPanel->getComponentForNode (destNodeID))
+      dstNodeComp->getPinPos (destNodeChannel, true, x2, y2);
   }
 }
 
 void ConnectorComponent::paint (Graphics& g)
 {
-  if (sourceFilterChannel == PMixDocument::midiChannelNumber
-      || destFilterChannel == PMixDocument::midiChannelNumber)
+  if (sourceNodeChannel == PMixDocument::midiChannelNumber
+      || destNodeChannel == PMixDocument::midiChannelNumber)
   {
     g.setColour (Colours::grey);
   }
@@ -629,16 +629,16 @@ void ConnectorComponent::mouseDrag (const MouseEvent& e)
   {
     dragging = true;
     
-    audioEngine.getDoc().removeConnection (sourceFilterID, sourceFilterChannel, destFilterID, destFilterChannel);
+    audioEngine.getDoc().removeConnection (sourceNodeID, sourceNodeChannel, destNodeID, destNodeChannel);
     
     double distanceFromStart, distanceFromEnd;
     getDistancesFromEnds (e.x, e.y, distanceFromStart, distanceFromEnd);
     const bool isNearerSource = (distanceFromStart < distanceFromEnd);
     
-    getGraphPanel()->beginConnectorDrag (isNearerSource ? 0 : sourceFilterID,
-                                         sourceFilterChannel,
-                                         isNearerSource ? destFilterID : 0,
-                                         destFilterChannel,
+    getGraphPanel()->beginConnectorDrag (isNearerSource ? 0 : sourceNodeID,
+                                         sourceNodeChannel,
+                                         isNearerSource ? destNodeID : 0,
+                                         destNodeChannel,
                                          e);
   }
   else if (dragging)

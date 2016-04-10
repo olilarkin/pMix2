@@ -54,7 +54,7 @@ void GraphEditor::mouseDown (const MouseEvent& e)
     PopupMenu m;
     audioEngine.createDeviceMenu(m);
     const int r = m.show();
-    createNewFilter (audioEngine.getChosenType (r), e.x, e.y);
+    createNewNode (audioEngine.getChosenType (r), e.x, e.y);
   }
   else
   {
@@ -80,16 +80,16 @@ void GraphEditor::mouseUp (const MouseEvent& e)
   removeChildComponent (&lassoComp);
 }
 
-void GraphEditor::createNewFilter (const PluginDescription* desc, int x, int y)
+void GraphEditor::createNewNode (const PluginDescription* desc, int x, int y)
 {
   if (desc != nullptr)
   {
     audioEngine.getDoc().beginTransaction();
-    audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, *this, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
+    audioEngine.getDoc().perform(new CreateNodeAction(audioEngine, *this, desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
   }
 }
 
-NodeComponent* GraphEditor::getComponentForFilter (const uint32 nodeId) const
+NodeComponent* GraphEditor::getComponentForNode (const uint32 nodeId) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
@@ -106,10 +106,10 @@ ConnectorComponent* GraphEditor::getComponentForConnection (const AudioProcessor
   for (int i = getNumChildComponents(); --i >= 0;)
   {
     if (ConnectorComponent* const c = dynamic_cast <ConnectorComponent*> (getChildComponent (i)))
-      if (c->sourceFilterID == conn.sourceNodeId
-          && c->destFilterID == conn.destNodeId
-          && c->sourceFilterChannel == conn.sourceChannelIndex
-          && c->destFilterChannel == conn.destChannelIndex)
+      if (c->sourceNodeID == conn.sourceNodeId
+          && c->destNodeID == conn.destNodeId
+          && c->sourceNodeChannel == conn.sourceChannelIndex
+          && c->destNodeChannel == conn.destChannelIndex)
         return c;
   }
 
@@ -162,8 +162,8 @@ void GraphEditor::updateComponents()
 
     if (cc != nullptr && cc != draggingConnector)
     {
-      if (audioEngine.getDoc().getConnectionBetween (cc->sourceFilterID, cc->sourceFilterChannel,
-                                      cc->destFilterID, cc->destFilterChannel) == nullptr)
+      if (audioEngine.getDoc().getConnectionBetween (cc->sourceNodeID, cc->sourceNodeChannel,
+                                      cc->destNodeID, cc->destNodeChannel) == nullptr)
       {
         delete cc;
       }
@@ -174,11 +174,11 @@ void GraphEditor::updateComponents()
     }
   }
 
-  for (int i = audioEngine.getDoc().getNumFilters(); --i >= 0;)
+  for (int i = audioEngine.getDoc().getNumNodes(); --i >= 0;)
   {
     const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
 
-    if (getComponentForFilter (f->nodeId) == 0)
+    if (getComponentForNode (f->nodeId) == 0)
     {
       NodeComponent* const comp = new NodeComponent (audioEngine, f->nodeId);
       addAndMakeVisible (comp);
@@ -201,8 +201,8 @@ void GraphEditor::updateComponents()
   }
 }
 
-void GraphEditor::beginConnectorDrag (const uint32 sourceFilterID, const int sourceFilterChannel,
-    const uint32 destFilterID, const int destFilterChannel,
+void GraphEditor::beginConnectorDrag (const uint32 sourceNodeID, const int sourceNodeChannel,
+    const uint32 destNodeID, const int destNodeChannel,
     const MouseEvent& e)
 {
   draggingConnector = dynamic_cast <ConnectorComponent*> (e.originalComponent);
@@ -210,8 +210,8 @@ void GraphEditor::beginConnectorDrag (const uint32 sourceFilterID, const int sou
   if (draggingConnector == nullptr)
     draggingConnector = new ConnectorComponent (audioEngine);
 
-  draggingConnector->setInput (sourceFilterID, sourceFilterChannel);
-  draggingConnector->setOutput (destFilterID, destFilterChannel);
+  draggingConnector->setInput (sourceNodeID, sourceNodeChannel);
+  draggingConnector->setOutput (destNodeID, destNodeChannel);
 
   addAndMakeVisible (draggingConnector);
   draggingConnector->toFront (false);
@@ -232,23 +232,23 @@ void GraphEditor::dragConnector (const MouseEvent& e)
 
     if (PinComponent* const pin = findPinAt (x, y))
     {
-      uint32 srcFilter = draggingConnector->sourceFilterID;
-      int srcChannel   = draggingConnector->sourceFilterChannel;
-      uint32 dstFilter = draggingConnector->destFilterID;
-      int dstChannel   = draggingConnector->destFilterChannel;
+      uint32 srcNode = draggingConnector->sourceNodeID;
+      int srcChannel   = draggingConnector->sourceNodeChannel;
+      uint32 dstNode = draggingConnector->destNodeID;
+      int dstChannel   = draggingConnector->destNodeChannel;
 
-      if (srcFilter == 0 && ! pin->isInput)
+      if (srcNode == 0 && ! pin->isInput)
       {
-        srcFilter = pin->nodeId;
+        srcNode = pin->nodeId;
         srcChannel = pin->index;
       }
-      else if (dstFilter == 0 && pin->isInput)
+      else if (dstNode == 0 && pin->isInput)
       {
-        dstFilter = pin->nodeId;
+        dstNode = pin->nodeId;
         dstChannel = pin->index;
       }
 
-      if (audioEngine.getDoc().canConnect (srcFilter, srcChannel, dstFilter, dstChannel))
+      if (audioEngine.getDoc().canConnect (srcNode, srcChannel, dstNode, dstChannel))
       {
         pin->mouseOver = true;
         pin->repaint();
@@ -260,7 +260,7 @@ void GraphEditor::dragConnector (const MouseEvent& e)
       }
     }
 
-    if (draggingConnector->sourceFilterID == 0)
+    if (draggingConnector->sourceNodeID == 0)
       draggingConnector->dragStart (x, y);
     else
       draggingConnector->dragEnd (x, y);
@@ -276,21 +276,21 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
 
   const MouseEvent e2 (e.getEventRelativeTo (this));
 
-  uint32 srcFilter = draggingConnector->sourceFilterID;
-  int srcChannel   = draggingConnector->sourceFilterChannel;
-  uint32 dstFilter = draggingConnector->destFilterID;
-  int dstChannel   = draggingConnector->destFilterChannel;
+  uint32 srcNode = draggingConnector->sourceNodeID;
+  int srcChannel   = draggingConnector->sourceNodeChannel;
+  uint32 dstNode = draggingConnector->destNodeID;
+  int dstChannel   = draggingConnector->destNodeChannel;
 
   draggingConnector = nullptr;
 
   if (PinComponent* const pin = findPinAt (e2.x, e2.y))
   {
-    if (srcFilter == 0)
+    if (srcNode == 0)
     {
       if (pin->isInput)
         return;
 
-      srcFilter = pin->nodeId;
+      srcNode = pin->nodeId;
       srcChannel = pin->index;
     }
     else
@@ -298,12 +298,12 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
       if (! pin->isInput)
         return;
 
-      dstFilter = pin->nodeId;
+      dstNode = pin->nodeId;
       dstChannel = pin->index;
     }
 
     audioEngine.getDoc().beginTransaction();
-    audioEngine.getDoc().perform(new CreateConnectionAction(audioEngine, srcFilter, srcChannel, dstFilter, dstChannel), TRANS("add connection"));
+    audioEngine.getDoc().perform(new CreateConnectionAction(audioEngine, srcNode, srcChannel, dstNode, dstChannel), TRANS("add connection"));
   }
 }
 
@@ -427,10 +427,10 @@ void GraphEditor::updateFaustNode (uint32 nodeID, String& newSourceCode)
   const XmlElement tempXml (*temp);
   
   PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
-  getComponentForFilter(nodeID)->removeEditor();
-  audioEngine.getDoc().removeFilter(nodeID);
+  getComponentForNode(nodeID)->removeEditor();
+  audioEngine.getDoc().removeNode(nodeID);
   
-  forEachXmlChildElementWithTagName (tempXml, e, "FILTER")
+  forEachXmlChildElementWithTagName (tempXml, e, "NODE")
   {
     if(nodeID==e->getIntAttribute("uid"))
     {
@@ -444,9 +444,9 @@ void GraphEditor::updateFaustNode (uint32 nodeID, String& newSourceCode)
   
   forEachXmlChildElementWithTagName (tempXml, e, "CONNECTION")
   {
-    if(e->getIntAttribute ("srcFilter")==nodeID || e->getIntAttribute ("dstFilter")==nodeID)
+    if(e->getIntAttribute ("srcNode")==nodeID || e->getIntAttribute ("dstNode")==nodeID)
     {
-      audioEngine.getDoc().addConnection((uint32) e->getIntAttribute ("srcFilter"), e->getIntAttribute ("srcChannel"), (uint32) e->getIntAttribute ("dstFilter"), e->getIntAttribute ("dstChannel"));
+      audioEngine.getDoc().addConnection((uint32) e->getIntAttribute ("srcNode"), e->getIntAttribute ("srcChannel"), (uint32) e->getIntAttribute ("dstNode"), e->getIntAttribute ("dstChannel"));
     }
   }
     
@@ -455,11 +455,11 @@ void GraphEditor::updateFaustNode (uint32 nodeID, String& newSourceCode)
 
 void GraphEditor::clear()
 {
-  for (int i = audioEngine.getDoc().getNumFilters(); --i >= 0;)
+  for (int i = audioEngine.getDoc().getNumNodes(); --i >= 0;)
   {
     const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
     
-    getComponentForFilter (f->nodeId)->removeEditor();
+    getComponentForNode (f->nodeId)->removeEditor();
   }
 }
 
@@ -500,7 +500,7 @@ void GraphEditor::filesDropped (const StringArray& files, int x, int y)
   PluginDescription desc;
   FaustAudioPluginInstance::fillInitialInPluginDescription(desc);
   desc.fileOrIdentifier = files[0];
-  audioEngine.getDoc().perform(new CreateFilterAction(audioEngine, *this, &desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
+  audioEngine.getDoc().perform(new CreateNodeAction(audioEngine, *this, &desc, x / (double) getWidth(), y / (double) getHeight()), TRANS("add node"));
 
   repaint();
 }
@@ -514,7 +514,7 @@ void GraphEditor::deleteSelection()
     NodeComponent* fc = dynamic_cast<NodeComponent*>(c);
     
     if (fc)
-      audioEngine.getDoc().perform(new RemoveFilterAction(audioEngine, *this, fc->nodeId), TRANS("remove node"));
+      audioEngine.getDoc().perform(new RemoveNodeAction(audioEngine, *this, fc->nodeId), TRANS("remove node"));
   }
   
   updateComponents();

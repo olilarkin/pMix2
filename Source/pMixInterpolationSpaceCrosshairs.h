@@ -53,7 +53,7 @@ public:
   void changeListenerCallback (ChangeBroadcaster* source);
   
   void updateComponents();
-  InterpolationSpaceIPos* getComponentForFilter (const uint32 nodeId) const;
+  InterpolationSpaceIPos* getComponentForNode (const uint32 nodeId) const;
 
 private:
   PMixAudioEngine& audioEngine;

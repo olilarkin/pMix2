@@ -111,7 +111,7 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
             
             String lineNo = error.fromFirstOccurrenceOf(": ", false, true).upToFirstOccurrenceOf(" :", false, true);
             
-            graphEditor.getComponentForFilter(selectedNodeID)->bubbleMessage(error);
+            graphEditor.getComponentForNode(selectedNodeID)->bubbleMessage(error);
           }
           
           editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());

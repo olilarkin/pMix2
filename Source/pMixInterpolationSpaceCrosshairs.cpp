@@ -41,11 +41,11 @@ void InterpolationSpaceIPos::mouseDrag (const MouseEvent& e)
   Rectangle<int> bounds = getBounds();
   normalizedPos.x = bounds.getCentreX()  / (double) getParentWidth();
   normalizedPos.y = bounds.getCentreY() / (double) getParentHeight();
-  audioEngine.getDoc().setFilterIPos(nodeId, normalizedPos.x, normalizedPos.y);
+  audioEngine.getDoc().setNodeIPos(nodeId, normalizedPos.x, normalizedPos.y);
   
   myDragger.dragComponent (this, e, &boundsConstrainer);
   
-  layout.repaintPresetsForFilter(nodeId);
+  layout.repaintPresetsForNode(nodeId);
 }
 
 void InterpolationSpaceIPos::mouseUp (const MouseEvent& e)
@@ -85,7 +85,7 @@ void InterpolationSpaceIPos::update()
     return;
   }
   
-  colour = audioEngine.getDoc().getFilterColour(nodeId);
+  colour = audioEngine.getDoc().getNodeColour(nodeId);
   repaint();
 }
 
@@ -156,11 +156,11 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
     }
   }
 
-  for (int i = audioEngine.getDoc().getNumFilters(); --i >= 0;)
+  for (int i = audioEngine.getDoc().getNumNodes(); --i >= 0;)
   {
     const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
     
-    if (getComponentForFilter (f->nodeId) == nullptr)
+    if (getComponentForNode (f->nodeId) == nullptr)
     {
       if (f->properties.getVarPointer("presets") != nullptr)
       {
@@ -170,7 +170,7 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
 
         if (presets->size() >= 2)
         {
-          InterpolationSpaceIPos* comp = new InterpolationSpaceIPos(audioEngine, layout, f->nodeId, audioEngine.getDoc().getFilterColour(f->nodeId));
+          InterpolationSpaceIPos* comp = new InterpolationSpaceIPos(audioEngine, layout, f->nodeId, audioEngine.getDoc().getNodeColour(f->nodeId));
           float r = 25.f;
           float x = getWidth() * (float) iposx;
           float y = getHeight() * (float) iposy;
@@ -184,7 +184,7 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
   }
 }
 
-InterpolationSpaceIPos* pMixInterpolationSpaceCrossHairs::getComponentForFilter (const uint32 nodeId) const
+InterpolationSpaceIPos* pMixInterpolationSpaceCrossHairs::getComponentForNode (const uint32 nodeId) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
