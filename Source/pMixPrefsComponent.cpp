@@ -1,18 +1,18 @@
 /*
   ==============================================================================
 
-  This is an automatically generated GUI class created by the Introjucer!
+  This is an automatically generated GUI class created by the Projucer!
 
   Be careful when adding custom code to these files, as only the code within
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Introjucer version: 3.1.1
+  Created with Projucer version: 4.2.0
 
   ------------------------------------------------------------------------------
 
-  The Introjucer is part of the JUCE library - "Jules' Utility Class Extensions"
-  Copyright 2004-13 by Raw Material Software Ltd.
+  The Projucer is part of the JUCE library - "Jules' Utility Class Extensions"
+  Copyright (c) 2015 - ROLI Ltd.
 
   ==============================================================================
 */
@@ -30,13 +30,14 @@ AudioDeviceManager& getDeviceManager();
 //==============================================================================
 PMixPrefsComponent::PMixPrefsComponent (PMixAudioEngine& audioEngine)
 {
+    //[Constructor_pre] You can add your own custom stuff here..
+    //[/Constructor_pre]
+
     addAndMakeVisible (tabbedComponent = new TabbedComponent (TabbedButtonBar::TabsAtTop));
     tabbedComponent->setTabBarDepth (23);
     tabbedComponent->addTab (TRANS("General"), Colours::lightgrey, new PMixPrefsGeneral(), true);
     tabbedComponent->addTab (TRANS("Controllers"), Colours::lightgrey, new PMixPrefsControllers(), true);
-#ifndef PMIX_PLUGIN
     tabbedComponent->addTab (TRANS("Audio"), Colours::lightgrey, new PMixPrefsAudio (getDeviceManager()), true);
-#endif
     tabbedComponent->addTab (TRANS("Plug-Ins"), Colours::lightgrey, new PMixPrefsPlugins (audioEngine), true);
     tabbedComponent->addTab (TRANS("Colours"), Colours::lightgrey, new PMixPrefsColours(), true);
     tabbedComponent->setCurrentTabIndex (0);
@@ -94,9 +95,9 @@ void PMixPrefsComponent::resized()
 
 //==============================================================================
 #if 0
-/*  -- Introjucer information section --
+/*  -- Projucer information section --
 
-    This is where the Introjucer stores the metadata that describe this GUI layout, so
+    This is where the Projucer stores the metadata that describe this GUI layout, so
     make changes in here at your peril!
 
 BEGIN_JUCER_METADATA
