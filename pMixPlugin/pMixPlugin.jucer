@@ -124,10 +124,6 @@
       <FILE id="gl0oTz" name="pMixDocument.cpp" compile="1" resource="0"
             file="../Source/pMixDocument.cpp"/>
       <FILE id="cPShvs" name="pMixDocument.h" compile="0" resource="0" file="../Source/pMixDocument.h"/>
-      <FILE id="zl0zzi" name="pMixInternalFilters.cpp" compile="1" resource="0"
-            file="../Source/pMixInternalFilters.cpp"/>
-      <FILE id="neo6Co" name="pMixInternalFilters.h" compile="0" resource="0"
-            file="../Source/pMixInternalFilters.h"/>
       <FILE id="CGkl3E" name="pMixLookAndFeel.cpp" compile="1" resource="0"
             file="../Source/pMixLookAndFeel.cpp"/>
       <FILE id="YeKmnR" name="pMixLookAndFeel.h" compile="0" resource="0"
@@ -136,6 +132,10 @@
             file="../Source/pMixMainComponent.cpp"/>
       <FILE id="YQA0Q6" name="pMixMainComponent.h" compile="0" resource="0"
             file="../Source/pMixMainComponent.h"/>
+      <FILE id="DRvspB" name="pMixInternalPluginFormat.cpp" compile="1" resource="0"
+            file="../Source/pMixInternalPluginFormat.cpp"/>
+      <FILE id="ZxXEDv" name="pMixInternalPluginFormat.h" compile="0" resource="0"
+            file="../Source/pMixInternalPluginFormat.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
