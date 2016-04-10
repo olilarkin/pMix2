@@ -5,17 +5,14 @@
 const int PMixDocument::midiChannelNumber = 0x1000;
 
 PMixDocument::PMixDocument (PMixAudioEngine& audioEngine)
-: FileBasedDocument (filenameSuffix,
-                     filenameWildcard,
-                     "Load a pMix patch",
-                     "Save a pMix patch"),
-                     audioEngine(audioEngine),
-                     lastUID (0),
-                     snapGridPixels (8),
-                     snapActive (true),
-                     snapShown (true),
-                     componentOverlayOpacity (0.33f),
-                     drawPath(FAUST_DRAW_PATH)
+: FileBasedDocument (filenameSuffix, filenameWildcard, TRANS("Load a pMix patch"), TRANS("Save a pMix patch"))
+, audioEngine(audioEngine)
+, lastUID (0)
+, snapGridPixels (8)
+, snapActive (true)
+, snapShown (true)
+, componentOverlayOpacity (0.33f)
+, drawPath(FAUST_DRAW_PATH)
 {
   startTimer (20);
 }
