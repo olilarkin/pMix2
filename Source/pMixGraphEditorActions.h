@@ -73,16 +73,16 @@ private:
 class CreateConnectionAction  : public UndoableAction
 {
 public:
-  CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcsourceNodeUID, int srcChannel, uint32 dstsourceNodeUID, int dstChannel) noexcept;
+  CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcNodeUID, int srcChannel, uint32 dstNodeUID, int dstChannel) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
   PMixAudioEngine& audioEngine;
-  uint32 srcsourceNodeUID;
+  uint32 srcNodeUID;
   int srcChannel;
-  uint32 dstsourceNodeUID;
+  uint32 dstNodeUID;
   int dstChannel;
   JUCE_DECLARE_NON_COPYABLE (CreateConnectionAction)
 };

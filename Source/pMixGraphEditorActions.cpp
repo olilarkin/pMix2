@@ -105,23 +105,23 @@ int MoveNodeAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-CreateConnectionAction::CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcsourceNodeUID, int srcChannel, uint32 dstsourceNodeUID, int dstChannel) noexcept
+CreateConnectionAction::CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcNodeUID, int srcChannel, uint32 dstNodeUID, int dstChannel) noexcept
 : audioEngine(audioEngine)
-, srcsourceNodeUID(srcsourceNodeUID)
+, srcNodeUID(srcNodeUID)
 , srcChannel(srcChannel)
-, dstsourceNodeUID(dstsourceNodeUID)
+, dstNodeUID(dstNodeUID)
 , dstChannel(dstChannel)
 {
 }
 
 bool CreateConnectionAction::perform()
 {
-  return audioEngine.getDoc().addConnection (srcsourceNodeUID, srcChannel, dstsourceNodeUID, dstChannel);
+  return audioEngine.getDoc().addConnection (srcNodeUID, srcChannel, dstNodeUID, dstChannel);
 }
 
 bool CreateConnectionAction::undo()
 {
-  audioEngine.getDoc().removeConnection (srcsourceNodeUID, srcChannel, dstsourceNodeUID, dstChannel);
+  audioEngine.getDoc().removeConnection (srcNodeUID, srcChannel, dstNodeUID, dstChannel);
   
   return true;
 }
