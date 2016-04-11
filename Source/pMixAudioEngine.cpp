@@ -95,7 +95,7 @@ void PMixAudioEngine::setPluginSortMethod(KnownPluginList::SortMethod sortMethod
   getAppProperties().getUserSettings()->setValue ("pluginSortMethod", (int) pluginSortMethod);
 }
 
-void PMixAudioEngine::createDeviceMenu (PopupMenu& m) const
+void PMixAudioEngine::createNodeMenu (PopupMenu& m) const
 {
   PopupMenu ioMenu;
   

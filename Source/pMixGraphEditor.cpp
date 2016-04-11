@@ -52,7 +52,7 @@ void GraphEditor::mouseDown (const MouseEvent& e)
   if (e.mods.isPopupMenu())
   {
     PopupMenu m;
-    audioEngine.createDeviceMenu(m);
+    audioEngine.createNodeMenu(m);
     const int r = m.show();
     createNewNode (audioEngine.getChosenType (r), e.x, e.y);
   }
