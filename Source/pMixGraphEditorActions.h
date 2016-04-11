@@ -33,14 +33,14 @@ private:
   GraphEditor& graphEditor;
   double x, y;
   PluginDescription desc;
-  uint32 nodeID;
+  uint32 nodeId;
   JUCE_DECLARE_NON_COPYABLE (CreateNodeAction)
 };
 
 class RemoveNodeAction  : public UndoableAction
 {
 public:
-  RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID) noexcept;
+  RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const uint32 nodeId) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -48,7 +48,7 @@ public:
 private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
-  uint32 nodeID;
+  uint32 nodeId;
   ScopedPointer<XmlElement> nodeXML;
   JUCE_DECLARE_NON_COPYABLE (RemoveNodeAction)
 };
@@ -56,7 +56,7 @@ private:
 class MoveNodeAction  : public UndoableAction
 {
 public:
-  MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
+  MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const uint32 nodeId, Point<double> startPos, Point<double> endPos) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -64,7 +64,7 @@ public:
 private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
-  uint32 nodeID;
+  uint32 nodeId;
   Point<double> startPos;
   Point<double> endPos;
   JUCE_DECLARE_NON_COPYABLE (MoveNodeAction)
@@ -73,16 +73,16 @@ private:
 class CreateConnectionAction  : public UndoableAction
 {
 public:
-  CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcNodeUID, int srcChannel, uint32 dstNodeUID, int dstChannel) noexcept;
+  CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcNodeId, int srcChannel, uint32 dstNodeId, int dstChannel) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
   PMixAudioEngine& audioEngine;
-  uint32 srcNodeUID;
+  uint32 srcNodeId;
   int srcChannel;
-  uint32 dstNodeUID;
+  uint32 dstNodeId;
   int dstChannel;
   JUCE_DECLARE_NON_COPYABLE (CreateConnectionAction)
 };

@@ -56,7 +56,7 @@ public:
   void deleteSelection();
   void selectAll();
 
-  void updateFaustNode (uint32 nodeID, String& newSourceCode);
+  void updateFaustNode (const uint32 nodeId, String& newSourceCode);
   
   //LassoSource
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area) override;

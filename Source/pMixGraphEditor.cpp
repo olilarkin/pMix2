@@ -421,18 +421,18 @@ SelectedItemSet <Component*>& GraphEditor::getLassoSelection()
   return selectedItems;
 }
 
-void GraphEditor::updateFaustNode (uint32 nodeID, String& newSourceCode)
+void GraphEditor::updateFaustNode (const uint32 nodeId, String& newSourceCode)
 {
   ScopedPointer<XmlElement> temp(audioEngine.getDoc().createXml());
   const XmlElement tempXml (*temp);
   
-  PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
-  getComponentForNode(nodeID)->removeEditor();
-  audioEngine.getDoc().removeNode(nodeID);
+  PluginWindow::closeCurrentlyOpenWindowsFor (nodeId);
+  getComponentForNode(nodeId)->removeEditor();
+  audioEngine.getDoc().removeNode(nodeId);
   
   forEachXmlChildElementWithTagName (tempXml, e, "NODE")
   {
-    if(nodeID==e->getIntAttribute("uid"))
+    if(nodeId == e->getIntAttribute("uid"))
     {
       double origX = e->getDoubleAttribute("x");
       double origY = e->getDoubleAttribute("y");
@@ -444,7 +444,7 @@ void GraphEditor::updateFaustNode (uint32 nodeID, String& newSourceCode)
   
   forEachXmlChildElementWithTagName (tempXml, e, "CONNECTION")
   {
-    if(e->getIntAttribute ("srcNode")==nodeID || e->getIntAttribute ("dstNode")==nodeID)
+    if(e->getIntAttribute ("srcNode") == nodeId || e->getIntAttribute ("dstNode") == nodeId)
     {
       audioEngine.getDoc().addConnection((uint32) e->getIntAttribute ("srcNode"), e->getIntAttribute ("srcChannel"), (uint32) e->getIntAttribute ("dstNode"), e->getIntAttribute ("dstChannel"));
     }
