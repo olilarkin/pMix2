@@ -14,7 +14,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 : audioEngine(audioEngine)
 , graphEditor(graphEditor)
 , selectedFaustAudioPluginInstance(nullptr)
-, selectedNodeID(0)
+, selectedNodeId(0)
 , show(CodeEditorBottomViewIDs::diagram)
 {
   addAndMakeVisible (menuBar = new MenuBarComponent (this));
@@ -94,8 +94,8 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
       
       if (selectedItem)
       {
-        selectedNodeID = selectedItem->nodeId;
-        FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(audioEngine.getDoc().getNodeForId(selectedNodeID)->getProcessor());
+        selectedNodeId = selectedItem->nodeId;
+        FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(audioEngine.getDoc().getNodeForId(selectedNodeId)->getProcessor());
         
         if (faustProc)
         {
@@ -111,7 +111,7 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
             
             String lineNo = error.fromFirstOccurrenceOf(": ", false, true).upToFirstOccurrenceOf(" :", false, true);
             
-            graphEditor.getComponentForNode(selectedNodeID)->bubbleMessage(error);
+            graphEditor.getComponentForNode(selectedNodeId)->bubbleMessage(error);
           }
           
           editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());
@@ -187,7 +187,7 @@ void CodeEditor::menuItemSelected (int menuItemID, int topLevelMenuIndex)
         case 1:
         {
           String newSourceCode = codeDocument.getAllContent();
-          graphEditor.updateFaustNode(selectedNodeID, newSourceCode);
+          graphEditor.updateFaustNode(selectedNodeId, newSourceCode);
           break;
         }
       }

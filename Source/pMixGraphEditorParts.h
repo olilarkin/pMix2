@@ -99,8 +99,8 @@ class ConnectorComponent   : public Component
 {
 public:
   ConnectorComponent (PMixAudioEngine& audioEngine);
-  void setInput (const uint32 sourceNodeID_, const int sourceNodeChannel_);
-  void setOutput (const uint32 destNodeID_, const int destNodeChannel_);
+  void setInput (const uint32 sourceNodeId_, const int sourceNodeChannel_);
+  void setOutput (const uint32 destNodeId_, const int destNodeChannel_);
   void dragStart (int x, int y);
   void dragEnd (int x, int y);
   void update();
@@ -113,7 +113,7 @@ public:
   void mouseUp (const MouseEvent& e);
   void resized();
   
-  uint32 sourceNodeID, destNodeID;
+  uint32 sourceNodeId, destNodeId;
   int sourceNodeChannel, destNodeChannel;
   
 private:

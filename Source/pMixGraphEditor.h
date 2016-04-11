@@ -48,7 +48,7 @@ public:
   void updateComponents();
   void clear();
   
-  void beginConnectorDrag (uint32 sourceNodeID, int sourceNodeChannel, uint32 destNodeID, int destNodeChannel, const MouseEvent& e);
+  void beginConnectorDrag (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel, const MouseEvent& e);
   void dragConnector (const MouseEvent& e);
   void endDraggingConnector (const MouseEvent& e);
 

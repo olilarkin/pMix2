@@ -493,34 +493,34 @@ void NodeComponent::bubbleMessage(String msg)
 #pragma mark ConnectorComponent
 
 ConnectorComponent::ConnectorComponent (PMixAudioEngine& audioEngine)
-: sourceNodeID (0),
-destNodeID (0),
-sourceNodeChannel (0),
-destNodeChannel (0),
-audioEngine (audioEngine),
-lastInputX (0),
-lastInputY (0),
-lastOutputX (0),
-lastOutputY (0)
+: sourceNodeId (0)
+, destNodeId (0)
+, sourceNodeChannel (0)
+, destNodeChannel (0)
+, audioEngine (audioEngine)
+, lastInputX (0)
+, lastInputY (0)
+, lastOutputX (0)
+, lastOutputY (0)
 {
   //setAlwaysOnTop (true);
 }
 
-void ConnectorComponent::setInput (const uint32 sourceNodeID_, const int sourceNodeChannel_)
+void ConnectorComponent::setInput (const uint32 sourceNodeId_, const int sourceNodeChannel_)
 {
-  if (sourceNodeID != sourceNodeID_ || sourceNodeChannel != sourceNodeChannel_)
+  if (sourceNodeId != sourceNodeId_ || sourceNodeChannel != sourceNodeChannel_)
   {
-    sourceNodeID = sourceNodeID_;
+    sourceNodeId = sourceNodeId_;
     sourceNodeChannel = sourceNodeChannel_;
     update();
   }
 }
 
-void ConnectorComponent::setOutput (const uint32 destNodeID_, const int destNodeChannel_)
+void ConnectorComponent::setOutput (const uint32 destNodeId_, const int destNodeChannel_)
 {
-  if (destNodeID != destNodeID_ || destNodeChannel != destNodeChannel_)
+  if (destNodeId != destNodeId_ || destNodeChannel != destNodeChannel_)
   {
-    destNodeID = destNodeID_;
+    destNodeId = destNodeId_;
     destNodeChannel = destNodeChannel_;
     update();
   }
@@ -581,10 +581,10 @@ void ConnectorComponent::getPoints (float& x1, float& y1, float& x2, float& y2) 
   
   if (GraphEditor* const hostPanel = getGraphPanel())
   {
-    if (NodeComponent* srcNodeComp = hostPanel->getComponentForNode (sourceNodeID))
+    if (NodeComponent* srcNodeComp = hostPanel->getComponentForNode (sourceNodeId))
       srcNodeComp->getPinPos (sourceNodeChannel, false, x1, y1);
     
-    if (NodeComponent* dstNodeComp = hostPanel->getComponentForNode (destNodeID))
+    if (NodeComponent* dstNodeComp = hostPanel->getComponentForNode (destNodeId))
       dstNodeComp->getPinPos (destNodeChannel, true, x2, y2);
   }
 }
@@ -629,15 +629,15 @@ void ConnectorComponent::mouseDrag (const MouseEvent& e)
   {
     dragging = true;
     
-    audioEngine.getDoc().removeConnection (sourceNodeID, sourceNodeChannel, destNodeID, destNodeChannel);
+    audioEngine.getDoc().removeConnection (sourceNodeId, sourceNodeChannel, destNodeId, destNodeChannel);
     
     double distanceFromStart, distanceFromEnd;
     getDistancesFromEnds (e.x, e.y, distanceFromStart, distanceFromEnd);
     const bool isNearerSource = (distanceFromStart < distanceFromEnd);
     
-    getGraphPanel()->beginConnectorDrag (isNearerSource ? 0 : sourceNodeID,
+    getGraphPanel()->beginConnectorDrag (isNearerSource ? 0 : sourceNodeId,
                                          sourceNodeChannel,
-                                         isNearerSource ? destNodeID : 0,
+                                         isNearerSource ? destNodeId : 0,
                                          destNodeChannel,
                                          e);
   }

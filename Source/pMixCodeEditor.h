@@ -67,7 +67,7 @@ private:
   StretchableLayoutManager verticalLayout;
   ScopedPointer<StretchableLayoutResizerBar> dividerBar1, dividerBar2;
   FaustAudioPluginInstance* selectedFaustAudioPluginInstance;
-  uint32 selectedNodeID;
+  uint32 selectedNodeId;
   int show;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CodeEditor);

@@ -106,8 +106,8 @@ ConnectorComponent* GraphEditor::getComponentForConnection (const AudioProcessor
   for (int i = getNumChildComponents(); --i >= 0;)
   {
     if (ConnectorComponent* const c = dynamic_cast <ConnectorComponent*> (getChildComponent (i)))
-      if (c->sourceNodeID == conn.sourceNodeId
-          && c->destNodeID == conn.destNodeId
+      if (c->sourceNodeId == conn.sourceNodeId
+          && c->destNodeId == conn.destNodeId
           && c->sourceNodeChannel == conn.sourceChannelIndex
           && c->destNodeChannel == conn.destChannelIndex)
         return c;
@@ -162,8 +162,8 @@ void GraphEditor::updateComponents()
 
     if (cc != nullptr && cc != draggingConnector)
     {
-      if (audioEngine.getDoc().getConnectionBetween (cc->sourceNodeID, cc->sourceNodeChannel,
-                                      cc->destNodeID, cc->destNodeChannel) == nullptr)
+      if (audioEngine.getDoc().getConnectionBetween (cc->sourceNodeId, cc->sourceNodeChannel,
+                                      cc->destNodeId, cc->destNodeChannel) == nullptr)
       {
         delete cc;
       }
@@ -201,8 +201,8 @@ void GraphEditor::updateComponents()
   }
 }
 
-void GraphEditor::beginConnectorDrag (const uint32 sourceNodeID, const int sourceNodeChannel,
-    const uint32 destNodeID, const int destNodeChannel,
+void GraphEditor::beginConnectorDrag (const uint32 sourceNodeId, const int sourceNodeChannel,
+    const uint32 destNodeId, const int destNodeChannel,
     const MouseEvent& e)
 {
   draggingConnector = dynamic_cast <ConnectorComponent*> (e.originalComponent);
@@ -210,8 +210,8 @@ void GraphEditor::beginConnectorDrag (const uint32 sourceNodeID, const int sourc
   if (draggingConnector == nullptr)
     draggingConnector = new ConnectorComponent (audioEngine);
 
-  draggingConnector->setInput (sourceNodeID, sourceNodeChannel);
-  draggingConnector->setOutput (destNodeID, destNodeChannel);
+  draggingConnector->setInput (sourceNodeId, sourceNodeChannel);
+  draggingConnector->setOutput (destNodeId, destNodeChannel);
 
   addAndMakeVisible (draggingConnector);
   draggingConnector->toFront (false);
@@ -232,9 +232,9 @@ void GraphEditor::dragConnector (const MouseEvent& e)
 
     if (PinComponent* const pin = findPinAt (x, y))
     {
-      uint32 srcNode = draggingConnector->sourceNodeID;
+      uint32 srcNode = draggingConnector->sourceNodeId;
       int srcChannel   = draggingConnector->sourceNodeChannel;
-      uint32 dstNode = draggingConnector->destNodeID;
+      uint32 dstNode = draggingConnector->destNodeId;
       int dstChannel   = draggingConnector->destNodeChannel;
 
       if (srcNode == 0 && ! pin->isInput)
@@ -260,7 +260,7 @@ void GraphEditor::dragConnector (const MouseEvent& e)
       }
     }
 
-    if (draggingConnector->sourceNodeID == 0)
+    if (draggingConnector->sourceNodeId == 0)
       draggingConnector->dragStart (x, y);
     else
       draggingConnector->dragEnd (x, y);
@@ -276,9 +276,9 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
 
   const MouseEvent e2 (e.getEventRelativeTo (this));
 
-  uint32 srcNode = draggingConnector->sourceNodeID;
+  uint32 srcNode = draggingConnector->sourceNodeId;
   int srcChannel   = draggingConnector->sourceNodeChannel;
-  uint32 dstNode = draggingConnector->destNodeID;
+  uint32 dstNode = draggingConnector->destNodeId;
   int dstChannel   = draggingConnector->destNodeChannel;
 
   draggingConnector = nullptr;
