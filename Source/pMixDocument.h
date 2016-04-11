@@ -59,11 +59,11 @@ public:
   void getNodePosition (const uint32 nodeId, double& x, double& y) const;
   int getNumConnections() const noexcept;
   const AudioProcessorGraph::Connection* getConnection (const int index) const noexcept;
-  const AudioProcessorGraph::Connection* getConnectionBetween (uint32 sourceNodeUID, int sourceNodeChannel, uint32 destNodeUID, int destNodeChannel) const noexcept;
-  bool canConnect (uint32 sourceNodeUID, int sourceNodeChannel, uint32 destNodeUID, int destNodeChannel) const noexcept;
-  bool addConnection (uint32 sourceNodeUID, int sourceNodeChannel, uint32 destNodeUID, int destNodeChannel);
+  const AudioProcessorGraph::Connection* getConnectionBetween (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel) const noexcept;
+  bool canConnect (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel) const noexcept;
+  bool addConnection (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel);
   void removeConnection (const int index);
-  void removeConnection (uint32 sourceNodeUID, int sourceNodeChannel, uint32 destNodeUID, int destNodeChannel);
+  void removeConnection (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel);
   void clear();
   
   XmlElement* createXml() const;

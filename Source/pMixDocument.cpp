@@ -158,25 +158,23 @@ const AudioProcessorGraph::Connection* PMixDocument::getConnection (const int in
   return audioEngine.getGraph().getConnection (index);
 }
 
-const AudioProcessorGraph::Connection* PMixDocument::getConnectionBetween (uint32 sourceNodeUID, int sourceNodeChannel,
-    uint32 destNodeUID, int destNodeChannel) const noexcept
+const AudioProcessorGraph::Connection* PMixDocument::getConnectionBetween (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel) const noexcept
 {
-  return audioEngine.getGraph().getConnectionBetween (sourceNodeUID, sourceNodeChannel,
-                                     destNodeUID, destNodeChannel);
+  return audioEngine.getGraph().getConnectionBetween (sourceNodeId, sourceNodeChannel,
+                                     destNodeId, destNodeChannel);
 }
 
-bool PMixDocument::canConnect (uint32 sourceNodeUID, int sourceNodeChannel,
-                              uint32 destNodeUID, int destNodeChannel) const noexcept
+bool PMixDocument::canConnect (uint32 sourceNodeId, int sourceNodeChannel,
+                              uint32 destNodeId, int destNodeChannel) const noexcept
 {
-  return audioEngine.getGraph().canConnect (sourceNodeUID, sourceNodeChannel,
-                           destNodeUID, destNodeChannel);
+  return audioEngine.getGraph().canConnect (sourceNodeId, sourceNodeChannel,
+                           destNodeId, destNodeChannel);
 }
 
-bool PMixDocument::addConnection (uint32 sourceNodeUID, int sourceNodeChannel,
-                                 uint32 destNodeUID, int destNodeChannel)
+bool PMixDocument::addConnection (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel)
 {
-  const bool result = audioEngine.getGraph().addConnection (sourceNodeUID, sourceNodeChannel,
-                      destNodeUID, destNodeChannel);
+  const bool result = audioEngine.getGraph().addConnection (sourceNodeId, sourceNodeChannel,
+                      destNodeId, destNodeChannel);
 
   if (result)
     changed();
@@ -190,11 +188,10 @@ void PMixDocument::removeConnection (const int index)
   changed();
 }
 
-void PMixDocument::removeConnection (uint32 sourceNodeUID, int sourceNodeChannel,
-                                    uint32 destNodeUID, int destNodeChannel)
+void PMixDocument::removeConnection (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel)
 {
-  if (audioEngine.getGraph().removeConnection (sourceNodeUID, sourceNodeChannel,
-                              destNodeUID, destNodeChannel))
+  if (audioEngine.getGraph().removeConnection (sourceNodeId, sourceNodeChannel,
+                              destNodeId, destNodeChannel))
     changed();
 }
 
@@ -237,8 +234,7 @@ Result PMixDocument::saveDocument (const File& file)
 File PMixDocument::getLastDocumentOpened()
 {
   RecentlyOpenedFilesList recentFiles;
-  recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()
-                                 ->getValue ("recentPMixDocumentFiles"));
+  recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()->getValue ("recentPMixDocumentFiles"));
 
   return recentFiles.getFile (0);
 }
@@ -246,8 +242,7 @@ File PMixDocument::getLastDocumentOpened()
 void PMixDocument::setLastDocumentOpened (const File& file)
 {
   RecentlyOpenedFilesList recentFiles;
-  recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()
-                                 ->getValue ("recentPMixDocumentFiles"));
+  recentFiles.restoreFromString (audioEngine.getAppProperties().getUserSettings()->getValue ("recentPMixDocumentFiles"));
 
   recentFiles.addFile (file);
 
