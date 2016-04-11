@@ -333,24 +333,24 @@ void GraphEditor::getAllCommands (Array <CommandID>& commands)
 
 void GraphEditor::getCommandInfo (const CommandID commandID, ApplicationCommandInfo& result)
 {
-  const String category ("General");
+  const String category (TRANS("General"));
   
   switch (commandID)
   {
     case CommandIDs::copy:
-      result.setInfo ("Copy", "Copies the currently selected items to the clipboard", category, 0);
+      result.setInfo (TRANS("Copy"), TRANS("Copies the currently selected items to the clipboard"), category, 0);
       result.defaultKeypresses.add (KeyPress ('c', ModifierKeys::commandModifier, 0));
       break;
     case CommandIDs::paste:
-      result.setInfo ("Paste", "Pastes from the clipboard", category, 0);
+      result.setInfo (TRANS("Paste"), TRANS("Pastes from the clipboard"), category, 0);
       result.defaultKeypresses.add (KeyPress ('v', ModifierKeys::commandModifier, 0));
       break;
     case CommandIDs::del:
-      result.setInfo ("Delete", "Deletes the selection", category, 0);
+      result.setInfo (TRANS("Delete"), TRANS("Deletes the selection"), category, 0);
       result.defaultKeypresses.add (KeyPress (KeyPress::backspaceKey, ModifierKeys::noModifiers, 0));
       break;
     case CommandIDs::selectAll:
-      result.setInfo ("Select All", "Select All", category, 0);
+      result.setInfo (TRANS("Select All"), TRANS("Select All"), category, 0);
       result.defaultKeypresses.add (KeyPress ('a', ModifierKeys::commandModifier, 0));
       break;
     case CommandIDs::zoomIn:

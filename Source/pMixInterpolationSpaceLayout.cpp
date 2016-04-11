@@ -59,11 +59,11 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
       
       if(!InternalPluginFormat::isInternalFormat(processor->getName()))
       {
-        m.addItem (1, "Delete Preset");
-        m.addItem (2, "Rename Preset");
-        m.addItem (3, "Update Preset");
-        m.addItem (4, "Randomize Preset");
-        m.addItem (5, "Set Colour");
+        m.addItem (1, TRANS("Delete Preset"));
+        m.addItem (2, TRANS("Rename Preset"));
+        m.addItem (3, TRANS("Update Preset"));
+        m.addItem (4, TRANS("Randomize Preset"));
+        m.addItem (5, TRANS("Set Colour"));
       }
     }
     
@@ -108,7 +108,7 @@ void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
   endBounds = getBounds();
   
   audioEngine.getDoc().beginTransaction();
-  audioEngine.getDoc().perform(new MovePresetAction(dynamic_cast<PMixInterpolationSpaceLayout*>(getParentComponent()), getComponentID(), startBounds, endBounds), "change preset bounds");
+  audioEngine.getDoc().perform(new MovePresetAction(dynamic_cast<PMixInterpolationSpaceLayout*>(getParentComponent()), getComponentID(), startBounds, endBounds), TRANS("change preset bounds"));
   
 }
 
@@ -205,7 +205,7 @@ void PMixInterpolationSpaceLayout::mouseDown (const MouseEvent& e)
         
         bool hasParams = (proc->getNumParameters() > 0);
 
-        m.addItem (1, "Add preset for node", hasParams);
+        m.addItem (1, TRANS("Add preset for node"), hasParams);
         
         const int r = m.show();
         

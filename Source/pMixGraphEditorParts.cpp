@@ -148,8 +148,8 @@ void NodeComponent::mouseDown (const MouseEvent& e)
   if (e.mods.isPopupMenu())
   {
     PopupMenu m;
-    m.addItem (1, "Delete this node");
-    m.addItem (2, "Disconnect all pins");
+    m.addItem (1, TRANS("Delete this node"));
+    m.addItem (2, TRANS("Disconnect all pins"));
     
     if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
     {
@@ -160,12 +160,12 @@ void NodeComponent::mouseDown (const MouseEvent& e)
       {
         bool hasParams = (processor->getNumParameters() > 0);
         
-        m.addItem (3, "Add a pMix Preset", hasParams);
-        m.addItem (4, "Set pMix Colour", hasParams);
-        m.addItem (5, "Interpolate all Parameters", hasParams);
-        m.addItem (6, "Clear all Parameters", hasParams);
+        m.addItem (3, TRANS("Add a pMix Preset"), hasParams);
+        m.addItem (4, TRANS("Set pMix Colour"), hasParams);
+        m.addItem (5, TRANS("Interpolate all Parameters"), hasParams);
+        m.addItem (6, TRANS("Clear all Parameters"), hasParams);
         m.addSeparator();
-        m.addItem (7, "Show plugin UI");
+        m.addItem (7, TRANS("Show plugin UI"));
       }
     }
     
