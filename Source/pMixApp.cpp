@@ -36,6 +36,7 @@ void pMixApp::initialise (const String& commandLine)
 //  }
   
   ScopedPointer<XmlElement> savedAudioState (audioEngine.getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
+  graphPlayer.setDoublePrecisionProcessing(true);
   graphPlayer.setProcessor(&audioEngine.getGraph());
   audioEngine.getDoc().initialize();
   deviceManager.initialise (256, 256, savedAudioState, true);
