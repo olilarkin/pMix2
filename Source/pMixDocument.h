@@ -14,9 +14,6 @@
 #include "pMixDefaultColours.h"
 #include "pMixConstants.h"
 
-const char* const filenameSuffix = ".pmix";
-const char* const filenameWildcard = "*.pmix";
-
 class PMixAudioEngine;
 
 class PMixDocument : public FileBasedDocument

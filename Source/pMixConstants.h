@@ -12,6 +12,8 @@
 
 #include "JuceHeader.h"
 
+const char* const filenameSuffix = ".pmix";
+const char* const filenameWildcard = "*.pmix";
 
 #define OFFSET_BETWEEN_PINS 15
 #define PINS_LEFT_OFFSET 10
@@ -29,7 +31,7 @@
 #if JUCE_MAC || JUCE_LINUX
 #define FAUST_DRAW_PATH "/var/tmp/"
 #elif JUCE_WIN32
-#define FAUST_DRAW_PATH "\\faustgen-resources\\"
+//#define FAUST_DRAW_PATH "\\faustgen-resources\\"
 #endif
 
 #endif  // PMIXCONSTANTS_H_INCLUDED
