@@ -27,7 +27,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   //editor->setCommandManager(&getCommandManager());
   addAndMakeVisible(dividerBar1 = new StretchableLayoutResizerBar (&verticalLayout, 1, false));
   addAndMakeVisible (svgDisplay = new SVGDisplay(audioEngine, graphEditor));
-  addAndMakeVisible(console = new Console());
+  addAndMakeVisible(console = new PMixConsole());
   audioEngine.getLogger().addChangeListener(console);
 
   editor->setFont(Font(Font::getDefaultMonospacedFontName(), 16.f, 0));

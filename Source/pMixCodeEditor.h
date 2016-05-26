@@ -59,7 +59,7 @@ private:
   ScopedPointer<MenuBarComponent> menuBar;
   ScopedPointer<CodeEditorComponent> editor;
   ScopedPointer<SVGDisplay> svgDisplay;
-  ScopedPointer<Console> console;
+  ScopedPointer<PMixConsole> console;
 
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;

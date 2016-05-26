@@ -10,7 +10,7 @@
 #include "pMixConsole.h"
 #include "pMixLogger.h"
 
-Console::Console()
+PMixConsole::PMixConsole()
 : listBoxModel (messageList)
 {
   setOpaque (true);
@@ -21,40 +21,40 @@ Console::Console()
   messageListBox.setColour (ListBox::outlineColourId, Colours::black);
 }
 
-Console::~Console()
+PMixConsole::~PMixConsole()
 {
 }
 
-void Console::paint (Graphics& g)
+void PMixConsole::paint (Graphics& g)
 {
   g.fillAll (Colours::white);
 }
 
-void Console::resized()
+void PMixConsole::resized()
 {
   Rectangle<int> area (getLocalBounds());
   messageListBox.setBounds (area.reduced (8));
 }
 
-void Console::postMessageToList (const String& message)
+void PMixConsole::postMessageToList (const String& message)
 {
   (new IncomingMessageCallback (this, message))->post();
 }
 
-void Console::addMessageToList (const String& message)
+void PMixConsole::addMessageToList (const String& message)
 {
   messageList.add (message);
   triggerAsyncUpdate();
 }
 
-void Console::handleAsyncUpdate()
+void PMixConsole::handleAsyncUpdate()
 {
   messageListBox.updateContent();
   messageListBox.scrollToEnsureRowIsOnscreen (messageList.size() - 1);
   messageListBox.repaint();
 }
 
-void Console::changeListenerCallback (ChangeBroadcaster* source)
+void PMixConsole::changeListenerCallback (ChangeBroadcaster* source)
 {
   PMixLogger* logger = dynamic_cast<PMixLogger*>(source);
   
@@ -68,7 +68,7 @@ void Console::changeListenerCallback (ChangeBroadcaster* source)
   }
 }
 
-void Console::clear()
+void PMixConsole::clear()
 {
   messageList.clear();
   messageListBox.updateContent();

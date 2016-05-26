@@ -12,10 +12,10 @@
 
 #include "JuceHeader.h"
 
-class ConsoleListBoxModel   : public ListBoxModel
+class PMixConsoleListBoxModel   : public ListBoxModel
 {
 public:
-    ConsoleListBoxModel (const Array<String>& list)
+    PMixConsoleListBoxModel (const Array<String>& list)
         : messageList (list)
     {
     }
@@ -41,16 +41,16 @@ public:
 private:
     const Array<String>& messageList;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConsoleListBoxModel)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixConsoleListBoxModel)
 };
 
-class Console  : public Component
+class PMixConsole  : public Component
                , private AsyncUpdater
                , public ChangeListener
 {
 public:
-  Console();
-  ~Console();
+  PMixConsole();
+  ~PMixConsole();
   
   void paint (Graphics& g) override;
   
@@ -63,22 +63,22 @@ public:
 private:
   ListBox messageListBox;
   Array<String> messageList;
-  ConsoleListBoxModel listBoxModel;
+  PMixConsoleListBoxModel listBoxModel;
 
 
   // This is used to dispach an incoming message to the message thread
   struct IncomingMessageCallback   : public CallbackMessage
   {
-    IncomingMessageCallback (Console* d, const String& m)
-    : console (d), message (m) {}
+    IncomingMessageCallback (PMixConsole* d, const String& m)
+    : PMixConsole (d), message (m) {}
     
     void messageCallback() override
     {
-      if (console != nullptr)
-        console->addMessageToList (message);
+      if (PMixConsole != nullptr)
+        PMixConsole->addMessageToList (message);
     }
 
-    Component::SafePointer<Console> console;
+    Component::SafePointer<PMixConsole> PMixConsole;
     String message;
   };
 
@@ -87,7 +87,7 @@ private:
 
   void handleAsyncUpdate() override;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Console);
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixConsole);
 };
 
 
