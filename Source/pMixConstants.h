@@ -15,6 +15,8 @@
 const char* const filenameSuffix = ".pmix";
 const char* const filenameWildcard = "*.pmix";
 
+#define DEFAULT_FAUST_DSP_SEARCHPATH "~/Library/Application Support/pMix2/FaustNodes"
+
 #define OFFSET_BETWEEN_PINS 15
 #define PINS_LEFT_OFFSET 10
 #define MIN_RADIUS 50.f

@@ -59,7 +59,7 @@ namespace CommandIDs
   static const int floatISpace            = 0x300016;
   static const int floatCodeEditor        = 0x300017;
   //static const int floatParameters        = 0x300018;
-  
+  static const int faustDSPFiles          = 0x400000;
 }
 
 

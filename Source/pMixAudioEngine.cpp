@@ -43,18 +43,10 @@ PMixAudioEngine::PMixAudioEngine()
   
   if (savedPluginList != nullptr)
     knownPluginList.recreateFromXml (*savedPluginList);
-    
-  ScopedPointer<PluginDirectoryScanner> scanner = new PluginDirectoryScanner(knownFaustDSPList, *faustPluginFormat, faustPluginFormat->getDefaultLocationsToSearch(), true, File::nonexistent);
   
-  LOG("Scanning Faust .dsp files...");
-
+  scanFaustDSPFiles();
+  
   String pluginBeingScanned;
-
-  while (scanner->scanNextFile(true, pluginBeingScanned)) {
-  }
-  
-  String str(knownFaustDSPList.getNumTypes());
-  //LOG("found " + str + " faust .dsp files");
   
   pluginSortMethod = (KnownPluginList::SortMethod) getAppProperties().getUserSettings()->getIntValue ("pluginSortMethod", KnownPluginList::sortByFileSystemLocation);
   setPluginSortMethod(pluginSortMethod);
@@ -111,18 +103,25 @@ void PMixAudioEngine::createNodeMenu (PopupMenu& m) const
   faustMenu.addItem(CommandIDs::newFaustEffect, "Synth");
   faustMenu.addSeparator();
   
-  knownFaustDSPList.addToMenu(faustMenu, KnownPluginList::sortAlphabetically);
+  for(int i = 0; i< faustDSPFiles.size(); i++)
+  {
+    faustMenu.addItem(CommandIDs::faustDSPFiles + i, faustDSPFiles[i]->name);
+  }
   
   m.addSubMenu("Faust", faustMenu);
-  
+ 
   PopupMenu pluginsMenu;
   knownPluginList.addToMenu (pluginsMenu, pluginSortMethod);
-
   m.addSubMenu("Plugins", pluginsMenu);
 }
 
 const PluginDescription* PMixAudioEngine::getChosenType (const int menuID) const
 {
+  if(menuID >= CommandIDs::faustDSPFiles && menuID < CommandIDs::faustDSPFiles + faustDSPFiles.size())
+  {
+    return faustDSPFiles[menuID - CommandIDs::faustDSPFiles];
+  }
+  
   switch (menuID)
   {
     case CommandIDs::newAudioInput: return internalTypes[0];
@@ -132,11 +131,6 @@ const PluginDescription* PMixAudioEngine::getChosenType (const int menuID) const
     case CommandIDs::newFaustEffect: return internalTypes[4];
     default:
     {
-      int result = knownFaustDSPList.getIndexChosenByMenu(menuID);
-      
-      if (result > -1)
-        return knownFaustDSPList.getType(result);
-    
       return knownPluginList.getType (knownPluginList.getIndexChosenByMenu (menuID));
     }
   }
@@ -154,4 +148,24 @@ AudioPluginInstance* PMixAudioEngine::createPluginInstance(const PluginDescripti
     result = formatManager.createPluginInstance (desc, getGraph().getSampleRate(), getGraph().getBlockSize(), errorMessage);
   
   return result;
+}
+
+void PMixAudioEngine::scanFaustDSPFiles()
+{
+  LOG("Scanning Faust .dsp files...");
+  
+  DirectoryIterator iter (File (DEFAULT_FAUST_DSP_SEARCHPATH), true, "*.dsp");
+  
+  while (iter.next())
+  {
+    File theFileItFound(iter.getFile());
+    
+    LOG("Found " + theFileItFound.getFileName());
+    
+    PluginDescription* desc = new PluginDescription();
+    FaustAudioPluginInstance::fillInitialInPluginDescription(*desc);
+    desc->name = theFileItFound.getFileName();
+    desc->fileOrIdentifier = theFileItFound.getFullPathName();
+    faustDSPFiles.add(desc);
+  }
 }

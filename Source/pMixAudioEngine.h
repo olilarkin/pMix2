@@ -48,6 +48,8 @@ public:
   
   AudioPluginInstance* createPluginInstance(const PluginDescription& desc, String& errorMessage);
   
+  void scanFaustDSPFiles();
+  
 private:
   PMixDocument doc;
 
@@ -59,8 +61,8 @@ private:
 
   KnownPluginList knownPluginList;
   KnownPluginList::SortMethod pluginSortMethod;
-  
-  KnownPluginList knownFaustDSPList;
+
+  OwnedArray<PluginDescription> faustDSPFiles;
   
   PMixLogger logger;
 
