@@ -44,9 +44,11 @@ public:
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
   const AudioProcessorGraph::Node::Ptr getNodeForId (const uint32 uid) const noexcept;
   
-  uint32 addNode (const PluginDescription* desc, double x, double y);
-  void removeNode (const uint32 nodeId);
-  void disconnectNode (const uint32 nodeId);
+  uint32 addNode(const PluginDescription* desc, double x, double y);
+  void removeNode(const uint32 nodeId);
+  void disconnectNode(const uint32 nodeId);
+  
+  void setNodeUIStatus(const uint32 nodeId, const uint32 uiStatus);
   
   bool getParameterIsInterpolated(const uint32 nodeId, const int paramIdx);
   void setParameterToInterpolate(const uint32 nodeId, const int paramIdx, bool interpolate);

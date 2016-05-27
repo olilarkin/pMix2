@@ -15,6 +15,10 @@
 const char* const filenameSuffix = ".pmix";
 const char* const filenameWildcard = "*.pmix";
 
+const int kUIStatusNone = 0;
+const int kUIStatusFloating = 1;
+const int kUIStatusEmbed = 2;
+
 #define DEFAULT_FAUST_DSP_SEARCHPATH "~/Library/Application Support/pMix2/FaustNodes"
 
 #define OFFSET_BETWEEN_PINS 15

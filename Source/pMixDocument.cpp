@@ -77,6 +77,7 @@ uint32 PMixDocument::addNode (const PluginDescription* desc, double x, double y)
       node->properties.set ("y", y);
       node->properties.set ("uiLastX", Random::getSystemRandom().nextInt (500));
       node->properties.set ("uiLastY", Random::getSystemRandom().nextInt (500));
+      node->properties.set ("uiStatus", kUIStatusNone);
       
       if (!InternalPluginFormat::isInternalFormat(desc->name))
       {
@@ -123,6 +124,16 @@ void PMixDocument::removeIllegalConnections()
     changed();
 }
 
+void PMixDocument::setNodeUIStatus(const uint32 nodeId, const uint32 uiStatus)
+{
+  const AudioProcessorGraph::Node::Ptr n (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if (n != nullptr)
+  {
+    n->properties.set ("uiStatus", jlimit<int>(0, 2, uiStatus));
+  }
+}
+
 void PMixDocument::setNodePosition (const uint32 nodeId, double x, double y)
 {
   const AudioProcessorGraph::Node::Ptr n (audioEngine.getGraph().getNodeForId (nodeId));
@@ -146,7 +157,6 @@ void PMixDocument::getNodePosition (const uint32 nodeId, double& x, double& y) c
     y = (double) n->properties ["y"];
   }
 }
-
 
 int PMixDocument::getNumConnections() const noexcept
 {
@@ -266,6 +276,7 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   e->setAttribute ("y", node->properties ["y"].toString());
   e->setAttribute ("uiLastX", node->properties ["uiLastX"].toString());
   e->setAttribute ("uiLastY", node->properties ["uiLastY"].toString());
+  e->setAttribute ("uiStatus", node->properties ["uiStatus"].toString());
   
   PluginDescription pd;
   plugin->fillInPluginDescription (pd);
@@ -348,6 +359,7 @@ void PMixDocument::createNodeFromXml (XmlElement& xml, const String& newSourceCo
   node->properties.set ("y", xml.getDoubleAttribute ("y"));
   node->properties.set ("uiLastX", xml.getIntAttribute ("uiLastX"));
   node->properties.set ("uiLastY", xml.getIntAttribute ("uiLastY"));
+  node->properties.set ("uiStatus", xml.getIntAttribute ("uiStatus"));
 
   // presets etc for faust & plugin nodes
   if(!InternalPluginFormat::isInternalFormat(pd.name))

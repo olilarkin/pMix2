@@ -165,7 +165,15 @@ void NodeComponent::mouseDown (const MouseEvent& e)
         m.addItem (5, TRANS("Interpolate all Parameters"), hasParams);
         m.addItem (6, TRANS("Clear all Parameters"), hasParams);
         m.addSeparator();
-        m.addItem (7, TRANS("Show plugin UI"));
+        
+        int uiStatus = f->properties["uiStatus"];
+        
+        PopupMenu ui;
+        ui.addItem (7, TRANS("Disabled"), true, uiStatus == kUIStatusNone);
+        ui.addItem (8, TRANS("Embedded"), true, uiStatus == kUIStatusEmbed);
+        ui.addItem (9, TRANS("Floating"), true, uiStatus == kUIStatusFloating);
+
+        m.addSubMenu (TRANS("Set UI Mode"), ui);
       }
     }
     
@@ -220,7 +228,20 @@ void NodeComponent::mouseDown (const MouseEvent& e)
         repaint();
       }
     }
-    else
+    else if (r == 7)
+    {
+      audioEngine.getDoc().setNodeUIStatus(nodeId, kUIStatusNone);
+      removeEditor();
+      PluginWindow::closeCurrentlyOpenWindowsFor(nodeId);
+      update();
+    }
+    else if (r == 8)
+    {
+      audioEngine.getDoc().setNodeUIStatus(nodeId, kUIStatusEmbed);
+      PluginWindow::closeCurrentlyOpenWindowsFor(nodeId);
+      update();
+    }
+    else if (r == 9)
     {
       if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
       {
@@ -231,11 +252,16 @@ void NodeComponent::mouseDown (const MouseEvent& e)
         
         if (r > 0)
         {
+          removeEditor();
+
           PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal : PluginWindow::Generic;
           
           if (PluginWindow* const w = PluginWindow::getWindowFor (f, type))
             w->toFront (true);
-        }
+          
+          audioEngine.getDoc().setNodeUIStatus(nodeId, kUIStatusFloating);
+          update();
+        };
       }
     }
   }
@@ -426,14 +452,19 @@ void NodeComponent::update()
   
     if(!InternalPluginFormat::isInternalFormat(name) && f->getProcessor()->getNumParameters() > 0)
     {
-      addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (audioEngine, f->getProcessor(), f->nodeId));
-      w = jmax (w, editor->getWidth() + 20 );
+      int uiStatus = f->properties["uiStatus"];
       
-      if (editor->getContentHeight() > 300) {
-        editor->setSize(editor->getWidth(), 100);
+      if(uiStatus == kUIStatusEmbed)
+      {
+        addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (audioEngine, f->getProcessor(), f->nodeId));
+        w = jmax (w, editor->getWidth() + 20 );
+        
+        if (editor->getContentHeight() > 300) {
+          editor->setSize(editor->getWidth(), 100);
+        }
+        
+        h += jmin (320, editor->getContentHeight() + 20);
       }
-      
-      h += jmin (320, editor->getContentHeight() + 20);
     }
     
     setSize (w, h);
