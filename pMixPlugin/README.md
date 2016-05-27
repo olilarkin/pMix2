@@ -21,12 +21,7 @@ For further info, see http://www.juce.com/forum/topic/ableton-live-deadlock-plug
 
 **License:**
 
-pMix - Copyright Oliver Larkin 2008 - 2016
-
-pMix v2    
-Contemporary Music Research Centre  
-Music Department  
-University of York  
-License: GPL
-  
-www.cmrcyork.org | www.olilarkin.co.uk
+pMix  
+Copyright Oliver Larkin 2008 - 2016  
+License: GPL  
+www.olilarkin.co.uk
