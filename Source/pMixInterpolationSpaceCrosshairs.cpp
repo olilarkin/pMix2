@@ -79,7 +79,7 @@ void InterpolationSpaceIPos::update()
 {
   const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (nodeId));
   
-  if (f == nullptr)
+  if (f == nullptr) // TODO: WTF?
   {
     delete this;
     return;
@@ -145,14 +145,19 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
     {
       const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId(ic->nodeId));
 
-      var iposx = f->properties["iposx"];
-      var iposy = f->properties["iposy"];
-      
-      float x = getWidth() * (float) iposx;
-      float y = getHeight() * (float) iposy;
-      ic->setCentrePosition(x, y);
-      
-      ic->update();
+      if(f != nullptr)
+      {
+        var iposx = f->properties["iposx"];
+        var iposy = f->properties["iposy"];
+        
+        float x = getWidth() * (float) iposx;
+        float y = getHeight() * (float) iposy;
+        ic->setCentrePosition(x, y);
+        
+        ic->update();
+      }
+      else
+        delete ic;
     }
   }
 
