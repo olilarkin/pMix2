@@ -154,6 +154,8 @@ void PMixAudioEngine::scanFaustDSPFiles()
 {
   LOG("Scanning Faust .dsp files...");
   
+  faustDSPFiles.clear();
+  
   DirectoryIterator iter (File (DEFAULT_FAUST_DSP_SEARCHPATH), true, "*.dsp");
   
   while (iter.next())
