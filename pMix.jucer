@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="RsNvH4" name="pMix" projectType="guiapp" version="0.0.1"
               bundleIdentifier="com.OliLarkin.pMix" includeBinaryInAppConfig="1"
-              jucerVersion="4.2.0" companyName="OliLarkin" companyWebsite="www.olilarkin.co.uk"
+              jucerVersion="4.2.1" companyName="OliLarkin" companyWebsite="www.olilarkin.co.uk"
               companyEmail="contact@olilarkin.co.uk">
   <MAINGROUP id="FiV8Cl" name="pMix">
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
