@@ -21,12 +21,12 @@ class PinComponent : public Component
 {
 public:
   PinComponent (PMixAudioEngine& audio, const uint32 nodeId_, const int index_, const bool isInput_);
-  void paint (Graphics& g);
-  void mouseDown (const MouseEvent& e);
-  void mouseDrag (const MouseEvent& e);
-  void mouseUp (const MouseEvent& e);
-  void mouseEnter (const MouseEvent& e);
-  void mouseExit (const MouseEvent& e);
+  void paint (Graphics& g) override;
+  void mouseDown (const MouseEvent& e) override;
+  void mouseDrag (const MouseEvent& e) override;
+  void mouseUp (const MouseEvent& e) override;
+  void mouseEnter (const MouseEvent& e) override;
+  void mouseExit (const MouseEvent& e) override;
 
   const uint32 nodeId;
   const int index;
@@ -45,25 +45,26 @@ private:
 #pragma mark NodeComponent
 
 class NodeComponent : public Component
-                      , public ChangeListener
+                    , public ChangeListener
 {
 public:
   NodeComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_);
   ~NodeComponent();
-  void mouseDown (const MouseEvent& e);
-  void mouseDrag (const MouseEvent& e);
-  void mouseUp (const MouseEvent& e);
-  void mouseDoubleClick (const MouseEvent&);
+  void mouseDown (const MouseEvent& e) override;
+  void mouseDrag (const MouseEvent& e) override;
+  void mouseUp (const MouseEvent& e) override;
+  void mouseDoubleClick (const MouseEvent&) override;
   
-  bool hitTest (int x, int y);
-  void paint (Graphics& g);
-  void resized();
+  bool hitTest (int x, int y) override;
+  void paint (Graphics& g) override;
+  void resized() override;
+  
   void getPinPos (const int index, const bool isInput, float& x, float& y);
   void update();
   
   void removeEditor();
   
-  void changeListenerCallback (ChangeBroadcaster* source);
+  void changeListenerCallback (ChangeBroadcaster* source) override;
   
   void bubbleMessage(String msg);
   

@@ -28,13 +28,16 @@ class InterpolationSpacePreset : public Component
 public:
   InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeId, const int presetId, Colour colour);
   ~InterpolationSpacePreset ();
-  void resized ();
-  void mouseDown (const MouseEvent& e);
-  void mouseDrag (const MouseEvent& e);
-  void mouseUp (const MouseEvent& e);
-  void paint (Graphics& g);
-  void changeListenerCallback (ChangeBroadcaster* source);
-  void labelTextChanged (Label* labelThatHasChanged);
+  void resized () override;
+  void mouseDown (const MouseEvent& e) override;
+  void mouseDrag (const MouseEvent& e) override;
+  void mouseUp (const MouseEvent& e) override;
+  void paint (Graphics& g) override;
+  
+  void changeListenerCallback (ChangeBroadcaster* source) override;
+  
+  void labelTextChanged (Label* labelThatHasChanged) override;
+  
   void update();
   
 public:
@@ -81,9 +84,7 @@ public:
   void changeListenerCallback (ChangeBroadcaster* source) override;
 
   void getComponentsForNode (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const;
-
   void repaintPresetsForNode (const uint32 nodeId);
-  
   void deleteSelection();
   void selectAll();
   

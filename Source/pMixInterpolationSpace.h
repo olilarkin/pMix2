@@ -21,8 +21,8 @@ class InterpolationSpace : public Component
 public:
   InterpolationSpace (PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
   ~InterpolationSpace ();
-  void resized ();
-  void paint (Graphics& g);
+  void resized () override;
+  void paint (Graphics& g) override;
   
 private:
   ScopedPointer<PMixInterpolationSpaceLayout> layout;

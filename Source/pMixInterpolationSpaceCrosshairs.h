@@ -20,11 +20,11 @@ public:
   InterpolationSpaceIPos(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout, const uint32 nodeId, Colour colour);
   ~InterpolationSpaceIPos();
   
-  void resized ();
-  void mouseDown (const MouseEvent& e);
-  void mouseDrag (const MouseEvent& e);
-  void mouseUp (const MouseEvent& e);
-  void paint (Graphics& g);
+  void resized () override;
+  void mouseDown (const MouseEvent& e) override;
+  void mouseDrag (const MouseEvent& e) override;
+  void mouseUp (const MouseEvent& e) override;
+  void paint (Graphics& g) override;
 
   void update();
 
@@ -47,10 +47,10 @@ public:
   pMixInterpolationSpaceCrossHairs(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout);
   ~pMixInterpolationSpaceCrossHairs();
   
-  void paint (Graphics&);
-  void resized();
+  void paint (Graphics&) override;
+  void resized() override;
   
-  void changeListenerCallback (ChangeBroadcaster* source);
+  void changeListenerCallback (ChangeBroadcaster* source) override;
   
   void updateComponents();
   InterpolationSpaceIPos* getComponentForNode (const uint32 nodeId) const;
