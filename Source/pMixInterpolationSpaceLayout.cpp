@@ -22,10 +22,10 @@ InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
   setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 }
 
-InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeId, const uint32 presetIdx, Colour colour)
+InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeId, const int presetId, Colour colour)
 : audioEngine(audioEngine)
 , nodeId(nodeId)
-, presetIdx(presetIdx)
+, presetId(presetId)
 , colour(colour)
 , opacity(1.)
 {
@@ -71,7 +71,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
     
     if (r == 1)
     {
-      audioEngine.getDoc().removePreset(nodeId, presetIdx);
+      audioEngine.getDoc().removePreset(nodeId, presetId);
     }
     else if (r == 2)
     {
@@ -146,7 +146,7 @@ void InterpolationSpacePreset::update()
   }
   
   colour = audioEngine.getDoc().getNodeColour(nodeId);
-  opacity = audioEngine.getDoc().getPresetWeight(nodeId, presetIdx);
+  opacity = audioEngine.getDoc().getPresetWeight(nodeId, presetId);
   
   repaint();
 }
@@ -161,7 +161,7 @@ void InterpolationSpacePreset::changeListenerCallback (ChangeBroadcaster* source
 
 void InterpolationSpacePreset::labelTextChanged (Label* labelThatHasChanged)
 {
-  audioEngine.getDoc().setPresetName(nodeId, presetIdx, labelThatHasChanged->getText());
+  audioEngine.getDoc().setPresetName(nodeId, presetId, labelThatHasChanged->getText());
 }
 
 PMixInterpolationSpaceLayout::PMixInterpolationSpaceLayout(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
@@ -327,7 +327,7 @@ void PMixInterpolationSpaceLayout::updateComponents()
           DynamicObject* obj = presets->getReference(presetIdx).getDynamicObject();
           
           String label = obj->getProperty("name");
-          InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeId, presetIdx, audioEngine.getDoc().getNodeColour(f->nodeId)  );
+          InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeId, obj->getProperty("uid"), audioEngine.getDoc().getNodeColour(f->nodeId)  );
           String componentID;
           componentID << "p." << (int) f->nodeId << "." << presetIdx;
           comp->setComponentID(componentID);

@@ -26,26 +26,21 @@ class InterpolationSpacePreset : public Component
                                , public LabelListener
 {
 public:
-  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeId, const uint32 presetIdx, Colour colour);
+  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeId, const int presetId, Colour colour);
   ~InterpolationSpacePreset ();
   void resized ();
   void mouseDown (const MouseEvent& e);
   void mouseDrag (const MouseEvent& e);
   void mouseUp (const MouseEvent& e);
-
   void paint (Graphics& g);
-  
   void changeListenerCallback (ChangeBroadcaster* source);
-
   void labelTextChanged (Label* labelThatHasChanged);
-
-  
   void update();
   
 public:
   PMixAudioEngine& audioEngine;
   const uint32 nodeId;
-  const uint32 presetIdx;
+  const int presetId;
   
 private:
   ComponentDragger myDragger;

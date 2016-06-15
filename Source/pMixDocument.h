@@ -26,12 +26,14 @@ public:
   
   void timerCallback();
 
+  DynamicObject* getPresetWithUID(const uint32 nodeId, const int presetId) const;
   void addPreset(const uint32 nodeId, double x, double y);
-  void setPresetPosition(const uint32 nodeId, const int presetIdx, double x, double y);
-  void getPresetPosition(const uint32 nodeId, const int presetIdx, double& x, double& y) const;
-  double getPresetWeight(const uint32 nodeId, const int presetIdx);
-  void removePreset(const uint32 nodeId, const int presetIdx);
-  void setPresetName(const uint32 nodeId, const int presetIdx, String newName);
+  void setPresetPosition(const uint32 nodeId, const int presetId, double x, double y);
+  void getPresetPosition(const uint32 nodeId, const int presetId, double& x, double& y) const;
+  double getPresetWeight(const uint32 nodeId, const int presetId);
+  void removePreset(const uint32 nodeId, const int presetId);
+  void setPresetName(const uint32 nodeId, const int presetId, String newName);
+  int getNumPresetsForNode(const uint32 nodeId);
 
   void setNodeIPos(const uint32 nodeId, double x, double y);
   void getNodeIPos(const uint32 nodeId, double& x, double& y) const;
@@ -105,6 +107,9 @@ private:
   uint32 lastUID;
   uint32 getNextUID() noexcept;
 
+  int lastPresetUID;
+  int getNextPresetUID() noexcept;
+  
   int snapGridPixels;
   bool snapActive, snapShown;
   float componentOverlayOpacity;

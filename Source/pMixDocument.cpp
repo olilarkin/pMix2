@@ -17,6 +17,7 @@ PMixDocument::PMixDocument (PMixAudioEngine& audioEngine)
 : FileBasedDocument (filenameSuffix, filenameWildcard, TRANS("Load a pMix patch"), TRANS("Save a pMix patch"))
 , audioEngine(audioEngine)
 , lastUID (0)
+, lastPresetUID(0)
 , snapGridPixels (8)
 , snapActive (true)
 , snapShown (true)
@@ -33,6 +34,11 @@ PMixDocument::~PMixDocument()
 uint32 PMixDocument::getNextUID() noexcept
 {
   return ++lastUID;
+}
+
+int PMixDocument::getNextPresetUID() noexcept
+{
+  return ++lastPresetUID;
 }
 
 int PMixDocument::getNumNodes() const noexcept
@@ -367,7 +373,6 @@ void PMixDocument::createNodeFromXml (XmlElement& xml, const String& newSourceCo
     node->properties.set ("colour", xml.getStringAttribute ("colour"));
     node->properties.set ("iposx", xml.getDoubleAttribute ("iposx"));
     node->properties.set ("iposy", xml.getDoubleAttribute ("iposy"));
-    
     if (const XmlElement* const params = xml.getChildByName ("PARAMS"))
     {
       var vparams = JSON::parse(params->getAllSubText());
@@ -526,6 +531,32 @@ String PMixDocument::getLibraryPath()
   return fullLibraryPath;
 }
 
+DynamicObject* PMixDocument::getPresetWithUID(const uint32 nodeId, const int presetId) const
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  DynamicObject* returnObj = nullptr;
+  
+  if (node != nullptr)
+  {
+    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+    
+    for(int i = 0; i< presetsArr->size(); i++)
+    {
+      DynamicObject* thePreset = presetsArr->getReference(i).getDynamicObject();
+      int thePresetUID = thePreset->getProperty("uid");
+      
+      if(thePresetUID == presetId)
+      {
+        returnObj = thePreset;
+        break;
+      }
+    }
+  }
+  
+  return returnObj;
+}
+
 void PMixDocument::addPreset(const uint32 nodeId, double x, double y)
 {
   AudioProcessorGraph::Node::Ptr node = getNodeForId(nodeId);
@@ -551,7 +582,8 @@ void PMixDocument::addPreset(const uint32 nodeId, double x, double y)
 //  obj->setProperty("distance", 0.);
   obj->setProperty("coeff", 1.);
   obj->setProperty("state", paramValues);
-
+  obj->setProperty("uid", getNextPresetUID());
+  
   var preset = var(obj);
   presetsArr->append(preset);
 
@@ -560,27 +592,44 @@ void PMixDocument::addPreset(const uint32 nodeId, double x, double y)
   changed();
 }
 
-void PMixDocument::removePreset(const uint32 nodeId, const int presetIdx)
+void PMixDocument::removePreset(const uint32 nodeId, const int presetId)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
   
   if (node != nullptr)
   {
     Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
-    presetsArr->remove(presetIdx);
+    
+    int indexToRemove = -1;
+    
+    for(int i = 0; i< presetsArr->size(); i++)
+    {
+      DynamicObject* obj = presetsArr->getReference(i).getDynamicObject();
+      if((int) obj->getProperty("uid") == presetId)
+      {
+        indexToRemove = i;
+        break;
+      }
+    }
+    
+    if(indexToRemove > -1) {
+      presetsArr->remove(indexToRemove);
+    }
   }
   
   changed();
 }
 
-void PMixDocument::setPresetPosition (const uint32 nodeId, const int presetIdx, double x, double y)
+void PMixDocument::setPresetPosition (const uint32 nodeId, const int presetId, double x, double y)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
   
   if (node != nullptr)
   {
-    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
-    DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+    DynamicObject* obj = getPresetWithUID(nodeId, presetId);
+    
+    jassert(obj != nullptr);
+    
     obj->setProperty("x", jlimit (0.0, 1.0, x));
     obj->setProperty("y", jlimit (0.0, 1.0, y));
     
@@ -588,50 +637,58 @@ void PMixDocument::setPresetPosition (const uint32 nodeId, const int presetIdx, 
   }
 }
 
-void PMixDocument::getPresetPosition (const uint32 nodeId, const int presetIdx, double& x, double& y) const
+void PMixDocument::getPresetPosition (const uint32 nodeId, const int presetId, double& x, double& y) const
 {
   x = y = 0;
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
   
   if (node != nullptr)
   {
-    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
-    DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+    DynamicObject* obj = getPresetWithUID(nodeId, presetId);
+    
+    jassert(obj != nullptr);
+    
     x = (double) obj->getProperty("x");
     y = (double) obj->getProperty("y");
   }
 }
 
-double PMixDocument::getPresetWeight(const uint32 nodeId, const int presetIdx)
+double PMixDocument::getPresetWeight(const uint32 nodeId, const int presetId)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
   
   if (node != nullptr)
   {
-    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+    DynamicObject* obj = getPresetWithUID(nodeId, presetId);
     
-    if (presetIdx < presetsArr->size())
-    {
-      DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
-      return (double) obj->getProperty("coeff");
-    }
+    jassert(obj != nullptr);
+    return (double) obj->getProperty("coeff");
   }
   
   return 0.;
 }
 
-void PMixDocument::setPresetName(const uint32 nodeId, const int presetIdx, String newName)
+void PMixDocument::setPresetName(const uint32 nodeId, const int presetId, String newName)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
   
   if (node != nullptr)
   {
-    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
-    DynamicObject* obj = presetsArr->getReference(presetIdx).getDynamicObject();
+    DynamicObject* obj = getPresetWithUID(nodeId, presetId);
     obj->setProperty("name", newName);
   }
   
   changed();
+}
+
+int PMixDocument::getNumPresetsForNode(const uint32 nodeId)
+{
+  const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeId));
+  
+  if(node)
+    return node->properties.getVarPointer("presets")->getArray()->size();
+  else
+    return 0;
 }
 
 void PMixDocument::setNodeColour(const uint32 nodeId, const Colour colour)

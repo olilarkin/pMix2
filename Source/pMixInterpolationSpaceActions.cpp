@@ -43,7 +43,7 @@ void MovePresetAction::doStuff(Rectangle<int>& whichBounds)
   Point<double> normalizedPos;
   normalizedPos.x = whichBounds.getCentreX() / (double) presetComp->getParentWidth();
   normalizedPos.y = whichBounds.getCentreY() / (double) presetComp->getParentHeight();
-  presetComp->audioEngine.getDoc().setPresetPosition(presetComp->nodeId, presetComp->presetIdx, normalizedPos.x, normalizedPos.y);
+  presetComp->audioEngine.getDoc().setPresetPosition(presetComp->nodeId, presetComp->presetId, normalizedPos.x, normalizedPos.y);
   
   interpolationSpace->repaintPresetsForNode(presetComp->nodeId);
 }
