@@ -57,7 +57,6 @@ bool RemoveNodeAction::perform()
   PluginWindow::closeCurrentlyOpenWindowsFor (nodeId);
   
   audioEngine.getDoc().removeNode (nodeId);
-  graphEditor.getLassoSelection().deselectAll();
 
   if (nodeId < 0xFFFFFFFF)
     return true;

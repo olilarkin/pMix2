@@ -513,9 +513,12 @@ void GraphEditor::deleteSelection()
     NodeComponent* fc = dynamic_cast<NodeComponent*>(c);
     
     if (fc)
+    {
       audioEngine.getDoc().perform(new RemoveNodeAction(audioEngine, *this, fc->nodeId), TRANS("remove node"));
+    }
   }
   
+  selectedItems.deselectAll();
   updateComponents();
 }
 
