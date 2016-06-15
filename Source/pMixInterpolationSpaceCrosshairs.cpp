@@ -79,7 +79,7 @@ void InterpolationSpaceIPos::update()
 {
   const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (nodeId));
   
-  if (f == nullptr) // TODO: WTF?
+  if (f == nullptr)
   {
     delete this;
     return;
@@ -139,33 +139,13 @@ void pMixInterpolationSpaceCrossHairs::resized()
 
 void pMixInterpolationSpaceCrossHairs::updateComponents()
 {
-  for (int i = getNumChildComponents(); --i >= 0;)
-  {
-    if (InterpolationSpaceIPos* const ic = dynamic_cast <InterpolationSpaceIPos*> (getChildComponent (i)))
-    {
-      const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId(ic->nodeId));
-
-      if(f != nullptr)
-      {
-        var iposx = f->properties["iposx"];
-        var iposy = f->properties["iposy"];
-        
-        float x = getWidth() * (float) iposx;
-        float y = getHeight() * (float) iposy;
-        ic->setCentrePosition(x, y);
-        
-        ic->update();
-      }
-      else
-        delete ic;
-    }
-  }
-
   for (int i = audioEngine.getDoc().getNumNodes(); --i >= 0;)
   {
     const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNode (i));
     
-    if (getComponentForNode (f->nodeId) == nullptr)
+    InterpolationSpaceIPos* ipos = getComponentForNode (f->nodeId);
+    
+    if (ipos == nullptr) // need to create a new InterpolationSpaceIPos
     {
       if (f->properties.getVarPointer("presets") != nullptr)
       {
@@ -184,6 +164,22 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
           comp->update();
           addAndMakeVisible(comp);
         }
+      }
+    }
+    else
+    {
+      Array<var>* presets = f->properties.getVarPointer("presets")->getArray();
+      
+      if (presets->size() < 2)
+        delete ipos;
+      else
+      {
+        var iposx = f->properties["iposx"];
+        var iposy = f->properties["iposy"];
+        float x = getWidth() * (float) iposx;
+        float y = getHeight() * (float) iposy;
+        ipos->setCentrePosition(x, y);
+        ipos->update();
       }
     }
   }
