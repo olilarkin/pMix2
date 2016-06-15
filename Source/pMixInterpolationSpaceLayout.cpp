@@ -9,6 +9,7 @@
 
 #include "pMixInterpolationSpaceLayout.h"
 #include "pMixConstants.h"
+#include "pMixCommandIDs.h"
 
 InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
 : Label(String::empty, labelText)
@@ -28,6 +29,7 @@ InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine,
 , presetId(presetId)
 , colour(colour)
 , opacity(1.)
+, dragging(false)
 {
   addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));
   label->addListener(this);
@@ -94,6 +96,7 @@ void InterpolationSpacePreset::mouseDown (const MouseEvent& e)
     myDragger.startDraggingComponent (this, e);
     toFront (true);
     startBounds = getBounds();
+    dragging = true;
     dynamic_cast<PMixInterpolationSpaceLayout*>(getParentComponent())->getLassoSelection().selectOnly(this);
   }
 }
@@ -105,11 +108,18 @@ void InterpolationSpacePreset::mouseDrag (const MouseEvent& e)
 
 void InterpolationSpacePreset::mouseUp (const MouseEvent& e)
 {
-  endBounds = getBounds();
+  if (! e.mouseWasClicked())
+  {
+    endBounds = getBounds();
+    
+    if(dragging && startBounds != endBounds)
+    {
+      audioEngine.getDoc().beginTransaction();
+      audioEngine.getDoc().perform(new MovePresetAction(dynamic_cast<PMixInterpolationSpaceLayout*>(getParentComponent()), getComponentID(), startBounds, endBounds), TRANS("change preset bounds"));
+    }
+  }
   
-  audioEngine.getDoc().beginTransaction();
-  audioEngine.getDoc().perform(new MovePresetAction(dynamic_cast<PMixInterpolationSpaceLayout*>(getParentComponent()), getComponentID(), startBounds, endBounds), TRANS("change preset bounds"));
-  
+  dragging = false;
 }
 
 void InterpolationSpacePreset::paint (Graphics& g)
@@ -170,6 +180,10 @@ PMixInterpolationSpaceLayout::PMixInterpolationSpaceLayout(PMixAudioEngine& audi
 {
   audioEngine.getDoc().addChangeListener (this);
   selectedItems.addChangeListener(this);
+  setMouseClickGrabsKeyboardFocus(true);
+  setWantsKeyboardFocus(true);
+  
+  getCommandManager().registerAllCommandsForTarget (this);
 }
 
 PMixInterpolationSpaceLayout::~PMixInterpolationSpaceLayout()
@@ -297,11 +311,11 @@ void PMixInterpolationSpaceLayout::changeListenerCallback (ChangeBroadcaster* so
 
 void PMixInterpolationSpaceLayout::updateComponents()
 {
-  for (int i = getNumChildComponents(); --i >= 0;)
-  {
-    if (InterpolationSpacePreset* const pc = dynamic_cast <InterpolationSpacePreset*> (getChildComponent (i)))
-      pc->update();
-  }
+//  for (int i = getNumChildComponents(); --i >= 0;)
+//  {
+//    if (InterpolationSpacePreset* const pc = dynamic_cast <InterpolationSpacePreset*> (getChildComponent (i)))
+//      pc->update();
+//  }
   
   for (int i = audioEngine.getDoc().getNumNodes(); --i >= 0;)
   {
@@ -369,5 +383,121 @@ void PMixInterpolationSpaceLayout::repaintPresetsForNode (const uint32 nodeId)
   }
 }
 
+#pragma mark ApplicationCommandTarget
 
+ApplicationCommandTarget* PMixInterpolationSpaceLayout::getNextCommandTarget()
+{
+  return findFirstTargetParentComponent();
+}
 
+void PMixInterpolationSpaceLayout::getAllCommands (Array <CommandID>& commands)
+{
+  // this returns the set of all commands that this target can perform..
+  const CommandID ids[] = {
+    CommandIDs::copy ,
+    CommandIDs::paste ,
+    CommandIDs::del ,
+    CommandIDs::selectAll ,
+    CommandIDs::zoomIn ,
+    CommandIDs::zoomOut ,
+    CommandIDs::zoomNormal
+  };
+  
+  commands.addArray (ids, numElementsInArray (ids));
+}
+
+void PMixInterpolationSpaceLayout::getCommandInfo (const CommandID commandID, ApplicationCommandInfo& result)
+{
+  const String category (TRANS("General"));
+  
+  switch (commandID)
+  {
+    case CommandIDs::copy:
+      result.setInfo (TRANS("Copy"), TRANS("Copies the currently selected items to the clipboard"), category, 0);
+      result.defaultKeypresses.add (KeyPress ('c', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::paste:
+      result.setInfo (TRANS("Paste"), TRANS("Pastes from the clipboard"), category, 0);
+      result.defaultKeypresses.add (KeyPress ('v', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::del:
+      result.setInfo (TRANS("Delete"), TRANS("Deletes the selection"), category, 0);
+      result.defaultKeypresses.add (KeyPress (KeyPress::backspaceKey, ModifierKeys::noModifiers, 0));
+      break;
+    case CommandIDs::selectAll:
+      result.setInfo (TRANS("Select All"), TRANS("Select All"), category, 0);
+      result.defaultKeypresses.add (KeyPress ('a', ModifierKeys::commandModifier, 0));
+      break;
+    case CommandIDs::zoomIn:
+      result.setInfo (TRANS("Zoom in"), TRANS("Zooms in on the current component."), category, 0);
+      result.defaultKeypresses.add (KeyPress (']', ModifierKeys::commandModifier, 0));
+      break;
+      
+    case CommandIDs::zoomOut:
+      result.setInfo (TRANS("Zoom out"), TRANS("Zooms out on the current component."), category, 0);
+      result.defaultKeypresses.add (KeyPress ('[', ModifierKeys::commandModifier, 0));
+      break;
+      
+    case CommandIDs::zoomNormal:
+      result.setInfo (TRANS("Zoom to 100%"), TRANS("Restores the zoom level to normal."), category, 0);
+      result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+      break;
+  }
+}
+
+bool PMixInterpolationSpaceLayout::perform (const InvocationInfo& info)
+{  
+  switch (info.commandID)
+  {
+    case CommandIDs::copy:
+      // TODO
+      break;
+      
+    case CommandIDs::paste:
+      // TODO
+      break;
+      
+    case CommandIDs::del:
+      deleteSelection();
+      break;
+    case CommandIDs::selectAll:
+      selectAll();
+      break;
+      
+      //    case CommandIDs::zoomIn:      getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() * 2.0)); break;
+      //    case CommandIDs::zoomOut:     getMainComponent()->setZoom (snapToIntegerZoom (getMainComponent()->getZoom() / 2.0)); break;
+      //    case CommandIDs::zoomNormal:  getMainComponent()->setZoom (1.0); break;
+      
+    default:
+      return false;
+  }
+  
+  return true;
+}
+
+void PMixInterpolationSpaceLayout::deleteSelection()
+{
+  for (int i = 0; i < selectedItems.getNumSelected(); i++)
+  {
+    Component* c = selectedItems.getSelectedItem(i);
+    
+    InterpolationSpacePreset* p = dynamic_cast<InterpolationSpacePreset*>(c);
+    
+    if (p)
+    {
+      audioEngine.getDoc().removePreset(p->nodeId, p->presetId);
+    }
+  }
+  
+  selectedItems.deselectAll();
+  
+  updateComponents();
+}
+
+void PMixInterpolationSpaceLayout::selectAll()
+{
+  for (int i = 0; i < getNumChildComponents(); i++)
+  {
+    selectedItems.addToSelection(getChildComponent(i));
+  }
+}

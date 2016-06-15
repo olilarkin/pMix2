@@ -22,7 +22,6 @@ GraphEditor::GraphEditor (PMixAudioEngine& audioEngine)
   
 #if PMIX_PLUGIN==0
   getCommandManager().registerAllCommandsForTarget (this);
-  getCommandManager().setFirstCommandTarget (this);
 #endif
   
   setOpaque (true);

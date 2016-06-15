@@ -45,37 +45,47 @@ public:
 private:
   ComponentDragger myDragger;
   ComponentBoundsConstrainer boundsConstrainer;
-  Rectangle<int> startBounds;
-  Rectangle<int> endBounds;
+  Rectangle<int> startBounds, endBounds;
   ScopedPointer<InterpolationSpaceLabel> label;
   Colour colour;
   float opacity;
+  bool dragging;
 };
 
 class PMixInterpolationSpaceLayout : public Component
                                    , public LassoSource<Component*>
                                    , public ChangeListener
+                                   , public ApplicationCommandTarget
 {
 public:
   PMixInterpolationSpaceLayout(PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
   ~PMixInterpolationSpaceLayout();
 
-  void paint (Graphics&);
-  void resized ();
+  void paint (Graphics&) override;
+  void resized () override;
   
-  void mouseDown (const MouseEvent& e);
-  void mouseDrag (const MouseEvent& e);
-  void mouseUp (const MouseEvent& e);
-  void mouseDoubleClick (const MouseEvent& e);
+  void mouseDown (const MouseEvent& e) override;
+  void mouseDrag (const MouseEvent& e) override;
+  void mouseUp (const MouseEvent& e) override;
+  void mouseDoubleClick (const MouseEvent& e) override;
 
-  void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area);
-  SelectedItemSet <Component*>& getLassoSelection();
+  void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area) override;
+  SelectedItemSet <Component*>& getLassoSelection() override;
   
-  void changeListenerCallback (ChangeBroadcaster* source);
+  //ApplicationCommandTarget
+  ApplicationCommandTarget* getNextCommandTarget() override;
+  void getAllCommands (Array <CommandID>& commands) override;
+  void getCommandInfo (CommandID commandID, ApplicationCommandInfo& result) override;
+  bool perform (const InvocationInfo& info) override;
+  
+  void changeListenerCallback (ChangeBroadcaster* source) override;
 
   void getComponentsForNode (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const;
 
   void repaintPresetsForNode (const uint32 nodeId);
+  
+  void deleteSelection();
+  void selectAll();
   
 private:
   //TooltipWindow tooltipWindow;

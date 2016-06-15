@@ -28,8 +28,6 @@ void pMixApp::initialise (const String& commandLine)
   deviceManager.addAudioCallback (&graphPlayer);
   deviceManager.addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
 
-  commandManager.registerAllCommandsForTarget (this);
-
 //  if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getMainComponent() != nullptr)
 //  {
 //    mainWindow->getMainComponent()->getDoc().loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
