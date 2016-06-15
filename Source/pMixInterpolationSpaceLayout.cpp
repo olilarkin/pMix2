@@ -183,7 +183,9 @@ PMixInterpolationSpaceLayout::PMixInterpolationSpaceLayout(PMixAudioEngine& audi
   setMouseClickGrabsKeyboardFocus(true);
   setWantsKeyboardFocus(true);
   
+#if PMIX_PLUGIN==0
   getCommandManager().registerAllCommandsForTarget (this);
+#endif
 }
 
 PMixInterpolationSpaceLayout::~PMixInterpolationSpaceLayout()

@@ -8,7 +8,7 @@
               pluginIsSynth="0" pluginWantsMidiIn="1" pluginProducesMidiOut="1"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="1"
               pluginAUExportPrefix="pMixPluginAU" pluginRTASCategory="" aaxIdentifier="com.OliLarkin.pMixPlugin"
-              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.2.0"
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.2.1"
               companyWebsite="www.olilarkin.co.uk" companyEmail="contact@olilarkin.co.uk"
               companyName="Oli Larkin Plugins" defines="PMIX_PLUGIN=1" pluginIsMidiEffectPlugin="0"
               buildAUv3="0">
