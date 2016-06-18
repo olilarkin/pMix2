@@ -306,12 +306,54 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   if(!InternalPluginFormat::isInternalFormat(pd.name))
   {
     XmlElement* params = new XmlElement ("PARAMS");
-    params->addTextElement (JSON::toString(node->properties ["params"], false));
-    e->addChildElement(params);
+    Array<var>* paramsArray = node->properties.getVarPointer("params")->getArray();
     
-    XmlElement* presets = new XmlElement ("PRESETS");
-    presets->addTextElement (JSON::toString(node->properties ["presets"], false));
-    e->addChildElement(presets);
+    params->addTextElement("[");
+    for(int i=0;i<paramsArray->size();i++)
+    {
+      var parameterIdx = paramsArray->getReference(i);
+      
+      params->addTextElement(parameterIdx.toString());
+      
+      if(i != paramsArray->size()-1)
+        params->addTextElement(", ");
+    }
+    params->addTextElement("]");
+    
+    e->addChildElement(params);
+        
+    Array<var>* presetsArr = node->properties.getVarPointer("presets")->getArray();
+    
+    for(int i=0;i<presetsArr->size();i++)
+    {
+      XmlElement* presetXML = new XmlElement ("PRESET");
+      DynamicObject* thePreset = presetsArr->getReference(i).getDynamicObject();
+      presetXML->setAttribute("name", thePreset->getProperty("name").toString());
+      presetXML->setAttribute("x", thePreset->getProperty("x").toString());
+      presetXML->setAttribute("y", thePreset->getProperty("y").toString());
+      presetXML->setAttribute("radius", thePreset->getProperty("radius").toString());
+      presetXML->setAttribute("hidden", thePreset->getProperty("hidden").toString());
+      //presetXML->setAttribute("distance", thePreset->getProperty("distance").toString());
+      presetXML->setAttribute("coeff", thePreset->getProperty("coeff").toString());
+      presetXML->setAttribute("uid", thePreset->getProperty("uid").toString());
+
+      Array<var>* paramsArray = thePreset->getProperty("state").getArray();
+      
+      presetXML->addTextElement("[");
+      for(int i=0;i<paramsArray->size();i++)
+      {
+        var parameterIdx = paramsArray->getReference(i);
+        
+        presetXML->addTextElement(parameterIdx.toString());
+        
+        if(i != paramsArray->size()-1)
+          presetXML->addTextElement(", ");
+      }
+      
+      presetXML->addTextElement("]");
+      
+      e->addChildElement(presetXML);
+    }
   }
   
   return e;
@@ -379,11 +421,31 @@ void PMixDocument::createNodeFromXml (XmlElement& xml, const String& newSourceCo
       node->properties.set ("params", vparams);
     }
     
-    if (const XmlElement* const presets = xml.getChildByName ("PRESETS"))
+    Array<var> presetsArr;
+    
+    forEachXmlChildElement (xml, e)
     {
-      var vpresets = JSON::parse(presets->getAllSubText());
-      node->properties.set ("presets", vpresets);
+      if (e->hasTagName ("PRESET"))
+      {
+        DynamicObject* obj = new DynamicObject();
+        obj->setProperty("name", e->getStringAttribute("name"));
+        obj->setProperty("x", e->getDoubleAttribute("x"));
+        obj->setProperty("y", e->getDoubleAttribute("y"));
+        obj->setProperty("radius", e->getDoubleAttribute("radius"));
+        obj->setProperty("hidden", e->getBoolAttribute("hidden"));
+        //  obj->setProperty("distance", e->getDoubleAttribute("distance"));
+        obj->setProperty("coeff", e->getDoubleAttribute("coeff"));
+        
+        var vparams = JSON::parse(e->getAllSubText());
+        obj->setProperty("state", vparams);
+        obj->setProperty("uid", e->getIntAttribute("uid"));
+        
+        var preset = var(obj);
+        presetsArr.add(preset);
+      }
     }
+    
+    node->properties.set("presets", presetsArr);
   }
   
   changed();
