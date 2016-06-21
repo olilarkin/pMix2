@@ -140,11 +140,11 @@
                postbuildCommand="if [ -d &quot;/usr/local/lib/faust/&quot; ]; then&#10;  echo copying faust libraries to bundle resources&#10;  cp /usr/local/lib/faust/*.lib $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;  cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;else&#10;  echo faust not installed at /usr/local/lib&#10;fi">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
-                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-3.7/lib&#10;/usr/local/lib"
+                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
                        headerPath="/usr/local/include" cppLibType="libc++"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
                        isDebug="0" optimisation="2" targetName="pMix" headerPath="/usr/local/include"
-                       libraryPath="/opt/local/libexec/llvm-3.7/lib&#10;/usr/local/lib"
+                       libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
                        cppLibType="libc++"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
