@@ -15,7 +15,8 @@ namespace MenuIDs
   static const int fileMenu      = 0x000000;
   static const int editMenu      = 0x000001;
   static const int viewMenu      = 0x000002;
-  static const int optionsMenu   = 0x000003;
+  static const int codeMenu      = 0x000003;
+  static const int optionsMenu   = 0x000004;
 }
 
 namespace CommandIDs
@@ -59,7 +60,9 @@ namespace CommandIDs
   static const int floatISpace            = 0x300016;
   static const int floatCodeEditor        = 0x300017;
   //static const int floatParameters        = 0x300018;
-  static const int faustDSPFiles          = 0x400000;
+  static const int faustDSPFiles          = 0x300019;
+  
+  static const int compile                = 0x300020;
 }
 
 

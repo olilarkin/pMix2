@@ -88,14 +88,14 @@ bool MainAppWindow::tryToQuitApplication()
 StringArray MainAppWindow::getMenuBarNames()
 {
 #if JUCE_LINUX || JUCE_WIN
-  const char* const names[] = { "File", "Edit", "View", "Options", nullptr };
+  const char* const names[] = { "File", "Edit", "View", "Options", "Code", nullptr };
 #else
-  const char* const names[] = { "File", "Edit", "View", nullptr };
+  const char* const names[] = { "File", "Edit", "View", "Code", nullptr };
 #endif
   return StringArray (names);
 }
 
-PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /*menuName*/)
+PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& menuName)
 {
   PopupMenu menu;
 
@@ -157,6 +157,10 @@ PopupMenu MainAppWindow::getMenuForIndex (int topLevelMenuIndex, const String& /
     menu.addCommandItem (&getCommandManager(), CommandIDs::showPrefs);
     menu.addCommandItem (&getCommandManager(), CommandIDs::aboutBox);
 #endif
+  }
+  else if (topLevelMenuIndex == MenuIDs::codeMenu)
+  {
+    menu.addCommandItem (&getCommandManager(), CommandIDs::compile);
   }
 
   return menu;

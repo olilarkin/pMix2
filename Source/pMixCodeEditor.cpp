@@ -9,6 +9,110 @@
 
 #include "pMixCodeEditor.h"
 #include "pMixGraphEditor.h"
+#include "pMixCommandIDs.h"
+
+class PMixToolbarButton : public ToolbarItemComponent
+{
+public:
+  PMixToolbarButton (const int toolbarItemId, String buttonText)
+  : ToolbarItemComponent (toolbarItemId, buttonText, false)
+  , button (buttonText)
+  {
+    addAndMakeVisible (button);
+  }
+  
+  bool getToolbarItemSizes (int toolbarDepth, bool isVertical, int& preferredSize, int& minSize, int& maxSize) override
+  {
+    if (isVertical)
+      return false;
+    
+    preferredSize = 150;
+    minSize = 80;
+    maxSize = 150;
+    return true;
+  }
+  
+  void paintButtonArea (Graphics&, int, int, bool, bool) override
+  {
+  }
+  
+  void contentAreaChanged (const Rectangle<int>& newArea) override
+  {
+    button.setSize (newArea.getWidth() - 2, jmin (newArea.getHeight() - 2, 22));
+    button.setCentrePosition (newArea.getCentreX(), newArea.getCentreY());
+  }
+  
+public:
+  TextButton button;
+};
+
+
+class CodeEditorToolbarItemFactory   : public ToolbarItemFactory
+{
+public:
+  
+  CodeEditorToolbarItemFactory(CodeEditor& codeEditor)
+  : codeEditor(codeEditor)
+  {}
+  
+  enum ToolbarItemIds
+  {
+    kCompile = 1,
+    kLoad = 2,
+    kSave = 3
+  };
+  
+  void getAllToolbarItemIds (Array<int>& ids) override
+  {
+    ids.add (kCompile);
+    ids.add (kLoad);
+    ids.add (kSave);
+
+//    ids.add (separatorBarId);
+//    ids.add (spacerId);
+//    ids.add (flexibleSpacerId);
+  }
+  
+  void getDefaultItemSet (Array<int>& ids) override
+  {
+    ids.add (kCompile);
+    ids.add (kLoad);
+    ids.add (kSave);
+  }
+  
+  ToolbarItemComponent* createItem (int itemId) override
+  {
+    switch (itemId)
+    {
+      case kCompile:
+      {
+        PMixToolbarButton* compileButton = new PMixToolbarButton (itemId, "Compile");
+        compileButton->button.addListener(&codeEditor);
+        return compileButton;
+      }
+      case kLoad:
+      {
+        PMixToolbarButton* compileButton = new PMixToolbarButton (itemId, "Load");
+        compileButton->button.addListener(&codeEditor);
+        return compileButton;
+      }
+      case kSave:
+      {
+        PMixToolbarButton* compileButton = new PMixToolbarButton (itemId, "Save");
+        compileButton->button.addListener(&codeEditor);
+        return compileButton;
+      }
+      default:
+        break;
+    }
+    
+    return nullptr;
+  }
+  
+private:
+  StringArray iconNames;
+  CodeEditor& codeEditor;
+};
 
 CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 : audioEngine(audioEngine)
@@ -17,8 +121,10 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 , selectedNodeId(0)
 , show(CodeEditorBottomViewIDs::diagram)
 {
-  addAndMakeVisible (menuBar = new MenuBarComponent (this));
-
+  addAndMakeVisible (toolBar = new Toolbar());
+  CodeEditorToolbarItemFactory factory(*this);
+  toolBar->addDefaultItems (factory);
+  
   verticalLayout.setItemLayout (0, 100, -1., -0.35);
   verticalLayout.setItemLayout (1, 8, 8, 8);
   verticalLayout.setItemLayout (2, 2, -1.0, 100);
@@ -34,6 +140,10 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   editor->setTabSize(2, true);
   
   graphEditor.addChangeListener(this);
+  
+#if PMIX_PLUGIN==0
+  getCommandManager().registerAllCommandsForTarget (this);
+#endif
   
   audioEngine.getLogger().logMessage("Ready.");
   
@@ -54,7 +164,7 @@ void CodeEditor::paint (Graphics& g)
 void CodeEditor::resized()
 {
   Rectangle<int> area (getLocalBounds());
-  menuBar->setBounds (area.removeFromTop (LookAndFeel::getDefaultLookAndFeel().getDefaultMenuBarHeight()));
+  toolBar->setBounds (area.removeFromTop (25));
 
   Component* vcomps[3];//{ editor, dividerBar1, console };
   vcomps[0] = editor;
@@ -126,90 +236,126 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
   clear();
 }
 
-
-StringArray CodeEditor::getMenuBarNames()
+void CodeEditor::buttonClicked (Button* button)
 {
-  const char* const names[] = { "File", "Edit", "View", "Help", nullptr };
-  
-  return StringArray (names);
-}
-
-PopupMenu CodeEditor::getMenuForIndex (int menuIndex, const String& menuName)
-{
-  PopupMenu menu;
-
-  switch (menuIndex)
+  if(button->getName() == "Compile")
   {
-    case CodeEditorMenuIDs::fileMenu:
-      menu.addItem(1, "Recompile", selectedFaustAudioPluginInstance != nullptr);
-      menu.addSeparator();
-      menu.addItem(2, "Import .dsp file", false);
-      menu.addItem(3, "Save As .dsp file ...", false);
-      menu.addItem(4, "Export ...", false);
-      break;
-    case CodeEditorMenuIDs::editMenu:
-      menu.addItem(1, "Copy", false);
-      menu.addItem(2, "Paste", false);
-      menu.addItem(3, "Delete", false);
-      menu.addItem(4, "Select All", false);
-      menu.addSeparator();
-      menu.addItem(5, "Comment Selection", false);
-      menu.addItem(6, "Uncomment Selection", false);
-
-      break;
-    case CodeEditorMenuIDs::viewMenu:
-      menu.addItem(CodeEditorBottomViewIDs::diagram, "Show Diagram", true, show == CodeEditorBottomViewIDs::diagram);
-      menu.addItem(CodeEditorBottomViewIDs::console, "Show Console", true, show == CodeEditorBottomViewIDs::console);
-      menu.addSeparator();
-      menu.addItem(3, "Increase Font Size", false, false);
-      menu.addItem(4, "Decrease Font Size", false, false);
-      menu.addItem(5, "Editor Settings...", false, false);
-      break;
-    case CodeEditorMenuIDs::helpMenu:
-      menu.addItem(1, "Open Faust Libraries", false);
-      menu.addItem(2, "Read PDF guide", false);
-      break;
-    default:
-      break;
-  }
-  
-  return menu;
-}
-
-void CodeEditor::menuItemSelected (int menuItemID, int topLevelMenuIndex)
-{
-  switch (topLevelMenuIndex)
-  {
-    case CodeEditorMenuIDs::fileMenu:
+    if(selectedNodeId > 0)
     {
-      switch (menuItemID)
-      {
-        case 1:
-        {
-          String newSourceCode = codeDocument.getAllContent();
-          graphEditor.updateFaustNode(selectedNodeId, newSourceCode);
-          break;
-        }
-      }
-      break;
+      String newSourceCode = codeDocument.getAllContent();
+      graphEditor.updateFaustNode(selectedNodeId, newSourceCode);
     }
-    case CodeEditorMenuIDs::viewMenu:
-      switch (menuItemID)
-      {
-        case CodeEditorBottomViewIDs::console:
-          showConsoleOrBrowser(CodeEditorBottomViewIDs::console);
-          break;
-        case CodeEditorBottomViewIDs::diagram:
-          showConsoleOrBrowser(CodeEditorBottomViewIDs::diagram);
-          break;
-        default:
-          break;
-      }
-      break;
-    default:
-      break;
   }
 }
+
+#pragma mark ApplicationCommandTarget
+
+ApplicationCommandTarget* CodeEditor::getNextCommandTarget()
+{
+  return findFirstTargetParentComponent();
+}
+
+void CodeEditor::getAllCommands (Array <CommandID>& commands)
+{
+  // this returns the set of all commands that this target can perform..
+  const CommandID ids[] = {
+    CommandIDs::compile
+//    CommandIDs::zoomIn ,
+//    CommandIDs::zoomOut ,
+//    CommandIDs::zoomNormal
+  };
+  
+  commands.addArray (ids, numElementsInArray (ids));
+}
+
+void CodeEditor::getCommandInfo (const CommandID commandID, ApplicationCommandInfo& result)
+{
+  const String category (TRANS("General"));
+  
+  switch (commandID)
+  {
+    case CommandIDs::compile:
+      result.setInfo (TRANS("Compile"), TRANS("Compile selected FAUST node"), category, 0);
+      result.defaultKeypresses.add (KeyPress (KeyPress::returnKey, ModifierKeys::commandModifier, 0));
+      break;
+//    case CommandIDs::zoomIn:
+//      result.setInfo (TRANS("Zoom in"), TRANS("Zooms in on the current component."), category, 0);
+//      result.defaultKeypresses.add (KeyPress (']', ModifierKeys::commandModifier, 0));
+//      break;
+//      
+//    case CommandIDs::zoomOut:
+//      result.setInfo (TRANS("Zoom out"), TRANS("Zooms out on the current component."), category, 0);
+//      result.defaultKeypresses.add (KeyPress ('[', ModifierKeys::commandModifier, 0));
+//      break;
+//      
+//    case CommandIDs::zoomNormal:
+//      result.setInfo (TRANS("Zoom to 100%"), TRANS("Restores the zoom level to normal."), category, 0);
+//      result.defaultKeypresses.add (KeyPress ('1', ModifierKeys::commandModifier, 0));
+//      break;
+  }
+}
+
+bool CodeEditor::perform (const InvocationInfo& info)
+{
+  switch (info.commandID)
+  {
+    case CommandIDs::compile:
+    {
+      if(selectedNodeId > 0)
+      {
+        String newSourceCode = codeDocument.getAllContent();
+        graphEditor.updateFaustNode(selectedNodeId, newSourceCode);
+        
+        break;
+      }
+    }
+    default:
+      return false;
+  }
+  
+  return true;
+}
+      //PopupMenu CodeEditor::getMenuForIndex (int menuIndex, const String& menuName)
+//{
+//  PopupMenu menu;
+//
+//  switch (menuIndex)
+//  {
+//    case CodeEditorMenuIDs::fileMenu:
+//      menu.addItem(1, "Recompile", selectedFaustAudioPluginInstance != nullptr);
+//      menu.addSeparator();
+//      menu.addItem(2, "Import .dsp file", false);
+//      menu.addItem(3, "Save As .dsp file ...", false);
+//      menu.addItem(4, "Export ...", false);
+//      break;
+//    case CodeEditorMenuIDs::editMenu:
+//      menu.addItem(1, "Copy", false);
+//      menu.addItem(2, "Paste", false);
+//      menu.addItem(3, "Delete", false);
+//      menu.addItem(4, "Select All", false);
+//      menu.addSeparator();
+//      menu.addItem(5, "Comment Selection", false);
+//      menu.addItem(6, "Uncomment Selection", false);
+//
+//      break;
+//    case CodeEditorMenuIDs::viewMenu:
+//      menu.addItem(CodeEditorBottomViewIDs::diagram, "Show Diagram", true, show == CodeEditorBottomViewIDs::diagram);
+//      menu.addItem(CodeEditorBottomViewIDs::console, "Show Console", true, show == CodeEditorBottomViewIDs::console);
+//      menu.addSeparator();
+//      menu.addItem(3, "Increase Font Size", false, false);
+//      menu.addItem(4, "Decrease Font Size", false, false);
+//      menu.addItem(5, "Editor Settings...", false, false);
+//      break;
+//    case CodeEditorMenuIDs::helpMenu:
+//      menu.addItem(1, "Open Faust Libraries", false);
+//      menu.addItem(2, "Read PDF guide", false);
+//      break;
+//    default:
+//      break;
+//  }
+//  
+//  return menu;
+//}
 
 void CodeEditor::clear()
 {

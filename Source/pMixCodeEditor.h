@@ -16,23 +16,18 @@
 #include "pMixConsole.h"
 #include "pMixGraphEditor.h"
 
-namespace CodeEditorMenuIDs
-{
-  static const int fileMenu = 0x000000;
-  static const int editMenu = 0x000001;
-  static const int viewMenu = 0x000002;
-  static const int helpMenu = 0x000003;
-};
-
 namespace CodeEditorBottomViewIDs
 {
   static const int diagram = 1;
   static const int console = 2;
 };
 
+class CodeEditorToolbarItemFactory;
+
 class CodeEditor : public Component
-                 , public MenuBarModel
                  , public ChangeListener
+                 , public Button::Listener
+                 , public ApplicationCommandTarget
 {
 public:
   CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor);
@@ -42,11 +37,13 @@ public:
   void resized() override;
   
   void changeListenerCallback (ChangeBroadcaster* source) override;
-  void buttonClicked (Button* button);
+  void buttonClicked (Button* button) override;
   
-  StringArray getMenuBarNames() override;
-  PopupMenu getMenuForIndex (int menuIndex, const String& menuName) override;
-  void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
+  //ApplicationCommandTarget
+  ApplicationCommandTarget* getNextCommandTarget() override;
+  void getAllCommands (Array <CommandID>& commands) override;
+  void getCommandInfo (CommandID commandID, ApplicationCommandInfo& result) override;
+  bool perform (const InvocationInfo& info) override;
   
   void clear();
   
@@ -56,7 +53,8 @@ private:
   FaustTokeniser tokeniser;
   CodeDocument codeDocument;
   
-  ScopedPointer<MenuBarComponent> menuBar;
+  ScopedPointer<Toolbar> toolBar;
+  
   ScopedPointer<CodeEditorComponent> editor;
   ScopedPointer<SVGDisplay> svgDisplay;
   ScopedPointer<PMixConsole> console;
