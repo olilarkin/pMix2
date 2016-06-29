@@ -966,9 +966,6 @@
     <ClCompile Include="..\..\..\juce_faustllvm\source\FaustGenFactory.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\juce_faustllvm\source\FaustUIComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\juce_faustllvm\juce_faustllvm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2143,7 +2140,6 @@
     <ClInclude Include="..\..\..\juce_faustllvm\source\FaustFileFilter.h"/>
     <ClInclude Include="..\..\..\juce_faustllvm\source\FaustGenFactory.h"/>
     <ClInclude Include="..\..\..\juce_faustllvm\source\FaustPluginFormat.h"/>
-    <ClInclude Include="..\..\..\juce_faustllvm\source\FaustUIComponent.h"/>
     <ClInclude Include="..\..\..\juce_faustllvm\juce_faustllvm.h"/>
     <ClInclude Include="..\..\..\juce_faustllvm\juce_faustllvm.h"/>
     <ClInclude Include="..\..\..\..\juce\modules\juce_graphics\colour\juce_Colour.h"/>

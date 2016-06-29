@@ -1324,9 +1324,6 @@
     <ClCompile Include="..\..\..\juce_faustllvm\source\FaustGenFactory.cpp">
       <Filter>Juce Modules\juce_faustllvm\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\juce_faustllvm\source\FaustUIComponent.cpp">
-      <Filter>Juce Modules\juce_faustllvm\source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\juce_faustllvm\juce_faustllvm.cpp">
       <Filter>Juce Modules\juce_faustllvm</Filter>
     </ClCompile>
@@ -3388,9 +3385,6 @@
       <Filter>Juce Modules\juce_faustllvm\source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\juce_faustllvm\source\FaustPluginFormat.h">
-      <Filter>Juce Modules\juce_faustllvm\source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\juce_faustllvm\source\FaustUIComponent.h">
       <Filter>Juce Modules\juce_faustllvm\source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\juce_faustllvm\juce_faustllvm.h">
