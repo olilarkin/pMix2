@@ -166,7 +166,7 @@ void CodeEditor::paint (Graphics& g)
 
   g.setColour (Colours::black);
   g.setFont (30.0f);
-  g.drawFittedText ("Create or select a Faust node to view the code", getLocalBounds(), Justification::centred, 1);
+  g.drawFittedText ("Create or select a Faust node to view the code", editor->getBounds(), Justification::centred, 1);
 }
 
 void CodeEditor::resized()
