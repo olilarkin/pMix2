@@ -83,7 +83,7 @@ uint32 PMixDocument::addNode (const PluginDescription* desc, double x, double y)
       node->properties.set ("y", y);
       node->properties.set ("uiLastX", Random::getSystemRandom().nextInt (500));
       node->properties.set ("uiLastY", Random::getSystemRandom().nextInt (500));
-      node->properties.set ("uiStatus", kUIStatusNone);
+      node->properties.set ("uiStatus", kUIStatusEmbed);
       
       if (!InternalPluginFormat::isInternalFormat(desc->name))
       {
