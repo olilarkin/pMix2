@@ -22,6 +22,45 @@ namespace CodeEditorBottomViewIDs
   static const int console = 2;
 };
 
+class CompileButton : public TextButton
+{
+public:
+  CompileButton(String buttonName)
+  : TextButton(buttonName)
+  , highlight(false)
+  {
+  }
+  
+  ~CompileButton()
+  {
+  }
+  
+  void paintButton (Graphics& g, bool isMouseOverButton, bool isButtonDown)
+  {
+    LookAndFeel& lf = getLookAndFeel();
+    
+    Colour bgColour;
+    
+    if(highlight)
+      bgColour = getToggleState() ? findColour(buttonOnColourId) : Colours::red;
+    else
+      bgColour = findColour (getToggleState() ? buttonOnColourId : buttonColourId);
+    
+    lf.drawButtonBackground (g, *this,bgColour, isMouseOverButton, isButtonDown);
+    
+    lf.drawButtonText (g, *this, isMouseOverButton, isButtonDown);
+  }
+  
+  void setHighlight(bool v)
+  {
+    highlight = v;
+    repaint();
+  }
+
+private:
+  bool highlight;
+};
+
 class CodeEditorToolbarItemFactory;
 
 class CodeEditor : public Component
@@ -49,6 +88,8 @@ public:
   
   void showConsoleOrBrowser(int which);
   
+  CompileButton* compileButton;
+  
 private:
   FaustTokeniser tokeniser;
   CodeDocument codeDocument;
@@ -58,7 +99,7 @@ private:
   ScopedPointer<CodeEditorComponent> editor;
   ScopedPointer<SVGDisplay> svgDisplay;
   ScopedPointer<PMixConsole> console;
-
+  
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
 

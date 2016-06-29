@@ -43,7 +43,7 @@ public:
   }
   
 public:
-  TextButton button;
+  CompileButton button;
 };
 
 
@@ -88,6 +88,9 @@ public:
       {
         PMixToolbarButton* compileButton = new PMixToolbarButton (itemId, "Compile");
         compileButton->button.addListener(&codeEditor);
+        
+        codeEditor.compileButton = &compileButton->button; //TODO: this is shit
+        
         return compileButton;
       }
       case kLoad:
@@ -115,7 +118,8 @@ private:
 };
 
 CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
-: audioEngine(audioEngine)
+: compileButton(nullptr)
+, audioEngine(audioEngine)
 , graphEditor(graphEditor)
 , selectedFaustAudioPluginInstance(nullptr)
 , selectedNodeId(0)
@@ -199,11 +203,6 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
 {
   if (source == &graphEditor)
   {
-//    if (selectedFaustAudioPluginInstance != nullptr)
-//    {
-//      selectedFaustAudioPluginInstance->setSourceCode(codeDocument.getAllContent(), false);
-//    }
-    
     if(graphEditor.getLassoSelection().getNumSelected() == 1)
     {
       NodeComponent* selectedItem = dynamic_cast<NodeComponent*>(graphEditor.getLassoSelection().getSelectedItem(0));
@@ -234,7 +233,6 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
           editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());
           editor->setVisible(true);
           toolBar->setVisible(true);
-
           return;
         }
       }
@@ -250,6 +248,7 @@ void CodeEditor::buttonClicked (Button* button)
   {
     String newSourceCode = codeDocument.getAllContent();
     graphEditor.updateFaustNode(selectedNodeId, newSourceCode);
+    compileButton->setHighlight(false);
   }
   else  if(button->getName() == "Load")
   {
@@ -265,6 +264,8 @@ void CodeEditor::buttonClicked (Button* button)
       FileInputStream fileInput(chosen);
       
       codeDocument.loadFromStream(fileInput);
+      selectedFaustAudioPluginInstance->setSourceCode(codeDocument.getAllContent(), false);
+      compileButton->setHighlight(true);
     }
   }
   else if(button->getName() == "Save")
@@ -342,7 +343,7 @@ bool CodeEditor::perform (const InvocationInfo& info)
       {
         String newSourceCode = codeDocument.getAllContent();
         graphEditor.updateFaustNode(selectedNodeId, newSourceCode);
-        
+        compileButton->setHighlight(false);
         break;
       }
     }
