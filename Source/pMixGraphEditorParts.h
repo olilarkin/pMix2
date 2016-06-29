@@ -36,7 +36,7 @@ public:
 private:
   PMixAudioEngine& audioEngine;
 
-  GraphEditor* getGraphPanel() const noexcept;
+  GraphEditor* getGraphEditor() const noexcept;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PinComponent)
 };
@@ -86,7 +86,7 @@ private:
   PMixGenericAudioProcessorEditor* editor;
   Label* nodeName;
   bool highlight;
-  GraphEditor* getGraphPanel() const noexcept;
+  GraphEditor* getGraphEditor() const noexcept;
   
   NodeComponent (const NodeComponent&);
   NodeComponent& operator= (const NodeComponent&);
@@ -123,7 +123,7 @@ private:
   Path linePath, hitPath;
   bool dragging;
   
-  GraphEditor* getGraphPanel() const noexcept;
+  GraphEditor* getGraphEditor() const noexcept;
   void getDistancesFromEnds (int x, int y, double& distanceFromStart, double& distanceFromEnd) const;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConnectorComponent)
 };

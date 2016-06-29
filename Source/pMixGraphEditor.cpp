@@ -504,6 +504,12 @@ void GraphEditor::filesDropped (const StringArray& files, int x, int y)
   repaint();
 }
 
+void GraphEditor::clearSelection()
+{
+  selectedItems.deselectAll();
+  sendChangeMessage();
+}
+
 void GraphEditor::deleteSelection()
 {
   for (int i = 0; i < selectedItems.getNumSelected(); i++)

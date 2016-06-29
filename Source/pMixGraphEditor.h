@@ -52,7 +52,7 @@ public:
   void dragConnector (const MouseEvent& e);
   void endDraggingConnector (const MouseEvent& e);
 
-  
+  void clearSelection();
   void deleteSelection();
   void selectAll();
 

@@ -159,6 +159,10 @@ CodeEditor::~CodeEditor()
 void CodeEditor::paint (Graphics& g)
 {
   g.fillAll (Colours::white);
+
+  g.setColour (Colours::black);
+  g.setFont (30.0f);
+  g.drawFittedText ("Create or select a Faust node to view the code", getLocalBounds(), Justification::centred, 1);
 }
 
 void CodeEditor::resized()
@@ -187,6 +191,8 @@ void CodeEditor::resized()
                                    area.getX(), area.getY(), area.getWidth(), area.getHeight(),
                                    true,     // lay out side-by-side
                                    true);     // resize the components' heights as well as widths
+  
+  repaint();
 }
 
 void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
@@ -209,6 +215,7 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
         
         if (faustProc)
         {
+          
           selectedFaustAudioPluginInstance = faustProc;
           
           if (!selectedFaustAudioPluginInstance->getHighlight())
@@ -225,7 +232,8 @@ void CodeEditor::changeListenerCallback (ChangeBroadcaster* source)
           }
           
           editor->loadContent(selectedFaustAudioPluginInstance->getSourceCode());
-          editor->setInterceptsMouseClicks(true, true);
+          editor->setVisible(true);
+          toolBar->setVisible(true);
 
           return;
         }
@@ -240,10 +248,39 @@ void CodeEditor::buttonClicked (Button* button)
 {
   if(button->getName() == "Compile")
   {
-    if(selectedNodeId > 0)
+    String newSourceCode = codeDocument.getAllContent();
+    graphEditor.updateFaustNode(selectedNodeId, newSourceCode);
+  }
+  else  if(button->getName() == "Load")
+  {
+    FileChooser fc ("Load Faust DSP file...",
+                    File::getSpecialLocation(File::userDesktopDirectory),
+                    "*.dsp",
+                    true);
+    
+    if (fc.browseForFileToOpen())
     {
-      String newSourceCode = codeDocument.getAllContent();
-      graphEditor.updateFaustNode(selectedNodeId, newSourceCode);
+      File chosen = fc.getResults().getLast();
+    
+      FileInputStream fileInput(chosen);
+      
+      codeDocument.loadFromStream(fileInput);
+    }
+  }
+  else if(button->getName() == "Save")
+  {
+    FileChooser fc ("Save Faust DSP file...",
+                    File::getSpecialLocation(File::userDesktopDirectory),
+                    "dsp",
+                    true);
+    
+    if (fc.browseForFileToSave(true))
+    {
+      File chosen = fc.getResults().getLast();
+      
+      FileOutputStream fileOutput(chosen);
+      
+      codeDocument.writeToStream(fileOutput);
     }
   }
 }
@@ -359,9 +396,10 @@ bool CodeEditor::perform (const InvocationInfo& info)
 
 void CodeEditor::clear()
 {
+  selectedNodeId = 0;
   selectedFaustAudioPluginInstance = nullptr;
-  editor->loadContent("Create or select a Faust node to view the code");
-  editor->setInterceptsMouseClicks(false, false);
+  editor->setVisible(false);
+  toolBar->setVisible(false);
   svgDisplay->clearDisplay();
 }
 

@@ -72,7 +72,7 @@ void PinComponent::paint (Graphics& g)
 
 void PinComponent::mouseDown (const MouseEvent& e)
 {
-  getGraphPanel()->beginConnectorDrag (isInput ? 0 : nodeId,
+  getGraphEditor()->beginConnectorDrag (isInput ? 0 : nodeId,
                                        index,
                                        isInput ? nodeId : 0,
                                        index,
@@ -81,12 +81,12 @@ void PinComponent::mouseDown (const MouseEvent& e)
 
 void PinComponent::mouseDrag (const MouseEvent& e)
 {
-  getGraphPanel()->dragConnector (e);
+  getGraphEditor()->dragConnector (e);
 }
 
 void PinComponent::mouseUp (const MouseEvent& e)
 {
-  getGraphPanel()->endDraggingConnector (e);
+  getGraphEditor()->endDraggingConnector (e);
 }
 
 void PinComponent::mouseEnter (const MouseEvent& e)
@@ -101,7 +101,7 @@ void PinComponent::mouseExit (const MouseEvent& e)
   repaint();
 }
 
-GraphEditor* PinComponent::getGraphPanel() const noexcept
+GraphEditor* PinComponent::getGraphEditor() const noexcept
 {
   return findParentComponentOfClass<GraphEditor>();
 }
@@ -171,7 +171,7 @@ void NodeComponent::mouseDown (const MouseEvent& e)
         PopupMenu ui;
         ui.addItem (7, TRANS("Disabled"), true, uiStatus == kUIStatusNone);
         ui.addItem (8, TRANS("Embedded"), true, uiStatus == kUIStatusEmbed);
-        ui.addItem (9, TRANS("Floating"), true, uiStatus == kUIStatusFloating);
+//        ui.addItem (9, TRANS("Floating"), true, uiStatus == kUIStatusFloating);
 
         m.addSubMenu (TRANS("Set UI Mode"), ui);
       }
@@ -190,7 +190,9 @@ void NodeComponent::mouseDown (const MouseEvent& e)
           removeEditor();
           
           audioEngine.getDoc().beginTransaction();
-          audioEngine.getDoc().perform(new RemoveNodeAction(audioEngine, *getGraphPanel(), nodeId), TRANS("remove node"));
+          audioEngine.getDoc().perform(new RemoveNodeAction(audioEngine, *getGraphEditor(), nodeId), TRANS("remove node"));
+          
+          getGraphEditor()->clearSelection();
         }
       }
       return;
@@ -241,34 +243,34 @@ void NodeComponent::mouseDown (const MouseEvent& e)
       PluginWindow::closeCurrentlyOpenWindowsFor(nodeId);
       update();
     }
-    else if (r == 9)
-    {
-      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
-      {
-        AudioProcessor* const processor = f->getProcessor();
-        jassert (processor != nullptr);
-        
-        String name = processor->getName();
-        
-        if (r > 0)
-        {
-          removeEditor();
-
-          PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal : PluginWindow::Generic;
-          
-          if (PluginWindow* const w = PluginWindow::getWindowFor (f, type))
-            w->toFront (true);
-          
-          audioEngine.getDoc().setNodeUIStatus(nodeId, kUIStatusFloating);
-          update();
-        };
-      }
-    }
+//    else if (r == 9)
+//    {
+//      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
+//      {
+//        AudioProcessor* const processor = f->getProcessor();
+//        jassert (processor != nullptr);
+//        
+//        String name = processor->getName();
+//        
+//        if (r > 0)
+//        {
+//          removeEditor();
+//
+//          PluginWindow::WindowFormatType type = processor->hasEditor() ? PluginWindow::Normal : PluginWindow::Generic;
+//          
+//          if (PluginWindow* const w = PluginWindow::getWindowFor (f, type))
+//            w->toFront (true);
+//          
+//          audioEngine.getDoc().setNodeUIStatus(nodeId, kUIStatusFloating);
+//          update();
+//        };
+//      }
+//    }
   }
   else
   {
     moving = true;
-    getGraphPanel()->getLassoSelection().selectOnly(this);
+    getGraphEditor()->getLassoSelection().selectOnly(this);
     audioEngine.getDoc().getNodePosition(nodeId, startPos.x, startPos.y);
   }
 }
@@ -287,7 +289,7 @@ void NodeComponent::mouseDrag (const MouseEvent& e)
     
     audioEngine.getDoc().setNodePosition (nodeId, endPos.x, endPos.y);
     
-    getGraphPanel()->updateComponents();
+    getGraphEditor()->updateComponents();
   }
 }
 
@@ -313,7 +315,7 @@ void NodeComponent::mouseUp (const MouseEvent& e)
     {
       moving = false;
       audioEngine.getDoc().beginTransaction();
-      audioEngine.getDoc().perform(new MoveNodeAction(audioEngine, *getGraphPanel(), nodeId, startPos, endPos), "move node");
+      audioEngine.getDoc().perform(new MoveNodeAction(audioEngine, *getGraphEditor(), nodeId, startPos, endPos), "move node");
     }
   }
 }
@@ -359,7 +361,7 @@ void NodeComponent::paint (Graphics& g)
 
   g.setColour (Colours::black);
   
-  if (getGraphPanel()->getLassoSelection().isSelected(this))
+  if (getGraphEditor()->getLassoSelection().isSelected(this))
     g.setColour (Colours::black);
   else
     g.setColour (Colours::grey);
@@ -492,7 +494,7 @@ void NodeComponent::update()
   }
 }
 
-GraphEditor* NodeComponent::getGraphPanel() const noexcept
+GraphEditor* NodeComponent::getGraphEditor() const noexcept
 {
   return findParentComponentOfClass<GraphEditor>();
 }
@@ -510,7 +512,7 @@ void NodeComponent::changeListenerCallback (ChangeBroadcaster* source)
 
 void NodeComponent::bubbleMessage(String msg)
 {
-  BubbleMessageComponent* bbl = new BubbleMessageComponent();
+  BubbleMessageComponent* bbl = new BubbleMessageComponent(5000);
   AttributedString text (msg);
   text.setJustification (Justification::centred);
   bbl->setAlwaysOnTop (true);
@@ -610,7 +612,7 @@ void ConnectorComponent::getPoints (float& x1, float& y1, float& x2, float& y2) 
   x2 = lastOutputX;
   y2 = lastOutputY;
   
-  if (GraphEditor* const hostPanel = getGraphPanel())
+  if (GraphEditor* const hostPanel = getGraphEditor())
   {
     if (NodeComponent* srcNodeComp = hostPanel->getComponentForNode (sourceNodeId))
       srcNodeComp->getPinPos (sourceNodeChannel, false, x1, y1);
@@ -666,7 +668,7 @@ void ConnectorComponent::mouseDrag (const MouseEvent& e)
     getDistancesFromEnds (e.x, e.y, distanceFromStart, distanceFromEnd);
     const bool isNearerSource = (distanceFromStart < distanceFromEnd);
     
-    getGraphPanel()->beginConnectorDrag (isNearerSource ? 0 : sourceNodeId,
+    getGraphEditor()->beginConnectorDrag (isNearerSource ? 0 : sourceNodeId,
                                          sourceNodeChannel,
                                          isNearerSource ? destNodeId : 0,
                                          destNodeChannel,
@@ -674,14 +676,14 @@ void ConnectorComponent::mouseDrag (const MouseEvent& e)
   }
   else if (dragging)
   {
-    getGraphPanel()->dragConnector (e);
+    getGraphEditor()->dragConnector (e);
   }
 }
 
 void ConnectorComponent::mouseUp (const MouseEvent& e)
 {
   if (dragging)
-    getGraphPanel()->endDraggingConnector (e);
+    getGraphEditor()->endDraggingConnector (e);
 }
 
 void ConnectorComponent::resized()
@@ -731,7 +733,7 @@ void ConnectorComponent::resized()
   linePath.setUsingNonZeroWinding (true);
 }
 
-GraphEditor* ConnectorComponent::getGraphPanel() const noexcept
+GraphEditor* ConnectorComponent::getGraphEditor() const noexcept
 {
   return findParentComponentOfClass<GraphEditor>();
 }
