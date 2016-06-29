@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="RsNvH4" name="pMix" projectType="guiapp" version="0.0.1"
+<JUCERPROJECT id="RsNvH4" name="pMix" projectType="guiapp" version="0.0.2"
               bundleIdentifier="com.OliLarkin.pMix" includeBinaryInAppConfig="1"
               jucerVersion="4.2.1" companyName="OliLarkin" companyWebsite="www.olilarkin.co.uk"
               companyEmail="contact@olilarkin.co.uk">

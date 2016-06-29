@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="kGtriQ" name="pMixPlugin" projectType="audioplug" version="0.0.1"
+<JUCERPROJECT id="kGtriQ" name="pMixPlugin" projectType="audioplug" version="0.0.2"
               bundleIdentifier="com.OliLarkin.pMixPlugin" includeBinaryInAppConfig="0"
               buildVST="1" buildVST3="0" buildAU="1" buildRTAS="0" buildAAX="0"
               pluginName="pMix" pluginDesc="pMix" pluginManufacturer="OliLarkin"

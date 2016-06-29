@@ -18,9 +18,9 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.0.1</string>
+    <string>0.0.2</string>
     <key>CFBundleVersion</key>
-    <string>0.0.1</string>
+    <string>0.0.2</string>
     <key>NSHumanReadableCopyright</key>
     <string>Oli Larkin Plugins</string>
     <key>NSHighResolutionCapable</key>
@@ -41,7 +41,7 @@
         <key>subtype</key>
         <string>pMix</string>
         <key>version</key>
-        <integer>1</integer>
+        <integer>2</integer>
       </dict>
     </array>
   </dict>
