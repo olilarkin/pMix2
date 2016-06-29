@@ -144,10 +144,10 @@
                extraLinkerFlags="" externalLibraries="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
-                       isDebug="1" optimisation="1" targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.7/lib&#10;/usr/local/lib"
+                       isDebug="1" optimisation="1" targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
                        headerPath="/usr/local/include" cppLibType="libc++"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
-                       isDebug="0" optimisation="2" targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.7/lib&#10;/usr/local/lib"
+                       isDebug="0" optimisation="2" targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
                        cppLibType="libc++" headerPath="/usr/local/include&#10;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
