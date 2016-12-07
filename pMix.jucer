@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="RsNvH4" name="pMix" projectType="guiapp" version="0.0.2"
               bundleIdentifier="com.OliLarkin.pMix" includeBinaryInAppConfig="1"
-              jucerVersion="4.2.1" companyName="OliLarkin" companyWebsite="www.olilarkin.co.uk"
+              jucerVersion="4.3.0" companyName="OliLarkin" companyWebsite="www.olilarkin.co.uk"
               companyEmail="contact@olilarkin.co.uk">
   <MAINGROUP id="FiV8Cl" name="pMix">
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
@@ -135,16 +135,16 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="~/SDKs/vstsdk2.4" vst3Folder="~/SDKs/VST3 SDK"
-               customPList="" bigIcon="OqTrli" smallIcon="OqTrli" externalLibraries=""
-               extraLinkerFlags="" extraCompilerFlags="" extraDefs="FAUSTFLOAT=double"
-               postbuildCommand="if [ -d &quot;/usr/local/lib/faust/&quot; ]; then&#10;  echo copying faust libraries to bundle resources&#10;  cp /usr/local/lib/faust/*.lib $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;  cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;else&#10;  echo faust not installed at /usr/local/lib&#10;fi">
+               customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist&gt;&#10;  &lt;dict&gt;&#10;    &lt;key&gt;CFBundleExecutable&lt;/key&gt;&#10;    &lt;string&gt;${EXECUTABLE_NAME}&lt;/string&gt;&#10;    &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;    &lt;string&gt;Icon.icns&lt;/string&gt;&#10;    &lt;key&gt;CFBundleIdentifier&lt;/key&gt;&#10;    &lt;string&gt;$(PRODUCT_BUNDLE_IDENTIFIER)&lt;/string&gt;&#10;    &lt;key&gt;CFBundleName&lt;/key&gt;&#10;    &lt;string&gt;pMix&lt;/string&gt;&#10;    &lt;key&gt;CFBundleDisplayName&lt;/key&gt;&#10;    &lt;string&gt;pMix&lt;/string&gt;&#10;    &lt;key&gt;CFBundlePackageType&lt;/key&gt;&#10;    &lt;string&gt;APPL&lt;/string&gt;&#10;    &lt;key&gt;CFBundleSignature&lt;/key&gt;&#10;    &lt;string&gt;????&lt;/string&gt;&#10;    &lt;key&gt;CFBundleShortVersionString&lt;/key&gt;&#10;    &lt;string&gt;0.0.2&lt;/string&gt;&#10;    &lt;key&gt;CFBundleVersion&lt;/key&gt;&#10;    &lt;string&gt;0.0.2&lt;/string&gt;&#10;    &lt;key&gt;NSHumanReadableCopyright&lt;/key&gt;&#10;    &lt;string&gt;OliLarkin&lt;/string&gt;&#10;    &lt;key&gt;NSHighResolutionCapable&lt;/key&gt;&#10;    &lt;true/&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&lt;dict&gt;&#10;  &lt;!--Include to allow all connections (DANGER)--&gt;&#10;  &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;      &lt;true/&gt;&#10;&lt;/dict&gt;&#10;  &lt;/dict&gt;&#10;&lt;/plist&gt;"
+               bigIcon="OqTrli" smallIcon="OqTrli" externalLibraries="" extraLinkerFlags=""
+               extraCompilerFlags="" extraDefs="FAUSTFLOAT=double" postbuildCommand="if [ -d &quot;/usr/local/lib/faust/&quot; ]; then&#10;  echo copying faust libraries to bundle resources&#10;  cp /usr/local/lib/faust/*.lib $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;  cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;else&#10;  echo faust not installed at /usr/local/lib&#10;fi">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
-                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
+                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib&#10;/opt/local/lib"
                        headerPath="/usr/local/include" cppLibType="libc++"/>
         <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
                        isDebug="0" optimisation="2" targetName="pMix" headerPath="/usr/local/include"
-                       libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
+                       libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib&#10;/opt/local/lib"
                        cppLibType="libc++"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
