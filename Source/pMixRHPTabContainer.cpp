@@ -19,9 +19,13 @@ PMixTabContainer::PMixTabContainer (PMixAudioEngine& audioEngine, GraphEditor& g
   tabbedComponent->setTabBarDepth (23);
   tabbedComponent->addTab (TRANS("Code Editor"), Colours::lightgrey, &codeEditor, false);
   tabbedComponent->addTab (TRANS("Interpolation Space"), Colours::lightgrey, &iSpace, false);
+  tabbedComponent->addTab (TRANS("Documentation"), Colours::lightgrey, &docsBrowser, false);
+  
   tabbedComponent->setCurrentTabIndex (0);
 
   tabbedComponent->setOutline(0.);
+  
+  docsBrowser.goToURL("http://faust.grame.fr/library.html");
 
   setSize (600, 400);
 }

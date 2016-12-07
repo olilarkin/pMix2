@@ -33,6 +33,7 @@ private:
   ScopedPointer<TabbedComponent> tabbedComponent;
   InterpolationSpace& iSpace;
   CodeEditor& codeEditor;
+  WebBrowserComponent docsBrowser;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixTabContainer)
 };
