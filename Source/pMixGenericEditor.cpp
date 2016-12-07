@@ -75,7 +75,7 @@ PMixProcessorParameterPropertyComp::PMixProcessorParameterPropertyComp (PMixAudi
   
 PMixProcessorParameterPropertyComp::~PMixProcessorParameterPropertyComp()
 {
-//  owner.removeListener (this);
+  owner.removeListener (this);
 }
   
 void PMixProcessorParameterPropertyComp::refresh()
