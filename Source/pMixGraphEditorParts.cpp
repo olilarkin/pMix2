@@ -123,6 +123,7 @@ NodeComponent::NodeComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_
 , editor(nullptr)
 , nodeName(nullptr)
 , highlight(false)
+, bbl(5000)
 {
   setSize (100, 50);
 }
@@ -388,6 +389,7 @@ void NodeComponent::resized()
   
   if (editor != nullptr)
     editor->setBounds(10, pinSize + nodeName->getHeight(), getWidth()-20, getHeight() - pinSize - pinSize - 10 - nodeName->getHeight());
+  
 }
 
 void NodeComponent::getPinPos (const int index, const bool isInput, float& x, float& y)
@@ -493,6 +495,11 @@ void NodeComponent::update()
     audioEngine.getDoc().getNodePosition (nodeId, x, y);
     setCentreRelative ((float) x, (float) y);
   }
+    
+  if(faustProc != nullptr) {
+    if(faustProc->getCompilerMessage() != String::empty)
+      bubbleMessage(faustProc->getCompilerMessage());
+  }
 }
 
 GraphEditor* NodeComponent::getGraphEditor() const noexcept
@@ -513,13 +520,12 @@ void NodeComponent::changeListenerCallback (ChangeBroadcaster* source)
 
 void NodeComponent::bubbleMessage(String msg)
 {
-  BubbleMessageComponent* bbl = new BubbleMessageComponent(5000);
   AttributedString text (msg);
   text.setJustification (Justification::centred);
-  bbl->setAlwaysOnTop (true);
-  bbl->addToDesktop (0);
+  bbl.setAlwaysOnTop (true);
+  bbl.addToDesktop (0);
   
-  bbl->showAt(this, text, 2000., true, true);
+  bbl.showAt(this, text, 5000., true, false);
 }
 
 

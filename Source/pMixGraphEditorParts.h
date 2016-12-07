@@ -32,7 +32,8 @@ public:
   const int index;
   const bool isInput;
   bool mouseOver;
-
+  int busIdx;
+  
 private:
   PMixAudioEngine& audioEngine;
 
@@ -90,6 +91,7 @@ private:
   
   NodeComponent (const NodeComponent&);
   NodeComponent& operator= (const NodeComponent&);
+  BubbleMessageComponent bbl;
 };
 
 #pragma mark -
