@@ -20,6 +20,7 @@ PinComponent::PinComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_, 
 , index (index_)
 , isInput (isInput_)
 , mouseOver(false)
+, busIdx(0)
 , audioEngine(audioEngine)
 {
   if (const AudioProcessorGraph::Node::Ptr node = audioEngine.getDoc().getNodeForId (nodeId_))
@@ -32,17 +33,17 @@ PinComponent::PinComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_, 
     }
     else
     {
-      const AudioProcessor::AudioBusArrangement& busArrangement = node->getProcessor()->busArrangement;
+      const AudioProcessor& processor = *node->getProcessor();
       
-      const Array<AudioProcessor::AudioProcessorBus>& buses = isInput ? busArrangement.inputBuses
-      : busArrangement.outputBuses;
+      int channel;
+      channel = processor.getOffsetInBusBufferForAbsoluteChannelIndex (isInput, index, busIdx);
       
-      if (buses.size() > 0)
-        tip = AudioChannelSet::getChannelTypeName (buses.getReference(0).channels.getTypeOfChannel (index));
-      
-      if (tip.isEmpty())
-        tip = (isInput ? "Input "
-               : "Output ") + String (index + 1);
+      if (const AudioProcessor::Bus* bus = processor.getBus (isInput, busIdx))
+        tip = bus->getName() + String (": ")
+        + AudioChannelSet::getAbbreviatedChannelTypeName (bus->getCurrentLayout().getTypeOfChannel (channel));
+      else
+        tip = (isInput ? "Main Input: "
+               : "Main Output: ") + String (index + 1);
     }
     
     setTooltip (tip);
