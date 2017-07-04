@@ -124,6 +124,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 , selectedFaustAudioPluginInstance(nullptr)
 , selectedNodeId(0)
 , show(CodeEditorBottomViewIDs::diagram)
+, lastDirectory(File::getSpecialLocation(File::userDesktopDirectory))
 {
   addAndMakeVisible (toolBar = new Toolbar());
   CodeEditorToolbarItemFactory factory(*this);
@@ -253,14 +254,14 @@ void CodeEditor::buttonClicked (Button* button)
   else  if(button->getName() == "Load")
   {
     FileChooser fc ("Load Faust DSP file...",
-                    File::getSpecialLocation(File::userDesktopDirectory),
+                    lastDirectory,
                     "*.dsp",
                     true);
     
     if (fc.browseForFileToOpen())
     {
       File chosen = fc.getResults().getLast();
-    
+      lastDirectory = chosen.getParentDirectory();
       FileInputStream fileInput(chosen);
       
       codeDocument.loadFromStream(fileInput);
@@ -271,14 +272,14 @@ void CodeEditor::buttonClicked (Button* button)
   else if(button->getName() == "Save")
   {
     FileChooser fc ("Save Faust DSP file...",
-                    File::getSpecialLocation(File::userDesktopDirectory),
+                    lastDirectory,
                     "dsp",
                     true);
     
     if (fc.browseForFileToSave(true))
     {
       File chosen = fc.getResults().getLast();
-      
+      lastDirectory = chosen.getParentDirectory();
       FileOutputStream fileOutput(chosen);
       
       codeDocument.writeToStream(fileOutput);
