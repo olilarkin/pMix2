@@ -10,8 +10,7 @@
 
 */
 
-#ifndef __APPHEADERFILE_RSNVH4__
-#define __APPHEADERFILE_RSNVH4__
+#pragma once
 
 #include "AppConfig.h"
 
@@ -45,5 +44,3 @@ namespace ProjectInfo
     const int          versionNumber  = 0x2;
 }
 #endif
-
-#endif   // __APPHEADERFILE_RSNVH4__

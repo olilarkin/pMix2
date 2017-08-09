@@ -1,0 +1,9 @@
+[submodule "VST3_SDK/public.sdk"]
+	path = VST3_SDK/public.sdk
+	url = git@github.com:steinbergmedia/vst3_public_sdk.git
+[submodule "VST3_SDK/base"]
+	path = VST3_SDK/base
+	url = git@github.com:steinbergmedia/vst3_base.git
+[submodule "VST3_SDK/pluginterfaces"]
+	path = VST3_SDK/pluginterfaces
+	url = git@github.com:steinbergmedia/vst3_pluginterfaces.git
