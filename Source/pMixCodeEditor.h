@@ -108,6 +108,7 @@ private:
   FaustAudioPluginInstance* selectedFaustAudioPluginInstance;
   uint32 selectedNodeId;
   int show;
+  File lastDirectory;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CodeEditor);
 };
