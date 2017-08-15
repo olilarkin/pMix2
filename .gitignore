@@ -16,3 +16,4 @@ Builds/VisualStudio2013/Release/
 *.synctex.gz
 *.toc
 *.opensdf
+pMixPlugin/JuceLibraryCode/*

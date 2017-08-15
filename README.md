@@ -27,7 +27,7 @@ the paths to these things can be modified via the .jucer project
 
 **VST3 SDK**
 
-The VST 3 SDK is now included as three git submodules
+The VST 3 SDK is now included as three git submodules. You will need to use ```git submodule update``` to check out the submodules.
 
 **JUCE_FAUSTLLVM Module Dependencies**
 
