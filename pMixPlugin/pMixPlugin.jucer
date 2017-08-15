@@ -2,16 +2,17 @@
 
 <JUCERPROJECT id="kGtriQ" name="pMixPlugin" projectType="audioplug" version="0.0.2"
               bundleIdentifier="com.OliLarkin.pMixPlugin" includeBinaryInAppConfig="0"
-              buildVST="1" buildVST3="0" buildAU="1" buildRTAS="0" buildAAX="0"
+              buildVST="1" buildVST3="0" buildAU="0" buildRTAS="0" buildAAX="0"
               pluginName="pMix" pluginDesc="pMix" pluginManufacturer="OliLarkin"
-              pluginManufacturerCode="oliL" pluginCode="pMix" pluginChannelConfigs="{2, 2}"
+              pluginManufacturerCode="oliL" pluginCode="pMix" pluginChannelConfigs="{32, 32}"
               pluginIsSynth="0" pluginWantsMidiIn="1" pluginProducesMidiOut="1"
               pluginSilenceInIsSilenceOut="0" pluginEditorRequiresKeys="1"
               pluginAUExportPrefix="pMixPluginAU" pluginRTASCategory="" aaxIdentifier="com.OliLarkin.pMixPlugin"
-              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.2.1"
+              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="5.1.1"
               companyWebsite="www.olilarkin.co.uk" companyEmail="contact@olilarkin.co.uk"
               companyName="Oli Larkin Plugins" defines="PMIX_PLUGIN=1" pluginIsMidiEffectPlugin="0"
-              buildAUv3="0">
+              buildAUv3="0" displaySplashScreen="0" reportAppUsage="0" splashScreenColour="Dark"
+              buildStandalone="0" enableIAA="0" cppLanguageStandard="11">
   <MAINGROUP id="AyXwwn" name="pMixPlugin">
     <GROUP id="{8923BDF0-8D2C-0D4F-E35D-890C89D5DF51}" name="Source">
       <GROUP id="{723E4500-EB17-731D-8B10-B7C846C86094}" name="Plugin">
@@ -143,12 +144,13 @@
                postbuildCommand="if [ $WRAPPER_EXTENSION != 'framework' ]; then&#10;  if [ -d &quot;/usr/local/lib/faust/&quot; ]; then&#10;    echo copying faust libraries to bundle resources&#10;    cp /usr/local/lib/faust/*.lib $BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Contents/Resources/&#10;    cp $SRCROOT/../../../Resources/* $BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Contents/Resources/&#10;  else&#10;    echo faust not installed at /usr/local/lib&#10;  fi&#10;fi"
                extraLinkerFlags="" externalLibraries="">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
-                       isDebug="1" optimisation="1" targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
-                       headerPath="/usr/local/include" cppLibType="libc++"/>
-        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
-                       isDebug="0" optimisation="2" targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-3.5/lib&#10;/usr/local/lib"
-                       cppLibType="libc++" headerPath="/usr/local/include&#10;"/>
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.12 SDK"
+                       osxArchitecture="64BitIntel" isDebug="0" optimisation="2" targetName="pMixPlugin"
+                       libraryPath="/opt/local/libexec/llvm-4.0/lib&#10;/usr/local/lib&#10;/opt/local/lib"
+                       cppLibType="libc++" headerPath="/usr/local/include&#10;../../../Source"/>
+        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.12 SDK" osxArchitecture="64BitIntel"
+                       isDebug="1" optimisation="1" targetName="pMixPlugin" libraryPath="/opt/local/libexec/llvm-4.0/lib&#10;/usr/local/lib&#10;/opt/local/lib"
+                       headerPath="/usr/local/include&#10;../../../Source" cppLibType="libc++"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../../juce/modules"/>
