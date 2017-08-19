@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXFLOATWINDOW_H_INCLUDED
-#define PMIXFLOATWINDOW_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -26,4 +25,3 @@ private:
   int windowID;
 };
 
-#endif  // PMIXFLOATWINDOW_H_INCLUDED

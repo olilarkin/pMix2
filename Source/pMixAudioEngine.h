@@ -9,8 +9,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXAUDIOENGINE_H_INCLUDED
-#define PMIXAUDIOENGINE_H_INCLUDED
+#pragma once
 
 #include "pMixDocument.h"
 #include "pMixInternalPluginFormat.h"
@@ -70,8 +69,3 @@ private:
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixAudioEngine)
 };
-
-
-
-
-#endif  // PMIXAUDIOENGINE_H_INCLUDED

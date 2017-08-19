@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXDOCUMENT_H_INCLUDED
-#define PMIXDOCUMENT_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "pMixDefaultColours.h"
@@ -120,4 +119,3 @@ private:
 };
 
 
-#endif   // PMIXDOCUMENT_H_INCLUDED

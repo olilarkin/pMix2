@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXPLUGINWINDOW_H_INCLUDED
-#define PMIXPLUGINWINDOW_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -43,4 +42,3 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginWindow)
 };
 
-#endif  // PMIXPLUGINWINDOW_H_INCLUDED

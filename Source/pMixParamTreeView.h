@@ -1,5 +1,4 @@
-#ifndef __PTVHEADER__
-#define __PTVHEADER__
+#pragma once
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
@@ -75,4 +74,3 @@ private:
 };
 
 
-#endif

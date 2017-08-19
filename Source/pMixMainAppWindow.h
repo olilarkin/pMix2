@@ -7,8 +7,7 @@
   ==============================================================================
  */
 
-#ifndef PMIXMAINAPPWINDOW_H_INCLUDED
-#define PMIXMAINAPPWINDOW_H_INCLUDED
+#pragma once
 
 #include "pMixAudioEngine.h"
 #include "pMixMainComponent.h"
@@ -61,4 +60,3 @@ private:
 };
 
 
-#endif   // PMIXMAINAPPWINDOW_H_INCLUDED

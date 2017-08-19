@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXLOGGER_H_INCLUDED
-#define PMIXLOGGER_H_INCLUDED
+#pragma once
 
 
 #include "JuceHeader.h"
@@ -56,4 +55,3 @@ private:
 };
 
 
-#endif  // PMIXLOGGER_H_INCLUDED

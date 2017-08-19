@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXCONSOLE_H_INCLUDED
-#define PMIXCONSOLE_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -91,4 +90,3 @@ private:
 };
 
 
-#endif  // PMIXCONSOLE_H_INCLUDED

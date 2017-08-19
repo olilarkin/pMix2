@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef FileBrowser_H_INCLUDED
-#define FileBrowser_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -109,4 +108,3 @@ private:
 };
 
 
-#endif  // FileBrowser_H_INCLUDED

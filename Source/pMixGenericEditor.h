@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXGENERICEDITOR_H_INCLUDED
-#define PMIXGENERICEDITOR_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
@@ -77,4 +76,3 @@ private:
 };
 
 
-#endif  // PMIXGENERICEDITOR_H_INCLUDED

@@ -7,8 +7,7 @@
   ==============================================================================
  */
 
-#ifndef PMIXAPP_H_INCLUDED
-#define PMIXAPP_H_INCLUDED
+#pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "pMixMainAppWindow.h"
@@ -33,5 +32,3 @@ private:
   PMixAudioEngine audioEngine;
 //  SplashScreen* splash;
 };
-
-#endif //PMIXAPP_H_INCLUDED

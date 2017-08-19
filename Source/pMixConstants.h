@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXCONSTANTS_H_INCLUDED
-#define PMIXCONSTANTS_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -41,4 +40,3 @@ const int kUIStatusEmbed = 1;
 //#define FAUST_DRAW_PATH "\\faustgen-resources\\"
 #endif
 
-#endif  // PMIXCONSTANTS_H_INCLUDED

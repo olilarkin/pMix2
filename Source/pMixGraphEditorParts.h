@@ -8,8 +8,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXGRAPHEDITORPARTS_H_INCLUDED
-#define PMIXGRAPHEDITORPARTS_H_INCLUDED
+#pragma once
 
 #include "pMixGraphEditor.h"
 #include "pMixGenericEditor.h"
@@ -130,4 +129,3 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConnectorComponent)
 };
 
-#endif  // PMIXGRAPHEDITORPARTS_H_INCLUDED

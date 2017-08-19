@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef MAINCOMPONENT_H_INCLUDED
-#define MAINCOMPONENT_H_INCLUDED
+#pragma once
 
 #include "pMixAudioEngine.h"
 #include "pMixInterpolationSpace.h"
@@ -69,4 +68,3 @@ private:
 };
 
 
-#endif  // GRAPHDOCUMENTCOMPONENT_H_INCLUDED

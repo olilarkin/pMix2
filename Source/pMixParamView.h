@@ -1,5 +1,4 @@
-#ifndef __PARAMVIEW_JUCEHEADER__
-#define __PARAMVIEW_JUCEHEADER__
+#pragma once
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
@@ -59,4 +58,3 @@ private:
   PropertyPanel panel;
 };
 
-#endif //__PARAMVIEW_JUCEHEADER__

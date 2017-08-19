@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXCOMMANDIDS_H_INCLUDED
-#define PMIXCOMMANDIDS_H_INCLUDED
+#pragma once
 
 namespace MenuIDs
 {
@@ -66,4 +65,3 @@ namespace CommandIDs
 }
 
 
-#endif  // PMIXCOMMANDIDS_H_INCLUDED

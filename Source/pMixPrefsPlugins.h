@@ -17,8 +17,7 @@
   ==============================================================================
 */
 
-#ifndef __JUCE_HEADER_F7DCD6DE88C48DE0__
-#define __JUCE_HEADER_F7DCD6DE88C48DE0__
+#pragma once
 
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
@@ -67,4 +66,3 @@ private:
 //[EndFile] You can add extra defines here...
 //[/EndFile]
 
-#endif   // __JUCE_HEADER_F7DCD6DE88C48DE0__

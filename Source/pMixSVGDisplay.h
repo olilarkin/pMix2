@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXSVGDISPLAY_H_INCLUDED
-#define PMIXSVGDISPLAY_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
@@ -40,4 +39,3 @@ private:
 };
 
 
-#endif  // PMIXSVGDISPLAY_H_INCLUDED

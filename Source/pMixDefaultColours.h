@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXDEFAULTCOLOURS_H_INCLUDED
-#define PMIXDEFAULTCOLOURS_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -49,4 +48,3 @@ private:
 
 
 
-#endif  // PMIXDEFAULTCOLOURS_H_INCLUDED

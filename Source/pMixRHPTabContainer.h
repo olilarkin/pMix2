@@ -7,8 +7,7 @@
   ==============================================================================
  */
 
-#ifndef PMIXRHPTAB_H_INCLUDED
-#define PMIXRHPTAB_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "pMixInterpolationSpace.h"
@@ -38,4 +37,3 @@ private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixTabContainer)
 };
 
-#endif //PMIXRHPTAB_H_INCLUDED

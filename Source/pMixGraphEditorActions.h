@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXGRAPHEDITORACTIONS_H_INCLUDED
-#define PMIXGRAPHEDITORACTIONS_H_INCLUDED
+#pragma once
 
 #include "pMixAudioEngine.h"
 #include "pMixGraphEditorParts.h"
@@ -87,4 +86,3 @@ private:
   JUCE_DECLARE_NON_COPYABLE (CreateConnectionAction)
 };
 
-#endif  // PMIXGRAPHEDITORACTIONS_H_INCLUDED

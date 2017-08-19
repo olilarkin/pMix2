@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXINTERPOLATIONSPACE_H_INCLUDED
-#define PMIXINTERPOLATIONSPACE_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "pMixGraphEditor.h"
@@ -29,4 +28,3 @@ private:
   ScopedPointer<pMixInterpolationSpaceCrossHairs> crosshairs;
 };
 
-#endif //PMIXINTERPOLATIONSPACE_H_INCLUDED 

@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXCODEEDITOR_H_INCLUDED
-#define PMIXCODEEDITOR_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
@@ -115,4 +114,3 @@ private:
 
 
 
-#endif  // CODEEDITOR_H_INCLUDED

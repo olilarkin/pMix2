@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXINTERPOLATIONSPACEACTIONS_H_INCLUDED
-#define PMIXINTERPOLATIONSPACEACTIONS_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 
@@ -32,4 +31,3 @@ private:
   JUCE_DECLARE_NON_COPYABLE (MovePresetAction)
 };
 
-#endif  // PMIXINTERPOLATIONSPACEACTIONS_H_INCLUDED

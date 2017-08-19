@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXABOUTBOX_H_INCLUDED
-#define PMIXABOUTBOX_H_INCLUDED
+#pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -39,6 +38,3 @@ public:
 private:
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (pMixAboutBox)
 };
-
-
-#endif  // PMIXABOUTBOX_H_INCLUDED

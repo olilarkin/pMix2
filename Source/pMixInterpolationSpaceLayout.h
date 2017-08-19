@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef PMIXINTERPOLATIONSPACELAYOUT_H_INCLUDED
-#define PMIXINTERPOLATIONSPACELAYOUT_H_INCLUDED
+#pragma once
 
 #include "JuceHeader.h"
 #include "pMixAudioEngine.h"
@@ -100,4 +99,3 @@ private:
 };
 
 
-#endif  // PMIXINTERPOLATIONSPACELAYOUT_H_INCLUDED
