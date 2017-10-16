@@ -10,6 +10,8 @@ pMix version 2 will eventually work on Mac, Linux and Windows and can operate as
 
 Currently it is being developed using JUCE on Mac with Xcode 8 and the 10.12 SDK, with OSX deployment target set to 10.12. It won't yet compile/work well on other platforms.
 
+[![IMAGE ALT TEXT](/misc/pMixVimeo.png?raw=true)](https://vimeo.com/122268573 "pMix2 quick demo")
+
 
 ## Dependencies
 
