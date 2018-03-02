@@ -25,41 +25,41 @@ public:
   
   void timerCallback();
 
-  DynamicObject* getPresetWithUID(const uint32 nodeId, const int presetId) const;
-  void addPreset(const uint32 nodeId, double x, double y);
-  void setPresetPosition(const uint32 nodeId, const int presetId, double x, double y);
-  void getPresetPosition(const uint32 nodeId, const int presetId, double& x, double& y) const;
-  double getPresetWeight(const uint32 nodeId, const int presetId);
-  void removePreset(const uint32 nodeId, const int presetId);
-  void setPresetName(const uint32 nodeId, const int presetId, String newName);
-  int getNumPresetsForNode(const uint32 nodeId);
+  DynamicObject* getPresetWithUID(const uint32 nodeID, const int presetId) const;
+  void addPreset(const uint32 nodeID, double x, double y);
+  void setPresetPosition(const uint32 nodeID, const int presetId, double x, double y);
+  void getPresetPosition(const uint32 nodeID, const int presetId, double& x, double& y) const;
+  double getPresetWeight(const uint32 nodeID, const int presetId);
+  void removePreset(const uint32 nodeID, const int presetId);
+  void setPresetName(const uint32 nodeID, const int presetId, String newName);
+  int getNumPresetsForNode(const uint32 nodeID);
 
-  void setNodeIPos(const uint32 nodeId, double x, double y);
-  void getNodeIPos(const uint32 nodeId, double& x, double& y) const;
+  void setNodeIPos(const uint32 nodeID, double x, double y);
+  void getNodeIPos(const uint32 nodeID, double& x, double& y) const;
   void updateCoefficients(const AudioProcessorGraph::Node::Ptr node);
 
-  void setNodeColour(const uint32 nodeId, const Colour colour);
-  Colour getNodeColour(const uint32 nodeId) const;
+  void setNodeColour(const uint32 nodeID, const Colour colour);
+  Colour getNodeColour(const uint32 nodeID) const;
   
   int getNumNodes() const noexcept;
   const AudioProcessorGraph::Node::Ptr getNode (const int index) const noexcept;
   const AudioProcessorGraph::Node::Ptr getNodeForId (const uint32 uid) const noexcept;
   
   uint32 addNode(const PluginDescription* desc, double x, double y);
-  void removeNode(const uint32 nodeId);
-  void disconnectNode(const uint32 nodeId);
+  void removeNode(const uint32 nodeID);
+  void disconnectNode(const uint32 nodeID);
   
-  void setNodeUIStatus(const uint32 nodeId, const uint32 uiStatus);
+  void setNodeUIStatus(const uint32 nodeID, const uint32 uiStatus);
   
-  bool getParameterIsInterpolated(const uint32 nodeId, const int paramIdx);
-  void setParameterToInterpolate(const uint32 nodeId, const int paramIdx, bool interpolate);
+  bool getParameterIsInterpolated(const uint32 nodeID, const int paramIdx);
+  void setParameterToInterpolate(const uint32 nodeID, const int paramIdx, bool interpolate);
 
   void removeIllegalConnections();
-  void setNodePosition (const uint32 nodeId, double x, double y);
-  void getNodePosition (const uint32 nodeId, double& x, double& y) const;
+  void setNodePosition (const uint32 nodeID, double x, double y);
+  void getNodePosition (const uint32 nodeID, double& x, double& y) const;
   int getNumConnections() const noexcept;
-  const AudioProcessorGraph::Connection* getConnection (const int index) const noexcept;
-  const AudioProcessorGraph::Connection* getConnectionBetween (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel) const noexcept;
+  const AudioProcessorGraph::Connection getConnection (const int index) const noexcept;
+  bool isConnected (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel) const noexcept;
   bool canConnect (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel) const noexcept;
   bool addConnection (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel);
   void removeConnection (const int index);

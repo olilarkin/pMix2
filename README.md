@@ -17,15 +17,13 @@ Currently it is being developed using JUCE on Mac with Xcode 8 and the 10.12 SDK
 
 Due to the complexity of this project please closely follow the instructions:
 
+**Using brew to install dependencies**
+
+```brew install llvm zlib ncurses openssl```
+
 **JUCE**
 
-pMix v2 is built using JUCE and the .jucer project expects to find the JUCE source and the juce_faustllvm juce modules source in a directory relative to the pMix source code. On my development machine the paths are like this...
-
-~/Dev/MyJUCEProjects/JUCE  
-~/Dev/MyJUCEProjects/Projects/juce_faustllvm  
-~/Dev/MyJUCEProjects/Projects/pMix  
-
-the paths to these things can be modified via the .jucer project
+pMix v2 is built using JUCE and the .jucer project expects to find the JUCE source and the juce_faustllvm juce modules source in the global module directory, which you can set in the Projucer settings.
 
 **VST3 SDK**
 

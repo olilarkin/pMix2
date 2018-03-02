@@ -15,15 +15,15 @@
 #pragma mark -
 #pragma mark PinComponent
 
-PinComponent::PinComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_, const int index_, const bool isInput_)
-: nodeId (nodeId_)
+PinComponent::PinComponent (PMixAudioEngine& audioEngine, const uint32 nodeID_, const int index_, const bool isInput_)
+: nodeID (nodeID_)
 , index (index_)
 , isInput (isInput_)
 , mouseOver(false)
 , busIdx(0)
 , audioEngine(audioEngine)
 {
-  if (const AudioProcessorGraph::Node::Ptr node = audioEngine.getDoc().getNodeForId (nodeId_))
+  if (const AudioProcessorGraph::Node::Ptr node = audioEngine.getDoc().getNodeForId (nodeID_))
   {
     String tip;
     
@@ -73,9 +73,9 @@ void PinComponent::paint (Graphics& g)
 
 void PinComponent::mouseDown (const MouseEvent& e)
 {
-  getGraphEditor()->beginConnectorDrag (isInput ? 0 : nodeId,
+  getGraphEditor()->beginConnectorDrag (isInput ? 0 : nodeID,
                                        index,
-                                       isInput ? nodeId : 0,
+                                       isInput ? nodeID : 0,
                                        index,
                                        e);
 }
@@ -110,9 +110,9 @@ GraphEditor* PinComponent::getGraphEditor() const noexcept
 #pragma mark -
 #pragma mark NodeComponent
 
-NodeComponent::NodeComponent (PMixAudioEngine& audioEngine, const uint32 nodeId_)
+NodeComponent::NodeComponent (PMixAudioEngine& audioEngine, const uint32 nodeID_)
 : audioEngine (audioEngine)
-, nodeId (nodeId_)
+, nodeID (nodeID_)
 , numInputs (0)
 , numOutputs (0)
 , pinSize (16)
@@ -153,7 +153,7 @@ void NodeComponent::mouseDown (const MouseEvent& e)
     m.addItem (1, TRANS("Delete this node"));
     m.addItem (2, TRANS("Disconnect all pins"));
     
-    if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
+    if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeID))
     {
       AudioProcessor* const processor = f->getProcessor();
       jassert (processor != nullptr);
@@ -183,7 +183,7 @@ void NodeComponent::mouseDown (const MouseEvent& e)
     
     if (r == 1)
     {
-      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
+      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeID))
       {
         AudioPluginInstance* const instance = dynamic_cast<AudioPluginInstance*>(f->getProcessor());
       
@@ -192,7 +192,7 @@ void NodeComponent::mouseDown (const MouseEvent& e)
           removeEditor();
           
           audioEngine.getDoc().beginTransaction();
-          audioEngine.getDoc().perform(new RemoveNodeAction(audioEngine, *getGraphEditor(), nodeId), TRANS("remove node"));
+          audioEngine.getDoc().perform(new RemoveNodeAction(audioEngine, *getGraphEditor(), nodeID), TRANS("remove node"));
           
           getGraphEditor()->clearSelection();
         }
@@ -201,18 +201,18 @@ void NodeComponent::mouseDown (const MouseEvent& e)
     }
     else if (r == 2)
     {
-      audioEngine.getDoc().disconnectNode (nodeId);
+      audioEngine.getDoc().disconnectNode (nodeID);
     }
     else if (r == 3)
     {
       Random rand;
-      audioEngine.getDoc().addPreset(nodeId, rand.nextFloat(), rand.nextFloat());
+      audioEngine.getDoc().addPreset(nodeID, rand.nextFloat(), rand.nextFloat());
     }
     else if (r == 4)
     {
       ColourSelector* colourSelector = new ColourSelector(ColourSelector::showSliders|ColourSelector::showColourAtTop|ColourSelector::showColourspace);
       colourSelector->setName ("background");
-      colourSelector->setCurrentColour (audioEngine.getDoc().getNodeColour(nodeId));
+      colourSelector->setCurrentColour (audioEngine.getDoc().getNodeColour(nodeID));
       colourSelector->addChangeListener (this);
       colourSelector->setColour (ColourSelector::backgroundColourId, Colours::lightgrey);
       colourSelector->setSize (300, 400);
@@ -221,12 +221,12 @@ void NodeComponent::mouseDown (const MouseEvent& e)
     }
     else if (r == 5 || r == 6)
     {
-      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
+      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeID))
 
       {
         for (int p=0; p < f->getProcessor()->getNumParameters(); p++)
         {
-          audioEngine.getDoc().setParameterToInterpolate(nodeId, p, r==5);
+          audioEngine.getDoc().setParameterToInterpolate(nodeID, p, r==5);
         }
         
         repaint();
@@ -234,20 +234,20 @@ void NodeComponent::mouseDown (const MouseEvent& e)
     }
     else if (r == 7)
     {
-      audioEngine.getDoc().setNodeUIStatus(nodeId, kUIStatusNone);
+      audioEngine.getDoc().setNodeUIStatus(nodeID, kUIStatusNone);
       removeEditor();
-      PluginWindow::closeCurrentlyOpenWindowsFor(nodeId);
+      PluginWindow::closeCurrentlyOpenWindowsFor(nodeID);
       update();
     }
     else if (r == 8)
     {
-      audioEngine.getDoc().setNodeUIStatus(nodeId, kUIStatusEmbed);
-      PluginWindow::closeCurrentlyOpenWindowsFor(nodeId);
+      audioEngine.getDoc().setNodeUIStatus(nodeID, kUIStatusEmbed);
+      PluginWindow::closeCurrentlyOpenWindowsFor(nodeID);
       update();
     }
 //    else if (r == 9)
 //    {
-//      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
+//      if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeID))
 //      {
 //        AudioProcessor* const processor = f->getProcessor();
 //        jassert (processor != nullptr);
@@ -263,7 +263,7 @@ void NodeComponent::mouseDown (const MouseEvent& e)
 //          if (PluginWindow* const w = PluginWindow::getWindowFor (f, type))
 //            w->toFront (true);
 //          
-//          audioEngine.getDoc().setNodeUIStatus(nodeId, kUIStatusFloating);
+//          audioEngine.getDoc().setNodeUIStatus(nodeID, kUIStatusFloating);
 //          update();
 //        };
 //      }
@@ -273,7 +273,7 @@ void NodeComponent::mouseDown (const MouseEvent& e)
   {
     moving = true;
     getGraphEditor()->getLassoSelection().selectOnly(this);
-    audioEngine.getDoc().getNodePosition(nodeId, startPos.x, startPos.y);
+    audioEngine.getDoc().getNodePosition(nodeID, startPos.x, startPos.y);
   }
 }
 
@@ -289,7 +289,7 @@ void NodeComponent::mouseDrag (const MouseEvent& e)
     endPos.x = (pos.getX() + getWidth() / 2) / (double) getParentWidth();
     endPos.y = (pos.getY() + getHeight() / 2) / (double) getParentHeight();
     
-    audioEngine.getDoc().setNodePosition (nodeId, endPos.x, endPos.y);
+    audioEngine.getDoc().setNodePosition (nodeID, endPos.x, endPos.y);
     
     getGraphEditor()->updateComponents();
   }
@@ -299,7 +299,7 @@ void NodeComponent::mouseUp (const MouseEvent& e)
 {
   if (e.mouseWasClicked() && e.getNumberOfClicks() == 2)
   {
-    if (const AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
+    if (const AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeID))
     {
       AudioProcessor* const processor = f->getProcessor();
       if(!InternalPluginFormat::isInternalFormat(processor->getName()))
@@ -317,14 +317,14 @@ void NodeComponent::mouseUp (const MouseEvent& e)
     {
       moving = false;
       audioEngine.getDoc().beginTransaction();
-      audioEngine.getDoc().perform(new MoveNodeAction(audioEngine, *getGraphEditor(), nodeId, startPos, endPos), "move node");
+      audioEngine.getDoc().perform(new MoveNodeAction(audioEngine, *getGraphEditor(), nodeID, startPos, endPos), "move node");
     }
   }
 }
 
 void NodeComponent::mouseDoubleClick (const MouseEvent&)
 {
-  if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeId))
+  if (AudioProcessorGraph::Node::Ptr f = audioEngine.getDoc().getNodeForId (nodeID))
   {
     AudioProcessor* const processor = f->getProcessor();
     jassert (processor != nullptr);
@@ -410,7 +410,7 @@ void NodeComponent::getPinPos (const int index, const bool isInput, float& x, fl
 
 void NodeComponent::update()
 {
-  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (nodeId));
+  const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId (nodeID));
   
   if (f == nullptr)
   {
@@ -461,7 +461,7 @@ void NodeComponent::update()
       
       if(uiStatus == kUIStatusEmbed)
       {
-        addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (audioEngine, f->getProcessor(), f->nodeId));
+        addAndMakeVisible(editor = new PMixGenericAudioProcessorEditor (audioEngine, f->getProcessor(), f->nodeID));
         w = jmax (w, editor->getWidth() + 20 );
         
         if (editor->getContentHeight() > 300) {
@@ -476,23 +476,23 @@ void NodeComponent::update()
 
     int i;
     for (i = 0; i < f->getProcessor()->getTotalNumInputChannels(); ++i)
-      addAndMakeVisible (new PinComponent (audioEngine, nodeId, i, true));
+      addAndMakeVisible (new PinComponent (audioEngine, nodeID, i, true));
     
     if (f->getProcessor()->acceptsMidi())
-      addAndMakeVisible (new PinComponent (audioEngine, nodeId, PMixDocument::midiChannelNumber, true));
+      addAndMakeVisible (new PinComponent (audioEngine, nodeID, PMixDocument::midiChannelNumber, true));
     
     for (i = 0; i < f->getProcessor()->getTotalNumOutputChannels(); ++i)
-      addAndMakeVisible (new PinComponent (audioEngine, nodeId, i, false));
+      addAndMakeVisible (new PinComponent (audioEngine, nodeID, i, false));
     
     if (f->getProcessor()->producesMidi())
-      addAndMakeVisible (new PinComponent (audioEngine, nodeId, PMixDocument::midiChannelNumber, false));
+      addAndMakeVisible (new PinComponent (audioEngine, nodeID, PMixDocument::midiChannelNumber, false));
     
     resized();
   }
   
   {
     double x, y;
-    audioEngine.getDoc().getNodePosition (nodeId, x, y);
+    audioEngine.getDoc().getNodePosition (nodeID, x, y);
     setCentreRelative ((float) x, (float) y);
   }
     
@@ -511,7 +511,7 @@ void NodeComponent::changeListenerCallback (ChangeBroadcaster* source)
 {
   if (ColourSelector* cs = dynamic_cast <ColourSelector*> (source))
   {    
-    audioEngine.getDoc().setNodeColour(nodeId, cs->getCurrentColour());
+    audioEngine.getDoc().setNodeColour(nodeID, cs->getCurrentColour());
     
     if (editor != nullptr)
       editor->repaint();

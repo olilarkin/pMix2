@@ -22,10 +22,10 @@ public:
 
 class InterpolationSpacePreset : public Component
                                , public ChangeListener
-                               , public LabelListener
+                               , public Label::Listener
 {
 public:
-  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeId, const int presetId, Colour colour);
+  InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeID, const int presetId, Colour colour);
   ~InterpolationSpacePreset ();
   void resized () override;
   void mouseDown (const MouseEvent& e) override;
@@ -41,7 +41,7 @@ public:
   
 public:
   PMixAudioEngine& audioEngine;
-  const uint32 nodeId;
+  const uint32 nodeID;
   const int presetId;
   
 private:
@@ -82,8 +82,8 @@ public:
   
   void changeListenerCallback (ChangeBroadcaster* source) override;
 
-  void getComponentsForNode (const uint32 nodeId, Array<InterpolationSpacePreset*>& components) const;
-  void repaintPresetsForNode (const uint32 nodeId);
+  void getComponentsForNode (const uint32 nodeID, Array<InterpolationSpacePreset*>& components) const;
+  void repaintPresetsForNode (const uint32 nodeID);
   void deleteSelection();
   void selectAll();
   

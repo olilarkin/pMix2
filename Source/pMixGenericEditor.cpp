@@ -10,11 +10,11 @@
 #include "pMixGenericEditor.h"
 
 
-PMixParamSlider::PMixParamSlider (PMixAudioEngine &audioEngine, AudioProcessor& p, int paramIdx, uint32 nodeId)
+PMixParamSlider::PMixParamSlider (PMixAudioEngine &audioEngine, AudioProcessor& p, int paramIdx, uint32 nodeID)
 : audioEngine(audioEngine)
 , owner (p)
 , index (paramIdx)
-, nodeId(nodeId)
+, nodeID(nodeID)
 {
   const int steps = owner.getParameterNumSteps (index);
   
@@ -49,22 +49,22 @@ String PMixParamSlider::getTextFromValue (double value)
 Colour PMixParamSlider::getSliderColour()
 {
   Colour sliderColour;
-  if (audioEngine.getDoc().getParameterIsInterpolated(nodeId, index))
-    sliderColour = audioEngine.getDoc().getNodeColour(nodeId);
+  if (audioEngine.getDoc().getParameterIsInterpolated(nodeID, index))
+    sliderColour = audioEngine.getDoc().getNodeColour(nodeID);
   else
     sliderColour = Colours::white;
   
   return sliderColour;
 }
 
-PMixProcessorParameterPropertyComp::PMixProcessorParameterPropertyComp (PMixAudioEngine &audioEngine, const String& name, AudioProcessor& p, int paramIdx, uint32 nodeId)
+PMixProcessorParameterPropertyComp::PMixProcessorParameterPropertyComp (PMixAudioEngine &audioEngine, const String& name, AudioProcessor& p, int paramIdx, uint32 nodeID)
 : PropertyComponent (name)
 , audioEngine(audioEngine)
 , owner (p)
 , index (paramIdx)
 , paramHasChanged (false)
-, slider (audioEngine, p, paramIdx, nodeId)
-, nodeId(nodeId)
+, slider (audioEngine, p, paramIdx, nodeID)
+, nodeID(nodeID)
 {
   startTimer (100);
   setPreferredHeight(16);
@@ -109,7 +109,7 @@ void PMixProcessorParameterPropertyComp::timerCallback()
 
 void PMixProcessorParameterPropertyComp::mouseDown (const MouseEvent& e)
 {
-  bool isInterpolated = audioEngine.getDoc().getParameterIsInterpolated(nodeId, index);
+  bool isInterpolated = audioEngine.getDoc().getParameterIsInterpolated(nodeID, index);
   
   if (e.mods.isPopupMenu())
   {
@@ -124,18 +124,18 @@ void PMixProcessorParameterPropertyComp::mouseDown (const MouseEvent& e)
     
     if (r == 1)
     {
-      audioEngine.getDoc().setParameterToInterpolate(nodeId, index, !isInterpolated);
+      audioEngine.getDoc().setParameterToInterpolate(nodeID, index, !isInterpolated);
       repaint();
     }
   }
   else if(e.mods.isShiftDown())
   {
-    audioEngine.getDoc().setParameterToInterpolate(nodeId, index, !isInterpolated);
+    audioEngine.getDoc().setParameterToInterpolate(nodeID, index, !isInterpolated);
     repaint();
   }
 }
 
-PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (PMixAudioEngine &audioEngine, AudioProcessor* const p, uint32 nodeId)
+PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (PMixAudioEngine &audioEngine, AudioProcessor* const p, uint32 nodeID)
 : AudioProcessorEditor (p)
 , audioEngine(audioEngine)
 {
@@ -155,7 +155,7 @@ PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (PMixAudioEngin
     if (name.trim().isEmpty())
       name = "Unnamed";
     
-    PMixProcessorParameterPropertyComp* const pc = new PMixProcessorParameterPropertyComp (audioEngine, name, *p, i, nodeId);
+    PMixProcessorParameterPropertyComp* const pc = new PMixProcessorParameterPropertyComp (audioEngine, name, *p, i, nodeID);
     params.add (pc);
     totalHeight += pc->getPreferredHeight();
   }

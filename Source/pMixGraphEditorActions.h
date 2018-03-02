@@ -32,14 +32,14 @@ private:
   GraphEditor& graphEditor;
   double x, y;
   PluginDescription desc;
-  uint32 nodeId;
+  uint32 nodeID;
   JUCE_DECLARE_NON_COPYABLE (CreateNodeAction)
 };
 
 class RemoveNodeAction  : public UndoableAction
 {
 public:
-  RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const uint32 nodeId) noexcept;
+  RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const uint32 nodeID) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -47,7 +47,7 @@ public:
 private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
-  uint32 nodeId;
+  uint32 nodeID;
   ScopedPointer<XmlElement> nodeXML;
   JUCE_DECLARE_NON_COPYABLE (RemoveNodeAction)
 };
@@ -55,7 +55,7 @@ private:
 class MoveNodeAction  : public UndoableAction
 {
 public:
-  MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const uint32 nodeId, Point<double> startPos, Point<double> endPos) noexcept;
+  MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -63,7 +63,7 @@ public:
 private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
-  uint32 nodeId;
+  uint32 nodeID;
   Point<double> startPos;
   Point<double> endPos;
   JUCE_DECLARE_NON_COPYABLE (MoveNodeAction)

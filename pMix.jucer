@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="RsNvH4" name="pMix" projectType="guiapp" version="0.0.2"
-              bundleIdentifier="com.OliLarkin.pMix" includeBinaryInAppConfig="1"
-              jucerVersion="5.1.2" companyName="OliLarkin" companyWebsite="www.olilarkin.co.uk"
-              companyEmail="contact@olilarkin.co.uk" displaySplashScreen="0"
-              reportAppUsage="1" splashScreenColour="Dark" cppLanguageStandard="11">
+<JUCERPROJECT id="RsNvH4" name="pMix" version="0.0.2" bundleIdentifier="com.OliLarkin.pMix"
+              includeBinaryInAppConfig="1" jucerVersion="5.2.1" companyName="OliLarkin"
+              companyWebsite="www.olilarkin.co.uk" companyEmail="contact@olilarkin.co.uk"
+              displaySplashScreen="0" reportAppUsage="1" splashScreenColour="Dark"
+              cppLanguageStandard="11" projectType="guiapp">
   <MAINGROUP id="FiV8Cl" name="pMix">
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
     <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
@@ -135,34 +135,35 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="~/SDKs/vstsdk2.4" vst3Folder="VST3_SDK"
+    <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="~/SDKs/vstsdk2.4" vst3Folder=""
                customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist&gt;&#10;  &lt;dict&gt;&#10;    &lt;key&gt;CFBundleExecutable&lt;/key&gt;&#10;    &lt;string&gt;${EXECUTABLE_NAME}&lt;/string&gt;&#10;    &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;    &lt;string&gt;Icon.icns&lt;/string&gt;&#10;    &lt;key&gt;CFBundleIdentifier&lt;/key&gt;&#10;    &lt;string&gt;$(PRODUCT_BUNDLE_IDENTIFIER)&lt;/string&gt;&#10;    &lt;key&gt;CFBundleName&lt;/key&gt;&#10;    &lt;string&gt;pMix&lt;/string&gt;&#10;    &lt;key&gt;CFBundleDisplayName&lt;/key&gt;&#10;    &lt;string&gt;pMix&lt;/string&gt;&#10;    &lt;key&gt;CFBundlePackageType&lt;/key&gt;&#10;    &lt;string&gt;APPL&lt;/string&gt;&#10;    &lt;key&gt;CFBundleSignature&lt;/key&gt;&#10;    &lt;string&gt;????&lt;/string&gt;&#10;    &lt;key&gt;CFBundleShortVersionString&lt;/key&gt;&#10;    &lt;string&gt;0.0.2&lt;/string&gt;&#10;    &lt;key&gt;CFBundleVersion&lt;/key&gt;&#10;    &lt;string&gt;0.0.2&lt;/string&gt;&#10;    &lt;key&gt;NSHumanReadableCopyright&lt;/key&gt;&#10;    &lt;string&gt;OliLarkin&lt;/string&gt;&#10;    &lt;key&gt;NSHighResolutionCapable&lt;/key&gt;&#10;    &lt;true/&gt;&#10;    &lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;    &lt;dict&gt;&#10;    &lt;!--Include to allow all connections (DANGER)--&gt;&#10;    &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;    &lt;true/&gt;&#10;&lt;/dict&gt;&#10;  &lt;/dict&gt;&#10;&lt;/plist&gt;"
-               bigIcon="OqTrli" smallIcon="OqTrli" externalLibraries="" extraLinkerFlags="/usr/local/lib/libfaust.a /opt/local/lib/libncurses.a /opt/local/lib/libz.a /opt/local/lib/libcrypto.a /opt/local/libexec/llvm-5.0/lib/libLLVMLTO.a /opt/local/libexec/llvm-5.0/lib/libLLVMPasses.a /opt/local/libexec/llvm-5.0/lib/libLLVMObjCARCOpts.a /opt/local/libexec/llvm-5.0/lib/libLLVMSymbolize.a /opt/local/libexec/llvm-5.0/lib/libLLVMDebugInfoPDB.a /opt/local/libexec/llvm-5.0/lib/libLLVMDebugInfoDWARF.a /opt/local/libexec/llvm-5.0/lib/libLLVMMIRParser.a /opt/local/libexec/llvm-5.0/lib/libLLVMCoverage.a /opt/local/libexec/llvm-5.0/lib/libLLVMTableGen.a /opt/local/libexec/llvm-5.0/lib/libLLVMDlltoolDriver.a /opt/local/libexec/llvm-5.0/lib/libLLVMOrcJIT.a /opt/local/libexec/llvm-5.0/lib/libLLVMObjectYAML.a /opt/local/libexec/llvm-5.0/lib/libLLVMLibDriver.a /opt/local/libexec/llvm-5.0/lib/libLLVMOption.a /opt/local/libexec/llvm-5.0/lib/libLLVMX86Disassembler.a /opt/local/libexec/llvm-5.0/lib/libLLVMX86AsmParser.a /opt/local/libexec/llvm-5.0/lib/libLLVMX86CodeGen.a /opt/local/libexec/llvm-5.0/lib/libLLVMGlobalISel.a /opt/local/libexec/llvm-5.0/lib/libLLVMSelectionDAG.a /opt/local/libexec/llvm-5.0/lib/libLLVMAsmPrinter.a /opt/local/libexec/llvm-5.0/lib/libLLVMDebugInfoCodeView.a /opt/local/libexec/llvm-5.0/lib/libLLVMDebugInfoMSF.a /opt/local/libexec/llvm-5.0/lib/libLLVMX86Desc.a /opt/local/libexec/llvm-5.0/lib/libLLVMMCDisassembler.a /opt/local/libexec/llvm-5.0/lib/libLLVMX86Info.a /opt/local/libexec/llvm-5.0/lib/libLLVMX86AsmPrinter.a /opt/local/libexec/llvm-5.0/lib/libLLVMX86Utils.a /opt/local/libexec/llvm-5.0/lib/libLLVMMCJIT.a /opt/local/libexec/llvm-5.0/lib/libLLVMLineEditor.a /opt/local/libexec/llvm-5.0/lib/libLLVMInterpreter.a /opt/local/libexec/llvm-5.0/lib/libLLVMExecutionEngine.a /opt/local/libexec/llvm-5.0/lib/libLLVMRuntimeDyld.a /opt/local/libexec/llvm-5.0/lib/libLLVMCodeGen.a /opt/local/libexec/llvm-5.0/lib/libLLVMTarget.a /opt/local/libexec/llvm-5.0/lib/libLLVMCoroutines.a /opt/local/libexec/llvm-5.0/lib/libLLVMipo.a /opt/local/libexec/llvm-5.0/lib/libLLVMInstrumentation.a /opt/local/libexec/llvm-5.0/lib/libLLVMVectorize.a /opt/local/libexec/llvm-5.0/lib/libLLVMScalarOpts.a /opt/local/libexec/llvm-5.0/lib/libLLVMLinker.a /opt/local/libexec/llvm-5.0/lib/libLLVMIRReader.a /opt/local/libexec/llvm-5.0/lib/libLLVMAsmParser.a /opt/local/libexec/llvm-5.0/lib/libLLVMInstCombine.a /opt/local/libexec/llvm-5.0/lib/libLLVMTransformUtils.a /opt/local/libexec/llvm-5.0/lib/libLLVMBitWriter.a /opt/local/libexec/llvm-5.0/lib/libLLVMAnalysis.a /opt/local/libexec/llvm-5.0/lib/libLLVMProfileData.a /opt/local/libexec/llvm-5.0/lib/libLLVMObject.a /opt/local/libexec/llvm-5.0/lib/libLLVMMCParser.a /opt/local/libexec/llvm-5.0/lib/libLLVMMC.a /opt/local/libexec/llvm-5.0/lib/libLLVMBitReader.a /opt/local/libexec/llvm-5.0/lib/libLLVMCore.a /opt/local/libexec/llvm-5.0/lib/libLLVMBinaryFormat.a /opt/local/libexec/llvm-5.0/lib/libLLVMSupport.a /opt/local/libexec/llvm-5.0/lib/libLLVMDemangle.a"
-               extraCompilerFlags="" extraDefs="FAUSTFLOAT=double" postbuildCommand="if [ -d &quot;/usr/local/share/faust/&quot; ]; then&#10;  echo copying faust libraries to bundle resources&#10;  cp /usr/local/share/faust/*.lib $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;  cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;else&#10;  echo faust not installed at /usr/local/share&#10;fi">
+               bigIcon="OqTrli" smallIcon="OqTrli" externalLibraries="" extraCompilerFlags=""
+               extraDefs="FAUSTFLOAT=double&#10;JUCE_VST3HEADERS_INCLUDE_HEADERS_ONLY=1"
+               postbuildCommand="if [ -d &quot;/usr/local/share/faust/&quot; ]; then&#10;  echo copying faust libraries to bundle resources&#10;  cp /usr/local/share/faust/*.lib $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;  cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;else&#10;  echo faust not installed at /usr/local/share&#10;fi"
+               extraLinkerFlags="/usr/local/lib/libfaust.a &#10;/usr/local/opt/ncurses/lib/libncurses.a&#10;/usr/local/opt/zlib/lib/libz.a &#10;/usr/local/opt/openssl/lib/libcrypto.a&#10;/usr/local/opt/llvm/lib/libLLVMLTO.a &#10;/usr/local/opt/llvm/lib/libLLVMPasses.a /usr/local/opt/llvm/lib/libLLVMObjCARCOpts.a /usr/local/opt/llvm/lib/libLLVMSymbolize.a /usr/local/opt/llvm/lib/libLLVMDebugInfoPDB.a /usr/local/opt/llvm/lib/libLLVMDebugInfoDWARF.a /usr/local/opt/llvm/lib/libLLVMMIRParser.a /usr/local/opt/llvm/lib/libLLVMCoverage.a /usr/local/opt/llvm/lib/libLLVMTableGen.a /usr/local/opt/llvm/lib/libLLVMDlltoolDriver.a /usr/local/opt/llvm/lib/libLLVMOrcJIT.a &#10;/usr/local/opt/llvm/lib/libLLVMObjectYAML.a /usr/local/opt/llvm/lib/libLLVMLibDriver.a &#10;/usr/local/opt/llvm/lib/libLLVMOption.a /usr/local/opt/llvm/lib/libLLVMX86Disassembler.a /usr/local/opt/llvm/lib/libLLVMX86AsmParser.a /usr/local/opt/llvm/lib/libLLVMX86CodeGen.a /usr/local/opt/llvm/lib/libLLVMGlobalISel.a /usr/local/opt/llvm/lib/libLLVMSelectionDAG.a /usr/local/opt/llvm/lib/libLLVMAsmPrinter.a /usr/local/opt/llvm/lib/libLLVMDebugInfoCodeView.a /usr/local/opt/llvm/lib/libLLVMDebugInfoMSF.a /usr/local/opt/llvm/lib/libLLVMX86Desc.a /usr/local/opt/llvm/lib/libLLVMMCDisassembler.a /usr/local/opt/llvm/lib/libLLVMX86Info.a /usr/local/opt/llvm/lib/libLLVMX86AsmPrinter.a /usr/local/opt/llvm/lib/libLLVMX86Utils.a /usr/local/opt/llvm/lib/libLLVMMCJIT.a /usr/local/opt/llvm/lib/libLLVMLineEditor.a /usr/local/opt/llvm/lib/libLLVMInterpreter.a /usr/local/opt/llvm/lib/libLLVMExecutionEngine.a /usr/local/opt/llvm/lib/libLLVMRuntimeDyld.a /usr/local/opt/llvm/lib/libLLVMCodeGen.a /usr/local/opt/llvm/lib/libLLVMTarget.a /usr/local/opt/llvm/lib/libLLVMCoroutines.a /usr/local/opt/llvm/lib/libLLVMipo.a /usr/local/opt/llvm/lib/libLLVMInstrumentation.a /usr/local/opt/llvm/lib/libLLVMVectorize.a /usr/local/opt/llvm/lib/libLLVMScalarOpts.a /usr/local/opt/llvm/lib/libLLVMLinker.a /usr/local/opt/llvm/lib/libLLVMIRReader.a /usr/local/opt/llvm/lib/libLLVMAsmParser.a /usr/local/opt/llvm/lib/libLLVMInstCombine.a /usr/local/opt/llvm/lib/libLLVMTransformUtils.a /usr/local/opt/llvm/lib/libLLVMBitWriter.a /usr/local/opt/llvm/lib/libLLVMAnalysis.a /usr/local/opt/llvm/lib/libLLVMProfileData.a /usr/local/opt/llvm/lib/libLLVMObject.a /usr/local/opt/llvm/lib/libLLVMMCParser.a /usr/local/opt/llvm/lib/libLLVMMC.a /usr/local/opt/llvm/lib/libLLVMBitReader.a /usr/local/opt/llvm/lib/libLLVMCore.a /usr/local/opt/llvm/lib/libLLVMBinaryFormat.a /usr/local/opt/llvm/lib/libLLVMSupport.a /usr/local/opt/llvm/lib/libLLVMDemangle.a">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.12 SDK" osxArchitecture="64BitIntel"
-                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-5.0/lib&#10;/usr/local/lib&#10;/opt/local/lib"
+        <CONFIGURATION name="Debug" osxCompatibility="10.12 SDK" osxArchitecture="64BitIntel"
+                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/usr/local/opt/llvm/lib&#10;/usr/local/lib"
                        headerPath="/usr/local/include" cppLibType="libc++"/>
-        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.12 SDK"
-                       osxArchitecture="64BitIntel" isDebug="0" optimisation="2" targetName="pMix"
-                       headerPath="/usr/local/include" libraryPath="/opt/local/libexec/llvm-5.0/lib&#10;/usr/local/lib&#10;/opt/local/lib"
-                       cppLibType="libc++"/>
+        <CONFIGURATION name="Release" osxCompatibility="10.12 SDK" osxArchitecture="64BitIntel"
+                       isDebug="0" optimisation="2" targetName="pMix" headerPath="/usr/local/include"
+                       libraryPath="/usr/local/opt/llvm/lib&#10;/usr/local/lib" cppLibType="libc++"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../juce/modules"/>
-        <MODULEPATH id="juce_events" path="../../juce/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../juce/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../juce/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../juce/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../juce/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../juce/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
-        <MODULEPATH id="juce_faustllvm" path="../../Projects"/>
+        <MODULEPATH id="juce_core" path=""/>
+        <MODULEPATH id="juce_events" path=""/>
+        <MODULEPATH id="juce_graphics" path=""/>
+        <MODULEPATH id="juce_data_structures" path=""/>
+        <MODULEPATH id="juce_gui_basics" path=""/>
+        <MODULEPATH id="juce_gui_extra" path=""/>
+        <MODULEPATH id="juce_cryptography" path=""/>
+        <MODULEPATH id="juce_opengl" path=""/>
+        <MODULEPATH id="juce_audio_basics" path=""/>
+        <MODULEPATH id="juce_audio_devices" path=""/>
+        <MODULEPATH id="juce_audio_formats" path=""/>
+        <MODULEPATH id="juce_audio_utils" path=""/>
+        <MODULEPATH id="juce_audio_processors" path=""/>
+        <MODULEPATH id="juce_faustllvm" path="../modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Linux" externalLibraries="" extraLinkerFlags=""
@@ -185,10 +186,10 @@
         <MODULEPATH id="juce_cryptography" path="../../juce/modules"/>
         <MODULEPATH id="juce_core" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path=""/>
         <MODULEPATH id="juce_faustllvm" path="../../juce/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
@@ -213,7 +214,7 @@
         <MODULEPATH id="juce_cryptography" path="..\..\JUCE\modules"/>
         <MODULEPATH id="juce_core" path="..\..\JUCE\modules"/>
         <MODULEPATH id="juce_audio_utils" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="..\..\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path=""/>
         <MODULEPATH id="juce_audio_formats" path="..\..\JUCE\modules"/>
         <MODULEPATH id="juce_audio_devices" path="..\..\JUCE\modules"/>
         <MODULEPATH id="juce_audio_basics" path="..\..\JUCE\modules"/>
@@ -236,10 +237,9 @@
     <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
     <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_PLUGINHOST_VST="enabled" JUCE_PLUGINHOST_VST3="enabled"
-               JUCE_PLUGINHOST_AU="disabled" JUCE_ASIO="enabled" JUCE_ALSA="disabled"
-               JUCE_JACK="enabled" JUCE_USE_CDREADER="disabled" JUCE_USE_CDBURNER="disabled"
-               JUCE_ENABLE_REPAINT_DEBUGGING="disabled"/>
+  <JUCEOPTIONS JUCE_PLUGINHOST_VST="0" JUCE_PLUGINHOST_VST3="0" JUCE_PLUGINHOST_AU="0"
+               JUCE_ASIO="1" JUCE_ALSA="0" JUCE_JACK="1" JUCE_USE_CDREADER="0"
+               JUCE_USE_CDBURNER="0" JUCE_ENABLE_REPAINT_DEBUGGING="0"/>
   <LIVE_SETTINGS>
     <OSX/>
   </LIVE_SETTINGS>

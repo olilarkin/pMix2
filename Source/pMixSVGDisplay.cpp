@@ -84,7 +84,7 @@ void SVGDisplay::changeListenerCallback (ChangeBroadcaster* source)
       
       if (selectedItem)
       {
-        FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(audioEngine.getDoc().getNodeForId(selectedItem->nodeId)->getProcessor());
+        FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(audioEngine.getDoc().getNodeForId(selectedItem->nodeID)->getProcessor());
         
         if (faustProc)
         {

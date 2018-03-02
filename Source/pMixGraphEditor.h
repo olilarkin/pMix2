@@ -37,7 +37,7 @@ public:
 
   void createNewNode (const PluginDescription* desc, int x, int y);
 
-  NodeComponent* getComponentForNode (uint32 nodeId) const;
+  NodeComponent* getComponentForNode (uint32 nodeID) const;
   ConnectorComponent* getComponentForConnection (const AudioProcessorGraph::Connection& conn) const;
   PinComponent* findPinAt (int x, int y) const;
 
@@ -55,7 +55,7 @@ public:
   void deleteSelection();
   void selectAll();
 
-  void updateFaustNode (const uint32 nodeId, String& newSourceCode);
+  void updateFaustNode (const uint32 nodeID, String& newSourceCode);
   
   //LassoSource
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area) override;
