@@ -62,36 +62,38 @@
 		C80B291240DFAD12ABEA840A = {isa = PBXBuildFile; fileRef = A6AC3F23DC4970518FD3A42B; };
 		753CF2D5B7CC13F4063C0D4D = {isa = PBXBuildFile; fileRef = 396744A9B6DA9EE7F1EA2D85; };
 		5DFE887AD36C80662A8FA456 = {isa = PBXBuildFile; fileRef = FB47B27DE210BD0540F96DE0; };
-		00747D294005EB095E392A1D = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_basics"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_audio_basics"; sourceTree = "<absolute>"; };
 		02C9F5AF813897D8C9E253EA = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixPrefsPlugins.cpp; path = ../../Source/pMixPrefsPlugins.cpp; sourceTree = "SOURCE_ROOT"; };
 		03CD3FC74BAAAC94E018B72E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixMainAppWindow.h; path = ../../Source/pMixMainAppWindow.h; sourceTree = "SOURCE_ROOT"; };
 		0549C1D7CBAB736FC9004112 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		05E5A67287062071A6289295 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixGraphEditorActions.cpp; path = ../../Source/pMixGraphEditorActions.cpp; sourceTree = "SOURCE_ROOT"; };
 		0886D0ED8AA558A37921C757 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		0922BA084903895F6D5D745D = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_core"; path = "../../../../juce/modules/juce_core"; sourceTree = "SOURCE_ROOT"; };
 		0AF2B49F9B7659A761B6BDD0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixInternalPluginFormat.cpp; path = ../../Source/pMixInternalPluginFormat.cpp; sourceTree = "SOURCE_ROOT"; };
 		0B20AE78DE003C66C5C5D89D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixLogger.h; path = ../../Source/pMixLogger.h; sourceTree = "SOURCE_ROOT"; };
 		0BDA17337639974D9F2656AC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixFileBrowser.h; path = ../../Source/pMixFileBrowser.h; sourceTree = "SOURCE_ROOT"; };
 		0C42124E0D193CC19F552041 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		1912A96AC25D61767B4D556C = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixGenericEditor.h; path = ../../Source/pMixGenericEditor.h; sourceTree = "SOURCE_ROOT"; };
+		19882DE9975AF9D57AA46AC0 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_graphics"; path = "../../../../juce/modules/juce_graphics"; sourceTree = "SOURCE_ROOT"; };
 		19B836928CF02629F8408199 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_graphics.mm"; path = "../../JuceLibraryCode/include_juce_graphics.mm"; sourceTree = "SOURCE_ROOT"; };
+		1B83EEB1872F1E801E717A34 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_data_structures"; path = "../../../../juce/modules/juce_data_structures"; sourceTree = "SOURCE_ROOT"; };
+		1BEDECA79B28192CB6286029 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_cryptography"; path = "../../../../juce/modules/juce_cryptography"; sourceTree = "SOURCE_ROOT"; };
 		1C606771EB52A029F1946B77 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_processors.mm"; path = "../../JuceLibraryCode/include_juce_audio_processors.mm"; sourceTree = "SOURCE_ROOT"; };
 		1D57F4840FBD0BF7F0FD5011 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1F8622751D5B60344D26BC8B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixMainAppWindow.cpp; path = ../../Source/pMixMainAppWindow.cpp; sourceTree = "SOURCE_ROOT"; };
 		217B6A84C889F4515F516E32 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_utils.mm"; path = "../../JuceLibraryCode/include_juce_audio_utils.mm"; sourceTree = "SOURCE_ROOT"; };
 		224046B817B835F2303865AA = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixAboutBox.h; path = ../../Source/pMixAboutBox.h; sourceTree = "SOURCE_ROOT"; };
+		22FE674C671AB052F8A84D87 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_devices"; path = "../../../../juce/modules/juce_audio_devices"; sourceTree = "SOURCE_ROOT"; };
 		256243FE0FF7DF3BC52B0726 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixGraphEditorParts.cpp; path = ../../Source/pMixGraphEditorParts.cpp; sourceTree = "SOURCE_ROOT"; };
-		27DD206BCC0E22976A42F1DF = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_data_structures"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_data_structures"; sourceTree = "<absolute>"; };
 		2BAEE6F84973092978078416 = {isa = PBXFileReference; lastKnownFileType = file.nib; name = RecentFilesMenuTemplate.nib; path = RecentFilesMenuTemplate.nib; sourceTree = "SOURCE_ROOT"; };
 		304C5CF95F6333E4E44BA887 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixPluginWindow.h; path = ../../Source/pMixPluginWindow.h; sourceTree = "SOURCE_ROOT"; };
 		35B8BEBEAFB2B29BBB9020AB = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixAudioEngine.h; path = ../../Source/pMixAudioEngine.h; sourceTree = "SOURCE_ROOT"; };
-		3823D2B82234DF94CCAFF2D3 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_graphics"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_graphics"; sourceTree = "<absolute>"; };
 		388291C3FA1A4322ECA0ECD1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixPrefsControllers.h; path = ../../Source/pMixPrefsControllers.h; sourceTree = "SOURCE_ROOT"; };
 		396744A9B6DA9EE7F1EA2D85 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_gui_extra.mm"; path = "../../JuceLibraryCode/include_juce_gui_extra.mm"; sourceTree = "SOURCE_ROOT"; };
+		39DCF38D59ACD0BE5D3FDFAD = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_opengl"; path = "../../../../juce/modules/juce_opengl"; sourceTree = "SOURCE_ROOT"; };
 		3B6EFA6B10FE0789B410083A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixPrefsColours.cpp; path = ../../Source/pMixPrefsColours.cpp; sourceTree = "SOURCE_ROOT"; };
 		3B766648AAE8D20A0A50E6F8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixDefaultColours.h; path = ../../Source/pMixDefaultColours.h; sourceTree = "SOURCE_ROOT"; };
 		3C8AED8AEE54EE8A4FB7488B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixPrefsComponent.cpp; path = ../../Source/pMixPrefsComponent.cpp; sourceTree = "SOURCE_ROOT"; };
 		4321B6C20F5EB586761E25D4 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		4A364A36DDEBDC998DB37751 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_cryptography"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_cryptography"; sourceTree = "<absolute>"; };
 		4E886482265A21C81A30F79A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixDocument.cpp; path = ../../Source/pMixDocument.cpp; sourceTree = "SOURCE_ROOT"; };
 		50C06C03719160C3EB9460D5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = "SOURCE_ROOT"; };
 		50E40121C97F94D949A7704D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixPrefsAudio.h; path = ../../Source/pMixPrefsAudio.h; sourceTree = "SOURCE_ROOT"; };
@@ -99,9 +101,7 @@
 		5416B84E32E0C294BC04E028 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixLookAndFeel.cpp; path = ../../Source/pMixLookAndFeel.cpp; sourceTree = "SOURCE_ROOT"; };
 		56D27210F08465251C70DA71 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_cryptography.mm"; path = "../../JuceLibraryCode/include_juce_cryptography.mm"; sourceTree = "SOURCE_ROOT"; };
 		5711425504D8C592DB8D5684 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_data_structures.mm"; path = "../../JuceLibraryCode/include_juce_data_structures.mm"; sourceTree = "SOURCE_ROOT"; };
-		583CB011A6757640A201BE15 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_processors"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_audio_processors"; sourceTree = "<absolute>"; };
 		596D1D09B684AC0D030E3CBE = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixInterpolationSpace.h; path = ../../Source/pMixInterpolationSpace.h; sourceTree = "SOURCE_ROOT"; };
-		6092EA6C016340E6C7D400FE = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_extra"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_gui_extra"; sourceTree = "<absolute>"; };
 		6189E9420751AE052A750CAD = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "include_juce_faustllvm.cpp"; path = "../../JuceLibraryCode/include_juce_faustllvm.cpp"; sourceTree = "SOURCE_ROOT"; };
 		63AE5581998EFF2687A10755 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_events.mm"; path = "../../JuceLibraryCode/include_juce_events.mm"; sourceTree = "SOURCE_ROOT"; };
 		63EEFCD73F1705F24CEDE0E4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixMainComponent.cpp; path = ../../Source/pMixMainComponent.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -110,16 +110,18 @@
 		6B888A0E5923D9F2E453F286 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixCodeEditor.cpp; path = ../../Source/pMixCodeEditor.cpp; sourceTree = "SOURCE_ROOT"; };
 		6BE0254E860A117DFC407AE5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixPrefsComponent.h; path = ../../Source/pMixPrefsComponent.h; sourceTree = "SOURCE_ROOT"; };
 		6D58742F8C3048A4E0A92A77 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecording.framework; path = System/Library/Frameworks/DiscRecording.framework; sourceTree = SDKROOT; };
+		6FE54D6B15C9F23AC9B15411 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_basics"; path = "../../../../juce/modules/juce_audio_basics"; sourceTree = "SOURCE_ROOT"; };
 		7114AA6D07444FA39957E72D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_devices.mm"; path = "../../JuceLibraryCode/include_juce_audio_devices.mm"; sourceTree = "SOURCE_ROOT"; };
+		72CA655227835948A28342FA = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_processors"; path = "../../../../juce/modules/juce_audio_processors"; sourceTree = "SOURCE_ROOT"; };
 		74E3D6CF1CD910FBB058E4A0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixInterpolationSpace.cpp; path = ../../Source/pMixInterpolationSpace.cpp; sourceTree = "SOURCE_ROOT"; };
 		7AEA7EF9AEA829A3B35E5A24 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixConsole.cpp; path = ../../Source/pMixConsole.cpp; sourceTree = "SOURCE_ROOT"; };
 		7D1168DF7813C7A8C2A7AF74 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixSVGDisplay.cpp; path = ../../Source/pMixSVGDisplay.cpp; sourceTree = "SOURCE_ROOT"; };
 		88ED0E37FED522A6674E5BAA = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixPrefsGeneral.h; path = ../../Source/pMixPrefsGeneral.h; sourceTree = "SOURCE_ROOT"; };
-		89545206A1E306452F6311EF = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_utils"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_audio_utils"; sourceTree = "<absolute>"; };
 		8B7AC011050D477D25868066 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixInterpolationSpaceActions.cpp; path = ../../Source/pMixInterpolationSpaceActions.cpp; sourceTree = "SOURCE_ROOT"; };
+		913C65D48221984F0AF05FA1 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_basics"; path = "../../../../juce/modules/juce_gui_basics"; sourceTree = "SOURCE_ROOT"; };
 		96FEAD49219BDA8CB4E2BDC7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixGraphEditorParts.h; path = ../../Source/pMixGraphEditorParts.h; sourceTree = "SOURCE_ROOT"; };
 		979B0BE096A3210FC8B86FDA = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = "SOURCE_ROOT"; };
-		9849078453D05B79FDF4213C = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_opengl"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_opengl"; sourceTree = "<absolute>"; };
+		99EA989EC6A2428FDD995B0E = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_formats"; path = "../../../../juce/modules/juce_audio_formats"; sourceTree = "SOURCE_ROOT"; };
 		9A4E46471DA2D2E24311BE3A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixInterpolationSpaceActions.h; path = ../../Source/pMixInterpolationSpaceActions.h; sourceTree = "SOURCE_ROOT"; };
 		9C32FFAEFFE85B1551A738FC = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_core.mm"; path = "../../JuceLibraryCode/include_juce_core.mm"; sourceTree = "SOURCE_ROOT"; };
 		9DF1B12BA796B00AF326D403 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixApp.cpp; path = ../../Source/pMixApp.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -131,22 +133,22 @@
 		A4991948BC2162590DB5C06E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixFloatWindow.h; path = ../../Source/pMixFloatWindow.h; sourceTree = "SOURCE_ROOT"; };
 		A6AC3F23DC4970518FD3A42B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_gui_basics.mm"; path = "../../JuceLibraryCode/include_juce_gui_basics.mm"; sourceTree = "SOURCE_ROOT"; };
 		A6CBAA813D8D905CE972A882 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixConsole.h; path = ../../Source/pMixConsole.h; sourceTree = "SOURCE_ROOT"; };
-		AE3A0B452EABB3BC4A3ACA55 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_events"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_events"; sourceTree = "<absolute>"; };
 		B0CF96112A3BD0DA8AB395EB = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixFloatWindow.cpp; path = ../../Source/pMixFloatWindow.cpp; sourceTree = "SOURCE_ROOT"; };
 		B1146183CA0BBC8604FBC829 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixInterpolationSpaceLayout.h; path = ../../Source/pMixInterpolationSpaceLayout.h; sourceTree = "SOURCE_ROOT"; };
+		B4451AA2DCC26EA32434EFD0 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_utils"; path = "../../../../juce/modules/juce_audio_utils"; sourceTree = "SOURCE_ROOT"; };
 		B4DA2D521533B6BFA56B456D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixAudioEngine.cpp; path = ../../Source/pMixAudioEngine.cpp; sourceTree = "SOURCE_ROOT"; };
 		B4F757678BCAF5F3D32EFD41 = {isa = PBXFileReference; lastKnownFileType = file.icns; name = Icon.icns; path = Icon.icns; sourceTree = "SOURCE_ROOT"; };
 		B578E417C78E091AD6599B1F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_formats.mm"; path = "../../JuceLibraryCode/include_juce_audio_formats.mm"; sourceTree = "SOURCE_ROOT"; };
-		B660CE447C2F2B33FBC9D528 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_devices"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_audio_devices"; sourceTree = "<absolute>"; };
 		B70F3F64B35A262E5A0E221C = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B88C6B9A609F72081025DE05 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixDocument.h; path = ../../Source/pMixDocument.h; sourceTree = "SOURCE_ROOT"; };
 		B8A868E258ADCCE8820DACF6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixCommandIDs.h; path = ../../Source/pMixCommandIDs.h; sourceTree = "SOURCE_ROOT"; };
 		BB885C50C2D51065212D5821 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixConstants.h; path = ../../Source/pMixConstants.h; sourceTree = "SOURCE_ROOT"; };
 		BC7FD21A9511332FEEBA706B = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pMix.app; sourceTree = "BUILT_PRODUCTS_DIR"; };
 		BCE6ADCC65B3762A9921B7FB = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixPrefsAudio.cpp; path = ../../Source/pMixPrefsAudio.cpp; sourceTree = "SOURCE_ROOT"; };
-		CA79DB3B61AD8AFA4424C679 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_formats"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_audio_formats"; sourceTree = "<absolute>"; };
+		C42C4EBA5DFCFED15C8537C0 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_faustllvm"; path = "../../../juce_faustllvm"; sourceTree = "SOURCE_ROOT"; };
+		C4A8E098C031A646A8B8E4F2 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_extra"; path = "../../../../juce/modules/juce_gui_extra"; sourceTree = "SOURCE_ROOT"; };
 		CC17FA8C9500548400F198E2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixMainComponent.h; path = ../../Source/pMixMainComponent.h; sourceTree = "SOURCE_ROOT"; };
-		CC52BC6ED99D06AB3690A664 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_faustllvm"; path = "../../../modules/juce_faustllvm"; sourceTree = "SOURCE_ROOT"; };
+		D204EFD9331F4F162C333AAB = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_events"; path = "../../../../juce/modules/juce_events"; sourceTree = "SOURCE_ROOT"; };
 		DB537A9A1CBCB74BFBF2340D = {isa = PBXFileReference; lastKnownFileType = image.png; name = pMix.png; path = ../../BinaryData/pMix.png; sourceTree = "SOURCE_ROOT"; };
 		DBF468698B8C2E74394C0EBA = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixInterpolationSpaceCrosshairs.h; path = ../../Source/pMixInterpolationSpaceCrosshairs.h; sourceTree = "SOURCE_ROOT"; };
 		E01BEBE42A3708ED9D2791DF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixGraphEditorActions.h; path = ../../Source/pMixGraphEditorActions.h; sourceTree = "SOURCE_ROOT"; };
@@ -158,13 +160,11 @@
 		ECF1A82904504C73B14FCA19 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixPrefsControllers.cpp; path = ../../Source/pMixPrefsControllers.cpp; sourceTree = "SOURCE_ROOT"; };
 		EF887A048DE5A6713360C8F4 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F028011E76A1C6057D7744C1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_basics.mm"; path = "../../JuceLibraryCode/include_juce_audio_basics.mm"; sourceTree = "SOURCE_ROOT"; };
-		F0C4F6A86691761325E33629 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_basics"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_gui_basics"; sourceTree = "<absolute>"; };
 		F3A18C79FB9928C8FB034D1C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixGenericEditor.cpp; path = ../../Source/pMixGenericEditor.cpp; sourceTree = "SOURCE_ROOT"; };
 		F5868740120733550B939899 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = "SOURCE_ROOT"; };
 		F5CF2355BB327F3F0CD088CE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixPrefsGeneral.cpp; path = ../../Source/pMixPrefsGeneral.cpp; sourceTree = "SOURCE_ROOT"; };
 		F89B3F15D5C424986BD320BA = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FB47B27DE210BD0540F96DE0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_opengl.mm"; path = "../../JuceLibraryCode/include_juce_opengl.mm"; sourceTree = "SOURCE_ROOT"; };
-		FB51E0925548DCD9117C08EF = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_core"; path = "/Users/josh/Developer/WaveCasual/JUCE/modules/juce_core"; sourceTree = "<absolute>"; };
 		FC431ACE0576716C82931497 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixSVGDisplay.h; path = ../../Source/pMixSVGDisplay.h; sourceTree = "SOURCE_ROOT"; };
 		FCC285FA6454BE858844F944 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pMixRHPTabContainer.h; path = ../../Source/pMixRHPTabContainer.h; sourceTree = "SOURCE_ROOT"; };
 		FD858A51EB1C94140C058315 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pMixRHPTabContainer.cpp; path = ../../Source/pMixRHPTabContainer.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -245,20 +245,20 @@
 					DB537A9A1CBCB74BFBF2340D,
 					6F1BE8DFB6E4F44F7689999E, ); name = pMix; sourceTree = "<group>"; };
 		CE26C6C144754EE129F9E82E = {isa = PBXGroup; children = (
-					00747D294005EB095E392A1D,
-					B660CE447C2F2B33FBC9D528,
-					CA79DB3B61AD8AFA4424C679,
-					583CB011A6757640A201BE15,
-					89545206A1E306452F6311EF,
-					FB51E0925548DCD9117C08EF,
-					4A364A36DDEBDC998DB37751,
-					27DD206BCC0E22976A42F1DF,
-					AE3A0B452EABB3BC4A3ACA55,
-					CC52BC6ED99D06AB3690A664,
-					3823D2B82234DF94CCAFF2D3,
-					F0C4F6A86691761325E33629,
-					6092EA6C016340E6C7D400FE,
-					9849078453D05B79FDF4213C, ); name = "JUCE Modules"; sourceTree = "<group>"; };
+					6FE54D6B15C9F23AC9B15411,
+					22FE674C671AB052F8A84D87,
+					99EA989EC6A2428FDD995B0E,
+					72CA655227835948A28342FA,
+					B4451AA2DCC26EA32434EFD0,
+					0922BA084903895F6D5D745D,
+					1BEDECA79B28192CB6286029,
+					1B83EEB1872F1E801E717A34,
+					D204EFD9331F4F162C333AAB,
+					C42C4EBA5DFCFED15C8537C0,
+					19882DE9975AF9D57AA46AC0,
+					913C65D48221984F0AF05FA1,
+					C4A8E098C031A646A8B8E4F2,
+					39DCF38D59ACD0BE5D3FDFAD, ); name = "JUCE Modules"; sourceTree = "<group>"; };
 		69C257D28C42C3674AF969CA = {isa = PBXGroup; children = (
 					50C06C03719160C3EB9460D5,
 					F028011E76A1C6057D7744C1,
@@ -315,7 +315,6 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"FAUSTFLOAT=double",
-					"JUCE_VST3HEADERS_INCLUDE_HEADERS_ONLY=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=0.0.2",
 					"JUCE_APP_VERSION_HEX=0x2",
@@ -325,17 +324,19 @@
 					"JucePlugin_Build_AUv3=0",
 					"JucePlugin_Build_RTAS=0",
 					"JucePlugin_Build_AAX=0",
-					"JucePlugin_Build_Standalone=0", );
+					"JucePlugin_Build_Standalone=0",
+					"JucePlugin_Build_Unity=0", );
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "/Users/josh/Developer/WaveCasual/JUCE/modules", "../../../modules", "/usr/local/include", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "../../../../juce/modules", "../../../../Projects", "/usr/local/include", "$(inherited)");
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"/usr/local/opt/llvm/lib\"", "\"/usr/local/lib\"");
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"/opt/local/libexec/llvm-6.0/lib\"", "\"/usr/local/lib\"", "\"/opt/local/lib\"");
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				OTHER_LDFLAGS = "/usr/local/lib/libfaust.a  /usr/local/opt/ncurses/lib/libncurses.a /usr/local/opt/zlib/lib/libz.a  /usr/local/opt/openssl/lib/libcrypto.a /usr/local/opt/llvm/lib/libLLVMLTO.a  /usr/local/opt/llvm/lib/libLLVMPasses.a /usr/local/opt/llvm/lib/libLLVMObjCARCOpts.a /usr/local/opt/llvm/lib/libLLVMSymbolize.a /usr/local/opt/llvm/lib/libLLVMDebugInfoPDB.a /usr/local/opt/llvm/lib/libLLVMDebugInfoDWARF.a /usr/local/opt/llvm/lib/libLLVMMIRParser.a /usr/local/opt/llvm/lib/libLLVMCoverage.a /usr/local/opt/llvm/lib/libLLVMTableGen.a /usr/local/opt/llvm/lib/libLLVMDlltoolDriver.a /usr/local/opt/llvm/lib/libLLVMOrcJIT.a  /usr/local/opt/llvm/lib/libLLVMObjectYAML.a /usr/local/opt/llvm/lib/libLLVMLibDriver.a  /usr/local/opt/llvm/lib/libLLVMOption.a /usr/local/opt/llvm/lib/libLLVMX86Disassembler.a /usr/local/opt/llvm/lib/libLLVMX86AsmParser.a /usr/local/opt/llvm/lib/libLLVMX86CodeGen.a /usr/local/opt/llvm/lib/libLLVMGlobalISel.a /usr/local/opt/llvm/lib/libLLVMSelectionDAG.a /usr/local/opt/llvm/lib/libLLVMAsmPrinter.a /usr/local/opt/llvm/lib/libLLVMDebugInfoCodeView.a /usr/local/opt/llvm/lib/libLLVMDebugInfoMSF.a /usr/local/opt/llvm/lib/libLLVMX86Desc.a /usr/local/opt/llvm/lib/libLLVMMCDisassembler.a /usr/local/opt/llvm/lib/libLLVMX86Info.a /usr/local/opt/llvm/lib/libLLVMX86AsmPrinter.a /usr/local/opt/llvm/lib/libLLVMX86Utils.a /usr/local/opt/llvm/lib/libLLVMMCJIT.a /usr/local/opt/llvm/lib/libLLVMLineEditor.a /usr/local/opt/llvm/lib/libLLVMInterpreter.a /usr/local/opt/llvm/lib/libLLVMExecutionEngine.a /usr/local/opt/llvm/lib/libLLVMRuntimeDyld.a /usr/local/opt/llvm/lib/libLLVMCodeGen.a /usr/local/opt/llvm/lib/libLLVMTarget.a /usr/local/opt/llvm/lib/libLLVMCoroutines.a /usr/local/opt/llvm/lib/libLLVMipo.a /usr/local/opt/llvm/lib/libLLVMInstrumentation.a /usr/local/opt/llvm/lib/libLLVMVectorize.a /usr/local/opt/llvm/lib/libLLVMScalarOpts.a /usr/local/opt/llvm/lib/libLLVMLinker.a /usr/local/opt/llvm/lib/libLLVMIRReader.a /usr/local/opt/llvm/lib/libLLVMAsmParser.a /usr/local/opt/llvm/lib/libLLVMInstCombine.a /usr/local/opt/llvm/lib/libLLVMTransformUtils.a /usr/local/opt/llvm/lib/libLLVMBitWriter.a /usr/local/opt/llvm/lib/libLLVMAnalysis.a /usr/local/opt/llvm/lib/libLLVMProfileData.a /usr/local/opt/llvm/lib/libLLVMObject.a /usr/local/opt/llvm/lib/libLLVMMCParser.a /usr/local/opt/llvm/lib/libLLVMMC.a /usr/local/opt/llvm/lib/libLLVMBitReader.a /usr/local/opt/llvm/lib/libLLVMCore.a /usr/local/opt/llvm/lib/libLLVMBinaryFormat.a /usr/local/opt/llvm/lib/libLLVMSupport.a /usr/local/opt/llvm/lib/libLLVMDemangle.a";
+				OTHER_LDFLAGS = "-lLLVMAArch64AsmParser -lLLVMAArch64AsmPrinter -lLLVMAArch64CodeGen -lLLVMAArch64Desc -lLLVMAArch64Disassembler -lLLVMAArch64Info -lLLVMAArch64Utils -lLLVMAMDGPUAsmParser -lLLVMAMDGPUAsmPrinter -lLLVMAMDGPUCodeGen -lLLVMAMDGPUDesc -lLLVMAMDGPUDisassembler -lLLVMAMDGPUInfo -lLLVMAMDGPUUtils -lLLVMARMAsmParser -lLLVMARMAsmPrinter -lLLVMARMCodeGen -lLLVMARMDesc -lLLVMARMDisassembler -lLLVMARMInfo -lLLVMARMUtils -lLLVMAnalysis -lLLVMAsmParser -lLLVMAsmPrinter -lLLVMBPFAsmParser -lLLVMBPFAsmPrinter -lLLVMBPFCodeGen -lLLVMBPFDesc -lLLVMBPFDisassembler -lLLVMBPFInfo -lLLVMBinaryFormat -lLLVMBitReader -lLLVMBitWriter -lLLVMCodeGen -lLLVMCore -lLLVMCoroutines -lLLVMCoverage -lLLVMDebugInfoCodeView -lLLVMDebugInfoDWARF -lLLVMDebugInfoMSF -lLLVMDebugInfoPDB -lLLVMDemangle -lLLVMDlltoolDriver -lLLVMExecutionEngine -lLLVMFuzzMutate -lLLVMGlobalISel -lLLVMHexagonAsmParser -lLLVMHexagonCodeGen -lLLVMHexagonDesc -lLLVMHexagonDisassembler -lLLVMHexagonInfo -lLLVMIRReader -lLLVMInstCombine -lLLVMInstrumentation -lLLVMInterpreter -lLLVMLTO -lLLVMLanaiAsmParser -lLLVMLanaiAsmPrinter -lLLVMLanaiCodeGen -lLLVMLanaiDesc -lLLVMLanaiDisassembler -lLLVMLanaiInfo -lLLVMLibDriver -lLLVMLineEditor -lLLVMLinker -lLLVMMC -lLLVMMCDisassembler -lLLVMMCJIT -lLLVMMCParser -lLLVMMIRParser -lLLVMMSP430AsmPrinter -lLLVMMSP430CodeGen -lLLVMMSP430Desc -lLLVMMSP430Info -lLLVMMipsAsmParser -lLLVMMipsAsmPrinter -lLLVMMipsCodeGen -lLLVMMipsDesc -lLLVMMipsDisassembler -lLLVMMipsInfo -lLLVMNVPTXAsmPrinter -lLLVMNVPTXCodeGen -lLLVMNVPTXDesc -lLLVMNVPTXInfo -lLLVMObjCARCOpts -lLLVMObject -lLLVMObjectYAML -lLLVMOption -lLLVMOrcJIT -lLLVMPasses -lLLVMPowerPCAsmParser -lLLVMPowerPCAsmPrinter -lLLVMPowerPCCodeGen -lLLVMPowerPCDesc -lLLVMPowerPCDisassembler -lLLVMPowerPCInfo -lLLVMProfileData -lLLVMRuntimeDyld -lLLVMScalarOpts -lLLVMSelectionDAG -lLLVMSparcAsmParser -lLLVMSparcAsmPrinter -lLLVMSparcCodeGen -lLLVMSparcDesc -lLLVMSparcDisassembler -lLLVMSparcInfo -lLLVMSupport -lLLVMSymbolize -lLLVMSystemZAsmParser -lLLVMSystemZAsmPrinter -lLLVMSystemZCodeGen -lLLVMSystemZDesc -lLLVMSystemZDisassembler -lLLVMSystemZInfo -lLLVMTableGen -lLLVMTarget -lLLVMTransformUtils -lLLVMVectorize -lLLVMWindowsManifest -lLLVMX86AsmParser -lLLVMX86AsmPrinter -lLLVMX86CodeGen -lLLVMX86Desc -lLLVMX86Disassembler -lLLVMX86Info -lLLVMX86Utils -lLLVMXCoreAsmPrinter -lLLVMXCoreCodeGen -lLLVMXCoreDesc -lLLVMXCoreDisassembler -lLLVMXCoreInfo -lLLVMipo -lcrypto -lcurses -lfaust -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = com.OliLarkin.pMix;
+				PRODUCT_NAME = "pMix";
 				SDKROOT_ppc = macosx10.5;
 				USE_HEADERMAP = NO; }; name = Debug; };
 		ACDA95680AA1E0CC1E87F49A = {isa = XCBuildConfiguration; buildSettings = {
@@ -352,7 +353,6 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"FAUSTFLOAT=double",
-					"JUCE_VST3HEADERS_INCLUDE_HEADERS_ONLY=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=0.0.2",
 					"JUCE_APP_VERSION_HEX=0x2",
@@ -362,19 +362,21 @@
 					"JucePlugin_Build_AUv3=0",
 					"JucePlugin_Build_RTAS=0",
 					"JucePlugin_Build_AAX=0",
-					"JucePlugin_Build_Standalone=0", );
+					"JucePlugin_Build_Standalone=0",
+					"JucePlugin_Build_Unity=0", );
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "/Users/josh/Developer/WaveCasual/JUCE/modules", "../../../modules", "/usr/local/include", "$(inherited)");
+				HEADER_SEARCH_PATHS = ("../../JuceLibraryCode", "../../../../juce/modules", "../../../../Projects", "/usr/local/include", "$(inherited)");
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"/usr/local/opt/llvm/lib\"", "\"/usr/local/lib\"");
+				LIBRARY_SEARCH_PATHS = ("$(inherited)", "\"/opt/local/libexec/llvm-6.0/lib\"", "\"/usr/local/lib\"", "\"/opt/local/lib\"");
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				OTHER_LDFLAGS = "/usr/local/lib/libfaust.a  /usr/local/opt/ncurses/lib/libncurses.a /usr/local/opt/zlib/lib/libz.a  /usr/local/opt/openssl/lib/libcrypto.a /usr/local/opt/llvm/lib/libLLVMLTO.a  /usr/local/opt/llvm/lib/libLLVMPasses.a /usr/local/opt/llvm/lib/libLLVMObjCARCOpts.a /usr/local/opt/llvm/lib/libLLVMSymbolize.a /usr/local/opt/llvm/lib/libLLVMDebugInfoPDB.a /usr/local/opt/llvm/lib/libLLVMDebugInfoDWARF.a /usr/local/opt/llvm/lib/libLLVMMIRParser.a /usr/local/opt/llvm/lib/libLLVMCoverage.a /usr/local/opt/llvm/lib/libLLVMTableGen.a /usr/local/opt/llvm/lib/libLLVMDlltoolDriver.a /usr/local/opt/llvm/lib/libLLVMOrcJIT.a  /usr/local/opt/llvm/lib/libLLVMObjectYAML.a /usr/local/opt/llvm/lib/libLLVMLibDriver.a  /usr/local/opt/llvm/lib/libLLVMOption.a /usr/local/opt/llvm/lib/libLLVMX86Disassembler.a /usr/local/opt/llvm/lib/libLLVMX86AsmParser.a /usr/local/opt/llvm/lib/libLLVMX86CodeGen.a /usr/local/opt/llvm/lib/libLLVMGlobalISel.a /usr/local/opt/llvm/lib/libLLVMSelectionDAG.a /usr/local/opt/llvm/lib/libLLVMAsmPrinter.a /usr/local/opt/llvm/lib/libLLVMDebugInfoCodeView.a /usr/local/opt/llvm/lib/libLLVMDebugInfoMSF.a /usr/local/opt/llvm/lib/libLLVMX86Desc.a /usr/local/opt/llvm/lib/libLLVMMCDisassembler.a /usr/local/opt/llvm/lib/libLLVMX86Info.a /usr/local/opt/llvm/lib/libLLVMX86AsmPrinter.a /usr/local/opt/llvm/lib/libLLVMX86Utils.a /usr/local/opt/llvm/lib/libLLVMMCJIT.a /usr/local/opt/llvm/lib/libLLVMLineEditor.a /usr/local/opt/llvm/lib/libLLVMInterpreter.a /usr/local/opt/llvm/lib/libLLVMExecutionEngine.a /usr/local/opt/llvm/lib/libLLVMRuntimeDyld.a /usr/local/opt/llvm/lib/libLLVMCodeGen.a /usr/local/opt/llvm/lib/libLLVMTarget.a /usr/local/opt/llvm/lib/libLLVMCoroutines.a /usr/local/opt/llvm/lib/libLLVMipo.a /usr/local/opt/llvm/lib/libLLVMInstrumentation.a /usr/local/opt/llvm/lib/libLLVMVectorize.a /usr/local/opt/llvm/lib/libLLVMScalarOpts.a /usr/local/opt/llvm/lib/libLLVMLinker.a /usr/local/opt/llvm/lib/libLLVMIRReader.a /usr/local/opt/llvm/lib/libLLVMAsmParser.a /usr/local/opt/llvm/lib/libLLVMInstCombine.a /usr/local/opt/llvm/lib/libLLVMTransformUtils.a /usr/local/opt/llvm/lib/libLLVMBitWriter.a /usr/local/opt/llvm/lib/libLLVMAnalysis.a /usr/local/opt/llvm/lib/libLLVMProfileData.a /usr/local/opt/llvm/lib/libLLVMObject.a /usr/local/opt/llvm/lib/libLLVMMCParser.a /usr/local/opt/llvm/lib/libLLVMMC.a /usr/local/opt/llvm/lib/libLLVMBitReader.a /usr/local/opt/llvm/lib/libLLVMCore.a /usr/local/opt/llvm/lib/libLLVMBinaryFormat.a /usr/local/opt/llvm/lib/libLLVMSupport.a /usr/local/opt/llvm/lib/libLLVMDemangle.a";
+				OTHER_LDFLAGS = "-lLLVMAArch64AsmParser -lLLVMAArch64AsmPrinter -lLLVMAArch64CodeGen -lLLVMAArch64Desc -lLLVMAArch64Disassembler -lLLVMAArch64Info -lLLVMAArch64Utils -lLLVMAMDGPUAsmParser -lLLVMAMDGPUAsmPrinter -lLLVMAMDGPUCodeGen -lLLVMAMDGPUDesc -lLLVMAMDGPUDisassembler -lLLVMAMDGPUInfo -lLLVMAMDGPUUtils -lLLVMARMAsmParser -lLLVMARMAsmPrinter -lLLVMARMCodeGen -lLLVMARMDesc -lLLVMARMDisassembler -lLLVMARMInfo -lLLVMARMUtils -lLLVMAnalysis -lLLVMAsmParser -lLLVMAsmPrinter -lLLVMBPFAsmParser -lLLVMBPFAsmPrinter -lLLVMBPFCodeGen -lLLVMBPFDesc -lLLVMBPFDisassembler -lLLVMBPFInfo -lLLVMBinaryFormat -lLLVMBitReader -lLLVMBitWriter -lLLVMCodeGen -lLLVMCore -lLLVMCoroutines -lLLVMCoverage -lLLVMDebugInfoCodeView -lLLVMDebugInfoDWARF -lLLVMDebugInfoMSF -lLLVMDebugInfoPDB -lLLVMDemangle -lLLVMDlltoolDriver -lLLVMExecutionEngine -lLLVMFuzzMutate -lLLVMGlobalISel -lLLVMHexagonAsmParser -lLLVMHexagonCodeGen -lLLVMHexagonDesc -lLLVMHexagonDisassembler -lLLVMHexagonInfo -lLLVMIRReader -lLLVMInstCombine -lLLVMInstrumentation -lLLVMInterpreter -lLLVMLTO -lLLVMLanaiAsmParser -lLLVMLanaiAsmPrinter -lLLVMLanaiCodeGen -lLLVMLanaiDesc -lLLVMLanaiDisassembler -lLLVMLanaiInfo -lLLVMLibDriver -lLLVMLineEditor -lLLVMLinker -lLLVMMC -lLLVMMCDisassembler -lLLVMMCJIT -lLLVMMCParser -lLLVMMIRParser -lLLVMMSP430AsmPrinter -lLLVMMSP430CodeGen -lLLVMMSP430Desc -lLLVMMSP430Info -lLLVMMipsAsmParser -lLLVMMipsAsmPrinter -lLLVMMipsCodeGen -lLLVMMipsDesc -lLLVMMipsDisassembler -lLLVMMipsInfo -lLLVMNVPTXAsmPrinter -lLLVMNVPTXCodeGen -lLLVMNVPTXDesc -lLLVMNVPTXInfo -lLLVMObjCARCOpts -lLLVMObject -lLLVMObjectYAML -lLLVMOption -lLLVMOrcJIT -lLLVMPasses -lLLVMPowerPCAsmParser -lLLVMPowerPCAsmPrinter -lLLVMPowerPCCodeGen -lLLVMPowerPCDesc -lLLVMPowerPCDisassembler -lLLVMPowerPCInfo -lLLVMProfileData -lLLVMRuntimeDyld -lLLVMScalarOpts -lLLVMSelectionDAG -lLLVMSparcAsmParser -lLLVMSparcAsmPrinter -lLLVMSparcCodeGen -lLLVMSparcDesc -lLLVMSparcDisassembler -lLLVMSparcInfo -lLLVMSupport -lLLVMSymbolize -lLLVMSystemZAsmParser -lLLVMSystemZAsmPrinter -lLLVMSystemZCodeGen -lLLVMSystemZDesc -lLLVMSystemZDisassembler -lLLVMSystemZInfo -lLLVMTableGen -lLLVMTarget -lLLVMTransformUtils -lLLVMVectorize -lLLVMWindowsManifest -lLLVMX86AsmParser -lLLVMX86AsmPrinter -lLLVMX86CodeGen -lLLVMX86Desc -lLLVMX86Disassembler -lLLVMX86Info -lLLVMX86Utils -lLLVMXCoreAsmPrinter -lLLVMXCoreCodeGen -lLLVMXCoreDesc -lLLVMXCoreDisassembler -lLLVMXCoreInfo -lLLVMipo -lcrypto -lcurses -lfaust -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = com.OliLarkin.pMix;
+				PRODUCT_NAME = "pMix";
 				SDKROOT_ppc = macosx10.5;
 				USE_HEADERMAP = NO; }; name = Release; };
 		3C86FB1D78169564E6D88653 = {isa = XCBuildConfiguration; buildSettings = {
@@ -521,7 +523,7 @@
 					D0F11039A8C606C2E21B882F,
 					6A41FB6138DEC057C10A2574,
 					FDB97B2E5191B51079D85B5B, ); buildRules = ( ); dependencies = (  ); name = "pMix - App"; productName = pMix; productReference = BC7FD21A9511332FEEBA706B; productType = "com.apple.product-type.application"; };
-		F172D84D6DCBDF84DA006D98 = {isa = PBXProject; buildConfigurationList = EE59693213785429BCFA43D5; attributes = { LastUpgradeCheck = 0830; ORGANIZATIONNAME = "OliLarkin"; TargetAttributes = { B2D156FBCE6CFD1607923F9D = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; }; }; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = F3C576EFF2B61061AF5C0D69; projectDirPath = ""; projectRoot = ""; targets = (B2D156FBCE6CFD1607923F9D); };
+		F172D84D6DCBDF84DA006D98 = {isa = PBXProject; buildConfigurationList = EE59693213785429BCFA43D5; attributes = { LastUpgradeCheck = 0930; ORGANIZATIONNAME = "OliLarkin"; TargetAttributes = { B2D156FBCE6CFD1607923F9D = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; }; }; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = F3C576EFF2B61061AF5C0D69; projectDirPath = ""; projectRoot = ""; targets = (B2D156FBCE6CFD1607923F9D); };
 	};
 	rootObject = F172D84D6DCBDF84DA006D98;
 }
