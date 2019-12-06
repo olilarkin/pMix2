@@ -45,7 +45,7 @@ public:
   //ChangeListener
   void changeListenerCallback (ChangeBroadcaster* broadcaster);
   
-  AudioPluginInstance* createPluginInstance(const PluginDescription& desc, String& errorMessage);
+  std::unique_ptr<AudioPluginInstance> createPluginInstance(const PluginDescription& desc, String& errorMessage);
   
   void scanFaustDSPFiles();
   

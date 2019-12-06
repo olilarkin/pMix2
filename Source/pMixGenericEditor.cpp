@@ -10,7 +10,7 @@
 #include "pMixGenericEditor.h"
 
 
-PMixParamSlider::PMixParamSlider (PMixAudioEngine &audioEngine, AudioProcessor& p, int paramIdx, uint32 nodeID)
+PMixParamSlider::PMixParamSlider (PMixAudioEngine &audioEngine, AudioProcessor& p, int paramIdx, NodeID nodeID)
 : audioEngine(audioEngine)
 , owner (p)
 , index (paramIdx)
@@ -57,7 +57,7 @@ Colour PMixParamSlider::getSliderColour()
   return sliderColour;
 }
 
-PMixProcessorParameterPropertyComp::PMixProcessorParameterPropertyComp (PMixAudioEngine &audioEngine, const String& name, AudioProcessor& p, int paramIdx, uint32 nodeID)
+PMixProcessorParameterPropertyComp::PMixProcessorParameterPropertyComp (PMixAudioEngine &audioEngine, const String& name, AudioProcessor& p, int paramIdx, NodeID nodeID)
 : PropertyComponent (name)
 , audioEngine(audioEngine)
 , owner (p)
@@ -135,7 +135,7 @@ void PMixProcessorParameterPropertyComp::mouseDown (const MouseEvent& e)
   }
 }
 
-PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (PMixAudioEngine &audioEngine, AudioProcessor* const p, uint32 nodeID)
+PMixGenericAudioProcessorEditor::PMixGenericAudioProcessorEditor (PMixAudioEngine &audioEngine, AudioProcessor* const p, NodeID nodeID)
 : AudioProcessorEditor (p)
 , audioEngine(audioEngine)
 {

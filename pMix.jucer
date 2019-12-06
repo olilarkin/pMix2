@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="RsNvH4" name="pMix" version="0.0.2" bundleIdentifier="com.OliLarkin.pMix"
-              includeBinaryInAppConfig="1" jucerVersion="5.3.2" companyName="OliLarkin"
+              includeBinaryInAppConfig="1" jucerVersion="5.4.5" companyName="OliLarkin"
               companyWebsite="www.olilarkin.co.uk" companyEmail="contact@olilarkin.co.uk"
               displaySplashScreen="0" reportAppUsage="0" splashScreenColour="Dark"
               cppLanguageStandard="11" projectType="guiapp">
@@ -141,8 +141,9 @@
                extraDefs="FAUSTFLOAT=double" postbuildCommand="if [ -d &quot;/usr/local/share/faust/&quot; ]; then&#10;  echo copying faust libraries to bundle resources&#10;  cp /usr/local/share/faust/*.lib $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;  cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;else&#10;  echo faust not installed at /usr/local/share&#10;fi">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
-                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-6.0/lib&#10;/usr/local/lib&#10;/opt/local/lib"
-                       headerPath="/usr/local/include" cppLibType="libc++"/>
+                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-6.0/lib&#10;/usr/local/lib&#10;/opt/local/lib&#10;/Users/oli/Dev/MyPlugins/Dependencies/Build/mac/lib&#10;/usr/local/opt/openssl/lib/&#10;/Users/oli/Dev/LLVM/lib"
+                       headerPath="/usr/local/include&#10;/Users/oli/Dev/MyPlugins/Dependencies/Build/mac/include"
+                       cppLibType="libc++"/>
         <CONFIGURATION name="Release" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
                        isDebug="0" optimisation="2" targetName="pMix" headerPath="/usr/local/include"
                        libraryPath="/opt/local/libexec/llvm-6.0/lib&#10;/usr/local/lib&#10;/opt/local/lib"
@@ -192,8 +193,7 @@
         <MODULEPATH id="juce_faustllvm" path="../../juce/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2017 targetFolder="Builds/VisualStudio2017" vst3Folder="" externalLibraries=""
-            extraCompilerFlags="/wd4100&#10;/wd4068&#10;/wd4996">
+    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="" extraCompilerFlags="/wd4100&#10;/wd4068&#10;/wd4996">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="pMix" libraryPath=""

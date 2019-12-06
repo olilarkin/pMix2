@@ -34,7 +34,6 @@ SVGDisplay::~SVGDisplay()
   audioEngine.getDoc().removeChangeListener(this);
   
   if (svgDrawable) {
-    delete svgDrawable;
     svgDrawable = nullptr;
   }
 }
@@ -135,7 +134,6 @@ void SVGDisplay::clearDisplay()
     browser->goToURL("");
   }
   else {
-    delete svgDrawable;
     svgDrawable = nullptr;
     repaint();
   }
@@ -147,10 +145,7 @@ void SVGDisplay::loadSVG(const String& url)
     browser->goToURL(url);
   else
   {
-    if(svgDrawable)
-      delete svgDrawable;
-    
-    svgDrawable = dynamic_cast <DrawableComposite*>(Drawable::createFromImageFile(File(url)));
+    svgDrawable = Drawable::createFromImageFile(File(url));
     repaint();
   }
 }

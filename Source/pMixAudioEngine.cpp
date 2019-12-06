@@ -39,7 +39,7 @@ PMixAudioEngine::PMixAudioEngine()
   faustPluginFormat->getAllTypes(internalTypes);
   JITformatManager.addFormat(faustPluginFormat);
   
-  ScopedPointer<XmlElement> savedPluginList (getAppProperties().getUserSettings()->getXmlValue ("pluginList"));
+  std::unique_ptr<XmlElement> savedPluginList (getAppProperties().getUserSettings()->getXmlValue ("pluginList"));
   
   if (savedPluginList != nullptr)
     knownPluginList.recreateFromXml (*savedPluginList);
@@ -71,11 +71,11 @@ void PMixAudioEngine::changeListenerCallback (ChangeBroadcaster* broadcaster)
   {
     // save the plugin list every time it gets chnaged, so that if we're scanning
     // and it crashes, we've still saved the previous ones
-    ScopedPointer<XmlElement> savedPluginList (knownPluginList.createXml());
+    std::unique_ptr<XmlElement> savedPluginList (knownPluginList.createXml());
     
     if (savedPluginList != nullptr)
     {
-      getAppProperties().getUserSettings()->setValue ("pluginList", savedPluginList);
+      getAppProperties().getUserSettings()->setValue ("pluginList", savedPluginList.get());
       getAppProperties().saveIfNeeded();
     }
   }
@@ -136,9 +136,9 @@ const PluginDescription* PMixAudioEngine::getChosenType (const int menuID) const
   }
 }
 
-AudioPluginInstance* PMixAudioEngine::createPluginInstance(const PluginDescription& desc, String& errorMessage)
+std::unique_ptr<AudioPluginInstance> PMixAudioEngine::createPluginInstance(const PluginDescription& desc, String& errorMessage)
 {
-  AudioPluginInstance* result = nullptr;
+  std::unique_ptr<AudioPluginInstance> result = nullptr;
   
   if(desc.pluginFormatName == "FAUST")
   {

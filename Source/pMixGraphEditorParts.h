@@ -19,7 +19,7 @@ class PinComponent : public Component
                    , public SettableTooltipClient
 {
 public:
-  PinComponent (PMixAudioEngine& audio, const uint32 nodeID_, const int index_, const bool isInput_);
+  PinComponent (PMixAudioEngine& audio, NodeID nodeID, const int index_, const bool isInput_);
   void paint (Graphics& g) override;
   void mouseDown (const MouseEvent& e) override;
   void mouseDrag (const MouseEvent& e) override;
@@ -27,7 +27,7 @@ public:
   void mouseEnter (const MouseEvent& e) override;
   void mouseExit (const MouseEvent& e) override;
 
-  const uint32 nodeID;
+  NodeID nodeID;
   const int index;
   const bool isInput;
   bool mouseOver;
@@ -48,7 +48,7 @@ class NodeComponent : public Component
                     , public ChangeListener
 {
 public:
-  NodeComponent (PMixAudioEngine& audioEngine, const uint32 nodeID_);
+  NodeComponent (PMixAudioEngine& audioEngine, NodeID nodeID);
   ~NodeComponent();
   void mouseDown (const MouseEvent& e) override;
   void mouseDrag (const MouseEvent& e) override;
@@ -70,7 +70,7 @@ public:
   
 public:
   PMixAudioEngine& audioEngine;
-  const uint32 nodeID;
+  NodeID nodeID;
   int numInputs, numOutputs;
   
 private:
@@ -101,8 +101,8 @@ class ConnectorComponent   : public Component
 {
 public:
   ConnectorComponent (PMixAudioEngine& audioEngine);
-  void setInput (const uint32 sourceNodeId_, const int sourceNodeChannel_);
-  void setOutput (const uint32 destNodeId_, const int destNodeChannel_);
+  void setInput (NodeID sourceNodeId_, const int sourceNodeChannel_);
+  void setOutput (NodeID destNodeId_, const int destNodeChannel_);
   void dragStart (int x, int y);
   void dragEnd (int x, int y);
   void update();
@@ -115,7 +115,7 @@ public:
   void mouseUp (const MouseEvent& e);
   void resized();
   
-  uint32 sourceNodeId, destNodeId;
+  NodeID sourceNodeId, destNodeId;
   int sourceNodeChannel, destNodeChannel;
   
 private:

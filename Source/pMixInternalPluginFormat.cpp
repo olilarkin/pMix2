@@ -32,27 +32,22 @@ InternalPluginFormat::InternalPluginFormat()
   }
 }
 
-void InternalPluginFormat::createPluginInstance (const PluginDescription& desc,
-                                                 double initialSampleRate,
-                                                 int initialBufferSize,
-                                                 void* userData,
-                                                 void (*callback) (void*, AudioPluginInstance*, const String&))
+std::unique_ptr<AudioPluginInstance> InternalPluginFormat::createInstance (const String& name)
 {
-  AudioPluginInstance* retval = nullptr;
-  
-  if (desc.name == audioOutDesc.name)
-    retval = new AudioProcessorGraph::AudioGraphIOProcessor (AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode);
-  
-  if (desc.name == audioInDesc.name)
-    retval = new AudioProcessorGraph::AudioGraphIOProcessor (AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode);
-  
-  if (desc.name == midiInDesc.name)
-    retval = new AudioProcessorGraph::AudioGraphIOProcessor (AudioProcessorGraph::AudioGraphIOProcessor::midiInputNode);
-  
-  if (desc.name == midiOutDesc.name)
-    retval = new AudioProcessorGraph::AudioGraphIOProcessor (AudioProcessorGraph::AudioGraphIOProcessor::midiOutputNode);
-  
-  callback (userData, retval, retval == nullptr ? NEEDS_TRANS ("Invalid internal node name") : String());
+    if (name == audioOutDesc.name) return std::make_unique<AudioProcessorGraph::AudioGraphIOProcessor> (AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode);
+    if (name == audioInDesc.name)  return std::make_unique<AudioProcessorGraph::AudioGraphIOProcessor> (AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode);
+    if (name == midiInDesc.name)   return std::make_unique<AudioProcessorGraph::AudioGraphIOProcessor> (AudioProcessorGraph::AudioGraphIOProcessor::midiInputNode);
+    if (name == midiOutDesc.name)  return std::make_unique<AudioProcessorGraph::AudioGraphIOProcessor> (AudioProcessorGraph::AudioGraphIOProcessor::midiOutputNode);
+
+    return {};
+}
+
+void InternalPluginFormat::createPluginInstance (const PluginDescription& desc, double, int initialBufferSize, PluginCreationCallback callback)
+{
+  if (auto p = createInstance (desc.name))
+      callback (std::move (p), {});
+  else
+      callback (nullptr, NEEDS_TRANS ("Invalid internal plugin name"));
 }
 
 const PluginDescription* InternalPluginFormat::getDescriptionFor (const InternalNodeType type)

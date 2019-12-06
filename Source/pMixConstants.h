@@ -18,6 +18,7 @@ const int kUIStatusNone = 0;
 const int kUIStatusEmbed = 1;
 //const int kUIStatusFloating = 1;
 
+using NodeID = juce::AudioProcessorGraph::NodeID;
 
 #define DEFAULT_FAUST_DSP_SEARCHPATH "~/Library/Application Support/pMix2/FaustNodes"
 

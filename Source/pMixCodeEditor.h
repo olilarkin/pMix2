@@ -105,7 +105,7 @@ private:
   StretchableLayoutManager verticalLayout;
   ScopedPointer<StretchableLayoutResizerBar> dividerBar1, dividerBar2;
   FaustAudioPluginInstance* selectedFaustAudioPluginInstance;
-  uint32 selectedNodeId;
+  NodeID selectedNodeId;
   int show;
   File lastDirectory;
   

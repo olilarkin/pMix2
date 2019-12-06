@@ -51,12 +51,12 @@ const AudioProcessorGraph::Node::Ptr PMixDocument::getNode (const int index) con
   return audioEngine.getGraph().getNode (index);
 }
 
-const AudioProcessorGraph::Node::Ptr PMixDocument::getNodeForId (const uint32 uid) const noexcept
+const AudioProcessorGraph::Node::Ptr PMixDocument::getNodeForId (NodeID nodeIDs) const noexcept
 {
-  return audioEngine.getGraph().getNodeForId (uid);
+  return audioEngine.getGraph().getNodeForId (nodeIDs);
 }
 
-uint32 PMixDocument::addNode (const PluginDescription* desc, double x, double y)
+NodeID PMixDocument::addNode (const PluginDescription* desc, double x, double y)
 {
   AudioProcessorGraph::Node* node = nullptr;
 
@@ -64,13 +64,13 @@ uint32 PMixDocument::addNode (const PluginDescription* desc, double x, double y)
   {
     String errorMessage;
     
-    AudioPluginInstance* instance = audioEngine.createPluginInstance(*desc, errorMessage);
+    std::unique_ptr<AudioPluginInstance> instance = audioEngine.createPluginInstance(*desc, errorMessage);
 
     jassert(instance != nullptr);
     
-    node = audioEngine.getGraph().addNode (instance);
+    node = audioEngine.getGraph().addNode (std::move (instance));
 
-    FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
+    FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance.get());
     
     if (faustProc)
     {
@@ -105,20 +105,20 @@ uint32 PMixDocument::addNode (const PluginDescription* desc, double x, double y)
                                    TRANS("Couldn't create node"),
                                    errorMessage);
       
-      return 0xFFFFFFFF;
+      return NodeID(0xFFFFFFFF);
     }
   }
   
   return node->nodeID;
 }
 
-void PMixDocument::removeNode (const uint32 nodeID)
+void PMixDocument::removeNode (NodeID nodeID)
 {
   if (audioEngine.getGraph().removeNode (nodeID))
     changed();
 }
 
-void PMixDocument::disconnectNode (const uint32 nodeID)
+void PMixDocument::disconnectNode (NodeID nodeID)
 {
   if (audioEngine.getGraph().disconnectNode (nodeID))
     changed();
@@ -130,7 +130,7 @@ void PMixDocument::removeIllegalConnections()
     changed();
 }
 
-void PMixDocument::setNodeUIStatus(const uint32 nodeID, const uint32 uiStatus)
+void PMixDocument::setNodeUIStatus(NodeID nodeID, const uint32 uiStatus)
 {
   const AudioProcessorGraph::Node::Ptr n (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -140,7 +140,7 @@ void PMixDocument::setNodeUIStatus(const uint32 nodeID, const uint32 uiStatus)
   }
 }
 
-void PMixDocument::setNodePosition (const uint32 nodeID, double x, double y)
+void PMixDocument::setNodePosition (NodeID nodeID, double x, double y)
 {
   const AudioProcessorGraph::Node::Ptr n (audioEngine.getGraph().getNodeForId (nodeID));
 
@@ -151,7 +151,7 @@ void PMixDocument::setNodePosition (const uint32 nodeID, double x, double y)
   }
 }
 
-void PMixDocument::getNodePosition (const uint32 nodeID, double& x, double& y) const
+void PMixDocument::getNodePosition (NodeID nodeID, double& x, double& y) const
 {
   x = y = 0;
 
@@ -175,7 +175,7 @@ const AudioProcessorGraph::Connection PMixDocument::getConnection (const int ind
     return connection;
 }
 
-bool PMixDocument::isConnected (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel) const noexcept
+bool PMixDocument::isConnected (NodeID sourceNodeId, int sourceNodeChannel, NodeID destNodeId, int destNodeChannel) const noexcept
 {
     AudioProcessorGraph::NodeAndChannel source {sourceNodeId, sourceNodeChannel};
     AudioProcessorGraph::NodeAndChannel destination {destNodeId, destNodeChannel};
@@ -183,8 +183,7 @@ bool PMixDocument::isConnected (uint32 sourceNodeId, int sourceNodeChannel, uint
     return audioEngine.getGraph().isConnected(connection);
 }
 
-bool PMixDocument::canConnect (uint32 sourceNodeId, int sourceNodeChannel,
-                              uint32 destNodeId, int destNodeChannel) const noexcept
+bool PMixDocument::canConnect (NodeID sourceNodeId, int sourceNodeChannel, NodeID destNodeId, int destNodeChannel) const noexcept
 {
     AudioProcessorGraph::NodeAndChannel source {sourceNodeId, sourceNodeChannel};
     AudioProcessorGraph::NodeAndChannel destination {destNodeId, destNodeChannel};
@@ -192,7 +191,7 @@ bool PMixDocument::canConnect (uint32 sourceNodeId, int sourceNodeChannel,
     return audioEngine.getGraph().canConnect(connection);
 }
 
-bool PMixDocument::addConnection (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel)
+bool PMixDocument::addConnection (NodeID sourceNodeId, int sourceNodeChannel, NodeID destNodeId, int destNodeChannel)
 {
     AudioProcessorGraph::NodeAndChannel source {sourceNodeId, sourceNodeChannel};
     AudioProcessorGraph::NodeAndChannel destination {destNodeId, destNodeChannel};
@@ -207,11 +206,11 @@ bool PMixDocument::addConnection (uint32 sourceNodeId, int sourceNodeChannel, ui
 
 void PMixDocument::removeConnection (const int index)
 {
-  audioEngine.getGraph().removeConnection (this->getConnection(index));
-  changed();
+    audioEngine.getGraph().removeConnection (this->getConnection(index));
+    changed();
 }
 
-void PMixDocument::removeConnection (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel)
+void PMixDocument::removeConnection (NodeID sourceNodeId, int sourceNodeChannel, NodeID destNodeId, int destNodeChannel)
 {
     AudioProcessorGraph::NodeAndChannel source {sourceNodeId, sourceNodeChannel};
     AudioProcessorGraph::NodeAndChannel destination {destNodeId, destNodeChannel};
@@ -238,7 +237,7 @@ String PMixDocument::getDocumentTitle()
 Result PMixDocument::loadDocument (const File& file)
 {
   XmlDocument doc (file);
-  ScopedPointer<XmlElement> xml (doc.getDocumentElement());
+  std::unique_ptr<XmlElement> xml (doc.getDocumentElement());
 
   if (xml == nullptr || ! xml->hasTagName ("PMIXDOC"))
     return Result::fail ("Not a valid pMix file");
@@ -249,9 +248,9 @@ Result PMixDocument::loadDocument (const File& file)
 
 Result PMixDocument::saveDocument (const File& file)
 {
-  ScopedPointer<XmlElement> xml (createXml());
+  std::unique_ptr<XmlElement> xml = createXml();
 
-  if (! xml->writeToFile (file, String::empty))
+  if (! xml->writeToFile (file, String()))
     return Result::fail ("Couldn't write to the file");
 
   return Result::ok();
@@ -287,7 +286,7 @@ void PMixDocument::setLastDocumentOpened (const File& file)
   }
 
   XmlElement* e = new XmlElement ("NODE");
-  e->setAttribute ("uid", (int) node->nodeID);
+  e->setAttribute ("uid", (int) node->nodeID.uid);
   e->setAttribute ("x", node->properties ["x"].toString());
   e->setAttribute ("y", node->properties ["y"].toString());
   e->setAttribute ("uiLastX", node->properties ["uiLastX"].toString());
@@ -304,7 +303,7 @@ void PMixDocument::setLastDocumentOpened (const File& file)
     e->setAttribute ("iposy", node->properties ["iposy"].toString());
   }
   
-  e->addChildElement (pd.createXml());
+  e->addChildElement (pd.createXml().release());
 
   XmlElement* state = new XmlElement ("STATE");
 
@@ -381,13 +380,13 @@ void PMixDocument::createNodeFromXml (XmlElement& xml, const String& newSourceCo
   
   String errorMessage;
   
-  AudioPluginInstance* instance = audioEngine.createPluginInstance(pd, errorMessage);
+  std::unique_ptr<AudioPluginInstance> instance = audioEngine.createPluginInstance(pd, errorMessage);
   
   jassert(instance != nullptr);
   
   if (pd.pluginFormatName == "FAUST")
   {
-    FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance);
+    FaustAudioPluginInstance* faustProc = dynamic_cast<FaustAudioPluginInstance*>(instance.get());
     faustProc->initialize(getLibraryPath(), drawPath);
     
     if (newSourceCode.length())
@@ -400,7 +399,7 @@ void PMixDocument::createNodeFromXml (XmlElement& xml, const String& newSourceCo
 //    xml.setAttribute("numOutputs", faustProc->getNumOutputChannels()); ???
   }
   
-  AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().addNode (instance, xml.getIntAttribute ("uid")));
+  AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().addNode (std::move(instance), NodeID(xml.getIntAttribute ("uid"))));
   
   if (!newSourceCode.length())
   {
@@ -462,25 +461,21 @@ void PMixDocument::createNodeFromXml (XmlElement& xml, const String& newSourceCo
 }
 
 
-XmlElement* PMixDocument::createXml() const
+std::unique_ptr<XmlElement> PMixDocument::createXml() const
 {
-  XmlElement* xml = new XmlElement ("PMIXDOC");
+  auto xml = std::make_unique<XmlElement> ("PMIXDOC");
 
-  for (int i = 0; i < audioEngine.getGraph().getNumNodes(); ++i)
-    xml->addChildElement (createNodeXml (audioEngine.getGraph().getNode (i)));
+  for (auto* node : audioEngine.getGraph().getNodes())
+    xml->addChildElement(createNodeXml(node));
 
-  for (int i = 0; i < audioEngine.getGraph().getConnections().size(); ++i)
+  for (auto& connection : audioEngine.getGraph().getConnections())
   {
-    const AudioProcessorGraph::Connection fc = this->getConnection(i);
+    auto e = xml->createNewChildElement ("CONNECTION");
 
-    XmlElement* e = new XmlElement ("CONNECTION");
-
-    e->setAttribute ("srcNode", (int) fc.source.nodeID);
-    e->setAttribute ("srcChannel", fc.source.channelIndex);
-    e->setAttribute ("dstNode", (int) fc.destination.nodeID);
-    e->setAttribute ("dstChannel", fc.destination.channelIndex);
-    
-    xml->addChildElement (e);
+    e->setAttribute ("srcNode", (int) connection.source.nodeID.uid);
+    e->setAttribute ("srcChannel", connection.source.channelIndex);
+    e->setAttribute ("dstNode", (int) connection.destination.nodeID.uid);
+    e->setAttribute ("dstChannel", connection.destination.channelIndex);
   }
   
 //  XmlElement* e = new XmlElement ("MISC");
@@ -509,9 +504,9 @@ void PMixDocument::restoreFromXml (const XmlElement& xml)
 
   forEachXmlChildElementWithTagName (xml, e, "CONNECTION")
   {
-    addConnection ((uint32) e->getIntAttribute ("srcNode"),
+    addConnection (NodeID (e->getIntAttribute ("srcNode")),
                             e->getIntAttribute ("srcChannel"),
-                   (uint32) e->getIntAttribute ("dstNode"),
+                   NodeID (e->getIntAttribute ("dstNode")),
                             e->getIntAttribute ("dstChannel"));
   }
 
@@ -576,7 +571,7 @@ void PMixDocument::initialize()
   InternalPluginFormat internalFormat;
   
   addNode(internalFormat.getDescriptionFor (InternalPluginFormat::audioInputNode),  0.5f,  0.1f);
-  //addNode(internalFormat.getDescriptionFor (InternalPluginFormat::midiInputNode),   0.25f, 0.1f);
+  addNode(internalFormat.getDescriptionFor (InternalPluginFormat::midiInputNode),   0.25f, 0.1f);
   addNode(internalFormat.getDescriptionFor (InternalPluginFormat::audioOutputNode), 0.5f,  0.9f);
   
   setChangedFlag (false);
@@ -603,7 +598,7 @@ String PMixDocument::getLibraryPath()
   return fullLibraryPath;
 }
 
-DynamicObject* PMixDocument::getPresetWithUID(const uint32 nodeID, const int presetId) const
+DynamicObject* PMixDocument::getPresetWithUID(NodeID nodeID, const int presetId) const
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -629,7 +624,7 @@ DynamicObject* PMixDocument::getPresetWithUID(const uint32 nodeID, const int pre
   return returnObj;
 }
 
-void PMixDocument::addPreset(const uint32 nodeID, double x, double y)
+void PMixDocument::addPreset(NodeID nodeID, double x, double y)
 {
   AudioProcessorGraph::Node::Ptr node = getNodeForId(nodeID);
   AudioPluginInstance* plugin = dynamic_cast <AudioPluginInstance*> (node->getProcessor());
@@ -664,7 +659,7 @@ void PMixDocument::addPreset(const uint32 nodeID, double x, double y)
   changed();
 }
 
-void PMixDocument::removePreset(const uint32 nodeID, const int presetId)
+void PMixDocument::removePreset(NodeID nodeID, const int presetId)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -692,7 +687,7 @@ void PMixDocument::removePreset(const uint32 nodeID, const int presetId)
   changed();
 }
 
-void PMixDocument::setPresetPosition (const uint32 nodeID, const int presetId, double x, double y)
+void PMixDocument::setPresetPosition (NodeID nodeID, const int presetId, double x, double y)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -709,7 +704,7 @@ void PMixDocument::setPresetPosition (const uint32 nodeID, const int presetId, d
   }
 }
 
-void PMixDocument::getPresetPosition (const uint32 nodeID, const int presetId, double& x, double& y) const
+void PMixDocument::getPresetPosition (NodeID nodeID, const int presetId, double& x, double& y) const
 {
   x = y = 0;
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
@@ -725,7 +720,7 @@ void PMixDocument::getPresetPosition (const uint32 nodeID, const int presetId, d
   }
 }
 
-double PMixDocument::getPresetWeight(const uint32 nodeID, const int presetId)
+double PMixDocument::getPresetWeight(NodeID nodeID, const int presetId)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -740,7 +735,7 @@ double PMixDocument::getPresetWeight(const uint32 nodeID, const int presetId)
   return 0.;
 }
 
-void PMixDocument::setPresetName(const uint32 nodeID, const int presetId, String newName)
+void PMixDocument::setPresetName(NodeID nodeID, const int presetId, String newName)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -753,7 +748,7 @@ void PMixDocument::setPresetName(const uint32 nodeID, const int presetId, String
   changed();
 }
 
-int PMixDocument::getNumPresetsForNode(const uint32 nodeID)
+int PMixDocument::getNumPresetsForNode(NodeID nodeID)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -763,7 +758,7 @@ int PMixDocument::getNumPresetsForNode(const uint32 nodeID)
     return 0;
 }
 
-void PMixDocument::setNodeColour(const uint32 nodeID, const Colour colour)
+void PMixDocument::setNodeColour(NodeID nodeID, const Colour colour)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
 
@@ -774,7 +769,7 @@ void PMixDocument::setNodeColour(const uint32 nodeID, const Colour colour)
   }
 }
 
-Colour PMixDocument::getNodeColour(const uint32 nodeID) const
+Colour PMixDocument::getNodeColour(NodeID nodeID) const
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
 
@@ -788,7 +783,7 @@ Colour PMixDocument::getNodeColour(const uint32 nodeID) const
   return clr;
 }
 
-void PMixDocument::setParameterToInterpolate(const uint32 nodeID, const int paramIdx, bool interpolate)
+void PMixDocument::setParameterToInterpolate(NodeID nodeID, const int paramIdx, bool interpolate)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -807,7 +802,7 @@ void PMixDocument::setParameterToInterpolate(const uint32 nodeID, const int para
   }
 }
 
-bool PMixDocument::getParameterIsInterpolated(const uint32 nodeID, const int paramIdx)
+bool PMixDocument::getParameterIsInterpolated(NodeID nodeID, const int paramIdx)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -821,7 +816,7 @@ bool PMixDocument::getParameterIsInterpolated(const uint32 nodeID, const int par
   return false;
 }
 
-void PMixDocument::setNodeIPos(const uint32 nodeID, double x, double y)
+void PMixDocument::setNodeIPos(NodeID nodeID, double x, double y)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -834,7 +829,7 @@ void PMixDocument::setNodeIPos(const uint32 nodeID, double x, double y)
   }
 }
 
-void PMixDocument::getNodeIPos(const uint32 nodeID, double& x, double& y) const
+void PMixDocument::getNodeIPos(NodeID nodeID, double& x, double& y) const
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   

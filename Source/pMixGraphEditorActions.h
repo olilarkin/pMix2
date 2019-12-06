@@ -32,14 +32,14 @@ private:
   GraphEditor& graphEditor;
   double x, y;
   PluginDescription desc;
-  uint32 nodeID;
+  NodeID nodeID;
   JUCE_DECLARE_NON_COPYABLE (CreateNodeAction)
 };
 
 class RemoveNodeAction  : public UndoableAction
 {
 public:
-  RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const uint32 nodeID) noexcept;
+  RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, NodeID nodeID) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -47,15 +47,15 @@ public:
 private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
-  uint32 nodeID;
-  ScopedPointer<XmlElement> nodeXML;
+  NodeID nodeID;
+  std::unique_ptr<XmlElement> nodeXML;
   JUCE_DECLARE_NON_COPYABLE (RemoveNodeAction)
 };
 
 class MoveNodeAction  : public UndoableAction
 {
 public:
-  MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept;
+  MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, NodeID nodeID, Point<double> startPos, Point<double> endPos) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
@@ -63,7 +63,7 @@ public:
 private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
-  uint32 nodeID;
+  NodeID nodeID;
   Point<double> startPos;
   Point<double> endPos;
   JUCE_DECLARE_NON_COPYABLE (MoveNodeAction)
@@ -72,16 +72,16 @@ private:
 class CreateConnectionAction  : public UndoableAction
 {
 public:
-  CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcNodeId, int srcChannel, uint32 dstNodeId, int dstChannel) noexcept;
+  CreateConnectionAction (PMixAudioEngine& audioEngine, NodeID srcNodeId, int srcChannel, NodeID dstNodeId, int dstChannel) noexcept;
   bool perform();
   bool undo();
   int getSizeInUnits();
   
 private:
   PMixAudioEngine& audioEngine;
-  uint32 srcNodeId;
+  NodeID srcNodeId;
   int srcChannel;
-  uint32 dstNodeId;
+  NodeID dstNodeId;
   int dstChannel;
   JUCE_DECLARE_NON_COPYABLE (CreateConnectionAction)
 };

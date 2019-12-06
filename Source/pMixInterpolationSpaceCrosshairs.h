@@ -16,7 +16,7 @@
 class InterpolationSpaceIPos : public Component
 {
 public:
-  InterpolationSpaceIPos(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout, const uint32 nodeID, Colour colour);
+  InterpolationSpaceIPos(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout, NodeID nodeID, Colour colour);
   ~InterpolationSpaceIPos();
   
   void resized () override;
@@ -36,7 +36,7 @@ private:
   Colour colour;
   
 public:
-  const uint32 nodeID;
+  NodeID nodeID;
 };
 
 class pMixInterpolationSpaceCrossHairs : public Component
@@ -52,7 +52,7 @@ public:
   void changeListenerCallback (ChangeBroadcaster* source) override;
   
   void updateComponents();
-  InterpolationSpaceIPos* getComponentForNode (const uint32 nodeID) const;
+  InterpolationSpaceIPos* getComponentForNode (NodeID nodeID) const;
 
 private:
   PMixAudioEngine& audioEngine;

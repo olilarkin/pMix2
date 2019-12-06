@@ -23,7 +23,7 @@ bool CreateNodeAction::perform()
 {
   nodeID = audioEngine.getDoc().addNode (&desc, x, y);
   
-  if (nodeID < 0xFFFFFFFF)
+  if (nodeID < NodeID(0xFFFFFFFF))
     return true;
   else
     return false;
@@ -44,12 +44,12 @@ int CreateNodeAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-RemoveNodeAction::RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, const uint32 nodeID) noexcept
+RemoveNodeAction::RemoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, NodeID nodeID) noexcept
 : audioEngine(audioEngine)
 , graphEditor(graphEditor)
 , nodeID(nodeID)
 {
-  nodeXML = audioEngine.getDoc().createNodeXml(audioEngine.getGraph().getNodeForId(nodeID));
+  nodeXML = std::unique_ptr<XmlElement>(audioEngine.getDoc().createNodeXml(audioEngine.getGraph().getNodeForId(juce::AudioProcessorGraph::NodeID(nodeID))));
 }
 
 bool RemoveNodeAction::perform()
@@ -58,7 +58,7 @@ bool RemoveNodeAction::perform()
   
   audioEngine.getDoc().removeNode (nodeID);
 
-  if (nodeID < 0xFFFFFFFF)
+  if (nodeID < NodeID(0xFFFFFFFF))
     return true;
   else
     return false;
@@ -76,7 +76,7 @@ int RemoveNodeAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-MoveNodeAction::MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, uint32 nodeID, Point<double> startPos, Point<double> endPos) noexcept
+MoveNodeAction::MoveNodeAction (PMixAudioEngine& audioEngine, GraphEditor& graphEditor, NodeID nodeID, Point<double> startPos, Point<double> endPos) noexcept
 : audioEngine(audioEngine)
 , graphEditor(graphEditor)
 , nodeID(nodeID)
@@ -104,7 +104,7 @@ int MoveNodeAction::getSizeInUnits()
   return (int) sizeof (*this); //xxx should be more accurate
 }
 
-CreateConnectionAction::CreateConnectionAction (PMixAudioEngine& audioEngine, uint32 srcNodeId, int srcChannel, uint32 dstNodeId, int dstChannel) noexcept
+CreateConnectionAction::CreateConnectionAction (PMixAudioEngine& audioEngine, NodeID srcNodeId, int srcChannel, NodeID dstNodeId, int dstChannel) noexcept
 : audioEngine(audioEngine)
 , srcNodeId(srcNodeId)
 , srcChannel(srcChannel)

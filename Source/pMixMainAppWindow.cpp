@@ -264,11 +264,11 @@ void MainAppWindow::getCommandInfo (const CommandID commandID, ApplicationComman
       break;
 
     case CommandIDs::aboutBox:
-      result.setInfo ("About pMix", String::empty, category, 0);
+      result.setInfo ("About pMix", String(), category, 0);
       break;
       
     case CommandIDs::showPrefs:
-      result.setInfo ("Preferences...", String::empty, category, 0);
+      result.setInfo ("Preferences...", String(), category, 0);
       result.defaultKeypresses.add (KeyPress (',', ModifierKeys::commandModifier, 0));
       break;
       
@@ -377,7 +377,7 @@ bool MainAppWindow::perform (const InvocationInfo& info)
 
     case CommandIDs::saveAs:
       if (mainComponent != nullptr)
-        audioEngine.getDoc().saveAs (File::nonexistent, true, true, true);
+        audioEngine.getDoc().saveAs ({}, true, true, true);
       break;
 
     case CommandIDs::showPrefs:
@@ -476,9 +476,9 @@ void MainAppWindow::showPreferences()
 
   o.runModal();
 
-  ScopedPointer<XmlElement> audioState (getDeviceManager().createStateXml());
+  std::unique_ptr<XmlElement> audioState (getDeviceManager().createStateXml());
 
-  audioEngine.getAppProperties().getUserSettings()->setValue ("audioDeviceState", audioState);
+//  audioEngine.getAppProperties().getUserSettings()->setValue("audioDeviceState", audioState); //TODO:
   audioEngine.getAppProperties().getUserSettings()->saveIfNeeded();
 
   audioEngine.getDoc().removeIllegalConnections();

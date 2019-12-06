@@ -15,7 +15,7 @@
 #pragma mark -
 #pragma mark PinComponent
 
-PinComponent::PinComponent (PMixAudioEngine& audioEngine, const uint32 nodeID_, const int index_, const bool isInput_)
+PinComponent::PinComponent (PMixAudioEngine& audioEngine, NodeID nodeID_, const int index_, const bool isInput_)
 : nodeID (nodeID_)
 , index (index_)
 , isInput (isInput_)
@@ -73,11 +73,7 @@ void PinComponent::paint (Graphics& g)
 
 void PinComponent::mouseDown (const MouseEvent& e)
 {
-  getGraphEditor()->beginConnectorDrag (isInput ? 0 : nodeID,
-                                       index,
-                                       isInput ? nodeID : 0,
-                                       index,
-                                       e);
+  getGraphEditor()->beginConnectorDrag (isInput ? NodeID(0) : nodeID, index, isInput ? nodeID : NodeID(0), index, e);
 }
 
 void PinComponent::mouseDrag (const MouseEvent& e)
@@ -110,7 +106,7 @@ GraphEditor* PinComponent::getGraphEditor() const noexcept
 #pragma mark -
 #pragma mark NodeComponent
 
-NodeComponent::NodeComponent (PMixAudioEngine& audioEngine, const uint32 nodeID_)
+NodeComponent::NodeComponent (PMixAudioEngine& audioEngine, NodeID nodeID_)
 : audioEngine (audioEngine)
 , nodeID (nodeID_)
 , numInputs (0)
@@ -497,7 +493,7 @@ void NodeComponent::update()
   }
     
   if(faustProc != nullptr) {
-    if(faustProc->getCompilerMessage() != String::empty)
+    if(faustProc->getCompilerMessage() != String())
       bubbleMessage(faustProc->getCompilerMessage());
   }
 }
@@ -546,7 +542,7 @@ ConnectorComponent::ConnectorComponent (PMixAudioEngine& audioEngine)
   //setAlwaysOnTop (true);
 }
 
-void ConnectorComponent::setInput (const uint32 sourceNodeId_, const int sourceNodeChannel_)
+void ConnectorComponent::setInput (NodeID sourceNodeId_, const int sourceNodeChannel_)
 {
   if (sourceNodeId != sourceNodeId_ || sourceNodeChannel != sourceNodeChannel_)
   {
@@ -556,7 +552,7 @@ void ConnectorComponent::setInput (const uint32 sourceNodeId_, const int sourceN
   }
 }
 
-void ConnectorComponent::setOutput (const uint32 destNodeId_, const int destNodeChannel_)
+void ConnectorComponent::setOutput (NodeID destNodeId_, const int destNodeChannel_)
 {
   if (destNodeId != destNodeId_ || destNodeChannel != destNodeChannel_)
   {
@@ -675,9 +671,9 @@ void ConnectorComponent::mouseDrag (const MouseEvent& e)
     getDistancesFromEnds (e.x, e.y, distanceFromStart, distanceFromEnd);
     const bool isNearerSource = (distanceFromStart < distanceFromEnd);
     
-    getGraphEditor()->beginConnectorDrag (isNearerSource ? 0 : sourceNodeId,
+    getGraphEditor()->beginConnectorDrag (isNearerSource ? NodeID(0) : sourceNodeId,
                                          sourceNodeChannel,
-                                         isNearerSource ? destNodeId : 0,
+                                         isNearerSource ? destNodeId : NodeID(0),
                                          destNodeChannel,
                                          e);
   }
@@ -731,7 +727,7 @@ void ConnectorComponent::resized()
                      -arrowL, -arrowW,
                      arrowL, 0.0f);
   
-  arrow.applyTransform (AffineTransform::identity
+  arrow.applyTransform (AffineTransform()
                         .rotated (float_Pi * 0.5f - (float) atan2 (x2 - x1, y2 - y1))
                         .translated ((x1 + x2) * 0.5f,
                                      (y1 + y2) * 0.5f));

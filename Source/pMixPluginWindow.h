@@ -10,6 +10,7 @@
 #pragma once
 
 #include "JuceHeader.h"
+#include "pMixConstants.h"
 
 class PluginWindow  : public DocumentWindow
 {
@@ -27,7 +28,7 @@ public:
   
   static PluginWindow* getWindowFor (AudioProcessorGraph::Node*, WindowFormatType);
   
-  static void closeCurrentlyOpenWindowsFor (const uint32 nodeID);
+  static void closeCurrentlyOpenWindowsFor (NodeID nodeID);
   static void closeAllCurrentlyOpenWindows();
   
   void moved() override;

@@ -37,7 +37,7 @@ public:
 
   void createNewNode (const PluginDescription* desc, int x, int y);
 
-  NodeComponent* getComponentForNode (uint32 nodeID) const;
+  NodeComponent* getComponentForNode (NodeID nodeID) const;
   ConnectorComponent* getComponentForConnection (const AudioProcessorGraph::Connection& conn) const;
   PinComponent* findPinAt (int x, int y) const;
 
@@ -47,7 +47,7 @@ public:
   void updateComponents();
   void clear();
   
-  void beginConnectorDrag (uint32 sourceNodeId, int sourceNodeChannel, uint32 destNodeId, int destNodeChannel, const MouseEvent& e);
+  void beginConnectorDrag (NodeID sourceNodeId, int sourceNodeChannel, NodeID destNodeId, int destNodeChannel, const MouseEvent& e);
   void dragConnector (const MouseEvent& e);
   void endDraggingConnector (const MouseEvent& e);
 
@@ -55,7 +55,7 @@ public:
   void deleteSelection();
   void selectAll();
 
-  void updateFaustNode (const uint32 nodeID, String& newSourceCode);
+  void updateFaustNode (NodeID nodeID, String& newSourceCode);
   
   //LassoSource
   void findLassoItemsInArea (Array <Component*>& results, const Rectangle<int>& area) override;

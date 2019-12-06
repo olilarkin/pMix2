@@ -26,24 +26,24 @@ void pMixApp::initialise (const String& commandLine)
   mainWindow = new MainAppWindow(audioEngine);
   
   deviceManager.addAudioCallback (&graphPlayer);
-  deviceManager.addMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
+  deviceManager.addMidiInputCallback (String(), &graphPlayer.getMidiMessageCollector());
 
 //  if (commandLine.isNotEmpty() && ! commandLine.trimStart().startsWith ("-") && mainWindow->getMainComponent() != nullptr)
 //  {
 //    mainWindow->getMainComponent()->getDoc().loadFrom (File::getCurrentWorkingDirectory().getChildFile (commandLine), true);
 //  }
   
-  ScopedPointer<XmlElement> savedAudioState (audioEngine.getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
+  std::unique_ptr<XmlElement> savedAudioState (audioEngine.getAppProperties().getUserSettings()->getXmlValue ("audioDeviceState"));
   graphPlayer.setDoublePrecisionProcessing(true);
   graphPlayer.setProcessor(&audioEngine.getGraph());
   audioEngine.getDoc().initialize();
-  deviceManager.initialise (256, 256, savedAudioState, true);
+  deviceManager.initialise (256, 256, savedAudioState.get(), true);
 }
 
 void pMixApp::shutdown()
 {
   deviceManager.removeAudioCallback (&graphPlayer);
-  deviceManager.removeMidiInputCallback (String::empty, &graphPlayer.getMidiMessageCollector());
+  deviceManager.removeMidiInputCallback (String(), &graphPlayer.getMidiMessageCollector());
   graphPlayer.setProcessor (nullptr);
 
   mainWindow = nullptr;

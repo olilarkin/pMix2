@@ -41,10 +41,12 @@ public:
   StringArray searchPathsForPlugins (const FileSearchPath& directoriesToSearch, const bool recursive, bool allowPluginsWhichRequireAsynchronousInstantiation = false) override     { return StringArray(); } 
   
   static bool isInternalFormat(String name);
-  
+  bool isTrivialToScan() const override { return true; }
+
 private:
-  void createPluginInstance (const PluginDescription&, double initialSampleRate, int initialBufferSize, void* userData, void (*callback) (void*, AudioPluginInstance*, const String&)) override;
-  
+  std::unique_ptr<AudioPluginInstance> createInstance (const String& name);
+  void createPluginInstance (const PluginDescription&, double initialSampleRate, int initialBufferSize, PluginCreationCallback) override;
+
   bool requiresUnblockedMessageThreadDuringCreation (const PluginDescription&) const noexcept override { return false; }
   
   PluginDescription audioInDesc;

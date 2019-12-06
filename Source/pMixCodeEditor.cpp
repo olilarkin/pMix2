@@ -340,7 +340,7 @@ bool CodeEditor::perform (const InvocationInfo& info)
   {
     case CommandIDs::compile:
     {
-      if(selectedNodeId > 0)
+      if(selectedNodeId != NodeID(0))
       {
         String newSourceCode = codeDocument.getAllContent();
         graphEditor.updateFaustNode(selectedNodeId, newSourceCode);
@@ -398,7 +398,7 @@ bool CodeEditor::perform (const InvocationInfo& info)
 
 void CodeEditor::clear()
 {
-  selectedNodeId = 0;
+  selectedNodeId = NodeID(0);
   selectedFaustAudioPluginInstance = nullptr;
   editor->setVisible(false);
   toolBar->setVisible(false);

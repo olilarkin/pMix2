@@ -25,7 +25,7 @@ PMixTabContainer::PMixTabContainer (PMixAudioEngine& audioEngine, GraphEditor& g
 
   tabbedComponent->setOutline(0.);
   
-  docsBrowser.goToURL("http://faust.grame.fr/library.html");
+  docsBrowser.goToURL("https://faust.grame.fr/doc/libraries/index.html");
 
   setSize (600, 400);
 }

@@ -12,7 +12,7 @@
 #include "pMixCommandIDs.h"
 
 InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
-: Label(String::empty, labelText)
+: Label(String(), labelText)
 {
   setInterceptsMouseClicks(false, false);
   setFont (Font (13.f));
@@ -23,7 +23,7 @@ InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
   setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 }
 
-InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, const uint32 nodeID, const int presetId, Colour colour)
+InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, NodeID nodeID, const int presetId, Colour colour)
 : audioEngine(audioEngine)
 , nodeID(nodeID)
 , presetId(presetId)
@@ -326,7 +326,7 @@ void PMixInterpolationSpaceLayout::updateComponents()
     if (!InternalPluginFormat::isInternalFormat(f->getProcessor()->getName()))
     {
       Array<InterpolationSpacePreset*> comps;
-      getComponentsForNode(f->nodeID, comps);
+      getComponentsForNode(NodeID(f->nodeID), comps);
       Array<var>* presets = f->properties.getVarPointer("presets")->getArray();
       
       // if the number of presets for this node has changed then delete the components and re-create
@@ -345,7 +345,7 @@ void PMixInterpolationSpaceLayout::updateComponents()
           String label = obj->getProperty("name");
           InterpolationSpacePreset* const comp = new InterpolationSpacePreset(audioEngine, label, f->nodeID, obj->getProperty("uid"), audioEngine.getDoc().getNodeColour(f->nodeID)  );
           String componentID;
-          componentID << "p." << (int) f->nodeID << "." << presetIdx;
+          componentID << "p." << String(f->nodeID.uid) << "." << presetIdx;
           comp->setComponentID(componentID);
           float r = MIN_RADIUS + (RADIUS_RANGE * (float) obj->getProperty("radius"));
           float x = getWidth() * (float) obj->getProperty("x");
@@ -363,7 +363,7 @@ void PMixInterpolationSpaceLayout::updateComponents()
   }
 }
 
-void PMixInterpolationSpaceLayout::getComponentsForNode (const uint32 nodeID, Array<InterpolationSpacePreset*>& components) const
+void PMixInterpolationSpaceLayout::getComponentsForNode (NodeID nodeID, Array<InterpolationSpacePreset*>& components) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
@@ -373,7 +373,7 @@ void PMixInterpolationSpaceLayout::getComponentsForNode (const uint32 nodeID, Ar
   }
 }
 
-void PMixInterpolationSpaceLayout::repaintPresetsForNode (const uint32 nodeID)
+void PMixInterpolationSpaceLayout::repaintPresetsForNode (NodeID nodeID)
 {
   const AudioProcessorGraph::Node::Ptr f (audioEngine.getDoc().getNodeForId(nodeID));
 

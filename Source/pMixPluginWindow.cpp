@@ -29,7 +29,7 @@ type (t)
   activePluginWindows.add (this);
 }
 
-void PluginWindow::closeCurrentlyOpenWindowsFor (const uint32 nodeID)
+void PluginWindow::closeCurrentlyOpenWindowsFor (NodeID nodeID)
 {
   for (int i = activePluginWindows.size(); --i >= 0;)
     if (activePluginWindows.getUnchecked(i)->owner->nodeID == nodeID)

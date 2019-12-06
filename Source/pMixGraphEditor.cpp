@@ -53,7 +53,9 @@ void GraphEditor::mouseDown (const MouseEvent& e)
     PopupMenu m;
     audioEngine.createNodeMenu(m);
     const int r = m.show();
-    createNewNode (audioEngine.getChosenType (r), e.x, e.y);
+    
+    if(r > 0)
+      createNewNode (audioEngine.getChosenType (r), e.x, e.y);
   }
   else
   {
@@ -88,7 +90,7 @@ void GraphEditor::createNewNode (const PluginDescription* desc, int x, int y)
   }
 }
 
-NodeComponent* GraphEditor::getComponentForNode (const uint32 nodeID) const
+NodeComponent* GraphEditor::getComponentForNode (NodeID nodeID) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
@@ -105,8 +107,8 @@ ConnectorComponent* GraphEditor::getComponentForConnection (const AudioProcessor
   for (int i = getNumChildComponents(); --i >= 0;)
   {
       if (ConnectorComponent* const c = dynamic_cast <ConnectorComponent*> (getChildComponent (i)))
-      if (c->sourceNodeId == conn.source.nodeID
-          && c->destNodeId == conn.destination.nodeID
+      if (NodeID(c->sourceNodeId) == conn.source.nodeID
+          && NodeID(c->destNodeId) == conn.destination.nodeID
           && c->sourceNodeChannel == conn.source.channelIndex
           && c->destNodeChannel == conn.destination.channelIndex)
         return c;
@@ -200,9 +202,7 @@ void GraphEditor::updateComponents()
   }
 }
 
-void GraphEditor::beginConnectorDrag (const uint32 sourceNodeId, const int sourceNodeChannel,
-    const uint32 destNodeId, const int destNodeChannel,
-    const MouseEvent& e)
+void GraphEditor::beginConnectorDrag (NodeID sourceNodeId, const int sourceNodeChannel, NodeID destNodeId, const int destNodeChannel, const MouseEvent& e)
 {
   draggingConnector = dynamic_cast <ConnectorComponent*> (e.originalComponent);
 
@@ -224,24 +224,24 @@ void GraphEditor::dragConnector (const MouseEvent& e)
 
   if (draggingConnector != nullptr)
   {
-    draggingConnector->setTooltip (String::empty);
+    draggingConnector->setTooltip (String());
 
     int x = e2.x;
     int y = e2.y;
 
     if (PinComponent* const pin = findPinAt (x, y))
     {
-      uint32 srcNode = draggingConnector->sourceNodeId;
+      NodeID srcNode = draggingConnector->sourceNodeId;
       int srcChannel   = draggingConnector->sourceNodeChannel;
-      uint32 dstNode = draggingConnector->destNodeId;
+      NodeID dstNode = draggingConnector->destNodeId;
       int dstChannel   = draggingConnector->destNodeChannel;
 
-      if (srcNode == 0 && ! pin->isInput)
+      if (srcNode == NodeID(0) && ! pin->isInput)
       {
         srcNode = pin->nodeID;
         srcChannel = pin->index;
       }
-      else if (dstNode == 0 && pin->isInput)
+      else if (dstNode == NodeID(0) && pin->isInput)
       {
         dstNode = pin->nodeID;
         dstChannel = pin->index;
@@ -259,7 +259,7 @@ void GraphEditor::dragConnector (const MouseEvent& e)
       }
     }
 
-    if (draggingConnector->sourceNodeId == 0)
+    if (draggingConnector->sourceNodeId == NodeID(0))
       draggingConnector->dragStart (x, y);
     else
       draggingConnector->dragEnd (x, y);
@@ -271,20 +271,20 @@ void GraphEditor::endDraggingConnector (const MouseEvent& e)
   if (draggingConnector == nullptr)
     return;
 
-  draggingConnector->setTooltip (String::empty);
+  draggingConnector->setTooltip (String());
 
   const MouseEvent e2 (e.getEventRelativeTo (this));
 
-  uint32 srcNode = draggingConnector->sourceNodeId;
+  NodeID srcNode = draggingConnector->sourceNodeId;
   int srcChannel   = draggingConnector->sourceNodeChannel;
-  uint32 dstNode = draggingConnector->destNodeId;
+  NodeID dstNode = draggingConnector->destNodeId;
   int dstChannel   = draggingConnector->destNodeChannel;
 
   draggingConnector = nullptr;
 
   if (PinComponent* const pin = findPinAt (e2.x, e2.y))
   {
-    if (srcNode == 0)
+    if (srcNode == NodeID(0))
     {
       if (pin->isInput)
         return;
@@ -420,18 +420,17 @@ SelectedItemSet <Component*>& GraphEditor::getLassoSelection()
   return selectedItems;
 }
 
-void GraphEditor::updateFaustNode (const uint32 nodeID, String& newSourceCode)
+void GraphEditor::updateFaustNode (NodeID nodeID, String& newSourceCode)
 {
-  ScopedPointer<XmlElement> temp(audioEngine.getDoc().createXml());
-  const XmlElement tempXml (*temp);
+  auto tempXml = audioEngine.getDoc().createXml();
   
   PluginWindow::closeCurrentlyOpenWindowsFor (nodeID);
   getComponentForNode(nodeID)->removeEditor();
   audioEngine.getDoc().removeNode(nodeID);
   
-  forEachXmlChildElementWithTagName (tempXml, e, "NODE")
+  forEachXmlChildElementWithTagName (*tempXml, e, "NODE")
   {
-    if(nodeID == e->getIntAttribute("uid"))
+    if(nodeID == NodeID(e->getIntAttribute("uid")))
     {
       double origX = e->getDoubleAttribute("x");
       double origY = e->getDoubleAttribute("y");
@@ -441,11 +440,11 @@ void GraphEditor::updateFaustNode (const uint32 nodeID, String& newSourceCode)
     }
   }
   
-  forEachXmlChildElementWithTagName (tempXml, e, "CONNECTION")
+  forEachXmlChildElementWithTagName (*tempXml, e, "CONNECTION")
   {
-    if(e->getIntAttribute ("srcNode") == nodeID || e->getIntAttribute ("dstNode") == nodeID)
+    if(NodeID(e->getIntAttribute ("srcNode")) == nodeID || NodeID(e->getIntAttribute ("dstNode")) == nodeID)
     {
-      audioEngine.getDoc().addConnection((uint32) e->getIntAttribute ("srcNode"), e->getIntAttribute ("srcChannel"), (uint32) e->getIntAttribute ("dstNode"), e->getIntAttribute ("dstChannel"));
+      audioEngine.getDoc().addConnection(NodeID(e->getIntAttribute ("srcNode")), e->getIntAttribute ("srcChannel"), NodeID(e->getIntAttribute ("dstNode")), e->getIntAttribute ("dstChannel"));
     }
   }
     

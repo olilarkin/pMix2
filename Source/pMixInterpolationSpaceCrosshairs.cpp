@@ -9,7 +9,7 @@
 
 #include "pMixInterpolationSpaceCrosshairs.h"
 
-InterpolationSpaceIPos::InterpolationSpaceIPos(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout, const uint32 nodeID, Colour colour)
+InterpolationSpaceIPos::InterpolationSpaceIPos(PMixAudioEngine& audioEngine, PMixInterpolationSpaceLayout& layout, NodeID nodeID, Colour colour)
 : audioEngine(audioEngine)
 , layout(layout)
 , colour(colour)
@@ -155,7 +155,7 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
 
         if (presets->size() >= 2)
         {
-          InterpolationSpaceIPos* comp = new InterpolationSpaceIPos(audioEngine, layout, f->nodeID, audioEngine.getDoc().getNodeColour(f->nodeID));
+          InterpolationSpaceIPos* comp = new InterpolationSpaceIPos(audioEngine, layout, f->nodeID, audioEngine.getDoc().getNodeColour(juce::AudioProcessorGraph::NodeID(f->nodeID)));
           float r = 25.f;
           float x = getWidth() * (float) iposx;
           float y = getHeight() * (float) iposy;
@@ -185,7 +185,7 @@ void pMixInterpolationSpaceCrossHairs::updateComponents()
   }
 }
 
-InterpolationSpaceIPos* pMixInterpolationSpaceCrossHairs::getComponentForNode (const uint32 nodeID) const
+InterpolationSpaceIPos* pMixInterpolationSpaceCrossHairs::getComponentForNode (NodeID nodeID) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
