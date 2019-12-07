@@ -46,14 +46,14 @@ int PMixDocument::getNumNodes() const noexcept
   return audioEngine.getGraph().getNumNodes();
 }
 
-const AudioProcessorGraph::Node::Ptr PMixDocument::getNode (const int index) const noexcept
+const AudioProcessorGraph::Node::Ptr PMixDocument::getNode (int index) const noexcept
 {
   return audioEngine.getGraph().getNode (index);
 }
 
-const AudioProcessorGraph::Node::Ptr PMixDocument::getNodeForId (NodeID nodeIDs) const noexcept
+const AudioProcessorGraph::Node::Ptr PMixDocument::getNodeForId (NodeID nodeID) const noexcept
 {
-  return audioEngine.getGraph().getNodeForId (nodeIDs);
+  return audioEngine.getGraph().getNodeForId (nodeID);
 }
 
 NodeID PMixDocument::addNode (const PluginDescription* desc, double x, double y)
@@ -130,7 +130,7 @@ void PMixDocument::removeIllegalConnections()
     changed();
 }
 
-void PMixDocument::setNodeUIStatus(NodeID nodeID, const uint32 uiStatus)
+void PMixDocument::setNodeUIStatus(NodeID nodeID, uint32 uiStatus)
 {
   const AudioProcessorGraph::Node::Ptr n (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -169,7 +169,7 @@ int PMixDocument::getNumConnections() const noexcept
     return audioEngine.getGraph().getConnections().size();
 }
 
-const AudioProcessorGraph::Connection PMixDocument::getConnection (const int index) const noexcept
+const AudioProcessorGraph::Connection PMixDocument::getConnection (int index) const noexcept
 {
     AudioProcessorGraph::Connection connection = audioEngine.getGraph().getConnections()[index];
     return connection;
@@ -204,7 +204,7 @@ bool PMixDocument::addConnection (NodeID sourceNodeId, int sourceNodeChannel, No
     return result;
 }
 
-void PMixDocument::removeConnection (const int index)
+void PMixDocument::removeConnection (int index)
 {
     audioEngine.getGraph().removeConnection (this->getConnection(index));
     changed();
@@ -513,7 +513,7 @@ void PMixDocument::restoreFromXml (const XmlElement& xml)
   audioEngine.getGraph().removeIllegalConnections();
 }
 
-bool PMixDocument::isSnapActive (const bool disableIfCtrlKeyDown) const noexcept
+bool PMixDocument::isSnapActive (bool disableIfCtrlKeyDown) const noexcept
 {
   return snapActive != (disableIfCtrlKeyDown && ModifierKeys::getCurrentModifiers().isCtrlDown());
 }
@@ -529,7 +529,7 @@ int PMixDocument::snapPosition (int pos) const noexcept
   return pos;
 }
 
-void PMixDocument::setSnappingGrid (const int numPixels, const bool active, const bool shown)
+void PMixDocument::setSnappingGrid (int numPixels, bool active, bool shown)
 {
   if (numPixels != snapGridPixels
       || active != snapActive
@@ -542,7 +542,7 @@ void PMixDocument::setSnappingGrid (const int numPixels, const bool active, cons
   }
 }
 
-void PMixDocument::setComponentOverlayOpacity (const float alpha)
+void PMixDocument::setComponentOverlayOpacity (float alpha)
 {
   if (alpha != componentOverlayOpacity)
   {
@@ -598,7 +598,7 @@ String PMixDocument::getLibraryPath()
   return fullLibraryPath;
 }
 
-DynamicObject* PMixDocument::getPresetWithUID(NodeID nodeID, const int presetId) const
+DynamicObject* PMixDocument::getPresetWithUID(NodeID nodeID, int presetId) const
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -659,7 +659,7 @@ void PMixDocument::addPreset(NodeID nodeID, double x, double y)
   changed();
 }
 
-void PMixDocument::removePreset(NodeID nodeID, const int presetId)
+void PMixDocument::removePreset(NodeID nodeID, int presetId)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -687,7 +687,7 @@ void PMixDocument::removePreset(NodeID nodeID, const int presetId)
   changed();
 }
 
-void PMixDocument::setPresetPosition (NodeID nodeID, const int presetId, double x, double y)
+void PMixDocument::setPresetPosition (NodeID nodeID, int presetId, double x, double y)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -704,7 +704,7 @@ void PMixDocument::setPresetPosition (NodeID nodeID, const int presetId, double 
   }
 }
 
-void PMixDocument::getPresetPosition (NodeID nodeID, const int presetId, double& x, double& y) const
+void PMixDocument::getPresetPosition (NodeID nodeID, int presetId, double& x, double& y) const
 {
   x = y = 0;
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
@@ -720,7 +720,7 @@ void PMixDocument::getPresetPosition (NodeID nodeID, const int presetId, double&
   }
 }
 
-double PMixDocument::getPresetWeight(NodeID nodeID, const int presetId)
+double PMixDocument::getPresetWeight(NodeID nodeID, int presetId)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -735,7 +735,7 @@ double PMixDocument::getPresetWeight(NodeID nodeID, const int presetId)
   return 0.;
 }
 
-void PMixDocument::setPresetName(NodeID nodeID, const int presetId, String newName)
+void PMixDocument::setPresetName(NodeID nodeID, int presetId, String newName)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -758,7 +758,7 @@ int PMixDocument::getNumPresetsForNode(NodeID nodeID)
     return 0;
 }
 
-void PMixDocument::setNodeColour(NodeID nodeID, const Colour colour)
+void PMixDocument::setNodeColour(NodeID nodeID, const Colour& colour)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
 
@@ -783,7 +783,7 @@ Colour PMixDocument::getNodeColour(NodeID nodeID) const
   return clr;
 }
 
-void PMixDocument::setParameterToInterpolate(NodeID nodeID, const int paramIdx, bool interpolate)
+void PMixDocument::setParameterToInterpolate(NodeID nodeID, int paramIdx, bool interpolate)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
@@ -802,7 +802,7 @@ void PMixDocument::setParameterToInterpolate(NodeID nodeID, const int paramIdx, 
   }
 }
 
-bool PMixDocument::getParameterIsInterpolated(NodeID nodeID, const int paramIdx)
+bool PMixDocument::getParameterIsInterpolated(NodeID nodeID, int paramIdx)
 {
   const AudioProcessorGraph::Node::Ptr node (audioEngine.getGraph().getNodeForId (nodeID));
   
