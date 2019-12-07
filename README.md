@@ -1,7 +1,5 @@
 # pMix - Preset Mixer (v2)
 
-- this project is archived due to code rot - if someone has time to get it working with the latest JUCE, that would be great
-
 pMix (short for preset mixer) is a sound design, composition and performance tool that facilitates the control of multiple parameters using an intuitive graphical interface. It includes a graphical patcher for creating a network of audio synthesis or processing nodes. A node could be a VST2, VST3, AU or LADSPA plug-in or it could a JIT compiled FAUST script. FAUST is a first class citizen in pMix and an integrated code editor and SVG display makes it a nice environment for FAUST development.
 
 Presets created for each node are represented by colour-coded balls that are positioned on a 2D plane. The size of each ball and its proximity to the node's cursor affects the weight of the associated preset in the interpolation.
@@ -51,6 +49,6 @@ If you need to change any paths etc, you should do so using the .jucer project r
 
 **License:**
 
-pMix - Copyright Oliver Larkin 2008 - 2017  
+pMix - Copyright Oliver Larkin 2008 - 2019 
 GNU Public License  
 www.olilarkin.co.uk
