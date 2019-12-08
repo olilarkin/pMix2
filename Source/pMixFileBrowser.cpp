@@ -213,7 +213,8 @@ FileBrowser::FileBrowser() : thread ("audio file preview")
   zoomSlider.addListener (this);
   zoomSlider.setSkewFactor (2);
   
-  addAndMakeVisible (thumbnail = new ThumbnailComponent (formatManager, transportSource, zoomSlider));
+  thumbnail = std::make_unique<ThumbnailComponent>(formatManager, transportSource, zoomSlider);
+  addAndMakeVisible (*thumbnail);
   thumbnail->addChangeListener (this);
   
   addAndMakeVisible (startStopButton);
@@ -293,10 +294,10 @@ void FileBrowser::loadFileIntoTransport (const File& audioFile)
   
   if (reader != nullptr)
   {
-    currentAudioFileSource = new AudioFormatReaderSource (reader, true);
+    currentAudioFileSource = std::make_unique<AudioFormatReaderSource>(reader, true);
     
     // ..and plug it into our transport source
-    transportSource.setSource (currentAudioFileSource,
+    transportSource.setSource (currentAudioFileSource.get(),
                                32768,          // tells it to buffer this many samples ahead
                                &thread,         // this is the background thread to use for reading-ahead
                                reader->sampleRate);   // allows for sample rate correction
@@ -336,6 +337,6 @@ void FileBrowser::buttonClicked (Button* buttonThatWasClicked)
 
 void FileBrowser::changeListenerCallback (ChangeBroadcaster* source)
 {
-  if (source == thumbnail)
+  if (source == thumbnail.get())
     showFile (thumbnail->getLastDroppedFile());
 }

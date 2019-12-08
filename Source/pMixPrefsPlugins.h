@@ -56,7 +56,7 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<PluginListComponent> pluginListComponent;
+    std::unique_ptr<PluginListComponent> pluginListComponent;
 
 
     //==============================================================================

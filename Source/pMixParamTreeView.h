@@ -69,8 +69,8 @@ public:
 
 private:
   PMixAudioEngine& audioEngine;
-  ScopedPointer <TreeViewItem> rootItem;
-  ScopedPointer <TreeView> treeView;
+  std::unique_ptr <TreeViewItem> rootItem;
+  std::unique_ptr <TreeView> treeView;
 };
 
 

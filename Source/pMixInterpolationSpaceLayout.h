@@ -48,7 +48,7 @@ private:
   ComponentDragger myDragger;
   ComponentBoundsConstrainer boundsConstrainer;
   Rectangle<int> startBounds, endBounds;
-  ScopedPointer<InterpolationSpaceLabel> label;
+  std::unique_ptr<InterpolationSpaceLabel> label;
   Colour colour;
   float opacity;
   bool dragging;

@@ -78,7 +78,7 @@ private:
   PMixAudioEngine& audioEngine;
   LassoComponent<Component*> lassoComp;
   SelectedItemSet<Component*> selectedItems;
-  ScopedPointer<ConnectorComponent> draggingConnector;
+  std::unique_ptr<ConnectorComponent> draggingConnector;
   bool somethingIsBeingDraggedOver;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphEditor)

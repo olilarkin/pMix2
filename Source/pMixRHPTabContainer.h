@@ -29,7 +29,7 @@ public:
   void removeTabForContent(Component& content);
 
 private:
-  ScopedPointer<TabbedComponent> tabbedComponent;
+  std::unique_ptr<TabbedComponent> tabbedComponent;
   InterpolationSpace& iSpace;
   CodeEditor& codeEditor;
   WebBrowserComponent docsBrowser;

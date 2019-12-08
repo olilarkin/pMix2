@@ -27,7 +27,7 @@ public:
   ApplicationCommandManager commandManager;
 
 private:
-  ScopedPointer<MainAppWindow> mainWindow;
+  std::unique_ptr<MainAppWindow> mainWindow;
   AudioProcessorPlayer graphPlayer;
   PMixAudioEngine audioEngine;
 //  SplashScreen* splash;

@@ -59,7 +59,7 @@ public:
   void paint (Graphics& g) override;
   void resized() override;
   
-  void getPinPos (const int index, const bool isInput, float& x, float& y);
+  void getPinPos (int index, bool isInput, float& x, float& y);
   void update();
   
   void removeEditor();

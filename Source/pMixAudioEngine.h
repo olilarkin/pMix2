@@ -40,7 +40,7 @@ public:
   
   // called from GUI classes to populate menus
   void createNodeMenu (PopupMenu& m) const;
-  const PluginDescription* getChosenType (const int menuID) const;
+  const PluginDescription* getChosenType (int menuID) const;
 
   //ChangeListener
   void changeListenerCallback (ChangeBroadcaster* broadcaster);
@@ -65,7 +65,7 @@ private:
   
   PMixLogger logger;
 
-  ScopedPointer<ApplicationProperties> appProperties;
+  std::unique_ptr<ApplicationProperties> appProperties;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PMixAudioEngine)
 };

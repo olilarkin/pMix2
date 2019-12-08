@@ -33,7 +33,8 @@ PMixPrefsPlugins::PMixPrefsPlugins (PMixAudioEngine& audioEngine)
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible (pluginListComponent = new PluginListComponent (audioEngine.getFormatManager(), audioEngine.getKnownPluginList(), audioEngine.getDMPFile(), audioEngine.getAppProperties().getUserSettings()));
+    pluginListComponent = std::make_unique<PluginListComponent>(audioEngine.getFormatManager(), audioEngine.getKnownPluginList(), audioEngine.getDMPFile(), audioEngine.getAppProperties().getUserSettings());
+    addAndMakeVisible (*pluginListComponent);
 
 
     //[UserPreSize]

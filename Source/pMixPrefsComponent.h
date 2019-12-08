@@ -59,7 +59,7 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<TabbedComponent> tabbedComponent;
+    std::unique_ptr<TabbedComponent> tabbedComponent;
 
 
     //==============================================================================

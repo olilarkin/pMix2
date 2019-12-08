@@ -26,7 +26,7 @@ PMixAudioEngine::PMixAudioEngine()
 #ifdef JUCE_MAC
   options.folderName = "pMix2";
 #endif
-  appProperties = new ApplicationProperties();
+  appProperties = std::make_unique<ApplicationProperties>();
   appProperties->setStorageParameters (options);
   
   formatManager.addDefaultFormats();
@@ -115,7 +115,7 @@ void PMixAudioEngine::createNodeMenu (PopupMenu& m) const
   m.addSubMenu("Plugins", pluginsMenu);
 }
 
-const PluginDescription* PMixAudioEngine::getChosenType (const int menuID) const
+const PluginDescription* PMixAudioEngine::getChosenType (int menuID) const
 {
   if(menuID >= CommandIDs::faustDSPFiles && menuID < CommandIDs::faustDSPFiles + faustDSPFiles.size())
   {

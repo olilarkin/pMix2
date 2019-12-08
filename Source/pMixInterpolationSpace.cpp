@@ -11,8 +11,10 @@
 
 InterpolationSpace::InterpolationSpace (PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 {
-  addAndMakeVisible(layout = new PMixInterpolationSpaceLayout(audioEngine, graphEditor));
-  addAndMakeVisible(crosshairs = new pMixInterpolationSpaceCrossHairs(audioEngine, *layout));
+  layout = std::make_unique<PMixInterpolationSpaceLayout>(audioEngine, graphEditor);
+  crosshairs = std::make_unique<pMixInterpolationSpaceCrossHairs>(audioEngine, *layout);
+  addAndMakeVisible(*layout);
+  addAndMakeVisible(*crosshairs);
 }
 
 InterpolationSpace::~InterpolationSpace ()

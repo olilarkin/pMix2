@@ -93,17 +93,17 @@ private:
   FaustTokeniser tokeniser;
   CodeDocument codeDocument;
   
-  ScopedPointer<Toolbar> toolBar;
+  std::unique_ptr<Toolbar> toolBar;
   
-  ScopedPointer<CodeEditorComponent> editor;
-  ScopedPointer<SVGDisplay> svgDisplay;
-  ScopedPointer<PMixConsole> console;
+  std::unique_ptr<CodeEditorComponent> editor;
+  std::unique_ptr<SVGDisplay> svgDisplay;
+  std::unique_ptr<PMixConsole> console;
   
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
 
   StretchableLayoutManager verticalLayout;
-  ScopedPointer<StretchableLayoutResizerBar> dividerBar1, dividerBar2;
+  std::unique_ptr<StretchableLayoutResizerBar> dividerBar1, dividerBar2;
   FaustAudioPluginInstance* selectedFaustAudioPluginInstance;
   NodeID selectedNodeId;
   int show;

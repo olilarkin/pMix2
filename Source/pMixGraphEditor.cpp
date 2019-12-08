@@ -117,7 +117,7 @@ ConnectorComponent* GraphEditor::getComponentForConnection (const AudioProcessor
   return nullptr;
 }
 
-PinComponent* GraphEditor::findPinAt (const int x, const int y) const
+PinComponent* GraphEditor::findPinAt (int x, int y) const
 {
   for (int i = getNumChildComponents(); --i >= 0;)
   {
@@ -161,7 +161,7 @@ void GraphEditor::updateComponents()
   {
     ConnectorComponent* const cc = dynamic_cast <ConnectorComponent*> (getChildComponent (i));
 
-    if (cc != nullptr && cc != draggingConnector)
+    if (cc != nullptr && cc != draggingConnector.get())
     {
       if (!audioEngine.getDoc().isConnected (cc->sourceNodeId, cc->sourceNodeChannel,
                                             cc->destNodeId, cc->destNodeChannel))
@@ -204,15 +204,16 @@ void GraphEditor::updateComponents()
 
 void GraphEditor::beginConnectorDrag (NodeID sourceNodeId, const int sourceNodeChannel, NodeID destNodeId, const int destNodeChannel, const MouseEvent& e)
 {
-  draggingConnector = dynamic_cast <ConnectorComponent*> (e.originalComponent);
-
+  auto* c = dynamic_cast<ConnectorComponent*> (e.originalComponent);
+  draggingConnector.reset(c);
+  
   if (draggingConnector == nullptr)
-    draggingConnector = new ConnectorComponent (audioEngine);
+    draggingConnector = std::make_unique<ConnectorComponent>(audioEngine);
 
   draggingConnector->setInput (sourceNodeId, sourceNodeChannel);
   draggingConnector->setOutput (destNodeId, destNodeChannel);
 
-  addAndMakeVisible (draggingConnector);
+  addAndMakeVisible (*draggingConnector);
   draggingConnector->toFront (false);
 
   dragConnector (e);

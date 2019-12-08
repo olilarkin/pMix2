@@ -21,15 +21,17 @@ MainComponent::MainComponent (PMixAudioEngine& audioEngine)
   horizontalLayout.setItemLayout (1, 8, 8, 8);
   horizontalLayout.setItemLayout (2, 150, -1.0, -0.65);
   
-  horizontalDividerBar = new StretchableLayoutResizerBar (&horizontalLayout, 1, true);
-  addAndMakeVisible (horizontalDividerBar);
+  horizontalDividerBar = std::make_unique<StretchableLayoutResizerBar>(&horizontalLayout, 1, true);
+  addAndMakeVisible (*horizontalDividerBar);
   
-  addAndMakeVisible (graphEditor = new GraphEditor(audioEngine));
+  graphEditor = std::make_unique<GraphEditor>(audioEngine);
+  addAndMakeVisible (*graphEditor);
   
-  codeEditor = new CodeEditor (audioEngine, *graphEditor);
-  iSpace = new InterpolationSpace (audioEngine, *graphEditor);
+  codeEditor = std::make_unique<CodeEditor>(audioEngine, *graphEditor);
+  iSpace = std::make_unique<InterpolationSpace>(audioEngine, *graphEditor);
   
-  addAndMakeVisible(rightHandPanel = new PMixTabContainer(audioEngine, *graphEditor, *codeEditor, *iSpace));
+  rightHandPanel = std::make_unique<PMixTabContainer>(audioEngine, *graphEditor, *codeEditor, *iSpace);
+  addAndMakeVisible(*rightHandPanel);
   
   graphEditor->updateComponents();
   
@@ -60,7 +62,7 @@ void MainComponent::paint (Graphics& g)
 
 void MainComponent::resized()
 {
-  Component* hcomps[] = { graphEditor, horizontalDividerBar, rightHandPanel  };
+  Component* hcomps[] = { graphEditor.get(), horizontalDividerBar.get(), rightHandPanel.get()  };
   
   horizontalLayout.layOutComponents (hcomps, 3, 0, 0, getWidth(), getHeight(), false, true);
 }

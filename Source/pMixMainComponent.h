@@ -47,14 +47,14 @@ private:
   pMixLookAndFeel lookAndFeel;
   PMixAudioEngine& audioEngine;
   
-  ScopedPointer<GraphEditor> graphEditor;
-  ScopedPointer<CodeEditor> codeEditor;
-  ScopedPointer<InterpolationSpace> iSpace;
+  std::unique_ptr<GraphEditor> graphEditor;
+  std::unique_ptr<CodeEditor> codeEditor;
+  std::unique_ptr<InterpolationSpace> iSpace;
   
   StretchableLayoutManager horizontalLayout;
-  ScopedPointer<StretchableLayoutResizerBar> horizontalDividerBar;
+  std::unique_ptr<StretchableLayoutResizerBar> horizontalDividerBar;
 
-  ScopedPointer<PMixTabContainer> rightHandPanel;
+  std::unique_ptr<PMixTabContainer> rightHandPanel;
   
   PMixFloatWindow* iSpaceWindow;
   PMixFloatWindow* codeEditorWindow;

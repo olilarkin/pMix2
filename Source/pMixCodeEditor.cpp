@@ -14,7 +14,7 @@
 class PMixToolbarButton : public ToolbarItemComponent
 {
 public:
-  PMixToolbarButton (const int toolbarItemId, String buttonText)
+  PMixToolbarButton (int toolbarItemId, String buttonText)
   : ToolbarItemComponent (toolbarItemId, buttonText, false)
   , button (buttonText)
   {
@@ -126,7 +126,8 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 , show(CodeEditorBottomViewIDs::diagram)
 , lastDirectory(File::getSpecialLocation(File::userDesktopDirectory))
 {
-  addAndMakeVisible (toolBar = new Toolbar());
+  toolBar = std::make_unique<Toolbar>();
+  addAndMakeVisible (*toolBar);
   CodeEditorToolbarItemFactory factory(*this);
   toolBar->addDefaultItems (factory);
   
@@ -134,12 +135,16 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   verticalLayout.setItemLayout (1, 8, 8, 8);
   verticalLayout.setItemLayout (2, 2, -1.0, 100);
   
-  addAndMakeVisible (editor = new CodeEditorComponent (codeDocument, &tokeniser));
+  editor = std::make_unique<CodeEditorComponent> (codeDocument, &tokeniser);
+  addAndMakeVisible (*editor);
   //editor->setCommandManager(&getCommandManager());
-  addAndMakeVisible(dividerBar1 = new StretchableLayoutResizerBar (&verticalLayout, 1, false));
-  addAndMakeVisible (svgDisplay = new SVGDisplay(audioEngine, graphEditor));
-  addAndMakeVisible(console = new PMixConsole());
-  audioEngine.getLogger().addChangeListener(console);
+  dividerBar1 = std::make_unique<StretchableLayoutResizerBar>(&verticalLayout, 1, false);
+  addAndMakeVisible(*dividerBar1);
+  svgDisplay = std::make_unique<SVGDisplay>(audioEngine, graphEditor);
+  addAndMakeVisible (*svgDisplay);
+  console = std::make_unique<PMixConsole>();
+  addAndMakeVisible(*console);
+  audioEngine.getLogger().addChangeListener(console.get());
 
   editor->setFont(Font(Font::getDefaultMonospacedFontName(), 16.f, 0));
   editor->setTabSize(2, true);
@@ -158,7 +163,7 @@ CodeEditor::CodeEditor(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
 CodeEditor::~CodeEditor()
 {
   graphEditor.removeChangeListener(this);
-  audioEngine.getLogger().removeChangeListener(console);
+  audioEngine.getLogger().removeChangeListener(console.get());
 }
 
 void CodeEditor::paint (Graphics& g)
@@ -176,20 +181,20 @@ void CodeEditor::resized()
   toolBar->setBounds (area.removeFromTop (25));
 
   Component* vcomps[3];//{ editor, dividerBar1, console };
-  vcomps[0] = editor;
-  vcomps[1] = dividerBar1;
+  vcomps[0] = editor.get();
+  vcomps[1] = dividerBar1.get();
   
   if (show == CodeEditorBottomViewIDs::diagram)
   {
     console->setVisible(false);
     svgDisplay->setVisible(true);
-    vcomps[2] = svgDisplay;
+    vcomps[2] = svgDisplay.get();
   }
   else
   {
     console->setVisible(true);
     svgDisplay->setVisible(false);
-    vcomps[2] = console;
+    vcomps[2] = console.get();
   }
   
   verticalLayout.layOutComponents (vcomps, 3,

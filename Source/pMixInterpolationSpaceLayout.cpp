@@ -23,7 +23,7 @@ InterpolationSpaceLabel::InterpolationSpaceLabel(const String& labelText)
   setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 }
 
-InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, NodeID nodeID, const int presetId, Colour colour)
+InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine, String& initalLabel, NodeID nodeID, int presetId, Colour colour)
 : audioEngine(audioEngine)
 , nodeID(nodeID)
 , presetId(presetId)
@@ -31,7 +31,8 @@ InterpolationSpacePreset::InterpolationSpacePreset(PMixAudioEngine& audioEngine,
 , opacity(1.)
 , dragging(false)
 {
-  addAndMakeVisible (label = new InterpolationSpaceLabel (initalLabel));
+  label = std::make_unique<InterpolationSpaceLabel>(initalLabel);
+  addAndMakeVisible (*label);
   label->addListener(this);
 }
 

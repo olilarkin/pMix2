@@ -33,7 +33,8 @@ PMixPrefsComponent::PMixPrefsComponent (PMixAudioEngine& audioEngine)
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible (tabbedComponent = new TabbedComponent (TabbedButtonBar::TabsAtTop));
+    tabbedComponent = std::make_unique<TabbedComponent>(TabbedButtonBar::TabsAtTop);
+    addAndMakeVisible (*tabbedComponent);
     tabbedComponent->setTabBarDepth (23);
     tabbedComponent->addTab (TRANS("General"), Colours::lightgrey, new PMixPrefsGeneral(), true);
     tabbedComponent->addTab (TRANS("Controllers"), Colours::lightgrey, new PMixPrefsControllers(), true);

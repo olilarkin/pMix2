@@ -19,7 +19,7 @@ SVGDisplay::SVGDisplay(PMixAudioEngine& audioEngine, GraphEditor& graphEditor)
   //browser = new WebBrowserComponent();
   
   if (browser) {
-    addAndMakeVisible (browser);
+    addAndMakeVisible (*browser);
   }
   
   graphEditor.addChangeListener(this);

@@ -81,9 +81,9 @@ private:
   
   AudioSourcePlayer audioSourcePlayer;
   AudioTransportSource transportSource;
-  ScopedPointer<AudioFormatReaderSource> currentAudioFileSource;
+  std::unique_ptr<AudioFormatReaderSource> currentAudioFileSource;
   
-  ScopedPointer<ThumbnailComponent> thumbnail;
+  std::unique_ptr<ThumbnailComponent> thumbnail;
   Label zoomLabel;
   Slider zoomSlider;
   ToggleButton followTransportButton;

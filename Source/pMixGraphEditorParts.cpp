@@ -388,7 +388,7 @@ void NodeComponent::resized()
   
 }
 
-void NodeComponent::getPinPos (const int index, const bool isInput, float& x, float& y)
+void NodeComponent::getPinPos (int index, bool isInput, float& x, float& y)
 {
   for (int i = 0; i < getNumChildComponents(); ++i)
   {

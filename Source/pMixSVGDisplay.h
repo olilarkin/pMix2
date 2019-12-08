@@ -33,7 +33,7 @@ private:
   PMixAudioEngine& audioEngine;
   GraphEditor& graphEditor;
   std::unique_ptr<Drawable> svgDrawable; // used if no webbrowser component
-  ScopedPointer<WebBrowserComponent> browser;
+  std::unique_ptr<WebBrowserComponent> browser;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SVGDisplay);
 };

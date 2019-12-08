@@ -24,7 +24,7 @@ public:
   void paint (Graphics& g) override;
   
 private:
-  ScopedPointer<PMixInterpolationSpaceLayout> layout;
-  ScopedPointer<pMixInterpolationSpaceCrossHairs> crosshairs;
+  std::unique_ptr<PMixInterpolationSpaceLayout> layout;
+  std::unique_ptr<pMixInterpolationSpaceCrossHairs> crosshairs;
 };
 

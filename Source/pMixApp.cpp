@@ -23,7 +23,7 @@ void pMixApp::initialise (const String& commandLine)
   
 
 
-  mainWindow = new MainAppWindow(audioEngine);
+  mainWindow = std::make_unique<MainAppWindow>(audioEngine);
   
   deviceManager.addAudioCallback (&graphPlayer);
   deviceManager.addMidiInputCallback (String(), &graphPlayer.getMidiMessageCollector());

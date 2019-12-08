@@ -15,7 +15,8 @@ PMixTabContainer::PMixTabContainer (PMixAudioEngine& audioEngine, GraphEditor& g
 : iSpace(iSpace)
 , codeEditor(codeEditor)
 {
-  addAndMakeVisible (tabbedComponent = new TabbedComponent (TabbedButtonBar::TabsAtTop));
+  tabbedComponent = std::make_unique<TabbedComponent>(TabbedButtonBar::TabsAtTop);
+  addAndMakeVisible (*tabbedComponent);
   tabbedComponent->setTabBarDepth (23);
   tabbedComponent->addTab (TRANS("Code Editor"), Colours::lightgrey, &codeEditor, false);
   tabbedComponent->addTab (TRANS("Interpolation Space"), Colours::lightgrey, &iSpace, false);
