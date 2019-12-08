@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="RsNvH4" name="pMix" version="0.0.2" bundleIdentifier="com.OliLarkin.pMix"
+<JUCERPROJECT id="RsNvH4" name="pMix" version="0.0.3" bundleIdentifier="com.OliLarkin.pMix"
               includeBinaryInAppConfig="1" jucerVersion="5.4.5" companyName="OliLarkin"
               companyWebsite="www.olilarkin.co.uk" companyEmail="contact@olilarkin.co.uk"
               displaySplashScreen="0" reportAppUsage="0" splashScreenColour="Dark"
-              cppLanguageStandard="11" projectType="guiapp">
+              cppLanguageStandard="17" projectType="guiapp">
   <MAINGROUP id="FiV8Cl" name="pMix">
     <FILE id="OqTrli" name="pMix.png" compile="0" resource="0" file="BinaryData/pMix.png"/>
     <GROUP id="{C1340CBE-4817-B4D1-E09B-3DFCB457E038}" name="Source">
@@ -138,16 +138,15 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" vstFolder="~/SDKs/vstsdk2.4" vst3Folder="VST3_SDK"
                customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist&gt;&#10;  &lt;dict&gt;&#10;    &lt;key&gt;CFBundleExecutable&lt;/key&gt;&#10;    &lt;string&gt;${EXECUTABLE_NAME}&lt;/string&gt;&#10;    &lt;key&gt;CFBundleIconFile&lt;/key&gt;&#10;    &lt;string&gt;Icon.icns&lt;/string&gt;&#10;    &lt;key&gt;CFBundleIdentifier&lt;/key&gt;&#10;    &lt;string&gt;$(PRODUCT_BUNDLE_IDENTIFIER)&lt;/string&gt;&#10;    &lt;key&gt;CFBundleName&lt;/key&gt;&#10;    &lt;string&gt;pMix&lt;/string&gt;&#10;    &lt;key&gt;CFBundleDisplayName&lt;/key&gt;&#10;    &lt;string&gt;pMix&lt;/string&gt;&#10;    &lt;key&gt;CFBundlePackageType&lt;/key&gt;&#10;    &lt;string&gt;APPL&lt;/string&gt;&#10;    &lt;key&gt;CFBundleSignature&lt;/key&gt;&#10;    &lt;string&gt;????&lt;/string&gt;&#10;    &lt;key&gt;CFBundleShortVersionString&lt;/key&gt;&#10;    &lt;string&gt;0.0.2&lt;/string&gt;&#10;    &lt;key&gt;CFBundleVersion&lt;/key&gt;&#10;    &lt;string&gt;0.0.2&lt;/string&gt;&#10;    &lt;key&gt;NSHumanReadableCopyright&lt;/key&gt;&#10;    &lt;string&gt;OliLarkin&lt;/string&gt;&#10;    &lt;key&gt;NSHighResolutionCapable&lt;/key&gt;&#10;    &lt;true/&gt;&#10;    &lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;    &lt;dict&gt;&#10;    &lt;!--Include to allow all connections (DANGER)--&gt;&#10;    &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;    &lt;true/&gt;&#10;&lt;/dict&gt;&#10;  &lt;/dict&gt;&#10;&lt;/plist&gt;"
                bigIcon="OqTrli" smallIcon="OqTrli" externalLibraries="" extraCompilerFlags=""
-               extraDefs="FAUSTFLOAT=double" postbuildCommand="if [ -d &quot;/usr/local/share/faust/&quot; ]; then&#10;  echo copying faust libraries to bundle resources&#10;  cp /usr/local/share/faust/*.lib $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;  cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;else&#10;  echo faust not installed at /usr/local/share&#10;fi">
+               extraDefs="FAUSTFLOAT=double" postbuildCommand="if [ -d &quot;$(SRCROOT)/../../Faust/&quot; ]; then&#10;  echo copying faust libraries to bundle resources&#10;  cp $(SRCROOT)/../../Faust/share/faust/*.lib $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;  cp $SRCROOT/../../Resources/* $BUILT_PRODUCTS_DIR/pMix.app/Contents/Resources/&#10;else&#10;  echo faust not installed at $(SRCROOT)/../../Faust/share/faust&#10;fi"
+               embeddedFrameworks="$(SRCROOT)/../../Faust/lib/libfaust.dylib">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
-                       isDebug="1" optimisation="1" targetName="pMix" libraryPath="/opt/local/libexec/llvm-6.0/lib&#10;/usr/local/lib&#10;/opt/local/lib&#10;/Users/oli/Dev/MyPlugins/Dependencies/Build/mac/lib&#10;/usr/local/opt/openssl/lib/&#10;/Users/oli/Dev/LLVM/lib"
-                       headerPath="/usr/local/include&#10;/Users/oli/Dev/MyPlugins/Dependencies/Build/mac/include"
-                       cppLibType="libc++"/>
         <CONFIGURATION name="Release" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
-                       isDebug="0" optimisation="2" targetName="pMix" headerPath="/usr/local/include"
-                       libraryPath="/opt/local/libexec/llvm-6.0/lib&#10;/usr/local/lib&#10;/opt/local/lib"
-                       cppLibType="libc++"/>
+                       isDebug="0" optimisation="2" targetName="pMix" cppLibType="libc++"
+                       headerPath="$(SRCROOT)/../../Faust/include/" libraryPath="$(SRCROOT)/../../Faust/lib/"/>
+        <CONFIGURATION name="Debug" osxCompatibility="10.9 SDK" osxArchitecture="64BitIntel"
+                       isDebug="1" optimisation="1" targetName="pMix" headerPath="$(SRCROOT)/../../Faust/include/"
+                       cppLibType="libc++" libraryPath="$(SRCROOT)/../../Faust/lib/"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../juce/modules"/>
@@ -166,59 +165,6 @@
         <MODULEPATH id="juce_faustllvm" path="../../Projects"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <LINUX_MAKE targetFolder="Builds/Linux" externalLibraries="" extraLinkerFlags=""
-                smallIcon="OqTrli" bigIcon="OqTrli" extraCompilerFlags="-std=gnu++0x"
-                vstFolder="~/SDKs/vstsdk2.4" extraDefs="JUCE_PLUGINHOST_LADSPA=1"
-                vst3Folder="~/SDKs/VST3 SDK">
-      <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/&#10;/usr/lib/llvm-5.0/lib/"
-                       isDebug="1" optimisation="1" targetName="pMix" linuxArchitecture="-m64"/>
-        <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/&#10;/usr/lib/llvm-5.0/lib/"
-                       isDebug="0" optimisation="2" targetName="pMix" linuxArchitecture="-m64"/>
-      </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_opengl" path="../../juce/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../juce/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../juce/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../juce/modules"/>
-        <MODULEPATH id="juce_events" path="../../juce/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../juce/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../juce/modules"/>
-        <MODULEPATH id="juce_core" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
-        <MODULEPATH id="juce_faustllvm" path="../../juce/modules"/>
-      </MODULEPATHS>
-    </LINUX_MAKE>
-    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="" extraCompilerFlags="/wd4100&#10;/wd4068&#10;/wd4996">
-      <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="pMix" libraryPath=""
-                       headerPath=""/>
-        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="pMix" libraryPath=""
-                       headerPath=""/>
-      </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_opengl" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_faustllvm" path="..\..\Projects"/>
-        <MODULEPATH id="juce_events" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_cryptography" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_core" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_utils" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_formats" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_devices" path="..\..\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_basics" path="..\..\JUCE\modules"/>
-      </MODULEPATHS>
-    </VS2017>
   </EXPORTFORMATS>
   <MODULES>
     <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>

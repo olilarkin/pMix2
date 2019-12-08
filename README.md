@@ -8,30 +8,18 @@ Morphing between presets can result in the discovery of interesting hybrid sound
 
 pMix version 2 will eventually work on Mac, Linux and Windows and can operate as a standalone application or as a plug-in.
 
-Currently it is being developed using JUCE on Mac with Xcode 8 and the 10.12 SDK, with OSX deployment target set to 10.12. It won't yet compile/work well on other platforms.
-
 [![IMAGE ALT TEXT](/misc/pMixVimeo.png?raw=true)](https://vimeo.com/122268573 "pMix2 quick demo")
 
 
 ## Dependencies
 
-Due to the complexity of this project please closely follow the instructions:
+**libFaust**
 
-**Using brew to install dependencies**
-
-```brew install llvm zlib ncurses openssl```
+The Faust JIT compiler is linked dynamically. libfaust.dylib is copied into the application bundle. In order to to simplify building pMix2, a prebuilt libfaust.dylib can be downloaded. [This zip](https://github.com/iPlug2/iPlug2/releases/download/setup/IPLUG2_DEPS_MAC.zip) should be extracted to a directory "Faust" alongside the .jucer file. 
 
 **JUCE**
 
 pMix v2 is built using JUCE and the .jucer project expects to find the JUCE source and the juce_faustllvm juce modules source in the global module directory, which you can set in the Projucer settings.
-
-**VST3 SDK**
-
-The VST 3 SDK is now included as three git submodules. You will need to use ```git submodule update``` to check out the submodules.
-
-**JUCE_FAUSTLLVM Module Dependencies**
-
-There are more dependencies which are described in the juce_faustllvm [README.md](https://github.com/olilarkin/juce_faustllvm)
 
 
 ## Compiling
@@ -42,7 +30,7 @@ If you need to change any paths etc, you should do so using the .jucer project r
 
 ## Notes
 
-* pMix has been developed on Mac OSX and there hasn't yet been time to get it working on the other intended platforms! Hopefully there should not be any platform dependencies that prevent it working on Linux and Windows.
+* pMix has been developed on macOS and there hasn't yet been time to get it working on the other intended platforms! Hopefully there should not be any platform dependencies that prevent it working on Linux and Windows.
 * JUCE's VST2 plug-in support is most mature, so VST2 plug-ins are preferable to VST3, however Steinberg no longer distribute the VST2.4 SDK so VST3 support must be enabled in order to find the VST2.4 headers in the VST3 SDK.
 * If you don't care about plugin hosting support, you can disable it on the juce_audio_processors module tab by opening the pMix.jucer.
 * AU plug-in hosting is currently disabled, you can turn it on via the .jucer project.
